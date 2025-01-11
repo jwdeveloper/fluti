@@ -1,0 +1,186 @@
+
+:root {
+    --bg-primary: #0D1317;
+    --bg-secondary: #141A1F;
+    --bg-tertiary: #212B31;
+
+    --text-light: #E9EFF3;
+    --text-primary: #9DB2C0;
+    --text-neutral: #ACAEB0;
+    --text-muted: #293945;
+    --text-error: rgb(239, 68, 68);
+
+    --accent-primary: #40EEC8;
+
+    --radious-1: 0.5em;
+    --radious-2: 0.8em;
+    --radious-3: 1em;
+    --radious-4: 1.2em;
+
+    --font--size-1: 0.8125rem;
+
+
+    --bg-000: rgba(217, 212, 212, 0.2);
+    --bg-100: rgb(255, 255, 255);
+    --bg-200: rgb(239, 239, 239);
+    --bg-300: rgb(233, 233, 233);
+    --bg-400: #e0dddd;
+    --bg-500: #afafaf;
+    --bg-600: #8d8d8d;
+    --bg-700: #a2a2a2;
+    --bg-800: #858383;
+    --bg-900: rgba(56, 48, 80, 0.71);
+
+    --bg-page: rgb(255, 255, 255);
+
+    --shadow: rgba(61, 65, 72, .15);
+
+    --font-size-small: 0.7em;
+    --font-size-normal: 0.8em;
+    --font-size-normaler: 1em;
+    --font-size-big: 1.2em;
+    --font-size-huge: 1.5em;
+
+    /*--bg-accent: #2a2a2c;*/
+    /*--bg-accent: #6010ea;*/
+    --bg-accent: #480ba8;
+    --bg-accent: #350680;
+    --bg-accent: #000000;
+    /*--bg-accent: #16a967;*/
+    /*--bg-accent: #721256;*/
+    /*--bg-accent: #139a79;*/
+    /*--bg-accent: rgba(34, 193, 195, 1);*/
+
+
+    --bg-accent-darker: color-mix(in srgb, var(--bg-accent), rgba(0, 0, 0, 0.3));
+    --bg-accent-lighter: color-mix(in srgb, var(--bg-accent), white 10%);
+
+    --color-darkerst: rgba(105, 104, 104, 0.87);
+    --color-darker: rgba(61, 61, 61, 0.87);
+    --color: #050613;
+    --color-ligher: rgb(217, 217, 217);
+    --color-lighest: rgb(232, 232, 232);
+    --radius: 0.3em;
+    --radius-medium: 0.5em;
+    --radius-strong: 0.8em;
+
+    line-height: 1.5;
+    color-scheme: light dark;
+    font-size: var(--font--size-1);
+    color: var(--color);
+    background-color: var(--bg-100);
+    user-select: none;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 0;
+    margin: 0;
+    /*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+}
+
+
+[data-theme="light-1"] {
+    --bg-primary: #e1e1e1;
+    --bg-secondary: #ced2d2;
+    --bg-tertiary: #bdbbbb;
+
+    --text-light: #192638;
+    --text-primary: #34465d;
+    --text-neutral: #4f627a;
+    --text-muted: #645d5d;
+    --text-error: rgb(239, 68, 68);
+
+    --accent-primary: #217fe0;
+}
+
+[data-theme="dark-2"] {
+    --bg-primary: #19152a;
+    --bg-secondary: #120915;
+    --bg-tertiary: #2d254d;
+
+    --text-light: #e7e2e2;
+    --text-primary: #ccc4c4;
+    --text-neutral: #9b9ea2;
+    --text-muted: #82888d;
+    --text-error: rgb(239, 68, 68);
+
+    --accent-primary: #66fd0f;
+}
+[data-theme="dark-3"] {
+    --bg-primary: #1b2838; /* Deep Ocean Blue */
+    --bg-secondary: #324154; /* Soft Steel Blue */
+    --bg-tertiary: #6f8198; /* Bright Aqua */
+
+    --text-light: #e0f7fa; /* Light Cyan */
+    --text-primary: #c7d3d7; /* Soft Light Blue */
+    --text-neutral: #81a3b5; /* Neutral Blue Gray */
+    --text-muted: #607d8b; /* Muted Steel Gray */
+    --text-error: #ff3d00; /* Bright Orange Red */
+
+    --accent-primary: rgba(239, 146, 6, 0.98); /* Golden Yellow */
+}
+
+
+@keyframes shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+
+.my-cluster-icon {
+    background: var(--bg-accent);
+    color: var(--bg-100);
+    padding: 1em;
+    font-size: 1.2em;
+    border-radius: 50%;
+}
+
+.leaflet-no-cluster {
+    background: red;
+}
+
+.scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) var(--bg-primary);
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.full-width {
+    width: 100%;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.9s linear;
+    background: var(--text-muted); /* Adjust as needed */
+    pointer-events: none; /* Ignore pointer events */
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+
