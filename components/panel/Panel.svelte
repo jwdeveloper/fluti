@@ -1,0 +1,174 @@
+<script lang="ts">
+    import {type PanelProps} from "./Panel.type";
+
+    import './panel.css'
+    import {addRippleEffect} from "../../effects/RippleEffect";
+    import {onMount} from "svelte";
+    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte.js";
+    import {addArrowController} from "../../effects/ArrowController";
+
+
+    let {
+        panelType = 'flex',
+        direction = 'row',
+        padding = '0.5em',
+        className = '',
+        gap = '1em',
+        align = 'center',
+        justify = 'center',
+        columns = "",
+        rows = "",
+        width = "",
+        height = "",
+        variant = "normal",
+        background = "",
+        maxHeight = "",
+        radius = "var(--radius)",
+        overflow = "",
+        style = "",
+        id = "",
+        ripplerEffect = false,
+        useArrowMovement = false,
+        ripplerEffectColor = '',
+        element = $bindable(),
+        breakpoints = undefined,
+        onClick,
+        onMouseOver = () => {
+        }
+    }: PanelProps = $props();
+
+    let breakpointsController = useBreakpoints();
+
+    let cacheService = new Map<string, string>();
+    let computedStyles = $state(getCurrentBreakPoint())
+    $effect(() => {
+        if (!breakpoints)
+            return
+        computedStyles = getCurrentBreakPoint();
+    })
+
+    function getCurrentBreakPoint() {
+
+        if (!breakpoints)
+            return '';
+
+        if (cacheService.has(breakpointsController.breakpoint)) {
+            return cacheService.get(breakpointsController.breakpoint);
+        }
+
+        let styles = breakpoints[breakpointsController.breakpoint] ?? undefined
+        if (styles === undefined) {
+            return '';
+        }
+
+        let str = ''
+        for (let key in styles) {
+            str += `${camelToKebab(key)}:${styles[key]};`
+        }
+        cacheService.set(breakpointsController.breakpoint, str)
+        return str;
+    }
+
+    function camelToKebab(camelCaseString) {
+        return camelCaseString
+            .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert a dash between lowercase and uppercase letters
+            .toLowerCase(); // Convert the entire string to lowercase
+    }
+
+    function addEffects(node: HTMLHtmlElement) {
+        let onDestroy = [];
+        if (ripplerEffect) {
+            let m = addRippleEffect(node, ripplerEffectColor);
+            onDestroy.push(m)
+            node.style.cursor = 'pointer';
+        }
+
+
+        if (useArrowMovement) {
+            onDestroy.push(addArrowController(node, element));
+        }
+
+        return () => {
+            onDestroy.forEach((f) => f())
+        }
+    }
+
+    function handleClick(event: MouseEvent) {
+        if (!onClick)
+            return
+
+        event.stopPropagation();
+        onClick(event);
+    }
+
+    onMount(() => {
+    })
+
+
+</script>
+
+<div onclick={handleClick}
+     id="{id}"
+     use:addEffects
+     bind:this={element}
+     onmouseenter={(e)=> onMouseOver(true,e)}
+     onmouseleave={(e) => onMouseOver(false, e)}
+     class=" {variant} {className} common component-panel scroll"
+     style="
+grid-template-rows: {rows};
+grid-template-columns: {columns};
+display: {panelType};
+flex-direction: {direction};
+        padding: {padding};
+        justify-content: {justify};
+        align-items: {align};
+        gap: {gap};
+        width: {width};
+        max-width:{width};
+        max-height:{maxHeight};
+        height: {height};
+        background:{background};
+        overflow:{overflow};
+        border-radius:{radius};
+        {style}
+     {computedStyles}
+
+">
+    <slot/>
+</div>
+
+
+<style>
+
+    .common {
+        position: relative;
+    }
+
+
+    :global(.border-modern) {
+        border: 0.13em solid var(--color-ligher) !important;
+        border-radius: 0.6em !important;
+        /*box-shadow: 0 10px 1em 0.01em var(--shadow);*/
+
+    }
+
+    :global(.border) {
+        background: var(--bg-100) !important;
+        border: 2px solid var(--color-ligher) !important;
+        border-radius: 0.5em;
+        transition: all 0.3s ease-in-out;
+    }
+
+    :global(.border:hover) {
+        box-shadow: 0 0 1em 0.3em var(--shadow);
+    }
+
+    :global(.border-color) {
+        transition: all 0.3s ease-in-out;
+    }
+
+    :global(.border-color:hover) {
+        box-shadow: inset 0px 0px 0.1em 0.05em var(--bg-accent-darker);
+
+    }
+</style>

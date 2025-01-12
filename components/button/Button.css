@@ -1,0 +1,75 @@
+
+.btn-small {
+    font-size: var(--font-size-normaler) !important;
+}
+
+.btn-medium {
+    font-size: 1.1em !important;
+
+}
+
+.btn-normal {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 0.3em !important;
+    height: 2.3em !important;
+
+}
+
+.btn-outline {
+    color: var(--bg-accent) !important;
+    font-weight: 600 !important;
+    background: var(--bg-100) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 2.3em !important;
+    box-shadow: inset 0px 0px 0.1em 0.02em var(--bg-accent) !important;
+
+}
+
+.btn-outline-light {
+    border: 2px solid var(--color-ligher) !important;
+    color: var(--bg-accent) !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 2.3em !important;
+    /*box-shadow: inset 0px 0px 0.1em 0.02em var(--bg-accent) !important;*/
+
+
+}
+
+.btn-outline:hover {
+    color: var(--bg-100) !important;
+    background: var(--bg-accent) !important;
+    cursor: pointer !important;
+}
+
+
+.btn-filled {
+    background: var(--bg-accent) !important;
+    font-weight: 600 !important;
+    color: var(--bg-100) !important;
+    box-shadow: 0px 0px 0.1em 0.05em var(--bg-100) !important;
+    /*border: 2px solid var(--bg-accent) !important;*/
+
+    /*background: linear-gradient(180deg, var(--bg-accent) 90%, var(--bg-accent-darker) 100%) !important;*/
+    /*background: linear-gradient(11deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%) !important;*/
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 2.3em !important;
+}
+
+.btn-filled:hover {
+    /*background: var(--bg-100) !important;*/
+    /*color: var(--bg-accent) !important;*/
+    /*cursor: pointer !important;*/
+    /*box-shadow: inset 0px 0px 0.1em 0.05em var(--bg-accent) !important;*/
+    /*border: 2px solid transparent !important;*/
+    background: var(--bg-accent-lighter) !important;
+}
+

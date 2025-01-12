@@ -1,0 +1,30 @@
+<script lang="ts">
+    import {useAlert} from "./AlertImpl.svelte.ts";
+    import Alert from "./Alert.svelte";
+
+    const alerts = useAlert();
+
+</script>
+
+<div class="container">
+    {#each alerts.displayedAlerts as alert (alert.id)}
+        <Alert {...alert} destroy={()=> alerts.destroy(alert.id)}/>
+    {/each}
+</div>
+
+<style>
+
+    .container {
+        position: fixed;
+        pointer-events: none;
+        z-index: 999999;
+        width: 100%;
+        gap: 0.5em;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding: 1em;
+    }
+</style>
