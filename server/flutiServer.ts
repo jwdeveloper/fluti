@@ -25,6 +25,14 @@ export class FlutiServerBuilderImpl implements FlutiServerBuilder {
         }
     }
 
+    useRatelimit(options?: RouteMiddlewareOptions): FlutiServerBuilder {
+        return this;
+    }
+
+    useCountryBlocker(options?: RouteMiddlewareOptions): FlutiServerBuilder {
+        return this;
+    }
+
     use(handler: FlutiServerMiddleware): FlutiServerBuilder {
         this.options.middlewares.push(handler)
         return this;
