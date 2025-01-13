@@ -59,12 +59,13 @@
         return 'var(--text-primary)'
     })
 
+    let data ='var(--text-primary)'
 </script>
 
 
 {#if children}
 
-    <div use:addRippleEffect={{color:"var(--text-neutral)"}} class="wide-icon {className}"
+    <div use:addRippleEffect={data} class="wide-icon {className}"
          style='
           width: {width};
           min-width:{fullWidth?"100%":""};

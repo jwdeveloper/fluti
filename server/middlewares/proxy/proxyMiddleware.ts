@@ -44,6 +44,7 @@ export let useProxyMiddleware = (options: ProxyMiddlewareOptions) => {
                 headers: request.headers,
                 body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
                 redirect: "manual",
+                //@ts-ignore
                 duplex: "half",
 
             });

@@ -5,6 +5,7 @@
 
     let userService = useUserSession()
     onMount(() => {
+        console.log("Loading session...")
         userService.loadSession();
     })
 </script>

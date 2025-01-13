@@ -13,12 +13,12 @@ export class UserSession {
     }
 
     loadSession() {
-        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+        const cookies = document.cookie.split('; ')
+            .reduce((acc, cookie) => {
             const [key, value] = cookie.split('=');
             acc[key] = decodeURIComponent(value);
             return acc;
         }, {} as Record<string, string>);
-
         if (cookies.user && cookies.session) {
             try {
                 this.user = JSON.parse(cookies.user);
@@ -41,15 +41,7 @@ export class UserSession {
         this.user = undefined;
         this.session = undefined;
         this.isLogin = false;
-
-        document.cookie = `user='s'; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-        document.cookie = `session='s'; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-
-        this.clearCookie('user');
-        this.clearCookie('session');
-        window.location.reload();
-        console.log("REMOVE COOKIES", document.cookie)
-        this.redirectToLogin();
+        this.redirectTo('/logout');
     }
 
     redirectToHome() {

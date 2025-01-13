@@ -1,4 +1,4 @@
-import {json, redirect, type RequestEvent} from "@sveltejs/kit";
+import {json, redirect, type RequestEvent, text} from "@sveltejs/kit";
 
 import type {
     FlutiServer,
@@ -11,6 +11,8 @@ import {
     type RouteMiddlewareOptions,
     useRouteMiddleware
 } from "$lib/fluti/server/middlewares/route/routeMiddleware";
+import type {OAuthMiddlewareOptions} from "./middlewares/oauth/oAuthTypes";
+import {useOAuthMiddleware} from "$lib/fluti/server/middlewares/oauth/oAuthMiddleware";
 
 
 export class FlutiServerBuilderImpl implements FlutiServerBuilder {
@@ -35,6 +37,12 @@ export class FlutiServerBuilderImpl implements FlutiServerBuilder {
 
     use(handler: FlutiServerMiddleware): FlutiServerBuilder {
         this.options.middlewares.push(handler)
+        return this;
+    }
+
+
+    useOAuth(options: OAuthMiddlewareOptions): FlutiServerBuilder {
+        this.use(useOAuthMiddleware(options))
         return this;
     }
 
@@ -72,7 +80,9 @@ export class FlutiServerImpl implements FlutiServer {
                     continue
                 }
                 if (typeof result === 'string') {
-                    return new Response(result, {headers: [['Content-type', 'text-plain']]});
+                    return new Response(result, {
+                        headers: [['Content-Type', 'text/plain; charset=utf-8']],
+                    });
                 }
                 return result;
             }
@@ -88,6 +98,6 @@ export class FlutiServerImpl implements FlutiServer {
 
 }
 
-export let createServer: () => FlutiServerBuilder = () => {
+export let createMiddleware: () => FlutiServerBuilder = () => {
     return new FlutiServerBuilderImpl();
 }

@@ -28,7 +28,6 @@ function validatePathOptions(options: PathOptions, request: RequestEvent) {
     if (options.anonymous) {
         return
     }
-    console.log(options)
 
     if (options.userValidator && !user)
         return returnError("IsUser failed, user can't be null");
@@ -37,8 +36,11 @@ function validatePathOptions(options: PathOptions, request: RequestEvent) {
         return returnError("IsUser status failed");
 
 
-    if (options.verified && !user?.verified)
-        return returnError("User is not verified");
+    if (options.verified) {
+        let isVerified = user?.verified || user?.verified_email;
+        if (!isVerified)
+            return returnError("User is not verified");
+    }
 
     if (options.admin && !user?.isAdmin)
         return returnError("Admin access required");
