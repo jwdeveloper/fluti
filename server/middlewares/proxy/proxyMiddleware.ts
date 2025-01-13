@@ -44,6 +44,8 @@ export let useProxyMiddleware = (options: ProxyMiddlewareOptions) => {
                 headers: request.headers,
                 body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
                 redirect: "manual",
+                duplex: "half",
+
             });
 
             if (onProxySuccess) {
@@ -51,12 +53,12 @@ export let useProxyMiddleware = (options: ProxyMiddlewareOptions) => {
             }
 
             const responseBody = await proxyResponse.text();
-            return new Response(responseBody, {
-                status: proxyResponse.status,
-                headers: proxyResponse.headers,
-            });
+            // return new Response(responseBody, {
+            //     status: proxyResponse.status,
+            //     headers: proxyResponse.headers,
+            // });
         } catch (error) {
-            console.log("proxy error", error)
+            // console.log("proxy error", error)
             if (onProxyError) {
                 onProxyError(event, error);
             }
