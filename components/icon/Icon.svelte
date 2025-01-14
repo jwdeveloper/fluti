@@ -132,7 +132,7 @@
         background: transparent;
 
         @media (max-width: 768px) {
-            font-size: 1.6em !important;
+            font-size: 1.5em !important;
 
         }
     }
