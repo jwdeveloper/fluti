@@ -1,8 +1,8 @@
 import type {OAuthMiddlewareOptions, OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+
 import type {FlutiServerMiddleware} from "$lib/fluti/server/serverTypes";
 import type {RequestEvent} from "@sveltejs/kit";
 import {redirectTo} from "$lib/fluti/utils/httpUtils";
-import {pocketbaseClient} from "$lib/pocketbase-client";
 
 
 export function useOAuthMiddleware(options: OAuthMiddlewareOptions): FlutiServerMiddleware {
