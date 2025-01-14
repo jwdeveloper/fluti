@@ -9,7 +9,9 @@ export interface PanelProps {
     direction?: "row" | "row-reverse" | "column" | "column-reverse"
     className?: string
     rows?: string
+    rowsAuto?: string
     columns?: string
+    columnsAuto?:string
     width?: string
     height?: string
     maxHeight?: string

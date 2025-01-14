@@ -5,11 +5,12 @@
         style?: string;
     }
 
-    let {variant = 'normal', color = 'normal',style=''}: TitleProps = $props();
+    let {variant = 'normal', color = 'normal', style = ''}: TitleProps = $props();
 
 </script>
 
-<h1 class="{variant}" style="color: {color === 'normal'? 'var(--text-primary)':'var(--text-light)' } {style}">
+<h1 class="{variant}"
+    style="color: {color === 'normal'? 'var(--text-primary)':'var(--text-light)' } {style}">
     <slot/>
 </h1>
 
@@ -23,10 +24,16 @@
 
     :global(.title-huge) {
         font-size: 5em !important;
+
+        @media (max-width: 600px) {
+            font-size: 2.5em !important;
+        }
+
     }
+
     h1 {
         font-size: 2em;
-        font-weight: bold;
+        font-weight: 800;
         color: var(--bg-tertiary);
     }
 </style>

@@ -17,7 +17,9 @@
         align = 'center',
         justify = 'center',
         columns = "",
+        columnsAuto = "",
         rows = "",
+        rowsAuto = "",
         width = "",
         height = "",
         variant = "normal",
@@ -105,6 +107,38 @@
     })
 
 
+    let getColumns = $derived.by(() => {
+        if (!columnsAuto)
+            return columns;
+        return calucalteAutoValue(columnsAuto);
+    })
+    let getRows = $derived.by(() => {
+        if (!rowsAuto)
+            return rows;
+        return calucalteAutoValue(rowsAuto);
+    })
+
+
+    function calucalteAutoValue(value: string) {
+        let split = value.split(" ");
+        let type = "fit"
+        let r1 = "auto";
+        let r2 = "1fr"
+        if (split.length == 1) {
+            r1 = split[0]
+        }
+        if (split.length == 2) {
+            r1 = split[0]
+            r2 = split[1]
+        }
+        if (split.length == 3) {
+            type = split[0]
+            r1 = split[1]
+            r2 = split[2]
+        }
+        return `repeat(auto-${type}, minmax(${r1}, ${r2}))`
+    }
+
 </script>
 
 <div onclick={handleClick}
@@ -115,8 +149,8 @@
      onmouseleave={(e) => onMouseOver(false, e)}
      class=" {variant} {className} common component-panel scroll"
      style="
-grid-template-rows: {rows};
-grid-template-columns: {columns};
+grid-template-rows: {getRows};
+grid-template-columns: {getColumns};
 display: {panelType};
 flex-direction: {direction};
         padding: {padding};

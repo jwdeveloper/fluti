@@ -77,16 +77,19 @@
     -moz-osx-font-smoothing: grayscale;
     padding: 0;
     margin: 0;
-    /*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
+    font-feature-settings: normal;
+    font-variation-settings: normal;
 
 }
 
 
 [data-theme="light-1"] {
-    --bg-primary: #e1e1e1;
-    --bg-secondary: #ced2d2;
+    --bg-primary: #d8d9d9;
+    --bg-secondary: #e1e1e1;
     --bg-tertiary: #bdbbbb;
 
     --text-light: #192638;

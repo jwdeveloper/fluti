@@ -1,13 +1,16 @@
 <script lang="ts">
 
     let {
-        url = undefined, onClick = () => {
-        }
+        url = undefined,
+        style='',
+        onClick = () => {}
     } = $props();
 
 </script>
 
-<a class="offer-url" onclick={()=> onClick()} href={url} target="_blank" rel="noopener noreferrer">
+<a class="offer-url" onclick={()=> onClick()} href={url} target="_blank"
+   style="{style}"
+   rel="noopener noreferrer">
     <slot/>
 </a>
 
