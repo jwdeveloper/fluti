@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {Spring} from 'svelte/motion';
 
     let {
         height = "8px",
@@ -8,9 +9,16 @@
     } = $props();
 
 
-    let getWidth = $derived.by(() => {
+    const getWidth = $derived.by(() => {
         return (currentValue / maxValue * 100);
     })
+    const tween = Spring.of(() => getWidth, {
+        damping: 0.5,
+        stiffness: 0.1,
+        precision: 0.1,
+    });
+
+
 </script>
 
 
@@ -18,9 +26,8 @@
      style="border-radius:{radius};">
     <div class="progress" style="
      border-radius:{radius};
-     width: {getWidth}%;
+     width: {tween.current}%;
      height:{height}; ">
-
     </div>
     <slot/>
 </div>
@@ -41,13 +48,11 @@
     }
 
 
-    .progress
-    {
+    .progress {
         position: relative;
     }
 
-    .progress-child
-    {
+    .progress-child {
         position: absolute;
         top: 25%;
         left: 5%;

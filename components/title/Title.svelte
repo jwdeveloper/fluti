@@ -3,14 +3,15 @@
         variant?: 'normal' | 'title-small' | 'title-huge';
         color?: 'normal' | "dark"
         style?: string;
+        className?: string;
     }
 
-    let {variant = 'normal', color = 'normal', style = ''}: TitleProps = $props();
+    let {className = '', variant = 'normal', color = 'normal', style = ''}: TitleProps = $props();
 
 </script>
 
-<h1 class="{variant}"
-    style="color: {color === 'normal'? 'var(--text-light)':'var(--text-primary)' } {style}">
+<h1 class="{variant} {className}"
+    style="color: {color === 'normal'? 'var(--text-light)':'var(--text-primary)' }; {style}">
     <slot/>
 </h1>
 

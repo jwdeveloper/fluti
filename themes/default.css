@@ -36,6 +36,7 @@
     --z-index-5: 30;
 
 
+    font-size: var(--font-size-normal);
     line-height: 1.5;
     user-select: none;
     font-synthesis: none;
@@ -71,8 +72,14 @@
 }
 
 [data-theme="dark-2"] {
-    --bg-primary: #19152a;
-    --bg-secondary: #120915;
+    /*--bg-primary: #19152a;*/
+    /*--bg-secondary: #120915;*/
+
+    --bg-primary: #120915;
+    --bg-secondary: #19152a;
+
+
+
     --bg-tertiary: #2d254d;
 
     --text-light: #e7e2e2;

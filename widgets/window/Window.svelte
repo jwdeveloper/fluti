@@ -7,7 +7,8 @@
 
     let {
         isOpen = $bindable(false),
-        closeWindow = () => {},
+        closeWindow = () => {
+        },
         focusedWindow,
         window,
     } = $props();
@@ -45,31 +46,33 @@
     }
 
 </script>
+
 <svelte:window onkeydown={handleKeyPress}></svelte:window>
-{#if isOpen}
-    <div id="window-wrapper"
-         transition:blur
-         bind:this={element}
-         class="wrapper"
-         onclick={hide}>
-        <div transition:slide class="window">
-            <slot/>
-        </div>
+
+
+<div id="window-wrapper"
+     transition:blur
+     bind:this={element}
+     class="wrapper"
+     onclick={hide}>
+    <div transition:slide>
+        <slot/>
     </div>
-{/if}
+</div>
 
 <style>
 
     .window {
-        height: auto;
-        width: auto;
-        padding: 2em;
-        border: 2px solid var(--color-ligher);
-        border-radius: 0.5em;
+        height: 100%;
+        width: 100%;
+
+        border-radius: var(--radius-medium);
         background: var(--bg-100);
-        box-shadow: 0 0 1em 0.5em var(--shadow);
         position: relative;
-        z-index: 200000;
+        z-index: var(--z-index-5);
+
+        display: grid;
+        background: green;
     }
 
 
@@ -80,9 +83,10 @@
         position: fixed;
         height: 100%;
         width: 100%;
-        z-index: 999999;
+        z-index: var(--z-index-5);
         left: 0;
         backdrop-filter: blur(5px) brightness(0.5);
-        backdrop-filter:  brightness(0.45);
+        /*backdrop-filter: brightness(0.45);*/
+        padding: 0;
     }
 </style>

@@ -22,7 +22,7 @@ export type PathOptions = {
     params?: [string, (e: string) => boolean][];
     cookies?: [string, (e: string) => boolean][];
     elseMethod?: (input: Response | undefined) => Promise<Response>
-    handler?: RequestHandler
+    handler?: FlutiRequestHandler
 };
 
 export type UserValidator = (user: FlutiUser, event: RequestEvent) => boolean | {
@@ -30,7 +30,7 @@ export type UserValidator = (user: FlutiUser, event: RequestEvent) => boolean | 
     message: string
 }
 
-export type RequestHandler = (event: RequestHandlerEvent) => any | void
+export type FlutiRequestHandler = (event: RequestHandlerEvent) => any | void
 
 export interface RequestHandlerEvent extends RequestEvent {
     user: FlutiUser | undefined
@@ -59,7 +59,7 @@ export interface PathOptionsBuilder {
 
     withMethod(value: OneOrMore<string>): PathOptionsBuilder
 
-    withHandler(handler: RequestHandler): PathOptionsBuilder
+    withHandler(handler: FlutiRequestHandler): PathOptionsBuilder
 
     hasHeader(name: string, value?: (e: string) => boolean): PathOptionsBuilder
 

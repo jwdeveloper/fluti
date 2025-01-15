@@ -25,15 +25,18 @@
         return 'snippet';
     }
 
+    let openWindows = $derived.by(() => {
+        return windows.filter(e => e.isOpen)
+    })
+
 </script>
 
 
-{#each windows as window (window.id)}
-    <Window bind:isOpen={window.isOpen}
+{#each openWindows as window (window.id)}
+    <Window isOpen={window.isOpen}
             window={window}
             focusedWindow={focusedWindow}
             closeWindow={(e: WindowCloseReason)=>window.close(e)}>
-
         {#if snippetOrComponent(window.component) === 'snippet'}
             {@render window.component(window, {...window.input})}
         {:else}
@@ -41,6 +44,5 @@
                               {...window.input}
                               window={window}/>
         {/if}
-
     </Window>
 {/each}

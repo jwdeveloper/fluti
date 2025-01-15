@@ -1,4 +1,4 @@
-import type {PathOptions, PathOptionsBuilder, RequestHandler} from "./routeTypes";
+import type {PathOptions, PathOptionsBuilder, FlutiRequestHandler} from "./routeTypes";
 import type {FlutiUser, OneOrMore} from "$lib/fluti/server/serverTypes";
 import {json, redirect, text, type RequestEvent} from "@sveltejs/kit";
 
@@ -16,7 +16,7 @@ export class PathOptionsBuilderImpl implements PathOptionsBuilder {
     private params: Map<string, (e: string) => boolean> = new Map();
     private cookies: Map<string, (e: string) => boolean> = new Map();
 
-    private handler?: RequestHandler
+    private handler?: FlutiRequestHandler
 
     //@ts-ignore
     private elseMethod: (response: Response | undefined) => Response | any;
@@ -35,7 +35,7 @@ export class PathOptionsBuilderImpl implements PathOptionsBuilder {
         return this;
     }
 
-    withHandler(handler: RequestHandler): PathOptionsBuilder {
+    withHandler(handler: FlutiRequestHandler): PathOptionsBuilder {
         this.handler = handler
         return this;
     }

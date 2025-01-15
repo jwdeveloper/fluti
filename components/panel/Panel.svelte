@@ -11,7 +11,7 @@
     let {
         panelType = 'flex',
         direction = 'row',
-        padding = '0.5em',
+        padding = '',
         className = '',
         gap = '1em',
         align = 'center',
