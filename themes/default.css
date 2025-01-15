@@ -12,26 +12,13 @@
 
     --accent-primary: #40EEC8;
 
-    --radious-1: 0.5em;
-    --radious-2: 0.8em;
-    --radious-3: 1em;
-    --radious-4: 1.2em;
 
-    --font--size-1: 0.8125rem;
+    --radius: 0.3em;
+    --radius-medium: 0.5em;
+    --radius-strong: 0.8em;
 
+    --border-size: 2px;
 
-    --bg-000: rgba(217, 212, 212, 0.2);
-    --bg-100: rgb(255, 255, 255);
-    --bg-200: rgb(239, 239, 239);
-    --bg-300: rgb(233, 233, 233);
-    --bg-400: #e0dddd;
-    --bg-500: #afafaf;
-    --bg-600: #8d8d8d;
-    --bg-700: #a2a2a2;
-    --bg-800: #858383;
-    --bg-900: rgba(56, 48, 80, 0.71);
-
-    --bg-page: rgb(255, 255, 255);
 
     --shadow: rgba(61, 65, 72, .15);
 
@@ -41,36 +28,16 @@
     --font-size-big: 1.2em;
     --font-size-huge: 1.5em;
 
-    /*--bg-accent: #2a2a2c;*/
-    /*--bg-accent: #6010ea;*/
-    --bg-accent: #480ba8;
-    --bg-accent: #350680;
-    --bg-accent: #000000;
-    /*--bg-accent: #16a967;*/
-    /*--bg-accent: #721256;*/
-    /*--bg-accent: #139a79;*/
-    /*--bg-accent: rgba(34, 193, 195, 1);*/
 
+    --z-index-1: 2;
+    --z-index-2: 5;
+    --z-index-3: 10;
+    --z-index-4: 20;
+    --z-index-5: 30;
 
-    --bg-accent-darker: color-mix(in srgb, var(--bg-accent), rgba(0, 0, 0, 0.3));
-    --bg-accent-lighter: color-mix(in srgb, var(--bg-accent), white 10%);
-
-    --color-darkerst: rgba(105, 104, 104, 0.87);
-    --color-darker: rgba(61, 61, 61, 0.87);
-    --color: #050613;
-    --color-ligher: rgb(217, 217, 217);
-    --color-lighest: rgb(232, 232, 232);
-    --radius: 0.3em;
-    --radius-medium: 0.5em;
-    --radius-strong: 0.8em;
 
     line-height: 1.5;
-    color-scheme: light dark;
-    font-size: var(--font--size-1);
-    color: var(--color);
-    background-color: var(--bg-100);
     user-select: none;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -80,7 +47,7 @@
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
     font-feature-settings: normal;
     font-variation-settings: normal;
 
@@ -88,17 +55,19 @@
 
 
 [data-theme="light-1"] {
-    --bg-primary: #d8d9d9;
-    --bg-secondary: #e1e1e1;
+    --bg-primary: #e1e1e1;
+    --bg-secondary: #d8d9d9;
+
     --bg-tertiary: #bdbbbb;
 
     --text-light: #192638;
     --text-primary: #34465d;
     --text-neutral: #4f627a;
-    --text-muted: #645d5d;
+    --text-muted: #8c929a;
     --text-error: rgb(239, 68, 68);
 
     --accent-primary: #217fe0;
+
 }
 
 [data-theme="dark-2"] {
@@ -114,6 +83,7 @@
 
     --accent-primary: #66fd0f;
 }
+
 [data-theme="dark-3"] {
     --bg-primary: #1b2838; /* Deep Ocean Blue */
     --bg-secondary: #324154; /* Soft Steel Blue */
@@ -126,6 +96,99 @@
     --text-error: #ff3d00; /* Bright Orange Red */
 
     --accent-primary: rgba(239, 146, 6, 0.98); /* Golden Yellow */
+}
+
+[data-theme="dark-4"] {
+
+    --bg-primary: rgb(24, 21, 21);
+    --bg-secondary: rgb(33, 30, 30);;
+    --bg-tertiary: rgb(51, 48, 48);
+
+    /*--bg-primary: #0d1b2a;*/
+    /*--bg-secondary: #1b263b; !* Dark Slate Blue *!*/
+    /*--bg-tertiary: #415a77; !* Rich Blue Gray *!*/
+
+    /*!* Text Colors *!*/
+    --text-light: rgba(245, 245, 245, 1); /* Soft White */
+    --text-primary: rgb(220, 220, 220); /* Light Silver */
+    --text-neutral: rgb(124, 120, 120); /* Warm Gray */
+    --text-muted: rgb(89, 86, 86); /* Cool Gray */
+    --text-error: #e53935; /* Vibrant Red */
+
+    /*!* Accent Color *!*/
+    /* Accent Color */
+    --accent-primary: rgba(255, 183, 77, 0.98); /* Warm Amber */
+}
+
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+::selection {
+    background-color: var(--accent-primary); /* Green background */
+    color: black; /* White text */
+}
+
+
+ol, ul {
+    list-style: inside;
+    padding: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold; /* Or any other font weight you prefer */
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+h2 {
+    font-size: x-large;
+}
+
+h3 {
+    font-size: large;
+}
+
+h4 {
+    font-size: medium;
+}
+
+h5 {
+    font-size: small;
+}
+
+h5 {
+    font-size: smaller;
+}
+
+p {
+    code {
+        background: var(--bg-tertiary);
+        padding: 0.1em 0.5em;
+        border-radius: 0.2em;
+        color: var(--text-primary) !important;
+    }
+}
+
+pre {
+    code {
+        color: var(--text-muted) !important;
+    }
+}
+
+blockquote {
+    background: var(--bg-tertiary);
+    padding: 0.5em;
+    border-radius: var(--radious-1);
+    margin: 0.5em;
+}
+
+p {
+    font-size: 1.3em;
 }
 
 

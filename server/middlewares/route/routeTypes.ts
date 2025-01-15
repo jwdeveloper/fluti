@@ -1,4 +1,4 @@
-import type {FlutiUserSession, OneOrMore} from "$lib/fluti/server/serverTypes";
+import type {FlutiUser, OneOrMore} from "$lib/fluti/server/serverTypes";
 import type {RequestEvent} from "@sveltejs/kit";
 
 export type MiddlewareOptions = {
@@ -11,6 +11,7 @@ export type MiddlewareOptions = {
 };
 
 export type PathOptions = {
+    isValidator?: (event: RequestEvent) => boolean;
     anonymous?: boolean;
     permissions?: string[];
     methods?: string[];
@@ -24,12 +25,15 @@ export type PathOptions = {
     handler?: RequestHandler
 };
 
-export type UserValidator = (user: FlutiUserSession) => boolean | { status: boolean, message: string }
+export type UserValidator = (user: FlutiUser, event: RequestEvent) => boolean | {
+    status: boolean,
+    message: string
+}
 
 export type RequestHandler = (event: RequestHandlerEvent) => any | void
 
 export interface RequestHandlerEvent extends RequestEvent {
-    user: FlutiUserSession | undefined
+    user: FlutiUser | undefined
 }
 
 export interface PathOptionsBuilder {
@@ -42,14 +46,18 @@ export interface PathOptionsBuilder {
 
     isAdmin(): PathOptionsBuilder
 
+    //* @param event - function that validates request event
+    is(event: (event: RequestEvent) => boolean): PathOptionsBuilder
+
     /**
      * Method that validates user session content
      *
      * @param method if parameter not provided then checks if user session exists
+     *
      */
     isUser(method?: UserValidator): PathOptionsBuilder
 
-    withRestMethods(value: OneOrMore<string>): PathOptionsBuilder
+    withMethod(value: OneOrMore<string>): PathOptionsBuilder
 
     withHandler(handler: RequestHandler): PathOptionsBuilder
 

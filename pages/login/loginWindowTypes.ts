@@ -14,6 +14,11 @@ export interface LoginViewProps {
 
 
 export interface LoginWindowProps {
+
+
+    //true
+    oAuth?: boolean
+
     onLogin?: (data: LoginFormData) => void
     onOAuthLogin?: (provider: string) => void
     onRegister?: (data: LoginFormData) => void

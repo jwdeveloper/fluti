@@ -6,6 +6,8 @@
     import UserManager from "$lib/fluti/widgets/user/UserManager.svelte";
 
     import './themes/default.css'
+    import {onMount} from "svelte";
+    import {setPageTitle} from "$lib/fluti/utils/client/setPageTitle";
 
     interface Fluti {
         useThemes?: boolean,

@@ -70,7 +70,7 @@
         padding: 1em 1.5em;
         border-radius: var(--radius);
         font-weight: bold;
-        background: var(--bg-accent);
+        background: var(--bg-primary);
         box-shadow: 0 0 1em 1em var(--shadow);
         color: var(--bg-100);
         width: 15%;

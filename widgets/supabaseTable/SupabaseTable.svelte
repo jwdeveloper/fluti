@@ -15,7 +15,6 @@
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
-    import Button from "$lib/fluti/components/button/Button.svelte";
     import SupabaseTablePagination from "./SupabaseTablePagination.svelte";
 
 

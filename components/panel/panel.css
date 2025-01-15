@@ -1,12 +1,12 @@
 
 .component-panel-border {
     border: 0.1em solid var(--bg-tertiary) !important;
-    border-radius: var(--radious-2) !important;
+    border-radius: var(--radius-medium) !important;
     background: var(--bg-secondary) !important;
 }
 
 .component-panel-border-dark {
-    border: 0.052em solid var(--text-muted) !important;
-    border-radius: var(--radious-2) !important;
+    border: 0.052em solid var(--bg-tertiary) !important;
+    border-radius: var(--radius-medium) !important;
     background: var(--bg-primary) !important;
 }

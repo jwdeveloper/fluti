@@ -9,6 +9,9 @@ export class LoginController {
 
     constructor() {
         this.reset()
+        this.props = {
+            oAuth: true
+        }
     }
 
     reset() {
@@ -28,7 +31,7 @@ export class LoginController {
             this.invalidFields.email = "login is required"
             throw new Error("Mail can not be empty!")
         }
-        if (!this.form.password) {
+        if (this.view != 'recovery' && !this.form.password) {
             this.invalidFields.password = "password is required"
             throw new Error("Password must not be empty")
         }
@@ -69,8 +72,6 @@ export class LoginController {
 
 
     async sendRecoveryMail() {
-
-
         return this.executeAction(this.props.onSendRecoveryMail);
     }
 

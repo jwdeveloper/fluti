@@ -13,7 +13,7 @@ export function addRippleEffect(element: HTMLElement, color?: string) {
         const y = e.clientY - rect.top - size / 2;
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
-        ripple.style.zIndex = `1`;
+        // ripple.style.zIndex = `1`;
         if (color)
             ripple.style.background = color
         ripple.classList.add("ripple");

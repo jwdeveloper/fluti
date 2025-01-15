@@ -20,6 +20,10 @@ export class ThemeController {
             {
                 text: "Jasny",
                 value: "light-1"
+            },
+            {
+                text: "Ciemny 4",
+                value: "dark-4"
             }
         ]
     }

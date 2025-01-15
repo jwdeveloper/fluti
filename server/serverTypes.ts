@@ -3,10 +3,11 @@ import type {SessionMiddlewareOptions} from "$lib/fluti/server/middlewares/sessi
 import type {RouteMiddlewareOptions} from "$lib/fluti/server/middlewares/route/routeMiddleware";
 import type {OAuthMiddlewareOptions} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 
-export type OneOrMore<T> = T | [T, ...T[]]
+export type OneOrMore<T> = T | [T, ...T[]] | T[]
 
-export type FlutiUserSession = {
-
+export type FlutiUser = {
+    id: string,
+    isAdmin?: boolean,
     email?: string,
     login?: string,
     verified: boolean

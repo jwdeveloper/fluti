@@ -1,16 +1,17 @@
 import type {PathOptions, PathOptionsBuilder, RequestHandler} from "./routeTypes";
-import type {FlutiUserSession, OneOrMore} from "$lib/fluti/server/serverTypes";
-import {json, redirect, text} from "@sveltejs/kit";
+import type {FlutiUser, OneOrMore} from "$lib/fluti/server/serverTypes";
+import {json, redirect, text, type RequestEvent} from "@sveltejs/kit";
 
 export class PathOptionsBuilderImpl implements PathOptionsBuilder {
 
 
+    private userValidator?: (user: any) => boolean;
+    private isValidator?: (event: RequestEvent) => boolean;
     private anonymous = false;
     private methods: Set<string> = new Set();
     private permissions: Set<string> = new Set();
     private verified = false;
     private admin = false;
-    private userValidator?: (user: any) => boolean;
     private headers: Map<string, (e: string) => boolean> = new Map();
     private params: Map<string, (e: string) => boolean> = new Map();
     private cookies: Map<string, (e: string) => boolean> = new Map();
@@ -20,7 +21,12 @@ export class PathOptionsBuilderImpl implements PathOptionsBuilder {
     //@ts-ignore
     private elseMethod: (response: Response | undefined) => Response | any;
 
-    withRestMethods(restMethod: OneOrMore<string>): PathOptionsBuilder {
+    is(event: (event: RequestEvent) => boolean): PathOptionsBuilder {
+        this.isValidator = event;
+        return this;
+    }
+
+    withMethod(restMethod: OneOrMore<string>): PathOptionsBuilder {
         if (Array.isArray(restMethod)) {
             restMethod.forEach(permission => this.methods.add(permission));
         } else {
@@ -60,7 +66,7 @@ export class PathOptionsBuilderImpl implements PathOptionsBuilder {
         return this;
     }
 
-    isUser(method: (user: FlutiUserSession) => boolean): PathOptionsBuilder {
+    isUser(method: (user: FlutiUser) => boolean): PathOptionsBuilder {
 
         if (method === undefined) {
             this.userValidator = (e) => {
@@ -113,6 +119,7 @@ export class PathOptionsBuilderImpl implements PathOptionsBuilder {
 
     build(): PathOptions {
         return {
+            isValidator: this.isValidator,
             anonymous: this.anonymous,
             methods: Array.from(this.methods),
             permissions: Array.from(this.permissions),

@@ -8,12 +8,13 @@
     import EmailView from "./views/EmailView.svelte";
     import RecoveryView from "./views/RecoveryView.svelte";
 
-    const props: LoginWindowProps = $props();
+    const {oAuth = true, ...props}: LoginWindowProps = $props();
     const translations = loginData;
     const controller = useLoginController();
     const breakpoints = useBreakpoints();
     onMount(() => {
         controller.props = props;
+        controller.props.oAuth = oAuth;
     })
 
     const currentView = $derived.by(() => {
@@ -59,3 +60,4 @@
 
     {/if}
 </Panel>
+1

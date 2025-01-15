@@ -189,7 +189,7 @@
                         {:else}
                             {#if value.text === undefined}
                                 <div style="color: var(--text-primary)">
-                                {placeholder}
+                                    {placeholder}
                                 </div>
                             {:else}
                                 {value.text}
@@ -210,7 +210,7 @@
                justify="flex-start"
                gap="0"
                style="
-                 z-index: 6;
+                 z-index: var(--z-index-4);
                  box-shadow: 0 0 1em 0.1em var(--shadow);
                  border: 2px solid var(--bg-tertiary);
                  top: 5px;
@@ -241,7 +241,8 @@
                     overflow="scroll">
 
                 {#if isLoading}
-                    <div style="position: absolute; width: 100%; height: 100%; z-index: 2">
+                    <div style="position: absolute; width: 100%; height: 100%;
+                    z-index: var(--z-index-3)">
                         <Loader isLoading={isLoading}/>
                     </div>
                 {/if}

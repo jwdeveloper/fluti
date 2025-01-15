@@ -1,4 +1,4 @@
-import type {FlutiUserSession} from "$lib/fluti/server/serverTypes";
+import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import type {RequestEvent} from "@sveltejs/kit";
 
 
@@ -10,7 +10,7 @@ export type OAuthEvent = {
     request: RequestEvent
 }
 
-export type OAuthProviderValidate = (event: OAuthEvent) => Promise<FlutiUserSession>
+export type OAuthProviderValidate = (event: OAuthEvent) => Promise<FlutiUser>
 
 export interface OAuthMiddlewareOptions {
 

@@ -2,7 +2,7 @@ import {redirect, type RequestEvent, text} from "@sveltejs/kit";
 import type {MiddlewareOptions, PathOptions, RouteOptionsBuilder} from "$lib/fluti/server/middlewares/route/routeTypes";
 import {RouteOptionsBuilderImpl} from "$lib/fluti/server/middlewares/route/routeOptionsBuilderImpl";
 import {redirectTo} from "$lib/fluti/utils/httpUtils";
-import type {FlutiUserSession} from "$lib/fluti/server/serverTypes";
+import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 
 export type RouteMiddlewareOptions = (options: RouteOptionsBuilder) => void
 
@@ -18,12 +18,15 @@ function validatePathOptions(options: PathOptions, request: RequestEvent) {
     //@ts-ignore
     const user = request.locals?.user;
 
+
     if (options.methods && options.methods.length > 0) {
         let foundMethod = options.methods.some((p: string) => p === request.request.method)
         if (!foundMethod)
             return
     }
 
+    if (options.isValidator && !options.isValidator(request))
+        return returnError("Is validator failed");
 
     if (options.anonymous) {
         return
@@ -31,8 +34,7 @@ function validatePathOptions(options: PathOptions, request: RequestEvent) {
 
     if (options.userValidator && !user)
         return returnError("IsUser failed, user can't be null");
-
-    else if (options.userValidator && !options.userValidator(user))
+    else if (options.userValidator && !options.userValidator(user, request))
         return returnError("IsUser status failed");
 
 
@@ -114,7 +116,7 @@ let middleware = async (request: RequestEvent, next: any) => {
 
         if (options.handler) {
             //@ts-ignore
-            let user: FlutiUserSession = request.locals.user;
+            let user: FlutiUser = request.locals.user;
             let event = {user, ...request}
             return await options.handler(event)
         }

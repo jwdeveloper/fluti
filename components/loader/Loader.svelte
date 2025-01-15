@@ -1,11 +1,12 @@
 <script>
 
     import {blur} from "svelte/transition";
-    let {isLoading = $bindable(true), background='transparent'} = $props();
+
+    let {isLoading = $bindable(true), background = 'transparent'} = $props();
 </script>
 
 {#if isLoading}
-    <div class="loader" transition:blur  style="background: {background}">
+    <div class="loader" transition:blur style="background: {background}">
         <i class=" fa fa-spinner fa-spin"></i>
     </div>
 {/if}
@@ -15,7 +16,7 @@
     .loader {
         position: absolute;
         left: 0;
-        top:0;
+        top: 0;
         height: 100%;
         width: 100%;
         font-size: var(--font-size-big);
@@ -24,7 +25,7 @@
         justify-content: center;
         align-items: center;
         backdrop-filter: blur(10px);
-        z-index: 3;
+        z-index: var(--z-index-5);
 
         i {
             font-size: 3em;

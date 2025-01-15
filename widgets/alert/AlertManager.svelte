@@ -17,7 +17,7 @@
     .container {
         position: fixed;
         pointer-events: none;
-        z-index: 999999;
+        z-index: var(--z-index-5);
         width: 100%;
         gap: 0.5em;
         height: 100%;

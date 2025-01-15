@@ -1,10 +1,10 @@
 <script lang="ts">
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
+
     import OAuthLogin from "../components/OAuthLogin.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import ButtonLogin from "../components/ButtonLogin.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
-    import img from "../../../../assets/logo.png";
     import {blur, scale, fly, slide} from "svelte/transition";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import {onMount} from "svelte";
@@ -12,6 +12,7 @@
 
     let {controller, translation = {}}: LoginViewProps = $props();
     let logoVisible = $state(false)
+    let logo = "https://wwsystem.com.pl/wp-content/uploads/2024/08/logo-1-328x83-1.png"
 
     onMount(() => {
         logoVisible = true;
@@ -30,7 +31,7 @@
             padding="0">
         {#if logoVisible}
             <div in:fly={{delay:0, duration:1500}}>
-                <img height="130px" width="130px" src={img}/>
+                <img height="130px" width="130px" src={logo}/>
             </div>
         {/if}
     </Panel>
@@ -49,14 +50,16 @@
 >
 
     <Logo/>
-    <Panel padding="0" height="100%"
-           width="100%"
-           style="min-height: 90px;">
-        <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
-    </Panel>
-    <Panel direction="column" padding="0em 0em 1em 0em" width="100%">
-        <Separator fontSize="1em">{translation.alternative}</Separator>
-    </Panel>
+    {#if controller.props.oAuth}
+        <Panel padding="0" height="100%"
+               width="100%"
+               style="min-height: 90px;">
+            <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
+        </Panel>
+        <Panel direction="column" padding="0em 0em 1em 0em" width="100%">
+            <Separator fontSize="1em">{translation.alternative}</Separator>
+        </Panel>
+    {/if}
 
     <Panel direction="column" width="100%" padding="0">
         <FormFieldsLogin transition={translation}

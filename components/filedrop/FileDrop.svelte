@@ -105,7 +105,7 @@
     }
 
     .drop-area {
-        border: 2px dashed var(--color-ligher);
+        border: 2px dashed var(--text-muted);
         padding: 1em 1em;
         text-align: center;
         justify-content: center;
@@ -127,8 +127,8 @@
 
     .drop-area:hover {
         cursor: pointer;
-        border: 2px dotted var(--color-darker);
-
+        border-color: var(--text-light);
+        color: var(--text-light);
     }
 
     .drop-area input[type="file"] {

@@ -180,15 +180,12 @@ flex-direction: {direction};
 
 
     :global(.border-modern) {
-        border: 0.13em solid var(--color-ligher) !important;
+        border: 0.13em solid var(--text-muted) !important;
         border-radius: 0.6em !important;
-        /*box-shadow: 0 10px 1em 0.01em var(--shadow);*/
-
     }
 
     :global(.border) {
-        background: var(--bg-100) !important;
-        border: 2px solid var(--color-ligher) !important;
+        border: 2px solid var(--bg-tertiary) !important;
         border-radius: 0.5em;
         transition: all 0.3s ease-in-out;
     }

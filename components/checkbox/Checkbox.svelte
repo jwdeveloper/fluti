@@ -40,7 +40,6 @@
 {#snippet InputSnippet()}
 
     <InputPanel
-
             style="{isFocues?'border: 2px solid var(--text-light); !important':''}"
             className="element-checkbox">
         <input type="checkbox"
@@ -94,12 +93,12 @@
         position: relative;
         width: 1.6em;
         height: 1.6em;
-        background-color: transparent;
-        border: 2px solid var(--text-primary);
+        background: var(--bg-primary) !important;
         transition: all 0.2s ease-in-out;
         cursor: pointer;
         border-radius: 6px;
 
+        border: var(--border-size) solid var(--text-muted)
     }
 
     input[type="checkbox"] {

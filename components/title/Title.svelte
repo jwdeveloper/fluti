@@ -10,7 +10,7 @@
 </script>
 
 <h1 class="{variant}"
-    style="color: {color === 'normal'? 'var(--text-primary)':'var(--text-light)' } {style}">
+    style="color: {color === 'normal'? 'var(--text-light)':'var(--text-primary)' } {style}">
     <slot/>
 </h1>
 

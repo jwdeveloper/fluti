@@ -121,15 +121,16 @@
 
     .thead-container {
         overflow: visible;
-        background-color: var(--bg-200); /* Ensure background matches design */
+        /*background-color: var(--bg-200);*/
 
+        background: var(--bg-secondary);
     }
 
     .tbody-container {
         flex-grow: 1;
         overflow-y: scroll;
         scrollbar-width: thin;
-        scrollbar-color: var(--bg-accent) var(--bg-400);
+        scrollbar-color: var(--accent-primary) var(--bg-400);
         height: 100%;
 
     }
@@ -143,11 +144,11 @@
 
     th, td {
         text-align: left;
-        border-bottom: 1px solid var(--color-ligher); /* Add border to cells */
+        border-bottom: 1px solid var(--text-muted); /* Add border to cells */
 
     }
 
-    td{
+    td {
         /*background: red;*/
     }
 
