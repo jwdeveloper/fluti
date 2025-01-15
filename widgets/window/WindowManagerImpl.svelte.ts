@@ -58,7 +58,6 @@ export class WindowHandle {
             this.input = props;
 
         this.isOpen = true;
-        console.log('set input props', this.input, this.id)
         let window = this;
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
