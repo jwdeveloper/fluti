@@ -2,13 +2,25 @@
 
     import {blur} from "svelte/transition";
 
-    let {isLoading = $bindable(true), background = 'transparent'} = $props();
+    let {
+        isLoading = $bindable(true),
+        background = 'transparent',
+        children
+    } = $props();
 </script>
 
 {#if isLoading}
-    <div class="loader" transition:blur style="background: {background}">
-        <i class=" fa fa-spinner fa-spin"></i>
+
+
+    <div class="loader" out:blur style="background: {background}">
+        {#if children}
+            {@render children()}
+        {:else}
+            <i class=" fa fa-spinner fa-spin"></i>
+        {/if}
     </div>
+
+
 {/if}
 
 <style>
