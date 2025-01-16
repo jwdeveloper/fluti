@@ -45,7 +45,7 @@
        width="400px"
        useArrowMovement={true}
        breakpoints={{
-           'sm':{width:"100%", height:"100vh",maxWidth:"100%",padding:"0"}
+           'sm':{width:"100%", height:"100%",maxWidth:"100%",padding:"0"}
        }}
        gap="0"
        direction="column">
