@@ -175,6 +175,10 @@
         font-size: var(--font-size-normaler);
         color: var(--text-light);
         background: transparent;
+        @media (max-width: 768px) {
+            font-size: var(--font-size-big);
+        }
+
     }
 
     input:hover {

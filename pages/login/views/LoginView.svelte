@@ -9,6 +9,7 @@
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import {onMount} from "svelte";
     import type {LoginViewProps} from "../loginWindowTypes";
+    import Icon from "$lib/fluti/components/icon/Icon.svelte";
 
     let {controller, translation = {}}: LoginViewProps = $props();
     let logoVisible = $state(false)
@@ -83,7 +84,11 @@
         </Panel>
         <Panel direction="column" style="align-self: flex-end" height="100%" width="100%"
                padding="1em 0 0 0">
-            <ButtonLogin onButtonClick={()=> controller.login()} title={translation.signIn}/>
+            <Icon fullWidth={true}
+                  textCenter={true}
+                  onClick={()=> controller.login()} icon="fa">
+                {translation.signIn}
+            </Icon>
             <Link>
                 <Panel onClick={()=>controller.view="register"} padding="1em 0 0 0">
                     <div>

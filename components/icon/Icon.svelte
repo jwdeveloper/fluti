@@ -14,6 +14,7 @@
         borderVariant = undefined,
         fullWidth = false,
         className = '',
+        textCenter = false,
         bordFont = true,
         style = ''
     } = $props();
@@ -88,7 +89,7 @@
          line-height: -2em;
         align-items:center;
         color: {fontColor};
-           justify-content: flex-start">
+           justify-content:{textCenter?'center':'flex-start'};">
                 {@render children()}
             </div>
         {/if}
