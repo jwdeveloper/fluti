@@ -22,6 +22,8 @@
 
     function handleClick(event: MouseEvent) {
         event.stopPropagation();
+        if (navigator)
+            navigator.vibrate(100);
         onClick(event);
     }
 
