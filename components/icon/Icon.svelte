@@ -23,7 +23,7 @@
     function handleClick(event: MouseEvent) {
         event.stopPropagation();
         if (navigator)
-            navigator.vibrate(100);
+            navigator.vibrate(25);
         onClick(event);
     }
 
