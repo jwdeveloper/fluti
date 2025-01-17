@@ -6,7 +6,7 @@
 }
 
 .component-panel-border-dark {
-    border: 0.052em solid var(--bg-tertiary) !important;
-    border-radius: var(--radius-medium) !important;
+    border: var(--border-size) solid var(--bg-tertiary) !important;
+    border-radius: var(--radius-strong) !important;
     background: var(--bg-primary) !important;
 }
