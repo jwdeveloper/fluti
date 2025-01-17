@@ -1,7 +1,10 @@
 <script lang="ts">
     import {
+
         blur,
-        slide
+        slide,
+        scale,
+        fly
     } from 'svelte/transition';
     import {WindowCloseReason} from "./WindowManagerImpl.svelte.js";
 
@@ -51,11 +54,12 @@
 
 
 <div id="window-wrapper"
+
      transition:blur
      bind:this={element}
      class="wrapper"
      onclick={hide}>
-    <div transition:slide>
+    <div transition:scale >
         <slot/>
     </div>
 </div>
