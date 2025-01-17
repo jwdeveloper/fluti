@@ -110,11 +110,13 @@
      height: auto; width: auto; overflow: hidden; position: relative" class="{className}">
 
 
-        <i use:addRippleEffect={{color:"var(--text-neutral)"}} onclick={handleClick}
+        <i use:addRippleEffect={{color:"var(--text-neutral)"}}
+           onclick={handleClick}
            class="icon-class"
            style='position: relative;
                       width: {width};  {style}; '>
-            <i class="{icon}" style="z-index: var(--z-index-2)">
+            <i class="{icon}"
+               style="z-index: var(--z-index-2)">
             </i>
         </i>
     </div>
@@ -164,7 +166,7 @@
         width: 1em;
         transition: all 0.3s ease-in-out;
         position: relative;
-        border: 2px solid var(--text-muted);
+        border: var(--border-size) solid var(--text-muted);
     }
 
     .icon-class:hover {

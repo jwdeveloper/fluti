@@ -8,15 +8,22 @@
         onInfoClick = undefined,
         error = $bindable(undefined),
         children = undefined,
+        style='',
+        labelColor='var(--text-light)',
+        gap="0.5em",
     }: LabelProps = $props()
 
 </script>
 
 
-<Panel width="100%" gap="0.5em" padding="0" direction="column">
+<Panel width="100%"
+       gap="{gap}"
+       padding="0"
+       direction="column" style={style}>
     {#if title}
         <Panel padding="0" width="100%"
-               style="font-weight: bold; color: var(--text-light)"
+               style="font-weight: bold;
+                color: {labelColor}"
                justify="flex-start">
             {title}
         </Panel>
