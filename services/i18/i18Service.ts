@@ -1,6 +1,7 @@
 import {CacheService} from "$lib/fluti/services/CacheService";
 import * as fs from "node:fs";
 import {parse, stringify} from 'yaml'
+import path from 'path';
 
 let cache = new CacheService();
 
@@ -16,19 +17,17 @@ function flattenObject(obj: Record<string, any>, parentKey = '', result: Record<
     return result;
 }
 
-export let loadTranslations = (path: any, lang: any) => {
+export let loadTranslations = (pagePath: any, lang: any) => {
     try {
         const rootPath = process.cwd();
-        const filePath = rootPath + `/src/i18/${lang}/layout.yml`;
-
+        const filePath = path.join(rootPath, 'src', 'i18', lang, 'layout.yml');
+        //
         // if (cache.has(filePath)) {
         //     return cache.get(filePath);
         // }
 
         const yamlFile = fs.readFileSync(filePath, 'utf8');
-        const data = parse(yamlFile,{
-
-        });
+        const data = parse(yamlFile, {});
         const flatten = flattenObject(data)
 
 
