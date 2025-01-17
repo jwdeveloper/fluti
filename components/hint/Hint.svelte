@@ -12,10 +12,10 @@
         onmouseenter={()=> show = true}
         onmouseleave={()=> show = false}
         class="contianer"
-        style="width: {fullWidth?'100%':'auto'} {style}"
+        style="  width: {fullWidth?'100%':'auto'} {style}"
 >
     {#if show && title !== undefined}
-        <div class="hint" transition:effect>
+        <div style="pointer-events: none;" class="hint" transition:effect>
             <Panel variant="component-panel-border-dark"
                    padding="0.6em"
                    style="text-wrap: nowrap;">
