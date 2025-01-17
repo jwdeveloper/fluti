@@ -30,5 +30,6 @@
         user-select: none;
         background: var(--bg-primary);
         color: var(--text-light);
+        transition: all 200ms ease-in-out;
     }
 </style>

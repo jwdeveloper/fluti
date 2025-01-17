@@ -72,22 +72,29 @@
     <div use:addRippleEffect={{color:"var(--text-neutral)"}} class="wide-icon {className}"
          style='
           width: {width};
+          height:100%;
+          padding:0.6em 1em;
           min-width:{fullWidth?"100%":""};
           grid-template-columns:{template};
           {border}
-
-
 {style};'
          onclick={handleClick}>
         {#if icon}
             <div style="z-index: var(--z-index-1);
-             height: 100%; margin: 0.45em 0; width: 100%; color: {fontColor};">
+             align-items: center;
+             justify-content: flex-start;
+             display: flex;
+             height: 100%;
+              width: 100%; color: {fontColor};">
                 <i class='{icon}'>
             </div>
         {/if}
         {#if children}
-            <div style="z-index: var(--z-index-1); display: flex; height: 100%; width: 100%;
-        text-wrap: nowrap;
+            <div style="z-index: var(--z-index-1);
+             display: flex;
+             height: 100%;
+              width: 100%;
+         text-wrap: nowrap;
          font-weight:{bordFont?'800':'normal'} ;
          line-height: -2em;
         align-items:center;

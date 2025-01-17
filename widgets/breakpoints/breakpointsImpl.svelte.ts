@@ -1,6 +1,6 @@
 export class BreakpointController {
     breakpoint = $state('');
-    isMobile = $derived.by(() => this.breakpoint === "sm");
+    isMobile = $derived.by(() => this.breakpoint === "sm" || this.breakpoint === "md");
 
     constructor(value: any) {
         this.breakpoint = value;

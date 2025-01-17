@@ -86,7 +86,7 @@
                padding="1em 0 0 0">
             <Icon fullWidth={true}
                   textCenter={true}
-                  onClick={()=> controller.login()} icon="fa">
+                  onClick={()=> controller.login()}>
                 {translation.signIn}
             </Icon>
             <Link>
