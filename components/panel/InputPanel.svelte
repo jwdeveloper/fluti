@@ -7,12 +7,14 @@
 </script>
 
 
-<Panel ripplerEffect={true}
-       {...data}
+<Panel
        ripplerEffectColor="var(--text-neutral)"
+       ripplerEffect={true}
        radius="0.6em"
        background="var(--bg-tertiary)"
        padding="0"
+       {...data}
+
      >
 
     {@render children()}

@@ -64,7 +64,7 @@
 
 
 <InputPanel
-        style="border: 1px solid {borderColor};"
+        style="border: var(--border-size) solid {borderColor}; position: relative"
         width="100%"
         className={className}
 >
@@ -102,18 +102,6 @@
 <style>
     /* Your existing styles */
 
-    :global(.placeholder-down) {
-        top: -1em !important;
-        background: var(--bg-200) !important;
-        border-radius: 0.3em !important;
-        padding: 1em !important;
-        border-bottom-left-radius: 0em !important;
-        border-bottom-right-radius: 0em !important;
-        /*scale: 0.9 !important;*/
-        color: var(--bg-accent) !important;
-        font-weight: 600 !important;
-    }
-
     :global(.input-border) {
         border: 1px solid var(--bg-accent);
     }
@@ -148,6 +136,11 @@
         i {
             color: var(--text-primary);
         }
+
+        @media (max-width: 768px) {
+            font-size: var(--font-size-huge);
+
+        }
     }
 
     :global(.input-pointer) {
@@ -168,13 +161,15 @@
 
     input {
         padding: 0.7em 1em;
-        border-radius: var(--radious-1);
+        border-radius: var(--radius-medium);
         user-select: none;
         width: 100%;
         transition: all 200ms ease-in-out;
         font-size: var(--font-size-normaler);
         color: var(--text-light);
         background: transparent;
+
+
         @media (max-width: 768px) {
             font-size: var(--font-size-big);
         }

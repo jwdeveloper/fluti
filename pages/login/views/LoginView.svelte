@@ -13,7 +13,7 @@
 
     let {controller, translation = {}}: LoginViewProps = $props();
     let logoVisible = $state(false)
-    let logo = "https://wwsystem.com.pl/wp-content/uploads/2024/08/logo-1-328x83-1.png"
+    let logo = "icons/icon.png"
 
     onMount(() => {
         logoVisible = true;
