@@ -23,7 +23,7 @@
 
 {#snippet Logo()}
     <Panel
-            style="position: relative; top: -60px"
+            style="position: relative; top: -80px"
             height="50px"
             align="flex-start"
             breakpoints={{
