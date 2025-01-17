@@ -59,7 +59,7 @@
                              enablePassword={true}/>
         </Panel>
 
-        <Panel padding="1.5em 0 1em"
+        <Panel
                align="flex-end"
                width="100%" direction="column">
             <Panel padding="0"
@@ -67,9 +67,9 @@
                      'sm':{
                       width:'100%',
                       padding:'0'},
-               }}"
-                   width="300px" justify="flex-end">
-                <Link style="margin-bottom: 1em" onClick={()=> controller.view = 'recovery'}>
+               }}" width="300px" justify="flex-end">
+
+                <Link style="margin-bottom: 2em" onClick={()=> controller.view = 'recovery'}>
                     {translation.forgotPassword}
                 </Link>
             </Panel>
