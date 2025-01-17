@@ -51,16 +51,6 @@
 >
 
     <Logo/>
-    {#if controller.props.oAuth}
-        <Panel padding="0" height="100%"
-               width="100%"
-               style="min-height: 90px;">
-            <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
-        </Panel>
-        <Panel direction="column" padding="0em 0em 1em 0em" width="100%">
-            <Separator fontSize="1em">{translation.alternative}</Separator>
-        </Panel>
-    {/if}
 
     <Panel direction="column" width="100%" padding="0">
         <FormFieldsLogin transition={translation}
@@ -78,26 +68,42 @@
                       padding:'0'},
                }}"
                width="300px" justify="flex-end">
-            <Link onClick={()=> controller.view = 'recovery'}>
+            <Link style="margin-bottom: 2em" onClick={()=> controller.view = 'recovery'}>
                 {translation.forgotPassword}
             </Link>
         </Panel>
-        <Panel direction="column" style="align-self: flex-end" height="100%" width="100%"
-               padding="1em 0 0 0">
-            <Icon fullWidth={true}
-                  textCenter={true}
-                  onClick={()=> controller.login()}>
-                {translation.signIn}
-            </Icon>
-            <Link>
-                <Panel onClick={()=>controller.view="register"} padding="1em 0 0 0">
-                    <div>
-                        Utworz konto
-                    </div>
-                    <i class="fa fa-user-plus"></i>
-                </Panel>
-            </Link>
+        <Panel direction="column" style="align-self: flex-end" width="100%">
+            <Panel width="100%">
+                <Icon fullWidth={true}
+                      textCenter={true}
+                      boldFont={false}
+                      onClick={()=> controller.login()}>
+                    {translation.signIn}
+                </Icon>
+            </Panel>
         </Panel>
 
+
+        {#if controller.props.oAuth}
+            <Panel direction="column"  width="100%">
+                <Separator fontSize="1em">{translation.alternative}</Separator>
+            </Panel>
+            <Panel padding="0"
+                   width="100%">
+                <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
+            </Panel>
+        {/if}
+
     </Panel>
+
+
+    <Link>
+        <Panel onClick={()=>controller.view="register"}>
+            <div>
+                Utworz konto
+            </div>
+            <i class="fa fa-user-plus"></i>
+        </Panel>
+    </Link>
+
 </Panel>

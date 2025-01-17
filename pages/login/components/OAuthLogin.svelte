@@ -53,6 +53,7 @@
     import {scale as Effect} from "svelte/transition";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
+    import Icon from "$lib/fluti/components/icon/Icon.svelte";
 </script>
 
 
@@ -107,31 +108,55 @@
 
 
 {#snippet OAuthButton(name, color, borderColor)}
-    <Panel
-            width="100%"
-            height="100%"
-            panelType="grid"
-            columns="5fr 6fr"
-            padding="0"
-            onClick={() => onHandleClick(name)}
-            style="
-           border: 3px solid {borderColor} !important;
-           box-shadow: 0px 0px 0.5em 0.1em {borderColor}"
-            breakpoints={{
-                sm:{columns:"1fr 1fr",minWidth:"50px", padding:"1em"},
-                }}
-            ripplerEffect={true} variant="component-panel-border">
+    <!--    <Panel-->
+    <!--            width="100%"-->
+    <!--            height="100%"-->
+    <!--            panelType="grid"-->
+    <!--            columns="5fr 6fr"-->
+    <!--            padding="0"-->
+    <!--            onClick={() => onHandleClick(name)}-->
+    <!--            style="-->
+    <!--           border: 3px solid {borderColor} !important;-->
+    <!--           box-shadow: 0px 0px 0.5em 0.1em {borderColor}"-->
+    <!--            breakpoints={{-->
+    <!--                sm:{columns:"1fr 1fr",minWidth:"50px", padding:"1em"},-->
+    <!--                }}-->
+    <!--            ripplerEffect={true} variant="component-panel-border">-->
 
-        <Panel justify="flex-end"
-               padding="0">
-            <i class="fa-brands fa-{name.toLowerCase()}" style="color: {color};z-index: 4"></i>
+    <!--        <Panel justify="flex-end"-->
+    <!--               padding="0">-->
+    <!--            <i class="fa-brands fa-{name.toLowerCase()}" style="color: {color};z-index: 4"></i>-->
+    <!--        </Panel>-->
+    <!--        <Panel-->
+    <!--                padding="0" width="100%" justify="flex-start" align="flex-start"-->
+    <!--                style="z-index: 4;font-size: 1.2em;">-->
+    <!--            {name}-->
+    <!--        </Panel>-->
+    <!--    </Panel>-->
+    <!--            <i class="fa-brands fa-{name.toLowerCase()}" style="color: {color};z-index: 4"></i>-->
+
+    <Icon
+            style="background: var(--bg-primary);
+            padding:0.7em 0;
+             margin:0.05em 0; "
+            textCenter={true}
+            boldFont={false}
+            fullWidth={true}>
+        <Panel width="60%">
+            <Panel width="100%"
+                   panelType="grid"
+                   columns="auto 1fr">
+                <i class="fa-brands fa-{name.toLowerCase()}"
+                   style="
+                     width: 1em;
+                    color: {color};font-size:1.6em; z-index: 4"></i>
+                <div style="color: var(--text-light)">
+                    Sing up with {name}
+                </div>
+            </Panel>
         </Panel>
-        <Panel
-                padding="0" width="100%" justify="flex-start" align="flex-start"
-                style="z-index: 4;font-size: 1.2em;">
-            {name}
-        </Panel>
-    </Panel>
+
+    </Icon>
 {/snippet}
 
 

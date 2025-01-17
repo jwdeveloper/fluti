@@ -69,7 +69,7 @@
 
 {#if children}
 
-    <div use:addRippleEffect={{color:"var(--text-neutral)"}} class="wide-icon {className}"
+    <div use:addRippleEffect={{color:"var(--text-neutral)"}} class=" wide-icon {className}"
          style='
           width: {width};
           height:100%;
@@ -149,8 +149,7 @@
         border: var(--border-size) solid var(--text-muted);
 
         @media (max-width: 768px) {
-            font-size: 1.5em !important;
-
+            font-size: var(--font-size-big) !important;
         }
     }
 
@@ -174,6 +173,11 @@
         transition: all 0.3s ease-in-out;
         position: relative;
         border: var(--border-size) solid var(--text-muted);
+
+        @media (max-width: 768px) {
+            font-size: var(--font-size-huge);
+        }
+
     }
 
     .icon-class:hover {

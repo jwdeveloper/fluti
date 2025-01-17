@@ -2,8 +2,9 @@
 
     let {
         url = undefined,
-        style='',
-        onClick = () => {}
+        style = '',
+        onClick = () => {
+        }
     } = $props();
 
 </script>
@@ -21,6 +22,10 @@
         color: var(--text-primary);
         font-weight: bold;
         cursor: pointer;
+
+        @media (max-width: 600px) {
+            font-size: var(--font-size-mobile);
+        }
 
     }
 
