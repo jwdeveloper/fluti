@@ -92,7 +92,7 @@
         </Panel>
 
 
-        <Link style="{breakpoints.isMobile?'padding-bottom: 90px':''}">
+        <Link style="{breakpoints.isMobile?'padding-bottom: 60px':''}">
             <Panel onClick={()=>controller.view="register"}>
                 <div>
                     Utworz konto
