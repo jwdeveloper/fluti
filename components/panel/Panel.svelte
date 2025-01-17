@@ -99,12 +99,13 @@
         if (!onClick)
             return
 
+        if (ripplerEffect) {
+            if (navigator)
+                navigator.vibrate(25);
+        }
         event.stopPropagation();
         onClick(event);
     }
-
-    onMount(() => {
-    })
 
 
     let getColumns = $derived.by(() => {

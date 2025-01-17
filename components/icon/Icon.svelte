@@ -24,6 +24,7 @@
         event.stopPropagation();
         if (navigator)
             navigator.vibrate(25);
+
         onClick(event);
     }
 
