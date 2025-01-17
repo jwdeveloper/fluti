@@ -86,18 +86,13 @@
 
 
             {#if controller.props.oAuth}
-                <Panel direction="column" width="100%">
-                    <Separator fontSize="1em">{translation.alternative}</Separator>
-                </Panel>
-                <Panel padding="0"
-                       width="100%">
-                    <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
-                </Panel>
+                <Separator fontSize="1em">{translation.alternative}</Separator>
+                <OAuthLogin onClick={(p)=> controller.loginOAuth(p)} icons={true}/>
             {/if}
         </Panel>
 
 
-        <Link style="{breakpoints.isMobile?'padding-bottom: 120px':''}">
+        <Link style="{breakpoints.isMobile?'padding-bottom: 90px':''}">
             <Panel onClick={()=>controller.view="register"}>
                 <div>
                     Utworz konto

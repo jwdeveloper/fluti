@@ -7,9 +7,21 @@
         }
     } = $props();
 
+
+    const handleClick = (e) => {
+
+        if (!onClick)
+            return
+
+        if (navigator)
+            navigator.vibrate(25);
+
+        onClick(e)
+    }
+
 </script>
 
-<a class="offer-url" onclick={()=> onClick()} href={url} target="_blank"
+<a class="offer-url" onclick={handleClick} href={url} target="_blank"
    style="{style}"
    rel="noopener noreferrer">
     <slot/>

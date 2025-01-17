@@ -102,6 +102,7 @@
         if (ripplerEffect) {
             if (navigator)
                 navigator.vibrate(25);
+
         }
         event.stopPropagation();
         onClick(event);
