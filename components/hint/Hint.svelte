@@ -15,7 +15,10 @@
         style="  width: {fullWidth?'100%':'auto'} {style}"
 >
     {#if show && title !== undefined}
-        <div style="pointer-events: none;" class="hint" transition:effect>
+        <div style="
+        z-index: var(--z-index-3);
+        pointer-events: none;"
+             class="hint" transition:effect>
             <Panel variant="component-panel-border-dark"
                    padding="0.6em"
                    style="text-wrap: nowrap;">
