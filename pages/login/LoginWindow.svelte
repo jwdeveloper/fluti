@@ -51,12 +51,10 @@
        direction="column">
 
     {#if currentView}
-        <div style="padding: 0 2em; width: {breakpoints.breakpoint === 'sm'?'100%':'auto'};">
-
+        <div style="padding: 0 2em; height: 100%; width: {breakpoints.breakpoint === 'sm'?'100%':'auto'};">
             <svelte:component this="{currentView}"
                               controller={controller}
                               translation={translations}/>
         </div>
-
     {/if}
 </Panel>
