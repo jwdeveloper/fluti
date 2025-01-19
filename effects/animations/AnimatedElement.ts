@@ -7,16 +7,16 @@ export let longestTime = 600;
 const extensionMethods: any = {}
 
 
-export function addExtension(fn: any) {
-    extensionMethods[fn.name] = fn;
+export function addExtension(fn: any, name: string) {
+    extensionMethods[name] = fn;
 }
 
-addExtension(addElement)
-addExtension(move)
-addExtension(addClass)
-addExtension(pos)
-addExtension(animate)
-addExtension(animateProperty)
+addExtension(addElement, "addElement")
+addExtension(move, "move")
+addExtension(addClass, "addClass")
+addExtension(pos, "pos")
+addExtension(animate, "animate")
+addExtension(animateProperty, "animateProperty")
 
 
 export function animatedElement(element: any) {
