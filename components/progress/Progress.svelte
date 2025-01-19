@@ -6,6 +6,7 @@
         radius = "4px",
         maxValue = 100,
         currentValue = 50,
+        color = 'var(--accent-primary)'
     } = $props();
 
 
@@ -27,9 +28,10 @@
     <div class="progress" style="
      border-radius:{radius};
      width: {tween.current}%;
+     background:{color};
      height:{height}; ">
+        <slot/>
     </div>
-    <slot/>
 </div>
 
 
@@ -43,7 +45,6 @@
 
     .progress-bar .progress {
         height: 8px;
-        background: var(--accent-primary);
         border-radius: 4px;
     }
 

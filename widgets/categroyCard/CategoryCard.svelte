@@ -9,7 +9,10 @@
         data = undefined,
         onClick,
         icon = '',
-        name = ''
+        name = '',
+        color = '',
+        fontSize='',
+        children = undefined,
     } = $props();
 
     let handleClick = (e) => {
@@ -21,11 +24,11 @@
 
     let borderColor = $derived.by(() => {
 
-
+        let defaultColor = color ?? 'var(--accent-primary)';
         if (data === '' && isMouseOver)
             return 'var(--text-primary)'
 
-        return data !== '' ? 'var(--accent-primary)' : 'var(--text-muted)'
+        return data !== '' ? defaultColor : 'var(--text-muted)'
     })
 
     let mouseOver = (s) => {
@@ -46,12 +49,13 @@
     <Panel style="z-index: var(--z-index-3)">
         <Icon
                 style="
+                font-size: {fontSize};
                         background: var(--bg-secondary);
                         border: var(--border-size) solid {borderColor} !important;
                         color:var(--text-light);
                        "
                 onClick={handleClick}
-                icon={icon}>
+                icon='fa {icon}'>
         </Icon>
     </Panel>
     {@const isData = data !== ''}
@@ -59,6 +63,7 @@
         <Panel direction="column" gap="0"
                justify="flex-start"
                style="z-index: var(--z-index-3)"
+               width="100%"
                align="flex-start">
             <Title tag="h4"
                    lineHeight="1"
@@ -69,7 +74,11 @@
                    weight="500"
                    color="primary">
                 {data}
+
             </Title>
+                {#if children}
+                    {@render children()}
+                {/if}
         </Panel>
 
     {:else}
