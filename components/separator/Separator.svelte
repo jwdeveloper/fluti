@@ -20,11 +20,10 @@
 
         <Bar/>
         <Panel style="
-        text-wrap: nowrap;
+         text-wrap: nowrap;
          font-weight: bold;
-            font-size: {fontSize};
-
-         color: var(--text-primary)">
+         font-size: {fontSize};
+         color: var(--text-muted);">
             {@render children()}
         </Panel>
         <Bar/>
@@ -37,7 +36,7 @@
 <style>
 
     .bar {
-        background: var(--bg-tertiary);
+        background: var(--text-muted);
         width: 100%;
         border-radius: 0.1em;
         height: 0.1em;

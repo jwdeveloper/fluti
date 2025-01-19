@@ -173,9 +173,15 @@
         transition: all 0.3s ease-in-out;
         position: relative;
         border: var(--border-size) solid var(--text-muted);
+            font-size: var(--font-size-huge);
+
 
         @media (max-width: 768px) {
             font-size: var(--font-size-huge);
+        }
+
+        @media (max-width: 380px) {
+            font-size: var(--font-size-big);
         }
 
     }

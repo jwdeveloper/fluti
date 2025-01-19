@@ -17,7 +17,8 @@
 
 
 <Panel width="100%"
-       gap="{gap}"
+       gap={gap}
+       tag="label"
        padding="0"
        direction="column" style={style}>
     {#if title}

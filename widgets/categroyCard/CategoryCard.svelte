@@ -46,7 +46,6 @@
     <Panel style="z-index: var(--z-index-3)">
         <Icon
                 style="
-                        font-size: 1.5em;
                         background: var(--bg-secondary);
                         border: var(--border-size) solid {borderColor} !important;
                         color:var(--text-light);
@@ -56,24 +55,34 @@
         </Icon>
     </Panel>
     {@const isData = data !== ''}
+    {#if isData}
+        <Panel direction="column" gap="0"
+               justify="flex-start"
+               style="z-index: var(--z-index-3)"
+               align="flex-start">
+            <Title tag="h4"
+                   lineHeight="1"
+                   color="light">
+                {name}
+            </Title>
+            <Title tag="h4"
+                   weight="500"
+                   color="primary">
+                {data}
+            </Title>
+        </Panel>
 
-    <Title style="
-            font-weight: 500;
-            font-size: 1.2em;
+    {:else}
+        <Title
+                tag="h4"
+                weight="600"
+                style="
             z-index: var(--z-index-3);
             color: {isData?'var(--text-primary)':'var(--text-muted)'};
-             width: 100%">
-        {#if isData}
-            <Label gap="1px" style="padding:0;"
-                   labelColor="var(--text-light)"
-                   title={name}>
-                <div style="font-size: 1.2em">
-                    {data}
-                </div>
-            </Label>
-        {:else}
+            width: 100%">
             {name}
-        {/if}
-    </Title>
+        </Title>
+
+    {/if}
 
 </Panel>

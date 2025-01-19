@@ -1,40 +1,41 @@
 <script lang="ts">
     interface TitleProps {
-        variant?: 'normal' | 'title-small' | 'title-huge';
-        color?: 'normal' | "dark"
+        color?: 'light' | 'primary' | 'secondary' | 'muted' | 'neutral' | 'error',
+        weight?: 'normal' | 'bold' | '400' | '500' | '600' | '900'
         style?: string;
         className?: string;
+        tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+        lineHeight?: "1" | "2" | "3" | "4" | 'normal'
+        children?: any
     }
 
-    let {className = '', variant = 'normal', color = 'normal', style = ''}: TitleProps = $props();
+    let {
+        className = '',
+        color = 'primary',
+        weight = 'bold',
+        tag = 'h1',
+        lineHeight = "normal",
+        style = '',
+        children = undefined,
+    }: TitleProps = $props();
 
 </script>
 
-<h1 class="{variant} {className}"
-    style="color: {color === 'normal'? 'var(--text-light)':'var(--text-primary)' }; {style}">
-    <slot/>
-</h1>
+<svelte:element this={tag}
+                class="{className}"
+                style="
+                 line-height:{lineHeight};
+                 font-weight:{weight};
+                 color: var(--text-{color});
+{style}">
+    {#if children}
+        {@render children()}
+    {/if}
+</svelte:element>
 
 
 <style>
-
-    :global(.title-small) {
-        font-size: 1.5em !important;
-    }
-
-
-    :global(.title-huge) {
-        font-size: 5em !important;
-
-        @media (max-width: 600px) {
-            font-size: 2.5em !important;
-        }
-
-    }
-
-    h1 {
-        font-size: 2em;
-        font-weight: 800;
-        color: var(--bg-tertiary);
+    a {
+        line-height: normal;
     }
 </style>

@@ -11,19 +11,21 @@ export interface PanelProps {
     rows?: string
     rowsAuto?: string
     columns?: string
-    columnsAuto?:string
+    columnsAuto?: string
     width?: string
     height?: string
     maxHeight?: string
-    background?: string
+    background?: string | 'primary' | 'secondary'
     overflow?: string
     radius?: string,
     style?: string,
+    margin?: string,
     useArrowMovement?: boolean,
     ripplerEffect?: boolean,
     ripplerEffectColor?: string,
     id?: string,
     element?: HTMLDivElement
+    tag?: string,
     variant?: "normal" | "border" | "shadow" | "border-color" |
         "border-modern" | "component-panel-border" | "component-panel-border-dark",
 

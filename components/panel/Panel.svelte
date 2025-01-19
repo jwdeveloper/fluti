@@ -29,6 +29,8 @@
         overflow = "",
         style = "",
         id = "",
+        tag = "div",
+        margin = '',
         ripplerEffect = false,
         useArrowMovement = false,
         ripplerEffectColor = '',
@@ -143,14 +145,15 @@
 
 </script>
 
-<div onclick={handleClick}
-     id="{id}"
-     use:addEffects
-     bind:this={element}
-     onmouseenter={(e)=> onMouseOver(true,e)}
-     onmouseleave={(e) => onMouseOver(false, e)}
-     class=" {variant} {className} common component-panel scroll"
-     style="
+<svelte:element this={tag}
+                onclick={handleClick}
+                id="{id}"
+                use:addEffects
+                bind:this={element}
+                onmouseenter={(e)=> onMouseOver(true,e)}
+                onmouseleave={(e) => onMouseOver(false, e)}
+                class=" {variant} {className} common component-panel scroll"
+                style="
 grid-template-rows: {getRows};
 grid-template-columns: {getColumns};
 display: {panelType};
@@ -166,12 +169,13 @@ flex-direction: {direction};
         background:{background};
         overflow:{overflow};
         border-radius:{radius};
+        margin:{margin};
         {style}
      {computedStyles}
 
 ">
     <slot/>
-</div>
+</svelte:element>
 
 
 <style>

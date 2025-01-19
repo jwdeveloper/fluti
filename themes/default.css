@@ -53,8 +53,14 @@
 
 
 [data-theme="light-1"] {
-    --bg-primary: #e1e1e1;
-    --bg-secondary: #d8d9d9;
+    /* 175, 175, 175*/
+
+
+    /*--bg-primary: #e1e1e1;*/
+    /*--bg-secondary: #d8d9d9;*/
+
+    --bg-primary: rgba(255, 255, 255);
+    --bg-secondary: rgba(255, 255, 255);
 
     --bg-tertiary: #bdbbbb;
 
@@ -62,6 +68,7 @@
     --text-primary: #34465d;
     --text-neutral: #4f627a;
     --text-muted: #8c929a;
+    --text-muted: rgba(175, 175, 175);
     --text-error: rgb(239, 68, 68);
 
     --accent-primary: #217fe0;
@@ -113,6 +120,9 @@
 
     /*!* Text Colors *!*/
     --text-light: rgba(245, 245, 245, 1); /* Soft White */
+
+    /* 175, 175, 175*/
+
     --text-primary: rgb(220, 220, 220); /* Light Silver */
     --text-neutral: rgb(124, 120, 120); /* Warm Gray */
     --text-muted: rgb(89, 86, 86); /* Cool Gray */

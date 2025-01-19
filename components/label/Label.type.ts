@@ -4,4 +4,7 @@ export interface LabelProps {
     error?: string
     onInfoClick?: () => void
     children?: any
+    gap?: string
+    style?: string
+    labelColor?: string
 }

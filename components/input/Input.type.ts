@@ -17,4 +17,5 @@ export interface InputProps {
     onKeydown?: (i: KeyboardEvent) => void,
     onKeyup?: (i: KeyboardEvent) => void,
     style?: string
+    children?: any
 }

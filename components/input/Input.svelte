@@ -25,7 +25,8 @@
         onValueChanged = () => {
         },
         onClick = () => {
-        }
+        },
+        children = undefined
     }: InputProps = $props();
 
     let finalId: any = '';
@@ -95,7 +96,10 @@
             placeholder={placeholder}
             style="{style}; z-index: 3"
     />
-    <slot/>
+
+    {#if children}
+        {@render children()}
+    {/if}
 </InputPanel>
 
 
