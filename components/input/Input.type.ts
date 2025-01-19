@@ -18,4 +18,5 @@ export interface InputProps {
     onKeyup?: (i: KeyboardEvent) => void,
     style?: string
     children?: any
+    focused?: boolean
 }

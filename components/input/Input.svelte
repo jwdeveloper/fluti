@@ -3,6 +3,7 @@
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import InputPanel from "$lib/fluti/components/panel/InputPanel.svelte";
+    import {onMount} from "svelte";
 
     let {
         placeholder,
@@ -13,6 +14,7 @@
         type = 'text',
         id,
         className,
+        focused = false,
         disabled = false,
         iconSymbol = '',
         variant = '',
@@ -38,6 +40,7 @@
 
     function handleFocus(event: FocusEvent) {
 
+
         if (type === 'email')
             return
 
@@ -59,6 +62,16 @@
         if (error === true)
             return 'var(--text-error)'
         return 'var(--text-primary)'
+    })
+
+    onMount(() => {
+
+        if (focused) {
+            let element = document.getElementById(finalId)
+            if (!element)
+                return
+            element.focus()
+        }
     })
 
 </script>
