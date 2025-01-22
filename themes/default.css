@@ -25,7 +25,7 @@
     --font-size-small: 0.7em;
     --font-size-normal: 0.8em;
     --font-size-normaler: 1em;
-    --font-size-mobile: 1.1em;
+    --font-size-desktop: 1.1em;
     --font-size-big: 1.2em;
     --font-size-huge: 1.5em;
 
@@ -62,14 +62,14 @@
     --bg-primary: rgba(255, 255, 255);
     --bg-secondary: rgba(255, 255, 255);
 
-    --bg-tertiary: #bdbbbb;
+    --bg-tertiary: #f3f3f3;
 
     --text-light: #192638;
     --text-primary: #34465d;
     --text-neutral: #4f627a;
     --text-muted: #8c929a;
-    --text-muted: rgba(175, 175, 175);
-    --text-error: rgb(239, 68, 68);
+    /*--text-muted: rgba(175, 175, 175);*/
+    --text-error    : rgb(239, 68, 68);
 
     --accent-primary: #217fe0;
 

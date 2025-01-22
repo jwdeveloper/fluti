@@ -16,7 +16,8 @@
         className = '',
         textCenter = false,
         bordFont = true,
-        style = ''
+        style = '',
+        iconSize = 'normal',
     } = $props();
 
 
@@ -63,7 +64,18 @@
         return 'var(--text-primary)'
     })
 
-    let data = 'var(--text-primary)'
+    let iconSizeValue = $derived.by(() => {
+        if (iconSize === 'normal')
+            return 'var(--font-size-desktop)'
+
+        if (iconSize === 'big')
+            return 'var(--font-size-big)'
+
+        if (iconSize === 'huge')
+            return 'var(--font-size-huge)'
+
+        return 'var(--font-size-normal)'
+    })
 </script>
 
 
@@ -104,7 +116,7 @@
             </div>
         {/if}
         {#if rightIcon}
-            <div style="z-index: var(--z-index-1);height: 100%; margin: 0.45em 0; width: 100%; color: {iconColor};">
+            <div style="z-index: var(--z-index-1);height: 100%;  width: 100%; color: {iconColor};">
                 <i class='{rightIcon}'>
             </div>
 
@@ -121,7 +133,8 @@
            onclick={handleClick}
            class="icon-class"
            style='position: relative;
-                      width: {width};  {style}; '>
+            font-size: {iconSizeValue};
+             width: {width};  {style}; '>
             <i class="{icon}"
                style="z-index: var(--z-index-2)">
             </i>
@@ -163,7 +176,7 @@
 
     .icon-class {
         padding: 1.2em;
-        border-radius: 0.8em;
+        border-radius: var(--radius-strong);
         display: flex;
         gap: 0.5em;
         justify-content: center;
@@ -173,8 +186,7 @@
         transition: all 0.3s ease-in-out;
         position: relative;
         border: var(--border-size) solid var(--text-muted);
-            font-size: var(--font-size-huge);
-
+        font-size: var(--font-size-desktop);
 
         @media (max-width: 768px) {
             font-size: var(--font-size-huge);

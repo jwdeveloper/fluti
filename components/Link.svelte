@@ -36,7 +36,7 @@
         cursor: pointer;
 
         @media (max-width: 600px) {
-            font-size: var(--font-size-mobile);
+            font-size: var(--font-size-desktop);
         }
 
     }

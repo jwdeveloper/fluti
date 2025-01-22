@@ -14,7 +14,7 @@
         type = 'text',
         id,
         className,
-        focused = false,
+        focused = $bindable(false),
         disabled = false,
         iconSymbol = '',
         variant = '',
@@ -38,6 +38,8 @@
         finalId = type == 'text' ? Math.random() : type;
     }
 
+    let isFocused = $state(false)
+
     function handleFocus(event: FocusEvent) {
 
 
@@ -47,21 +49,29 @@
         const input = event.target as HTMLInputElement;
         // Remove text selection and move the cursor to the end
         input.setSelectionRange(input.value.length, input.value.length);
+        isFocused = true;
     }
 
     let element;
     let handleMouseDown = () => {
         // element.classList.add('placeholder-down')
+        isFocused = false;
     }
 
     let handleMouseUp = () => {
         // element.classList.remove('placeholder-down')
+        isFocused = false;
+
     }
 
     let borderColor = $derived.by(() => {
+
+        if (isFocused)
+            return 'var(--text-light)'
+
         if (error === true)
             return 'var(--text-error)'
-        return 'var(--text-primary)'
+        return 'var(--text-muted)'
     })
 
     onMount(() => {
@@ -78,7 +88,10 @@
 
 
 <InputPanel
-        style="border: var(--border-size) solid {borderColor}; position: relative"
+        style="
+        border: var(--border-size) solid {borderColor};
+        border:none;
+         position: relative"
         width="100%"
         className={className}
 >
@@ -107,7 +120,7 @@
             autocomplete="email"
             class="{readonly ? 'input-pointer' : ''} {className} {variant}"
             placeholder={placeholder}
-            style="{style}; z-index: 3"
+            style="{style}; z-index: 2;border: var(--border-size) solid {borderColor}; "
     />
 
     {#if children}
@@ -120,7 +133,7 @@
     /* Your existing styles */
 
     :global(.input-border) {
-        border: 1px solid var(--bg-accent);
+        border: var(--border-size) solid var(--bg-accent);
     }
 
     input[disabled] {
@@ -167,24 +180,23 @@
 
 
     input:focus {
-        /*outline: none;*/
-        /*border: 1px solid var(--text-light);*/
+        outline: none;
     }
 
     input::placeholder {
         color: var(--text-primary);
-
     }
 
     input {
-        padding: 0.7em 1em;
+        padding: 0.6em 1em;
         border-radius: var(--radius-medium);
         user-select: none;
         width: 100%;
         transition: all 200ms ease-in-out;
         font-size: var(--font-size-normaler);
         color: var(--text-light);
-        background: transparent;
+        background: var(--bg-secondary);
+        /*background: transparent;*/
 
 
         @media (max-width: 768px) {

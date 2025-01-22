@@ -10,7 +10,7 @@
         onClick,
         icon = '',
         name = '',
-        color = '',
+        color = undefined,
         fontSize='',
         children = undefined,
     } = $props();

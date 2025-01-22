@@ -2,14 +2,13 @@ export interface TabsProps {
 
     items: TabsItem[],
 
-    selectedItem: TabsItem | undefined
+    selectedItem?: TabsItem | undefined
 
-    onSelect(event: (item: TabsItem) => void): void
+    selectedComponent?: any | undefined
 }
-
 
 export interface TabsItem {
     name: string
-    value: any
     icon: string,
+    component: any,
 }

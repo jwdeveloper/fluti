@@ -51,6 +51,7 @@
         }
 
         value = item;
+        justValue = value.value;
         open = false;
     }
 
@@ -72,6 +73,7 @@
         searchPlaceHolder = "Search value...",
         items = $bindable([]),
         value = $bindable({text: undefined, value: undefined}),
+        justValue = $bindable(undefined),
         input = $bindable(''),
         icon = undefined,
         selected = $bindable({}),

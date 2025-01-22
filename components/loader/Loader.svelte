@@ -5,7 +5,7 @@
     let {
         isLoading = $bindable(true),
         background = 'transparent',
-        children
+        children = undefined
     } = $props();
 </script>
 
