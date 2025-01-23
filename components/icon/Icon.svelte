@@ -14,6 +14,7 @@
         children = undefined,
         clickable = true,
         useClickEffect = false,
+        useRipplerEffect = true,
         borderVariant = undefined,
         fullWidth = false,
         className = '',
@@ -87,8 +88,12 @@
 
     function useEffects(element) {
         let cleanup = []
-        let result = addRippleEffect(element, "var(--text-neutral)", clickable);
-        cleanup.push(result)
+
+        if (useRipplerEffect) {
+            let result = addRippleEffect(element, "var(--text-neutral)", clickable);
+            cleanup.push(result)
+        }
+
         if (useClickEffect) {
             let eff = addClickEffect(element)
             cleanup.push(eff)
@@ -149,7 +154,7 @@
 {:else }
 
     <div style="
-     height: auto; width: auto; overflow: hidden; position: relative"  class="{className}">
+     height: auto; width: auto; overflow: hidden; position: relative" class="{className}">
         <i use:useEffects
            onclick={handleClick}
            class="icon-class"
