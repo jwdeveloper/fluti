@@ -2,21 +2,42 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {scale as effect} from "svelte/transition";
 
-
-    let {children, title, fullWidth = false, style = ''} = $props();
+    let {
+        children,
+        keepOpen = false,
+        title,
+        fullWidth = false, style = ''
+    } = $props();
     let show = $state(false)
+
+    let handleOpen = () => {
+        show = true;
+    }
+
+    let handleClose = () => {
+        show = false;
+    }
+
+    let shouldOpen = $derived.by(() => {
+        if (keepOpen)
+            return true;
+
+        return show;
+    })
+
 </script>
 
 
 <div
-        onmouseenter={()=> show = true}
-        onmouseleave={()=> show = false}
+        onmouseenter={handleOpen}
+        onmouseleave={handleClose}
         class="contianer"
         style="  width: {fullWidth?'100%':'auto'} {style}"
 >
-    {#if show && title !== undefined}
+    {#if shouldOpen && title !== undefined}
         <div style="
         z-index: var(--z-index-3);
+        overflow:hidden;
         pointer-events: none;"
              class="hint" transition:effect>
             <Panel variant="component-panel-border-dark"

@@ -12,7 +12,7 @@
 
 
     const getWidth = $derived.by(() => {
-        return (currentValue / maxValue * 100);
+        return ((currentValue / maxValue) * 100);
     })
     // const tween = Spring.of(() => getWidth, {
     //     damping: 0.5,
@@ -20,8 +20,15 @@
     //     precision: 0.1,
     // });
 
+    const easing = (t) => {
+        if (currentValue > 0)
+            return Math.min(easeFunction.backOut()(t), 1);
+
+        return Math.max(easeFunction.circOut()(t), 0);
+    }
+
     const tween = Tween.of(() => getWidth, {
-        easing: easeFunction.backOut(),
+        easing: easing,
         duration: 500
     })
 
@@ -30,7 +37,7 @@
 
 
 <div class="progress-bar"
-     style="border-radius:{radius};">
+     style=" border-radius:{radius};">
     <div class="progress" style="
      border-radius:{radius};
      width: {tween.current}%;
