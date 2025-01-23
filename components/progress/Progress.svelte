@@ -1,5 +1,6 @@
 <script lang="ts">
-    import {Spring} from 'svelte/motion';
+    import {Spring, Tween} from 'svelte/motion';
+    import {easeFunction} from "$lib/fluti/utils/ease";
 
     let {
         height = "8px",
@@ -13,11 +14,16 @@
     const getWidth = $derived.by(() => {
         return (currentValue / maxValue * 100);
     })
-    const tween = Spring.of(() => getWidth, {
-        damping: 0.5,
-        stiffness: 0.1,
-        precision: 0.1,
-    });
+    // const tween = Spring.of(() => getWidth, {
+    //     damping: 0.5,
+    //     stiffness: 0.1,
+    //     precision: 0.1,
+    // });
+
+    const tween = Tween.of(() => getWidth, {
+        easing: easeFunction.backOut(),
+        duration: 500
+    })
 
 
 </script>
