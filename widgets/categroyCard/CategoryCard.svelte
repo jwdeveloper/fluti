@@ -5,6 +5,7 @@
     import IconCard from "../../../../routes/game/elements/IconCard.svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
     import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";
+    import {transparentColor} from "$lib/fluti/utils/cssUtils";
 
     let {
         data = undefined,
@@ -52,6 +53,7 @@
        padding="1em"
        onClick={handleClick}
        onMouseOver={mouseOver}
+       background={"rgba(123,123,123,0.1);"}
        justify="flex-start">
     <Panel bind:element={iconElement} style="z-index: var(--z-index-3)">
         <Icon
