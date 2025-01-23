@@ -3,6 +3,7 @@
     --bg-primary: #0D1317;
     --bg-secondary: #141A1F;
     --bg-tertiary: #212B31;
+    --bg-transparent: rgba(50, 90, 90, 0.1);
 
     --text-light: #E9EFF3;
     --text-primary: #9DB2C0;
@@ -61,6 +62,8 @@
 
     --bg-primary: rgba(255, 255, 255);
     --bg-secondary: rgba(255, 255, 255);
+    --bg-transparent: rgba(53, 53, 53, 0.1);
+
 
     --bg-tertiary: #f3f3f3;
 
@@ -69,7 +72,7 @@
     --text-neutral: #4f627a;
     --text-muted: #8c929a;
     /*--text-muted: rgba(175, 175, 175);*/
-    --text-error    : rgb(239, 68, 68);
+    --text-error: rgb(239, 68, 68);
 
     --accent-primary: #217fe0;
 
@@ -113,12 +116,8 @@
     --bg-primary: rgb(24, 21, 21);
     --bg-secondary: rgb(33, 30, 30);;
     --bg-tertiary: rgb(51, 48, 48);
+    --bg-transparent: rgba(123, 123, 123, 0.1);
 
-    /*--bg-primary: #0d1b2a;*/
-    /*--bg-secondary: #1b263b; !* Dark Slate Blue *!*/
-    /*--bg-tertiary: #415a77; !* Rich Blue Gray *!*/
-
-    /*!* Text Colors *!*/
     --text-light: rgba(245, 245, 245, 1); /* Soft White */
 
     /* 175, 175, 175*/

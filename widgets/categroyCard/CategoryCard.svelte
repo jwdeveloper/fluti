@@ -53,7 +53,7 @@
        padding="1em"
        onClick={handleClick}
        onMouseOver={mouseOver}
-       background={"rgba(123,123,123,0.1);"}
+       background='var(--bg-transparent)'
        justify="flex-start">
     <Panel bind:element={iconElement} style="z-index: var(--z-index-3)">
         <Icon
