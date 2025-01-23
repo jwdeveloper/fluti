@@ -23,6 +23,7 @@ export interface PanelProps {
     useArrowMovement?: boolean,
     ripplerEffect?: boolean,
     ripplerEffectColor?: string,
+    useClickEffect?: boolean,
     id?: string,
     element?: HTMLDivElement
     tag?: string,

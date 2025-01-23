@@ -2,8 +2,9 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
-    import Label from "$lib/fluti/components/label/Label.svelte";
-
+    import IconCard from "../../../../routes/game/elements/IconCard.svelte";
+    import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
+    import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";
 
     let {
         data = undefined,
@@ -11,14 +12,18 @@
         icon = '',
         name = '',
         color = undefined,
-        fontSize='',
+        fontSize = '',
         children = undefined,
     } = $props();
 
-    let handleClick = (e) => {
+    let handleClick = async (e) => {
         if (onClick)
             onClick(e);
+
+        invokeClickEffect(iconElement)
     }
+
+    let iconElement;
     let isMouseOver = $state(false)
 
 
@@ -41,22 +46,25 @@
 <Panel width="100%"
        ripplerEffect={true}
        align="flex-start"
+       className="element-category-card"
        style="z-index: var(--z-index-2)"
        radius="1em"
+       padding="1em"
        onClick={handleClick}
        onMouseOver={mouseOver}
        justify="flex-start">
-    <Panel style="z-index: var(--z-index-3)">
+    <Panel bind:element={iconElement} style="z-index: var(--z-index-3)">
         <Icon
                 style="
-                font-size: {fontSize};
                         background: var(--bg-secondary);
-                        border: var(--border-size) solid {borderColor} !important;
-                        color:var(--text-light);
+                        border-color: {borderColor? 'var(--accent-primary)' : ''};
                        "
                 onClick={handleClick}
+                clickable={false}
+                iconSize="xxl"
                 icon='fa {icon}'>
         </Icon>
+
     </Panel>
     {@const isData = data !== ''}
     {#if isData}
@@ -76,9 +84,9 @@
                 {data}
 
             </Title>
-                {#if children}
-                    {@render children()}
-                {/if}
+            <!--{#if children}-->
+            <!--    {@render children()}-->
+            <!--{/if}-->
         </Panel>
 
     {:else}
@@ -95,3 +103,14 @@
     {/if}
 
 </Panel>
+
+
+<style>
+    :global(.element-category-card) {
+        transition: 200ms ease-in-out;
+    }
+
+    :global(.element-category-card:hover) {
+        background: var(--bg-secondary);
+    }
+</style>

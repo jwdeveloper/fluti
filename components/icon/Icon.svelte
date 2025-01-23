@@ -1,6 +1,7 @@
 <script lang="ts">
     import {addRippleEffect} from "../../effects/RippleEffect";
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
+    import {addClickEffect} from "$lib/fluti/effects/ClickEffect";
 
 
     let {
@@ -11,6 +12,8 @@
         iconColor = '',
         disabled = false,
         children = undefined,
+        clickable = true,
+        useClickEffect = false,
         borderVariant = undefined,
         fullWidth = false,
         className = '',
@@ -74,14 +77,34 @@
         if (iconSize === 'huge')
             return 'var(--font-size-huge)'
 
+        if (iconSize === 'xxl')
+            return '1.8em'
+
+
         return 'var(--font-size-normal)'
     })
+
+
+    function useEffects(element) {
+        let cleanup = []
+        let result = addRippleEffect(element, "var(--text-neutral)", clickable);
+        cleanup.push(result)
+        if (useClickEffect) {
+            let eff = addClickEffect(element)
+            cleanup.push(eff)
+        }
+        return () => {
+            cleanup.forEach(fn => fn())
+        }
+    }
+
+
 </script>
 
 
 {#if children}
 
-    <div use:addRippleEffect={{color:"var(--text-neutral)"}} class=" wide-icon {className}"
+    <div use:useEffects class=" wide-icon {className}"
          style='
           width: {width};
           height:100%;
@@ -126,10 +149,8 @@
 {:else }
 
     <div style="
-     height: auto; width: auto; overflow: hidden; position: relative" class="{className}">
-
-
-        <i use:addRippleEffect={{color:"var(--text-neutral)"}}
+     height: auto; width: auto; overflow: hidden; position: relative"  class="{className}">
+        <i use:useEffects
            onclick={handleClick}
            class="icon-class"
            style='position: relative;

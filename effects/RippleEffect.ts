@@ -1,4 +1,7 @@
-export function addRippleEffect(element: HTMLElement, color?: string) {
+export function addRippleEffect(element: HTMLElement, color?: string, enabled: boolean = true) {
+
+    if (!enabled)
+        return
 
     element.style.overflow = "hidden";
     const listener = (e: MouseEvent) => {

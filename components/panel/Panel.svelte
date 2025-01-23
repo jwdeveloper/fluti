@@ -6,6 +6,7 @@
     import {onMount} from "svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte.js";
     import {addArrowController} from "../../effects/ArrowController";
+    import {addClickEffect} from "$lib/fluti/effects/ClickEffect";
 
 
     let {
@@ -31,6 +32,7 @@
         id = "",
         tag = "div",
         margin = '',
+        useClickEffect = false,
         ripplerEffect = false,
         useArrowMovement = false,
         ripplerEffectColor = '',
@@ -90,6 +92,10 @@
 
         if (useArrowMovement) {
             onDestroy.push(addArrowController(node, element));
+        }
+
+        if (useClickEffect) {
+            onDestroy.push(addClickEffect(node));
         }
 
         return () => {
