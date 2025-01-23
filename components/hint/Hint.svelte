@@ -6,7 +6,8 @@
         children,
         keepOpen = false,
         title,
-        fullWidth = false, style = ''
+        fullWidth = false, style = '',
+        offset = "125%"
     } = $props();
     let show = $state(false)
 
@@ -36,10 +37,13 @@
 >
     {#if shouldOpen && title !== undefined}
         <div style="
+        transform: translate(0, {offset});
         z-index: var(--z-index-3);
         overflow:hidden;
         pointer-events: none;"
-             class="hint" transition:effect>
+
+             class="hint"
+             transition:effect>
             <Panel variant="component-panel-border-dark"
                    padding="0.6em"
                    style="text-wrap: nowrap;">
@@ -59,24 +63,9 @@
         height: auto;
     }
 
-    .wide-icon {
-        border-radius: 0.8em;
-        gap: 0.7em;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        width: auto;
-        padding: 0 0.8em;
-        transition: all 0.2s ease-in-out;
-        position: relative;
-        cursor: pointer;
-        border: 2px solid var(--color-ligher);
-        color: var(--color-darkerst);
-    }
-
     .hint {
         position: fixed;
-        z-index: 2000;
-        transform: translate(0, 125%);
+        z-index: var(--z-index-4);
     }
 
 </style>
