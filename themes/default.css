@@ -131,6 +131,8 @@
     /*!* Accent Color *!*/
     /* Accent Color */
     --accent-primary: rgba(255, 183, 77, 0.98); /* Warm Amber */
+    --accent-primary: #21e05d;
+
 }
 
 
