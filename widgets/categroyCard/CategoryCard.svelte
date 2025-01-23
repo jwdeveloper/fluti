@@ -2,14 +2,14 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
-    import IconCard from "../../../../routes/game/elements/IconCard.svelte";
-    import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
     import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";
-    import {transparentColor} from "$lib/fluti/utils/cssUtils";
+    import {scale} from "svelte/transition";
 
     let {
         data = undefined,
         onClick,
+        onRemove,
+        showRemove = false,
         icon = '',
         name = '',
         color = undefined,
@@ -22,6 +22,13 @@
             onClick(e);
 
         invokeClickEffect(iconElement)
+    }
+
+    let handleRemove = async (e: MouseEvent) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (onRemove)
+            onRemove(e);
     }
 
     let iconElement;
@@ -84,11 +91,7 @@
                    weight="500"
                    color="primary">
                 {data}
-
             </Title>
-            <!--{#if children}-->
-            <!--    {@render children()}-->
-            <!--{/if}-->
         </Panel>
 
     {:else}
@@ -101,9 +104,14 @@
             width: 100%">
             {name}
         </Title>
-
     {/if}
 
+    {#if showRemove}
+        <div in:scale={{duration:250, delay:400}} style="z-index: var(--z-index-3)">
+            <Icon onClick={handleRemove}
+                  icon="fa fa-close"></Icon>
+        </div>
+    {/if}
 </Panel>
 
 
