@@ -53,7 +53,6 @@ export class WindowHandle {
     }
 
     async open(props?: any): Promise<WindowAction> {
-
         if (props !== undefined)
             this.input = props;
 
