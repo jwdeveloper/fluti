@@ -6,6 +6,7 @@
         height = "8px",
         radius = "4px",
         maxValue = 100,
+        duration=500,
         currentValue = 50,
         color = 'var(--accent-primary)'
     } = $props();
@@ -29,7 +30,7 @@
 
     const tween = Tween.of(() => getWidth, {
         easing: easing,
-        duration: 500
+        duration: duration
     })
 
 

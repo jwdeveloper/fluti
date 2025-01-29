@@ -45,6 +45,8 @@
 
         if (type === 'email')
             return
+        if (type === 'color')
+            return;
 
         const input = event.target as HTMLInputElement;
         // Remove text selection and move the cursor to the end
@@ -196,7 +198,6 @@
         font-size: var(--font-size-normaler);
         color: var(--text-light);
         background: var(--bg-secondary);
-        /*background: transparent;*/
 
 
         @media (max-width: 768px) {
