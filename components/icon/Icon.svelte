@@ -101,6 +101,30 @@
         return () => {
             cleanup.forEach(fn => fn())
         }
+
+    }
+
+
+    function addClickEffectUse(element) {
+        let cleanup = []
+        if (useClickEffect) {
+            let eff = addClickEffect(element)
+            cleanup.push(eff)
+        }
+        return () => {
+            cleanup.forEach(fn => fn())
+        }
+    }
+
+    function addRippleEffectUse(element) {
+        let cleanup = []
+        if (useRipplerEffect) {
+            let result = addRippleEffect(element, "var(--text-neutral)", clickable);
+            cleanup.push(result)
+        }
+        return () => {
+            cleanup.forEach(fn => fn())
+        }
     }
 
 
@@ -153,12 +177,15 @@
 
 {:else }
 
-    <div style="
+    <div
+            use:addClickEffectUse
+                       onclick={handleClick}
+            style="
      height: auto; width: auto; overflow: hidden; position: relative" class="{className}">
-        <i use:useEffects
-           onclick={handleClick}
+        <i use:addRippleEffectUse
            class="icon-class"
            style='position: relative;
+           overflow: hidden;
             font-size: {iconSizeValue};
              width: {width};  {style}; '>
             <i class="{icon}"

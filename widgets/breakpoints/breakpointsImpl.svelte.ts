@@ -1,4 +1,5 @@
 export class BreakpointController {
+    width = $state(0)
     breakpoint = $state('');
     isMobile = $derived.by(() => this.breakpoint === "sm" || this.breakpoint === "md");
     isMedium = $derived.by(() => this.breakpoint === "md");

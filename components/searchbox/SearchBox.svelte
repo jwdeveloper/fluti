@@ -189,6 +189,8 @@
                         {#if multiSelect}
                             {@render selectedValuesTemplate()}
                         {:else}
+
+                            { value.text}
                             {#if value.text === undefined}
                                 <div style="color: var(--text-primary)">
                                     {placeholder}

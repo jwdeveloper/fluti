@@ -4,6 +4,7 @@
     import Title from "$lib/fluti/components/title/Title.svelte";
     import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";
     import {scale} from "svelte/transition";
+    import Hint from "$lib/fluti/components/hint/Hint.svelte";
 
     let {
         data = undefined,
@@ -108,8 +109,9 @@
 
     {#if showRemove}
         <div in:scale={{duration:250, delay:400}} style="z-index: var(--z-index-3)">
-            <Icon onClick={handleRemove}
-                  icon="fa fa-close"></Icon>
+            <Hint title="Usuń">
+                <Icon onClick={handleRemove} icon="fa fa-close"></Icon>
+            </Hint>
         </div>
     {/if}
 </Panel>
