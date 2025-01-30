@@ -1,6 +1,7 @@
 <script lang="ts">
     import Button from "$lib/fluti/components/button/Button.svelte";
     import {WindowCloseReason, type WindowHandle} from "./WindowManagerImpl.svelte.js";
+    import Icon from "$lib/fluti/components/icon/Icon.svelte";
 
     let {
         window, onSave = () => {
@@ -33,6 +34,6 @@
     }
 
 </script>
-<Button isLoading={isSaveLoading} fullWidth={true} variant="btn-filled" onClick={handleSave}>Zapisz</Button>
-<Button fullWidth={true} variant="btn-filled" onClick={handleCancel}>Anuluj
-</Button>
+<Icon onClick={handleSave}>Zapisz</Icon>
+<Icon onClick={handleCancel}>Anuluj
+</Icon>

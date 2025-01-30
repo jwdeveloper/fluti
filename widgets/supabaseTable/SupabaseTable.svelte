@@ -178,7 +178,6 @@
             table: table,
             isEdit: false
         })
-        console.log(result)
         if (result.closeReason !== WindowCloseReason.save)
             return
 
