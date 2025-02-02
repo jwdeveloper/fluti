@@ -3,6 +3,7 @@ import type {LoginFormData, LoginWindowProps} from "./loginWindowTypes";
 export class LoginController {
     view: 'login' | 'register' | 'recovery' | 'email' | 'error' = $state('login')
     isLoading = $state(false)
+    error = $state('')
     form: LoginFormData = $state({})
     props: LoginWindowProps = $state({})
     invalidFields: Record<string, any> = $state({})
@@ -23,6 +24,7 @@ export class LoginController {
         }
         this.invalidFields = {}
         this.view = 'login'
+        this.error = ''
     }
 
     validate() {
@@ -48,6 +50,7 @@ export class LoginController {
             this.validate();
             await action(this.form);
         } catch (e) {
+            this.error = e + "";
             status = false;
         }
         this.isLoading = false;
@@ -76,17 +79,26 @@ export class LoginController {
     }
 
     async checkUserVerification() {
-        if (this.props.onCheckVerification) {
-            return await this.props.onCheckVerification(this.form);
+        try {
+            if (this.props.onCheckVerification) {
+                return await this.props.onCheckVerification(this.form);
+            }
+        } catch (e) {
+            this.error = e + "";
         }
         return false;
     }
 
     async loginOAuth(provider: string) {
-        if (this.props.onOAuthLogin) {
-            return await this.props.onOAuthLogin(provider);
+        try {
+            if (this.props.onOAuthLogin) {
+                return await this.props.onOAuthLogin(provider);
+            }
+        } catch (e) {
+            this.error = e + "";
         }
         return false;
+
     }
 }
 
