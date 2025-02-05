@@ -13,6 +13,7 @@ import {
 } from "$lib/fluti/server/middlewares/route/routeMiddleware";
 import type {OAuthMiddlewareOptions} from "./middlewares/oauth/oAuthTypes";
 import {useOAuthMiddleware} from "$lib/fluti/server/middlewares/oauth/oAuthMiddleware";
+import {type ApiMiddlewareOptions, useApiMiddleware} from "$lib/fluti/server/middlewares/api/apiMiddleware";
 
 
 export class FlutiServerBuilderImpl implements FlutiServerBuilder {
@@ -25,6 +26,11 @@ export class FlutiServerBuilderImpl implements FlutiServerBuilder {
             errorMiddleware: () => {
             }
         }
+    }
+
+    useApi(options: ApiMiddlewareOptions): FlutiServerBuilder {
+        this.use(useApiMiddleware(options))
+        return this;
     }
 
     useRatelimit(options?: RouteMiddlewareOptions): FlutiServerBuilder {
@@ -49,7 +55,6 @@ export class FlutiServerBuilderImpl implements FlutiServerBuilder {
     useSession(options: SessionMiddlewareOptions): FlutiServerBuilder {
         this.use(useSessionMiddleware(options))
         return this;
-
     }
 
     useRoutes(options: RouteMiddlewareOptions): FlutiServerBuilder {

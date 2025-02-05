@@ -13,7 +13,19 @@ export class CacheService {
         return this.cache.has(key);
     }
 
-    size():number{
+    size(): number {
         return this.cache.size;
+    }
+
+    getOrSet(key: string, value: any): any {
+        if (this.has(key))
+            return this.get(key);
+
+        this.set(key, value);
+        return value;
+    }
+
+    items() {
+        return this.cache.entries();
     }
 }
