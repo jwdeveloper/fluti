@@ -4,8 +4,8 @@ export class UserSession {
     user: any = $state({})
 
     setSession(token: string, data: any) {
-        this.user = data;
         this.session = token;
+        this.user = data;
         this.isLogin = true;
 
         document.cookie = `user=${encodeURIComponent(JSON.stringify(this.user))}; path=/;`;
@@ -13,12 +13,7 @@ export class UserSession {
     }
 
     loadSession() {
-        const cookies = document.cookie.split('; ')
-            .reduce((acc, cookie) => {
-            const [key, value] = cookie.split('=');
-            acc[key] = decodeURIComponent(value);
-            return acc;
-        }, {} as Record<string, string>);
+        let cookies = this.loadCookies();
         if (cookies.user && cookies.session) {
             try {
                 this.user = JSON.parse(cookies.user);
@@ -49,6 +44,18 @@ export class UserSession {
             return
         }
         window.location.href = '/';
+    }
+
+
+    loadCookies()
+    {
+        const cookies = document.cookie.split('; ')
+            .reduce((acc, cookie) => {
+            const [key, value] = cookie.split('=');
+            acc[key] = decodeURIComponent(value);
+            return acc;
+        }, {} as Record<string, string>);
+        return cookies;
     }
 
     redirectTo(url: string) {

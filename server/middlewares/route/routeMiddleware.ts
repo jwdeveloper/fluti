@@ -111,9 +111,7 @@ let middleware = async (request: RequestEvent, next: any) => {
         options = middlewareOptions.globalPathOptions
 
     let validationFailedResponse = validatePathOptions(options, request);
-
     if (!validationFailedResponse) {
-
         if (options.handler) {
             //@ts-ignore
             let user: FlutiUser = request.locals.user;

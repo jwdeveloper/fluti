@@ -30,9 +30,9 @@ export type UserValidator = (user: FlutiUser, event: RequestEvent) => boolean | 
     message: string
 }
 
-export type FlutiRequestHandler = (event: RequestHandlerEvent) => any | void
+export type FlutiRequestHandler = (event: FlutiRequestEvent) => any | void
 
-export interface RequestHandlerEvent extends RequestEvent {
+export interface FlutiRequestEvent extends RequestEvent {
     user: FlutiUser | undefined
 }
 

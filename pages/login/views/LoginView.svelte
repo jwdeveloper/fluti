@@ -11,6 +11,7 @@
     import type {LoginViewProps} from "../loginWindowTypes";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import Title from "$lib/fluti/components/title/Title.svelte";
 
     let {controller, translation = {}}: LoginViewProps = $props();
     let logoVisible = $state(false)
@@ -49,10 +50,12 @@
         gap="0"
 
 >
-
     <Logo/>
-
     <Panel direction="column">
+
+    {#if controller.error}
+        <Title tag="h5" color="error">{controller.error}</Title>
+    {/if}
         <Panel direction="column" width="100%" padding="0">
             <FormFieldsLogin transition={translation}
                              controller={controller}
@@ -60,8 +63,8 @@
         </Panel>
 
         <Panel
-               align="flex-end"
-               width="100%" direction="column">
+                align="flex-end"
+                width="100%" direction="column">
             <Panel padding="0"
                    breakpoints="{{
                      'sm':{

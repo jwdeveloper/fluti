@@ -50,6 +50,8 @@ export function useOAuthMiddleware(options: OAuthMiddlewareOptions): FlutiServer
                 code: code,
                 request: event
             })
+
+
             event.cookies.delete(verifierCookie, {path: '/'});
             event.cookies.delete(stateCookie, {path: '/'});
             event.cookies.set('user', JSON.stringify(user), {path: '/', httpOnly: false});

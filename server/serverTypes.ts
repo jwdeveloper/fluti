@@ -1,9 +1,15 @@
 import type {RequestEvent} from "@sveltejs/kit";
+
 import type {SessionMiddlewareOptions} from "$lib/fluti/server/middlewares/sessionMiddleware";
 import type {RouteMiddlewareOptions} from "$lib/fluti/server/middlewares/route/routeMiddleware";
 import type {OAuthMiddlewareOptions} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+import type {ApiMiddlewareOptions} from "$lib/fluti/server/middlewares/api/apiMiddleware";
+import type {Context,Next} from "hono";
 
 export type OneOrMore<T> = T | [T, ...T[]] | T[]
+
+
+export type HonoMiddleware = (context: Context, next: Next) => Promise<void | Response>
 
 export type FlutiUser = {
     id: string,
@@ -13,6 +19,13 @@ export type FlutiUser = {
     verified: boolean
     permissions: string[]
     roles: string[]
+    country?: string
+    profile?: {
+        name?: string,
+        firstName?: string,
+        lastName?: string,
+        picture?: string,
+    }
     claims: Record<string, string>
 }
 
@@ -30,6 +43,11 @@ export interface FlutiServerBuilder {
      */
     useOAuth(options: OAuthMiddlewareOptions): FlutiServerBuilder
 
+    /**
+     *
+     * @param options
+     */
+    useApi(options: ApiMiddlewareOptions): FlutiServerBuilder
 
     /**
      *

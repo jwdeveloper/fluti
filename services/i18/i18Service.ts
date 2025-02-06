@@ -9,9 +9,9 @@ function flattenObject(obj: Record<string, any>, parentKey = '', result: Record<
     for (const [key, value] of Object.entries(obj)) {
         const fullKey = parentKey ? `${parentKey}.${key}` : key;
         if (typeof value === 'object' && value !== null) {
-            flattenObject(value, fullKey, result); // Recursively flatten nested objects
+            flattenObject(value, fullKey, result);
         } else {
-            result[fullKey] = String(value); // Convert value to string
+            result[fullKey] = String(value);
         }
     }
     return result;
@@ -20,12 +20,8 @@ function flattenObject(obj: Record<string, any>, parentKey = '', result: Record<
 export let loadTranslations = (pagePath: any, lang: any) => {
     try {
         const rootPath = process.cwd();
-        const filePath = path.join(rootPath, 'src', 'i18', lang, 'layout.yml');
-        //
-        // if (cache.has(filePath)) {
-        //     return cache.get(filePath);
-        // }
-
+        const filePath = path.join(rootPath, 'src', "assets", 'i18', lang, 'layout.yml');
+        console.log("Final translation path is", filePath)
         const yamlFile = fs.readFileSync(filePath, 'utf8');
         const data = parse(yamlFile, {});
         const flatten = flattenObject(data)
