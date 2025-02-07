@@ -44,6 +44,7 @@
         border: var(--border-size) solid var(--text-muted);
         border-radius: var(--radius-medium);
         width: 100%;
+        color: var(--text-color);
     }
 
     option {
