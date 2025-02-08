@@ -1,9 +1,10 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import type {PanelProps} from "$lib/fluti/components/panel/Panel.type";
     import {onMount} from "svelte";
-
+    import Grid from "$lib/fluti/components/panel/Grid.svelte";
+    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
+    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     interface MobileDesktopLayoutProps {
         panel?: PanelProps// props of root panel
         slotPanel?: PanelProps //props of left, center, right panels
@@ -17,6 +18,7 @@
         right?: any
     }
 
+    let serverRenderConfig = useServerRenderConfig
     let breakpoints = useBreakpoints();
     let props: MobileDesktopLayoutProps = $props();
     let isInit = $state(false)
@@ -32,6 +34,8 @@
     })
 
     let getGridTemplate = () => {
+
+
         let width = props?.width ?? "60%"
         let intWidth = parseInt(width) / 100;
         let remainSpace = 1 - intWidth;
@@ -40,6 +44,16 @@
     }
 
     let dimentions = $derived.by(() => {
+
+
+        if (serverRenderConfig.isMobile) {
+            return {
+                rows: '1fr',
+                columns: '1fr'
+            }
+        }
+
+
         if (isInit && shouldHideSidePanels)
             return {
                 rows: '1fr',
@@ -60,44 +74,44 @@
     })
 
     let shouldHideSidePanels = $derived.by(() => {
-        if (!shouldBreak)
+        if (!shouldBreak) {
             return false;
-
+        }
         return props.hideSidePanelsOnMobile === true;
     })
 
 </script>
 
 {#snippet renderSlot(slot)}
-    <Panel width="100%"
-           height="100%"
-           radius="0"
-           tag="section"
-           {...props.slotPanel}>
+    <Grid width="100%"
+          height="100%"
+          radius="0"
+          tag="section"
+          {...props.slotPanel}>
         {#if slot !== undefined}
             {@render slot()}
         {/if}
-    </Panel>
+    </Grid>
 {/snippet}
 
 
-<Panel panelType="grid"
-       columns={dimentions.columns}
-       rows={dimentions.rows}
-       height="100%"
-       width="100%"
-       radius="0"
-       gap="0"
-       {...props.panel}
+<Grid panelType="grid"
+      columns={dimentions.columns}
+      rows={dimentions.rows}
+      width="100%"
+      radius="0"
+      gap="0"
+      {...props.panel}
 >
+
+
     {#if !shouldHideSidePanels}
         {@render renderSlot(props?.left)}
     {/if}
-
     {@render renderSlot(props?.center)}
 
     {#if !shouldHideSidePanels}
         {@render renderSlot(props?.right)}
     {/if}
 
-</Panel>
+</Grid>

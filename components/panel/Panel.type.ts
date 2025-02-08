@@ -1,7 +1,7 @@
 import type {Breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointType";
 
 export interface PanelProps {
-    panelType?: "flex" | "grid"
+    panelType?: "flex" | "grid" | "block"
     gap?: string
     padding?: string
     justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
@@ -33,6 +33,13 @@ export interface PanelProps {
     onClick?: (event: MouseEvent) => void
     onMouseOver?: (isOver: boolean, event: MouseEvent) => void
     breakpoints?: Breakpoints
+
+    sm?: PanelProps //props for small size
+    md?: PanelProps //props for medium size
+    lg?: PanelProps //props for large size
+    xl?: PanelProps //props for large size
+
+    hover?: PanelProps //props for hover
 }
 
 

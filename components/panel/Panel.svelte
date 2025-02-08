@@ -162,6 +162,7 @@
                 style="
 grid-template-rows: {getRows};
 grid-template-columns: {getColumns};
+
 display: {panelType};
 flex-direction: {direction};
         padding: {padding};
