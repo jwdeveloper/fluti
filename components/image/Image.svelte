@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import {onMount} from "svelte";
+    import Loader from "$lib/fluti/components/loader/Loader.svelte";
 
 
     let {src, className = ''} = $props()
 
-    let isLoading = true;
-    let isVisible = false;
+    let isLoading = $state(true);
+    let isVisible = $state(false);
     let observer: IntersectionObserver;
     let element: HTMLHtmlElement
 
@@ -19,6 +19,7 @@
             ([entry]) => {
                 if (entry.isIntersecting) {
                     isVisible = true;
+                    isLoading = false;
                     observer.disconnect();
                 }
             },
@@ -39,23 +40,11 @@
 </script>
 
 <div class="img-container {className}" bind:this={element}>
-    {#if isLoading}
-        <div class="loader" style="display: {isLoading ? 'block' : 'none'}">
-            <Loader isLoading={isLoading}/>
-        </div>
-    {/if}
-    <img src={src} class={className}  onload={handleImageLoad}/>
+    <Loader bind:isLoading={isLoading}/>
+    <img src={src} onload={handleImageLoad}/>
 </div>
 
 <style>
-    .loader {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-    }
-
     .img-container {
         position: relative;
         width: 100%; /* Full width of its container */

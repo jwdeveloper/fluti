@@ -57,8 +57,6 @@
 
 [data-theme="light-1"] {
     /* 175, 175, 175*/
-
-
     /*--bg-primary: #e1e1e1;*/
     /*--bg-secondary: #d8d9d9;*/
 
@@ -77,7 +75,6 @@
     --text-error: rgb(239, 68, 68);
 
     --accent-primary: #217fe0;
-
 }
 
 [data-theme="dark-2"] {

@@ -249,7 +249,7 @@
         pointer-events: none;
         left: 0;
         top: 0;
-        z-index: var(--z-index-4);
+        z-index: var(--z-index-5);
         backdrop-filter: brightness(100%);
     }
 </style>

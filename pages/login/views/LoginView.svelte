@@ -15,7 +15,7 @@
 
     let {controller, translation = {}}: LoginViewProps = $props();
     let logoVisible = $state(false)
-    let logo = "icons/icon.png"
+    let logo = "icons/logo.png"
 
     onMount(() => {
         logoVisible = true;
