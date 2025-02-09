@@ -69,7 +69,12 @@
         // Convert hover properties to CSS
         let hoverObject = {...propsCopy, ...props?.hover}
         let hoverStyles = Object.entries(hoverObject)
-            .map(([key, value]) => `${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${value} !important;`)
+            .map(([key, value]) => {
+                if (key === 'style')
+                    return ` ${value} `
+
+                return `${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${value} !important;`
+            })
             .join(" ");
 
         const style = document.createElement("style");

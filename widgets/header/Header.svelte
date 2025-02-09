@@ -5,6 +5,10 @@
     import Grid from "$lib/fluti/components/panel/Grid.svelte";
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
+    import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
+    import DefaultMenu from "$lib/fluti/widgets/menu/DefaultMenu.svelte";
+    import Hint from "$lib/fluti/components/hint/Hint.svelte";
+    import {useThemes} from "$lib/fluti/widgets/theme/themeController.svelte";
 
     interface TopMenuProps {
         height?: number;
@@ -16,12 +20,28 @@
 
     let {
         height = 90,
-        width = "80%",
+        width = "100%",
         logo = 'logo.png',
         title = '',
         treashold = 100
     }: TopMenuProps = $props();
 
+    let themes = useThemes()
+    let themeIcon = $derived.by(() => {
+
+        if (themes.theme !== 'dark-1')
+            return 'fa fa-moon'
+
+        return 'fa fa-solid fa-sun'
+    })
+    let updateTheme = () => {
+        if (themes.theme === 'dark-1')
+            themes.setTheme('light-cenograf')
+        else
+            themes.setTheme('dark-1')
+    }
+
+    let session = useUserSession()
     let element: HTMLHtmlElement
     let aElement: any
     let scroll = $state(0)
@@ -62,6 +82,8 @@
     {#if logo !== ''}
         <img src={logo} alt="logo" style="height: {height-height*0.2}px;"/>
     {/if}
+
+    <i style="font-size: 3em;color: var(--accent-primary)" class="fa fa-line-chart"></i>
     <h1 style="color: var(--accent-primary)">{title}</h1>
 {/snippet}
 
@@ -70,36 +92,38 @@
     <Grid width="100%"
           bind:element={element}
           background="var(--bg-primary)"
+          style="box-shadow: 0 0 1em 0.1em var(--shadow)"
           height='{height}px'>
 
         <Grid
                 panelType="grid"
-                columns="auto 1fr auto"
+                columns="22.5fr 55fr 22.5fr"
                 width={width}>
 
-            <Grid padding="0 1em">
+            <Grid
+                    hover={{style:"cursor:pointer;"}}
+                    onClick={()=> window.location.href='/'} padding="0 1em">
                 <Logo/>
             </Grid>
             <Grid width="100%" justify="flex-end">
-                <Grid padding="0 1em" justify="space-around" align="center" gap="1em">
-                    <Link>
-                        <h4>O nas</h4>
-                    </Link>
-                    <Link>
-                        <h4>Cennik</h4>
-                    </Link>
-                    <Link>
-                        <h4>Kontakt</h4>
-                    </Link>
+                <DefaultMenu/>
+                <Grid padding="0 1em">
+                    {#if session.isLogin}
+                        <Hint title="Polubione ogłoszenia">
+                            <Icon icon="fa fa-heart  fa-beat"/>
+                        </Hint>
+                        <Icon onClick={()=> window.location.href='/profile'} icon="fa fa-user">Konto</Icon>
+                    {:else }
+                        <Icon onClick={()=> window.location.href='/login'}>Zaloguj się</Icon>
+                    {/if}
                 </Grid>
             </Grid>
 
-            <Grid padding="0 1em">
-                <Icon icon="fa fa-heart"/>
-                <Icon icon="fa fa-user">Konto</Icon>
-                <Icon onClick={()=> window.location.href='/login'}>Zaloguj się</Icon>
+            <Grid padding="0 5em" justify="flex-end">
+                <Hint title="Zmień motyw">
+                    <Icon onClick={updateTheme} icon={themeIcon}/>
+                </Hint>
             </Grid>
         </Grid>
     </Grid>
-    <!--    <Separator/>-->
 </Grid>

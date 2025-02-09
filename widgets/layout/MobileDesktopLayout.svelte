@@ -5,6 +5,7 @@
     import Grid from "$lib/fluti/components/panel/Grid.svelte";
     import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
+
     interface MobileDesktopLayoutProps {
         panel?: PanelProps// props of root panel
         slotPanel?: PanelProps //props of left, center, right panels
@@ -87,6 +88,7 @@
           height="100%"
           radius="0"
           tag="section"
+          align="flex-start"
           {...props.slotPanel}>
         {#if slot !== undefined}
             {@render slot()}
@@ -101,6 +103,7 @@
       width="100%"
       radius="0"
       gap="0"
+      align="flex-start"
       {...props.panel}
 >
 

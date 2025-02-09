@@ -7,7 +7,8 @@
         keepOpen = false,
         title,
         fullWidth = false, style = '',
-        offset = "125%"
+        offset = "125%",
+        panelStyle
     } = $props();
     let show = $state(false)
 
@@ -40,7 +41,9 @@
         transform: translate(0, {offset});
         z-index: var(--z-index-3);
         overflow:hidden;
-        pointer-events: none;"
+        pointer-events: none;
+        {panelStyle};
+    "
 
              class="hint"
              transition:effect>
