@@ -1,147 +1,75 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
-    import {onMount} from "svelte";
+    import {scale as Effect} from "svelte/transition";
+    import type {LoginViewProps, OAuthProvider} from "$lib/fluti/pages/login/loginPageTypes";
+    import Hint from "$lib/fluti/components/hint/Hint.svelte";
+    import Button2 from "$lib/fluti/components/button/Button2.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
-
-    interface OAuthLoginProps {
-        icons?: boolean;
-        onClick: (provider: string) => void;
-        // items?: ProviderOption[];
+    interface OAuthLoginProps extends LoginViewProps {
+        onProviderClick: (provider: string) => void;
     }
 
-    interface ProviderOption {
-        provider: string;
-        iconColor: string;
-        borderColor: string;
-    }
+    const {controller, onProviderClick}: OAuthLoginProps = $props();
+    const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers ?? [])
 
-    let {icons = $bindable(false), onClick}: OAuthLoginProps = $props();
+    const providersIcons = $derived.by(() => {
+        return items.filter(e => e.onlyIcon);
+    })
 
+    const providersFullIcons = $derived.by(() => {
+        return items.filter(e => !e.onlyIcon);
+    })
 
-    const breakpoints = useBreakpoints()
-    const items: ProviderOption[] = $state([])
-    const Element = $derived.by(() => {
-
-        if (breakpoints.breakpoint != 'sm') {
-            return OAuthIcon;
+    const TargetElement = $derived.by(() => {
+        if (controller.props?.templates?.oAuthProviderTemplate) {
+            return controller.props?.templates?.oAuthProviderTemplate
         }
         return OAuthButton;
     })
-
-    const onHandleClick = (provider: string) => {
-        onClick(provider)
-    }
-    onMount(() => {
-
-        items.push({
-            provider: "Google",
-            iconColor: "red",
-            borderColor: "red"
-        })
-
-        items.push({
-            provider: "Facebook",
-            iconColor: "#1877F2",
-            borderColor: "#1877F2"
-        })
-        items.push({
-            provider: "Discord",
-            iconColor: "#5865F2",
-            borderColor: "#5865F2"
-        })
-    })
-    import {scale as Effect} from "svelte/transition";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
-    import Hint from "$lib/fluti/components/hint/Hint.svelte";
-    import Icon from "$lib/fluti/components/icon/Icon.svelte";
 </script>
 
 
-<Panel width="100%"
-       padding="1em 0"
-       gap="0.9em"
-       justify="space-around"
-       align="center"
-       direction="{breakpoints.breakpoint != 'sm'?'row':'column'}">
-
-    {#each items as item,index}
+<Element width="100%"
+         display="grid"
+         columns="1fr"
+         margin="1.5em 0"
+         gap="0.9em"
+         direction="column">
+    {#each providersFullIcons as item,index}
         <div style="width: 100%" transition:Effect={{delay:index*120}}>
-            {@render Element(item.provider, item.iconColor, item.borderColor)}
+            {@render TargetElement(item)}
         </div>
     {/each}
-</Panel>
+
+    <Element width="100%">
+        {#each providersIcons as item,index}
+            <div style="width: 100%" transition:Effect={{delay:index*120}}>
+                {@render TargetElement(item)}
+            </div>
+        {/each}
+    </Element>
+</Element>
 
 
-{#snippet OAuthIcon(name, color, borderColor)}
-    <Hint title="Zaloguj się poprzez {name}">
-
-        <Panel
-                onClick={() => onHandleClick(name)}
-                padding="0" width="100%" style="cursor: pointer">
-
-            <Panel
-                    panelType="grid"
-                    height="50px"
-                    width="50px"
-                    padding="1.2em"
-                    radius="50% !important"
-                    className="oauth-button"
-                    style="
-                  border: 3px solid {borderColor} !important;
-        box-shadow: 0px 0px 0.9em 0.05em {borderColor};
-
-"
-                    breakpoints={{
-                sm:{columns:"1fr 1fr",minWidth:"50px", padding:"1em"},
-                md:{fontSize:"1.6em"}
-                }}
-
-                    ripplerEffect={true} variant="component-panel-border">
-
-                <i class="fa-brands fa-{name.toLowerCase()}"
-                   style="color: {color};z-index: 4;">
-                </i>
-            </Panel>
-        </Panel>
+{#snippet OAuthButton(provider)}
+    {@const prefix = controller.props?.messages?.oAuthPrefix ?? "Continue with"}
+    <Hint title={provider.onlyIcon ? prefix+ " " +provider.name: undefined}>
+        {@const isIcon = provider.onlyIcon}
+        <Button2
+                textSize="h4"
+                fullWidth={true}
+                onClick={()=> onProviderClick(provider.name)}
+                color={provider.iconColor}
+                fontSize={isIcon?'1.6em':undefined}
+                padding={isIcon?flutiTheme.padding.small:flutiTheme.padding.medium}
+                isShowText={!isIcon}
+                radius={flutiTheme.radius.huge}
+                icon='fa-brands fa-{provider.name.toLowerCase()}'>
+            {#if !provider.onlyIcon}
+                {prefix} {provider.name}
+            {/if}
+        </Button2>
     </Hint>
 {/snippet}
 
-
-{#snippet OAuthButton(name, color, borderColor)}
-    <Icon
-            onClick={() => onHandleClick(name)}
-            style="background: var(--bg-primary);
-            padding:0.7em 0;
-             margin:0.05em 0; "
-            textCenter={true}
-            boldFont={false}
-            fullWidth={true}>
-        <Panel width="60%">
-            <Panel width="100%"
-                   panelType="grid"
-                   columns="auto 1fr">
-                <i class="fa-brands fa-{name.toLowerCase()}"
-                   style="
-                     width: 1em;
-                    color: {color};font-size:1.6em; z-index: 4"></i>
-                <div style="color: var(--text-light)">
-                    Sing up with {name}
-                </div>
-            </Panel>
-        </Panel>
-
-    </Icon>
-{/snippet}
-
-
-<style>
-    :global(.oauth-button) {
-        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    :global(.oauth-button:hover) {
-        scale: 1.1;
-        background: var(--bg-tertiary) !important;
-        box-shadow: 0px 0px 0.5em 0.1em var(--text-muted);
-    }
-</style>

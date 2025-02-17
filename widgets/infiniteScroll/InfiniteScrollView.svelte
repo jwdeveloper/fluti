@@ -4,6 +4,7 @@
     import Grid from "$lib/fluti/components/panel/Grid.svelte";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Textbox from "$lib/fluti/components/textbox/Textbox.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         controller = useInfiniteScrollController(),
@@ -46,9 +47,10 @@
 {#if controller.error}
     {@render errorTemplate(controller.error)}
 {:else}
-    <Grid direction="column"
-          width="100%"
-          {...container}>
+    <Element direction="column"
+             height="auto"
+             width="100%"
+             {...container}>
         {#each controller.items as item, index (item.id)}
             {#if itemTemplate}
                 {@render itemTemplate(item, index)}
@@ -57,18 +59,18 @@
         {#if controller.isLoading}
             {@render loadingTemplate()}
         {/if}
-    </Grid>
+    </Element>
 {/if}
 
 
 {#snippet defaultLoader()}
-    <Grid  width="100%" height="100vh" style="position: fixed; z-index: 3; bottom: 0">
+    <Element width="100%" height="100vh" style="position: fixed; z-index: 3; bottom: 0">
         <Loader bind:isLoading={controller.isLoading}/>
-    </Grid>
+    </Element>
 {/snippet}
 
 {#snippet defaultErrorTemplate(error)}
-    <Grid height="200px" width="100%">
+    <Element height="200px" width="100%">
         <Textbox value={error}></Textbox>
-    </Grid>
+    </Element>
 {/snippet}

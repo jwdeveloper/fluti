@@ -1,18 +1,17 @@
-import type {LoginFormData, LoginWindowProps} from "./loginWindowTypes";
+import type {LoginFormData, LoginPageProps} from "./loginPageTypes";
 
 export class LoginController {
     view: 'login' | 'register' | 'recovery' | 'email' | 'error' = $state('login')
     isLoading = $state(false)
     error = $state('')
     form: LoginFormData = $state({})
-    props: LoginWindowProps = $state({})
+    //@ts-ignore
+    props: LoginPageProps = $state()
     invalidFields: Record<string, any> = $state({})
 
-    constructor() {
+    constructor(props: LoginPageProps) {
+        this.props = props
         this.reset()
-        this.props = {
-            oAuth: true
-        }
     }
 
     reset() {
@@ -102,6 +101,6 @@ export class LoginController {
     }
 }
 
-export let useLoginController = () => {
-    return new LoginController();
+export let useLoginController = (props: LoginPageProps) => {
+    return new LoginController(props);
 }

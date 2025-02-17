@@ -8,29 +8,55 @@
     --text-light: #E9EFF3;
     --text-primary: #9DB2C0;
     --text-neutral: #ACAEB0;
-    --text-muted: #293945;
+
+
     --text-error: rgb(239, 68, 68);
 
     --accent-primary: #40EEC8;
+    --accent-color: #ffffff;
 
 
     --radius: 0.3em;
-    --radius-medium: 0.5em;
     --radius-strong: 0.8em;
+    --radius-max: 1.5em;
+    --padding: 0.5em;
 
-    --padding: 0.6em;
+    --radius-tiny: 0.125em; /* 2px */
+    --radius-small: 0.25em; /* 4px */
+    --radius-medium: 0.6em; /* 8px */
+    --radius-large: 1em; /* 16px */
+    --radius-huge: 2em; /* 32px */
+
+    --padding-tiny: 0.3em; /* ~8px */
+    --padding-small: 0.4em; /* ~12px */
+    --padding-medium: 0.65em; /* ~16px (48px total height) */
+    --padding-large: 1.2em; /* ~24px */
+    --padding-huge: 1.6em; /* ~32px */
+
+    --font-size-tiny: 0.625rem; /* 10px */
+    --font-size-small: 0.8rem; /* 42px */
+    --font-size-medium: 1em; /* 16px */
+    --font-size-large: 1.2rem; /* 24px */
+    --font-size-huge: 2rem; /* 32px */
+    --font-size-extra-huge: 2.25rem;
+
+
+    --border-size-tiny: 0.02em; /* 10px */
+    --border-size-small: 1px; /* 12px */
+    --border-size-medium: 2px; /* 16px */
+    --border-size-large: 3px; /* 24px */
+    --border-size-huge: 4px; /* 32px */
+
 
     --border-size: 2px;
 
 
     --shadow: rgba(61, 65, 72, .15);
 
-    --font-size-small: 0.7em;
-    --font-size-normal: 0.8em;
+    --font-size-normal: 0.9em;
     --font-size-normaler: 1em;
     --font-size-desktop: 1.1em;
     --font-size-big: 1.2em;
-    --font-size-huge: 1.5em;
 
 
     --z-index-1: 2;
@@ -40,8 +66,8 @@
     --z-index-5: 30;
 
 
-    font-size: var(--font-size-normal);
-    line-height: 1.5;
+    font-size: var(--font-size-medium);
+    /*line-height: 1.5;*/
     user-select: none;
 
     padding: 0;
@@ -91,7 +117,7 @@
     --text-primary: #ccc4c4;
     --text-neutral: #9b9ea2;
     --text-muted: #82888d;
-    --text-error: rgb(239, 68, 68);
+    --text-error: rgba(239, 68, 68, 0.8);
 
     --accent-primary: #66fd0f;
 }
@@ -108,6 +134,7 @@
     --text-error: #ff3d00; /* Bright Orange Red */
 
     --accent-primary: rgba(239, 146, 6, 0.98); /* Golden Yellow */
+
 }
 
 [data-theme="dark-4"] {
@@ -140,7 +167,6 @@ body {
     width: 100%;
     background: var(--bg-primary);
     color: var(--text-primary);
-
 }
 
 body, html {
@@ -150,7 +176,7 @@ body, html {
 
 ::selection {
     background-color: var(--accent-primary); /* Green background */
-    color: black; /* White text */
+    color: var(--accent-color); /* White text */
 }
 
 
@@ -164,27 +190,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: xx-large;
+    font-size: var(--font-size-extra-huge);
 }
 
 h2 {
-    font-size: x-large;
+    font-size: var(--font-size-huge);
 }
 
 h3 {
-    font-size: large;
+    font-size: var(--font-size-large);
 }
 
 h4 {
-    font-size: medium;
+    font-size: var(--font-size-medium);
 }
 
 h5 {
-    font-size: small;
+    font-size: var(--font-size-small);
 }
 
-h5 {
-    font-size: smaller;
+h6 {
+    font-size: var(--font-size-tiny);
 }
 
 p {
@@ -205,7 +231,7 @@ pre {
 blockquote {
     background: var(--bg-tertiary);
     padding: 0.5em;
-    border-radius: var(--radious-1);
+    border-radius: var(--radius-medium);
     margin: 0.5em;
 }
 
@@ -223,18 +249,6 @@ p {
     }
 }
 
-
-.my-cluster-icon {
-    background: var(--bg-accent);
-    color: var(--bg-100);
-    padding: 1em;
-    font-size: 1.2em;
-    border-radius: 50%;
-}
-
-.leaflet-no-cluster {
-    background: red;
-}
 
 .scroll {
     scrollbar-width: thin;

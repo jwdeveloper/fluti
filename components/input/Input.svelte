@@ -17,6 +17,7 @@
         focused = $bindable(false),
         disabled = false,
         iconSymbol = '',
+        inputMode='',
         variant = '',
         icon = '',
         style,
@@ -28,7 +29,8 @@
         },
         onClick = () => {
         },
-        children = undefined
+        children = undefined,
+        border = true
     }: InputProps = $props();
 
     let finalId: any = '';
@@ -117,12 +119,13 @@
             onmousedown={handleMouseDown}
             onfocusout={handleMouseUp}
             onfocus={handleFocus}
+            inputmode={inputMode}
             oninput={onValueChanged}
             type={type}
             autocomplete="email"
             class="{readonly ? 'input-pointer' : ''} {className} {variant}"
             placeholder={placeholder}
-            style="{style}; z-index: 2;border: var(--border-size) solid {borderColor}; "
+            style="{style};'border: var(--border-size) solid {borderColor}'"
     />
 
     {#if children}
@@ -136,6 +139,13 @@
 
     :global(.input-border) {
         border: var(--border-size) solid var(--bg-accent);
+    }
+
+    input[type=number] {
+        appearance: textfield;
+    }
+    input[type=number]:hover {
+        appearance: textfield;
     }
 
     input[disabled] {
@@ -161,12 +171,11 @@
         padding: 0 1em;
         height: 100%;
         width: 100%;
-        color: var(--color-darker);
-        z-index: 2;
+        color: var(--text-muted);
         pointer-events: none;
 
         i {
-            color: var(--text-primary);
+            color: var(--text-muted);
         }
 
         @media (max-width: 768px) {
@@ -186,7 +195,7 @@
     }
 
     input::placeholder {
-        color: var(--text-primary);
+        color: var(--text-muted);
     }
 
     input {
@@ -195,7 +204,7 @@
         user-select: none;
         width: 100%;
         transition: all 200ms ease-in-out;
-        font-size: var(--font-size-normaler);
+        font-size: var(--font-size-normal);
         color: var(--text-light);
         background: var(--bg-secondary);
 

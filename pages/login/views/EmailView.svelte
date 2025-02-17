@@ -2,7 +2,7 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import ButtonLogin from "../components/ButtonLogin.svelte";
     import TitleLogin from "../components/TitleLogin.svelte";
-    import type {LoginViewProps} from "../loginWindowTypes";
+    import type {LoginViewProps} from "../loginPageTypes";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import {onMount} from "svelte";
 

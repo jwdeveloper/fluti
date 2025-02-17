@@ -4,7 +4,8 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
-    import type {LoginViewProps} from "../loginWindowTypes";
+    import type {LoginViewProps} from "../loginPageTypes";
+    import Button2 from "$lib/fluti/components/button/Button2.svelte";
 
     let {controller, translation}: LoginViewProps = $props();
 
@@ -46,6 +47,7 @@
             onButtonClick={handleRegister}
             onActionClick={() => controller.view = 'login'}
             actionTitle="Powrót do logowania"/>
+
 
 
 </Panel>

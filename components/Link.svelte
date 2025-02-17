@@ -22,7 +22,7 @@
 </script>
 
 <a class="offer-url" onclick={handleClick} href={url} target="_blank"
-   style="{style}"
+   style="margin:1em 0 1.5em 0; font-size: var(--font-size-small);{style}; "
    rel="noopener noreferrer">
     <slot/>
 </a>

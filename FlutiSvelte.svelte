@@ -6,6 +6,8 @@
     import UserManager from "$lib/fluti/widgets/user/UserManager.svelte";
 
     import './themes/default.css'
+    import '../../index.css'
+
 
     interface Fluti {
         useThemes?: boolean,
@@ -22,8 +24,6 @@
         useAlerts = true,
         useUserSession = true,
     }: Fluti = $props();
-
-
 </script>
 
 {#if useUserSession}

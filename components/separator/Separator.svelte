@@ -19,7 +19,9 @@
     <Panel width="100%" padding="0">
 
         <Bar/>
-        <Panel style="
+        <Panel
+                height="100%"
+                style="
          text-wrap: nowrap;
          font-weight: bold;
          font-size: {fontSize};

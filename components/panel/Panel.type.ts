@@ -7,10 +7,12 @@ export interface PanelProps {
     justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
     align?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
     direction?: "row" | "row-reverse" | "column" | "column-reverse"
+
+    shadow?: string,
     className?: string
     rows?: string
-    rowsAuto?: string
     columns?: string
+    rowsAuto?: string
     columnsAuto?: string
     width?: string
     height?: string
@@ -18,6 +20,7 @@ export interface PanelProps {
     background?: string | 'primary' | 'secondary'
     overflow?: string
     radius?: string,
+    border?: string
     style?: string,
     margin?: string,
     useArrowMovement?: boolean,
@@ -25,6 +28,7 @@ export interface PanelProps {
     ripplerEffectColor?: string,
     useClickEffect?: boolean,
     id?: string,
+    useStyles?: boolean,
     element?: HTMLDivElement
     tag?: string,
     variant?: "normal" | "border" | "shadow" | "border-color" |
@@ -40,6 +44,8 @@ export interface PanelProps {
     xl?: PanelProps //props for large size
 
     hover?: PanelProps //props for hover
+
+    children?: any
 }
 
 

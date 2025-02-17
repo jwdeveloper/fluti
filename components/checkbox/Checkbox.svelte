@@ -43,7 +43,6 @@
             style="{isFocues?'border: 2px solid var(--text-light); !important':''}"
             className="element-checkbox">
         <input type="checkbox"
-               onclick={handleClick}
                onfocus={()=> isFocues= true}
                onfocusout={()=> isFocues= false}
                checked={value} tabindex="0"/>
@@ -66,9 +65,9 @@
 
 
 {#if children}
-    <Panel panelType="grid" columns="auto 1fr" padding="0" gap="0.5em">
+    <Panel onClick={handleClick} panelType="grid" columns="auto 1fr" padding="0" gap="0.5em">
         <InputSnippet/>
-        <Link onClick={handleClick}>
+        <Link >
             {@render children()}
         </Link>
     </Panel>

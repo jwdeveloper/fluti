@@ -12,9 +12,9 @@
 
 <svelte:head>
     <script>
-        let themeValue = localStorage.getItem("theme");
-        if (themeValue === undefined)
-            themeValue = "dark";
-        document.documentElement.setAttribute("data-theme", themeValue);
+        let themeValueHolder = localStorage.getItem("theme");
+        if (themeValueHolder === undefined)
+            themeValueHolder = "dark";
+        document.documentElement.setAttribute("data-theme", themeValueHolder);
     </script>
 </svelte:head>

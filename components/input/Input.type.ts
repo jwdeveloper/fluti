@@ -19,4 +19,6 @@ export interface InputProps {
     style?: string
     children?: any
     focused?: boolean
+    border?: boolean
+    inputMode?: string
 }

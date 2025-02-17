@@ -1,6 +1,8 @@
 <script lang="ts">
     import type {LabelProps} from "./Label.type.ts";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {fly} from 'svelte/transition'
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let {
         title = undefined,
@@ -8,67 +10,47 @@
         onInfoClick = undefined,
         error = $bindable(undefined),
         children = undefined,
-        style='',
-        labelColor='var(--text-light)',
-        gap="0.5em",
+        style = '',
+        labelColor = 'var(--text-primary)',
+        gap = "0.5em",
     }: LabelProps = $props()
 
 </script>
 
 
-<Panel width="100%"
-       gap={gap}
-       tag="label"
-       padding="0"
-       direction="column" style={style}>
+<Element width="100%"
+         gap={gap}
+         tag="label"
+         direction="column"
+         style={style}>
     {#if title}
-        <Panel padding="0" width="100%"
-               style="font-weight: bold;
-                color: {labelColor}"
-               justify="flex-start">
+        <h5 style="align-self: flex-start">
             {title}
-        </Panel>
+        </h5>
     {/if}
     {#if children}
-        <Panel justify="flex-start" width="100%" padding="0">
+        <Element justify="flex-start" width="100%" style="z-index: {flutiTheme.zIndex.i1}">
             {@render children()}
-        </Panel>
+        </Element>
     {/if}
 
     {#if error}
-        <Panel padding="0 0.2em" width="100%"
-               gap="0.4em"
-               style="color:var(--text-error);"
-               justify="flex-start">
-            <i style="align-self: flex-start; margin-top: 0.4em"
-               class="fa fa-warning"/>
-            <div>
+        <div transition:fly={{y:-50}} style="width: 100%;">
+
+            <Element
+                    padding="0 0.2em"
+                    width="100%"
+                    gap="0.4em"
+                    tag="h5"
+                    style="color:var(--text-error);"
+                    justify="flex-start">
+                <i style="align-self: flex-start; margin-top: 0.4em" class="fa fa-warning"/>
                 {error}
-            </div>
-        </Panel>
+            </Element>
+        </div>
+
     {/if}
-</Panel>
-
-
-<!--<div class="container">-->
-<!--    <div class="title">-->
-<!--        <h1>{title}</h1>-->
-<!--        {#if onInfoClick}-->
-<!--            <div class="flex gap-2 icon-container" onclick={onInfoClick}>-->
-<!--                <h4 >{info}</h4>-->
-<!--            </div>-->
-<!--        {/if}-->
-<!--    </div>-->
-
-
-<!--    <div class="content">-->
-<!--        <slot/>-->
-<!--    </div>-->
-
-<!--    <div class="error-container">-->
-<!--        {error}-->
-<!--    </div>-->
-<!--</div>-->
+</Element>
 
 <style>
 

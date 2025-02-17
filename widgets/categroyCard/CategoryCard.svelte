@@ -121,6 +121,8 @@
 <style>
     :global(.element-category-card) {
         transition: 200ms ease-in-out;
+        background: var(--bg-primary);
+
     }
 
     :global(.element-category-card:hover) {

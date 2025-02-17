@@ -3,7 +3,7 @@
 
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import TitleLogin from "../components/TitleLogin.svelte";
-    import type {LoginViewProps} from "../loginWindowTypes";
+    import type {LoginViewProps} from "../loginPageTypes";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
     import {onMount} from "svelte";

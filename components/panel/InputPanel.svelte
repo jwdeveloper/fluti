@@ -13,12 +13,10 @@
 
 
 <Panel
-
        radius="var(--radius-medium)"
        background="var(--bg-tertiary)"
        padding="0"
        {...data}
-
      >
 
     {@render children()}

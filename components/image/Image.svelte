@@ -39,10 +39,11 @@
     });
 </script>
 
-<div class="img-container {className}" bind:this={element}>
+<figure class="img-container {className}" bind:this={element}>
     <Loader bind:isLoading={isLoading}/>
     <img src={src} onload={handleImageLoad}/>
-</div>
+    <slot/>
+</figure>
 
 <style>
     .img-container {

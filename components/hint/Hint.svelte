@@ -1,6 +1,12 @@
 <script lang="ts">
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {scale as effect} from "svelte/transition";
+    import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+
+
+    interface HintProps extends ElementProps {
+        title?: string | undefined
+    }
 
     let {
         children,
@@ -9,7 +15,7 @@
         fullWidth = false, style = '',
         offset = "125%",
         panelStyle
-    } = $props();
+    }: HintProps = $props();
     let show = $state(false)
 
     let handleOpen = () => {
@@ -50,7 +56,9 @@
             <Panel variant="component-panel-border-dark"
                    padding="0.6em"
                    style="text-wrap: nowrap;">
+                <h5>
                 {title}
+                </h5>
             </Panel>
         </div>
     {/if}
@@ -64,6 +72,7 @@
     .contianer {
         width: auto;
         height: auto;
+
     }
 
     .hint {

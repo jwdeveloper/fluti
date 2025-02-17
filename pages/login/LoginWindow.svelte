@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {loginData} from "./data";
     import {useLoginController} from "./loginController.svelte";
     import LoginView from "./views/LoginView.svelte";
@@ -7,16 +6,63 @@
     import ErrorView from "./views/ErrorView.svelte";
     import EmailView from "./views/EmailView.svelte";
     import RecoveryView from "./views/RecoveryView.svelte";
+    import type {LoginPageProps} from "./loginPageTypes";
 
-    const {oAuth = true, ...props}: LoginWindowProps = $props();
+    const props: LoginPageProps = $props();
     const translations = loginData;
-    const controller = useLoginController();
-    const breakpoints = useBreakpoints();
-    onMount(() => {
-        controller.props = props;
-        controller.props.oAuth = oAuth;
-    })
 
+    const defaultProps: LoginPageProps = {
+        oAuth: {
+            enable: true,
+            prefix: 'Continue with',
+            providers: [
+                {
+                    name: "Google",
+                    iconColor: "red",
+                    // borderColor: "red",
+                    onlyIcon: false
+                },
+                {
+                    name: "Facebook",
+                    iconColor: "#1877F2",
+                    // borderColor: "#1877F2",
+                    onlyIcon: true
+
+                },
+                {
+                    name: "Discord",
+                    iconColor: "#5865F2",
+                    // borderColor: "#5865F2",
+                    onlyIcon: true
+                },
+                {
+                    name: "Github",
+                    iconColor: "#2f3034",
+                    borderColor: "#ffffff",
+                    onlyIcon: true
+                },
+
+            ]
+        },
+        links: {
+            privacyPolicy: '/privacy-policy',
+            termsAndCondition: '/terms-and-conditions',
+            error: '/error',
+            login: '/login',
+            page: '/'
+        }
+    }
+
+
+    const mergedData = {...defaultProps, ...props}
+    const data: LoginPageProps = {
+        oAuth: {...defaultProps?.oAuth, ...props?.oAuth},
+        templates: {...defaultProps?.templates, ...props?.templates},
+        links: {...defaultProps?.links, ...props?.links},
+    }
+    const finalData = {...mergedData, ...data}
+
+    const controller = useLoginController(finalData);
     const currentView = $derived.by(() => {
         switch (controller.view) {
             case "login":
@@ -34,27 +80,9 @@
         }
     })
 
-    import type {LoginWindowProps} from "./loginWindowTypes";
-    import {onMount} from "svelte";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 </script>
 
 
-<Panel variant="component-panel-border"
-       padding="1em 4em 2em 4em"
-       width="400px"
-       useArrowMovement={true}
-       breakpoints={{
-           'sm':{width:"100%", height:"100%",maxWidth:"100%",padding:"0"}
-       }}
-       gap="0"
-       direction="column">
-
-    {#if currentView}
-        <div style="padding: 0 2em; height: 100%; width: {breakpoints.breakpoint === 'sm'?'100%':'auto'};">
-            <svelte:component this="{currentView}"
-                              controller={controller}
-                              translation={translations}/>
-        </div>
-    {/if}
-</Panel>
+<svelte:component this="{currentView}"
+                  controller={controller}
+                  translation={translations}/>

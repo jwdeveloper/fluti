@@ -82,6 +82,7 @@
         isLoading = $bindable(false),
         readOnly = false,
         placeholderTemplate = undefined,
+        style='',
         template = itemTemplate,
         footer = undefined,
         ...data
@@ -179,7 +180,7 @@
 
         <Icon rightIcon="fa-solid fa-sort"
               icon={icon}
-              style="width: 100%; "
+              style="width: 100%; {style};"
               onClick={handleOpen}>
             <Panel width="100%" padding="0 0.5em">
                 <div style="text-wrap: nowrap; font-weight: 400; width: 100%">
@@ -210,19 +211,20 @@
         <Panel direction="column"
                width="200px"
                background="var(--bg-primary)"
-               padding="0"
+               padding="0.5em"
                justify="flex-start"
-               gap="0"
+               gap="1em"
                style="
                  z-index: var(--z-index-4);
                  box-shadow: 0 0 1em 0.1em var(--shadow);
                  border: 2px solid var(--bg-tertiary);
                  top: 5px;
-                 pointer-events: auto"
+                 pointer-events: auto;
+                 ;"
                overflow="hidden">
 
             {#if enableSearch}
-                <Panel padding="0.5em"
+                <Panel
                        direction="column"
                        gap="0.1em"
                        width="100%">
@@ -230,7 +232,6 @@
                            bind:value={input}
                            icon="fa fa-search"/>
                 </Panel>
-                <Separator/>
             {/if}
 
             <Panel
@@ -270,11 +271,12 @@
 <style>
     :global(.item-template) {
         min-height: 30px !important;
+        background: var(--bg-secondary);
 
     }
 
     :global(.item-template:hover) {
-        background: var(--bg-secondary);
+        background: var(--bg-tertiary);
         cursor: pointer;
     }
 </style>
