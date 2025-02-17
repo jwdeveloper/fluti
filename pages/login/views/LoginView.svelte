@@ -108,11 +108,13 @@
 
 
         <ButtonLogin
-                title="Continue"
+                showPrivacyPolicy={true}
+                title={translation.continue}
                 onButtonClick={()=>controller.login()}
                 onActionClick={() => controller.view = 'register'}
                 actionIcon="fa fa-user"
                 actionTitle="Utwórz konto"/>
+
     </Element>
 </Element>
 

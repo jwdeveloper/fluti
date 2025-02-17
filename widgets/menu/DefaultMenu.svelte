@@ -15,6 +15,7 @@
     interface DefaultMenuProps extends ElementProps {
         items: DefaultMenuItemProps[]
         highlightColor?: string
+        textColor?: string
         currentItemKey?: string
         onClick?: (item: DefaultMenuItemProps) => void
     }
@@ -22,7 +23,8 @@
 
     const {
         items,
-        highlightColor = flutiTheme.background.transparent,
+        highlightColor = flutiTheme.background.tertiary,
+        textColor = flutiTheme.color.accent,
         currentItemKey,
         onClick = () => {
         },
@@ -141,6 +143,7 @@
 </Element>
 
 <style>
+
     .menu-item {
         padding: 0.9em 1.5em;
         border-radius: var(--radius-strong);

@@ -1,5 +1,6 @@
 <script>
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         style = '',
@@ -11,15 +12,17 @@
 
 
 {#snippet Bar()}
-    <div class="bar" style='margin: {margin}; {style}'>
-    </div>
+    <Element width="100%" height="100%">
+        <div class="bar" style='margin: {margin}; {style}'/>
+    </Element>
+
 {/snippet}
 
 {#if children}
-    <Panel width="100%" padding="0">
+    <Element gap="1em" width="100%">
 
         <Bar/>
-        <Panel
+        <Element
                 height="100%"
                 style="
          text-wrap: nowrap;
@@ -27,9 +30,9 @@
          font-size: {fontSize};
          color: var(--text-muted);">
             {@render children()}
-        </Panel>
+        </Element>
         <Bar/>
-    </Panel>
+    </Element>
 
 {:else }
     <Bar/>

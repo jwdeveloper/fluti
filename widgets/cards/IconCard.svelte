@@ -3,6 +3,9 @@
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+    import {scale} from 'svelte/transition'
+    import {onMount} from "svelte";
+    import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
 
     interface IconCardProps extends ElementProps {
         icon?: string
@@ -12,10 +15,12 @@
 
     let {icon = '', title = '', subtitle = '', ...props}: IconCardProps = $props();
 
+
 </script>
 
 
-<Element width="100%" gap="1em"
+<Element
+        width="100%" gap="1em"
          align="flex-start"
          justify="flex-start"
          {...props}>

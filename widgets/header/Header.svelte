@@ -7,6 +7,7 @@
     import {useThemes} from "$lib/fluti/widgets/theme/themeController.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     interface TopMenuProps {
         height?: number;
@@ -131,7 +132,8 @@
                 <Logo/>
             </Element>
             <Element width="100%" justify="center">
-                <DefaultMenu items={defaultItems}/>
+                <DefaultMenu
+                        items={defaultItems}/>
             </Element>
             <Element padding="0 1em"
                      justify="flex-start">

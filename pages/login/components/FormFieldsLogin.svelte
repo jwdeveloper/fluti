@@ -18,6 +18,13 @@
     }: FormFieldsProps = $props();
 
 
+    let isPasswordShown = $state(false)
+    let passwordType = $derived.by(() => {
+        return isPasswordShown ? 'text' : 'password'
+    })
+    let passwordIcon = $derived.by(() => {
+        return !isPasswordShown ? 'fa fa-eye' : 'fa fa-eye-slash'
+    })
 
 </script>
 
@@ -30,7 +37,7 @@
             id="form-login"
             placeholder="Enter email address"
             type="email"
-            />
+    />
 
 </Label>
 
@@ -41,10 +48,11 @@
             error={controller.invalidFields?.password}
             title={'Password'}>
         <Input2
+                onIconClick={()=>{ isPasswordShown = !isPasswordShown}}
                 id="form-password"
-                type="password"
+                type={passwordType}
                 placeholder="Enter password"
-                icon="fa fa-eye"/>
+                icon={passwordIcon}/>
 
     </Label>
 {/if}
