@@ -35,7 +35,7 @@
     let aElement: any;
     let selectedItemKey = $state(currentItemKey);
     let isBackVisible = $state(false)
-    const time = 300;
+    const time = 200;
     let menuDirection = $derived.by(() => {
         return props.direction ?? 'row';
     })
