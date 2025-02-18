@@ -39,15 +39,18 @@ let handleOAuthLogin = async (provider: string) => {
     if (!oauthProvider)
         throw new Error("OAuth provider " + provider + " not found!")
 
-    const redirectUrl = `${window.location.origin}/oauth/${provider.toLowerCase()}`;
     const authUrl = oauthProvider.authURL;
     const state = oauthProvider.state;
     const verifier = oauthProvider.codeVerifier;
+    const redirectUrl = `${window.location.origin}/oauth/${provider.toLowerCase()}`;
 
     document.cookie = `oauth_state=${encodeURIComponent(state)}; path=/; Secure; SameSite=Lax`;
     document.cookie = `oauth_verifier=${encodeURIComponent(verifier)}; path=/; Secure; SameSite=Lax`;
 
-    const fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
+    let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
+    if (provider.toLowerCase() === 'github') {
+        fullUrl = fullUrl.replace("redirect_uri", '')
+    }
     window.location.href = fullUrl;
     return false;
 }
