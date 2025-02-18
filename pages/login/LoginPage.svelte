@@ -3,6 +3,7 @@
     import LoginWindow from "$lib/fluti/pages/login/LoginWindow.svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import Separator from "$lib/fluti/components/separator/Separator.svelte";
 
     const props: LoginPageProps = $props();
     const breakpoints = useBreakpoints()
@@ -24,7 +25,7 @@
         <Element height="100%"
                  width="100%"
                  background="var(--bg-primary)"
-                 radius="0">
+                 >
             <Element width="50%" direction="column">
                 <LoginWindow {...props}/>
             </Element>

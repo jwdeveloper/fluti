@@ -61,7 +61,10 @@ export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
                 baseMapping.login = rawUser.username;
                 baseMapping.country = rawUser.locale;
                 break
+            case 'github':
+                baseMapping.verified = true;
+                baseMapping.login = rawUser.login;
+                break
         }
     return baseMapping;
 }
-

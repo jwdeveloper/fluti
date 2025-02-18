@@ -2,10 +2,9 @@
     import Label from "$lib/fluti/components/label/Label.svelte";
     import type {LoginController} from "../loginController.svelte";
     import Input2 from "../../../../../components/input/Input2.svelte";
-    import type {InputType} from "../../../../../components/input/Input.type";
+    import PasswordInput from "$lib/fluti/pages/login/components/PasswordInput.svelte";
 
     interface FormFieldsProps {
-        transition: any,
         enablePassword?: boolean,
         enableRepeatPassword?: boolean,
         controller: LoginController
@@ -13,28 +12,20 @@
 
     let {
         controller,
-        transition = {},
         enablePassword = false,
         enableRepeatPassword = false,
     }: FormFieldsProps = $props();
 
-
-    let isPasswordShown = $state(false)
-    let passwordType: InputType = $derived.by(() => {
-        return isPasswordShown ? 'text' : 'password'
-    })
-    let passwordIcon = $derived.by(() => {
-        return !isPasswordShown ? 'fa fa-eye' : 'fa fa-eye-slash'
-    })
-
+    let translations = controller.props.messages.form;
 </script>
 
 
-<Label title='Email or login' error={controller.invalidFields?.email}>
+<Label title={translations.email.title} error={controller.invalidFields?.email}>
 
     <Input2 bind:value={controller.form.email}
-            id="form-login"
-            placeholder="Enter email address"
+            id="email"
+            invalid={controller.invalidFields?.email !== undefined}
+            placeholder={translations.email.subtitle}
             type="email"/>
 
 </Label>
@@ -42,15 +33,14 @@
 {#if enablePassword}
     <Label
             error={controller.invalidFields?.password}
-            title={'Password'}>
-        <Input2
+            title={translations.password.title}>
+
+        <PasswordInput
                 bind:value={controller.form.password}
-                onIconClick={()=>{ isPasswordShown = !isPasswordShown}}
-                id="form-password"
-                type={passwordType}
-                invalid={controller.invalidFields?.password !== undefined}
-                placeholder="Enter password"
-                icon={passwordIcon}/>
+                id="password"
+                disabled={controller.isLoading}
+                placeholder={translations.password.subtitle}
+                invalid={controller.invalidFields?.password !== undefined}/>
 
     </Label>
 {/if}
@@ -58,13 +48,14 @@
 {#if enableRepeatPassword}
     <Label
             error={controller.invalidFields?.confirmPassword}
-            title={transition.passwordRepeat ??'Repeat password'}>
-        <Input2 bind:value={controller.form.confirmPassword}
+            title={translations.repeatPassword.title}>
+
+        <PasswordInput
+                bind:value={controller.form.confirmPassword}
+                id="repeat-password"
                 disabled={controller.isLoading}
-                type="password"
-                placeholder="Repeat password"
-                invalid={controller.invalidFields?.confirmPassword !== undefined}
-                icon="fa fa-lock"/>
+                placeholder={translations.repeatPassword.subtitle}
+                invalid={controller.invalidFields?.confirmPassword !== undefined}/>
     </Label>
 {/if}
 

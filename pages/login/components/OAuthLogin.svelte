@@ -12,7 +12,7 @@
 
     const {controller, onProviderClick}: OAuthLoginProps = $props();
     const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers ?? [])
-
+    const translations = controller.props.messages.loginView.oauth;
     const providersIcons = $derived.by(() => {
         return items.filter(e => e.onlyIcon);
     })
@@ -53,8 +53,8 @@
 
 
 {#snippet OAuthButton(provider)}
-    {@const prefix = controller.props?.messages?.oAuthPrefix ?? "Continue with"}
-    <Hint title={provider.onlyIcon ? prefix+ " " +provider.name: undefined}>
+
+    <Hint title={provider.onlyIcon ? translations.continue+ " " +provider.name: undefined}>
         {@const isIcon = provider.onlyIcon}
         <Button2
                 textSize="h4"
@@ -67,7 +67,7 @@
                 radius={flutiTheme.radius.huge}
                 icon='fa-brands fa-{provider.name.toLowerCase()}'>
             {#if !provider.onlyIcon}
-                {prefix} {provider.name}
+                {translations.continue} {provider.name}
             {/if}
         </Button2>
     </Hint>

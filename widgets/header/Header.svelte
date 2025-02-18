@@ -133,6 +133,7 @@
             </Element>
             <Element width="100%" justify="center">
                 <DefaultMenu
+                        highlightColor={flutiTheme.background.secondary}
                         items={defaultItems}/>
             </Element>
             <Element padding="0 1em"

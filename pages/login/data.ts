@@ -1,22 +1,5 @@
 import type {LoginPagePropsTranslations} from "$lib/fluti/pages/login/loginPageTypes";
 
-export let loginData = {
-    title: "ESC00L logowanie",
-    rememberMe: "Zapamiętaj mnie",
-    forgotPassword: "Zapomniałeś hasła?",
-    continue: "Kontynuuj",
-    signIn: "Zaloguj się",
-    alternative: "Albo",
-    password: "Hasło",
-    loginOrEmail: "Email lub nazwa konta",
-
-
-    recovery: {
-        title: "Zapomniałeś hasła?",
-        description: "Bez obaw, wyślemy Ci link do zresetowania hasła.",
-    }
-}
-
 export let defaultTranslation: LoginPagePropsTranslations = {
 
     emailView: {
@@ -39,9 +22,8 @@ export let defaultTranslation: LoginPagePropsTranslations = {
             title: "Create a New Account",
             subtitle: "Join our community today!",
         },
-        iAcceptTerms: "I agree to the Terms and Conditions of Service.",
-        iAcceptPolicy: "I agree to the Privacy Policy.",
-        youMustAccept:"You must accept to register",
+        iAgreeTo: "I agree to the ",
+        youMustAccept: "You must accept to register",
         button: {
             title: "Register",
             subtitle: "Return to Login",
@@ -49,6 +31,52 @@ export let defaultTranslation: LoginPagePropsTranslations = {
         fieldCanNotBeEmpty: "This field cannot be empty.",
         passwordsDoesNotMatch: "Passwords do not match.",
         userAlreadyExists: 'This email is already taken'
-    }
+    },
 
+    loginView: {
+        oauth: {
+            continue: 'Continue with'
+        },
+        top: {
+            title: '',
+            subtitle: 'Create free account and join our community!'
+        },
+        rules: {
+            accept: "By continuing, you agree to",
+            terms: 'Terms of service',
+            policy: 'Privacy policy'
+        },
+        button: {
+            title: 'Continue',
+            subtitle: 'Create a new account'
+        },
+        or: "or",
+        forgotPassword: "I've forgot my password",
+    },
+
+    recoveryView: {
+        top: {
+            title: 'Forgot password?',
+            subtitle: "Don't worry we will send you recovery email"
+        },
+        button: {
+            title: "Send",
+            subtitle: "Back to login"
+        }
+    },
+
+    form: {
+        email: {
+            title: 'Email',
+            subtitle: 'Enter email address'
+        },
+        password: {
+            title: 'Password',
+            subtitle: 'Enter password'
+        },
+        repeatPassword: {
+            title: "Repeat password",
+            subtitle: 'Repeat password'
+        }
+    }
 }

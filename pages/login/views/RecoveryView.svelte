@@ -8,7 +8,7 @@
     import Title from "$lib/fluti/components/title/Title.svelte";
     import {onMount} from "svelte";
 
-    let {controller, translation}: LoginViewProps = $props();
+    let {controller}: LoginViewProps = $props();
 
     let isRecoveryView = $state(true)
 
@@ -24,17 +24,18 @@
         isRecoveryView = false;
     }
 
+    let translations = controller.props.messages.recoveryView;
+
 </script>
 
 {#snippet RecoveryView()}
-    <TitleLogin title={translation.recovery.title}
+    <TitleLogin title={translations.top.title}
                 icon="fa fa-envelope"
-                description={translation.recovery.description}
+                description={translations.top.subtitle}
     />
 
 
     <FormFieldsLogin controller={controller}
-                     transition={translation}
                      enablePassword={false}
                      enableRepeatPassword={false}
     />
@@ -58,7 +59,8 @@
     </Panel>
     <Panel width="100%" padding="0">
         <ButtonLogin onButtonClick={()=> controller.view = "login"}
-                     title="Powrót do logowania"/>
+                     title={translations.button.title}
+                     actionTitle={translations.button.subtitle}/>
     </Panel>
 {/snippet}
 

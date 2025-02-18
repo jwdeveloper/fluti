@@ -8,7 +8,7 @@
     let {
         title,
         actionTitle,
-        showPrivacyPolicy = false,
+        children=undefined,
         isLoading = false,
         actionIcon = 'fa fa-arrow-left',
         buttonProps = undefined,
@@ -21,18 +21,6 @@
 </script>
 
 
-{#snippet PrivacyPolicy()}
-    <h6 style="font-weight: normal;
-         text-align: center;
-         width: 100%;
-         margin-bottom: 1em;
-         padding: 0 var(--padding-medium)">
-        By continuing, you agree to Mobbin’s
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/terms">Terms of Service</a>
-        and
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/privacy">Privacy policy</a>
-    </h6>
-{/snippet}
 
 <Panel direction="column" width="100%" gap="0.5em" padding="0">
 
@@ -44,9 +32,8 @@
              {...buttonProps}>
         {title}
     </Button2>
-    {#if showPrivacyPolicy}
-        <PrivacyPolicy/>
-    {/if}
+
+    {@render children?.()}
 
     {#if actionTitle}
         <Link onClick={onActionClick}>

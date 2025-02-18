@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {defaultTranslation, loginData} from "./data";
+    import {defaultTranslation} from "./data";
     import {useLoginController} from "./loginController.svelte";
     import LoginView from "./views/LoginView.svelte";
     import RegisterView from "./views/RegisterView.svelte";

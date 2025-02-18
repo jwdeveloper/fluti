@@ -31,24 +31,47 @@ export interface LoginPagePropsTranslations {
     subtitle?: string
     invalidLoginOrPassword?: string
 
+    form: {
+        email: i18Section
+        password: i18Section
+        repeatPassword: i18Section
+    }
+
     registerView: {
         top: i18Section
         button: i18Section
-        iAcceptTerms: string
-        iAcceptPolicy: string,
+        iAgreeTo: string
 
         fieldCanNotBeEmpty: string,
         passwordsDoesNotMatch: string,
         userAlreadyExists: string
         youMustAccept: string
-
     }
 
     emailView: {
         top: i18Section
         center: i18Section
         button: i18Section
+    }
 
+    recoveryView:{
+        top: i18Section
+        button: i18Section
+    }
+
+    loginView: {
+        rules: {
+            accept: string,
+            terms: string,
+            policy: string
+        },
+        oauth: {
+            continue: string
+        }
+        top: i18Section
+        button: i18Section
+        forgotPassword: string
+        or: string
     }
 }
 

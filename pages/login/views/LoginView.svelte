@@ -9,10 +9,13 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import ButtonLogin from "$lib/fluti/pages/login/components/ButtonLogin.svelte";
+    import Space from "$lib/fluti/components/space/Space.svelte";
 
-    let {controller, translation = {}}: LoginViewProps = $props();
+    let {controller}: LoginViewProps = $props();
     let logoVisible = $state(false)
     let logo = "icons/logo.png"
+
+    let translation = controller.props.messages.loginView;
 
     onMount(() => {
         logoVisible = true;
@@ -35,11 +38,22 @@
 {/snippet}
 
 
+{#snippet PrivacyPolicy()}
+    <h6 style="font-weight: normal;
+         text-align: center;
+         width: 100%;
+         margin-bottom: 1em;
+         padding: 0 var(--padding-medium)">
+        {translation.rules.accept}
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/terms">{translation.rules.terms}</a>,
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/privacy">{translation.rules.policy}</a>
+    </h6>
+{/snippet}
+
 <Element
         height="100%"
         width="100%"
-        direction="column"
-        gap="0">
+        direction="column">
 
     {#if controller.props?.templates?.logoTemplate}
         <svelte:component this={controller.props.templates.logoTemplate} {...controller.props}/>
@@ -47,13 +61,13 @@
         <Logo/>
     {/if}
 
-    {#if controller.props?.messages?.subtitle}
+    {#if translation.top.subtitle}
         <h5 style="font-weight: normal;
          text-align: center;
          width: 100%;
          margin-bottom: 1em;
          padding: 0 var(--padding-medium)">
-            {controller.props?.messages?.subtitle}
+            {translation.top.subtitle}
         </h5>
     {/if}
 
@@ -70,17 +84,17 @@
                 translation={translation}
                 onProviderClick={(p)=> controller.loginOAuth(p)}/>
 
-        <Separator
-                margin="1em 0 2em 0"
-                style="
+
+        <Separator style="
          height: 0.1em;
          background: var(--bg-secondary)">
             <div style="color: var(--text-muted);
              display: flex;
              font-size: 0.6em; font-weight: 500">
-                {translation.alternative}
+                {translation.or}
             </div>
         </Separator>
+        <Space variant="tiny"/>
     {/if}
 
 
@@ -105,18 +119,18 @@
                 {translation.forgotPassword}
             </Link>
         </Element>
-
-
         <ButtonLogin
                 isLoading={controller.isLoading}
-                showPrivacyPolicy={true}
-                title={translation.continue}
+                title={translation.button.title}
                 onButtonClick={()=>controller.login()}
                 onActionClick={() => controller.view = 'register'}
                 actionIcon="fa fa-user"
-                actionTitle="Utwórz konto"/>
-
+                actionTitle={translation.button.subtitle}>
+            {@render PrivacyPolicy()}
+        </ButtonLogin>
     </Element>
 </Element>
+
+
 
 

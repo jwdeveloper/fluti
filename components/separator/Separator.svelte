@@ -1,5 +1,4 @@
 <script>
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
@@ -20,20 +19,18 @@
 
 {#if children}
     <Element gap="1em" width="100%">
-
         <Bar/>
         <Element
                 height="100%"
+                fontSize={fontSize}
+                color={'var(--text-muted)'}
                 style="
          text-wrap: nowrap;
-         font-weight: bold;
-         font-size: {fontSize};
-         color: var(--text-muted);">
+         font-weight: bold;">
             {@render children()}
         </Element>
         <Bar/>
     </Element>
-
 {:else }
     <Bar/>
 {/if}

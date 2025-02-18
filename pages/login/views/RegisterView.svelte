@@ -54,7 +54,26 @@
         controller.view = 'email';
     }
 
+    let handleClickAgree = (e: MouseEvent, link: string) => {
+        e.preventDefault()
+        e.stopPropagation()
+        window.open(link, "_blank");
+    }
 </script>
+
+
+{#snippet LinkContent(link, content)}
+    <Element>
+        {translation.iAgreeTo}
+        <h5
+                onclick={(e)=>handleClickAgree(e,link)}
+                style="
+                     font-weight: 900;
+                     border-bottom: 1px solid black">
+            {content}
+        </h5>
+    </Element>
+{/snippet}
 
 
 <Element width="100%" height="100%" direction="column" gap="1.5em" padding="2em 0 0 0">
@@ -63,24 +82,24 @@
     <h5 style:color={flutiTheme.color.error}>{controller.error}</h5>
     <TitleLogin title={translation.top.title}
                 description={translation.top.subtitle}
-                icon="fa fa-envelope"
+                icon="fa fa-user"
     />
     <FormFieldsLogin
             enablePassword={true}
             enableRepeatPassword={true}
             controller={controller}
-            transition={translation}/>
+            />
 
     <Element direction="column" width="100%" align="flex-start">
         <Label error={controller?.invalidFields['acceptPolicy']} gap="0">
             <Checkbox bind:value={controller.form.acceptPolicy}>
-                {translation.iAcceptPolicy}
+                {@render LinkContent("/blog/privacy", controller.props.messages.loginView.rules.policy)}
             </Checkbox>
         </Label>
 
         <Label error={controller?.invalidFields['acceptTerms']} gap="0">
             <Checkbox bind:value={controller.form.acceptTerms}>
-                {translation.iAcceptTerms}
+                {@render LinkContent("/blog/terms", controller.props.messages.loginView.rules.terms)}
             </Checkbox>
         </Label>
     </Element>
