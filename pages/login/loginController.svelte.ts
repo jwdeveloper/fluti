@@ -16,10 +16,11 @@ export class LoginController {
 
     reset() {
         this.form = {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            acceptRules: false
+            email: undefined,
+            password: undefined,
+            confirmPassword: undefined,
+            acceptPolicy: false,
+            acceptTerms: false
         }
         this.invalidFields = {}
         this.view = 'login'
@@ -50,6 +51,8 @@ export class LoginController {
             await action(this.form);
         } catch (e) {
             this.error = e + "";
+            if (this.props?.onError)
+                this.props?.onError(this.form, this, e)
             status = false;
         }
         this.isLoading = false;

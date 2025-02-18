@@ -9,7 +9,9 @@
         title,
         actionTitle,
         showPrivacyPolicy = false,
+        isLoading = false,
         actionIcon = 'fa fa-arrow-left',
+        buttonProps = undefined,
         onButtonClick = (e: MouseEvent) => {
         },
         onActionClick = (e: MouseEvent) => {
@@ -36,7 +38,10 @@
 
     <Button2 onClick={onButtonClick}
              variant="filled"
-             fullWidth={true}>
+             isLoading={isLoading}
+             disabled={isLoading}
+             fullWidth={true}
+             {...buttonProps}>
         {title}
     </Button2>
     {#if showPrivacyPolicy}

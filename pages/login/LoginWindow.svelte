@@ -1,20 +1,17 @@
 <script lang="ts">
-    import {loginData} from "./data";
+    import {defaultTranslation, loginData} from "./data";
     import {useLoginController} from "./loginController.svelte";
     import LoginView from "./views/LoginView.svelte";
     import RegisterView from "./views/RegisterView.svelte";
-    import ErrorView from "./views/ErrorView.svelte";
     import EmailView from "./views/EmailView.svelte";
     import RecoveryView from "./views/RecoveryView.svelte";
     import type {LoginPageProps} from "./loginPageTypes";
 
     const props: LoginPageProps = $props();
-    const translations = loginData;
 
     const defaultProps: LoginPageProps = {
         oAuth: {
             enable: true,
-            prefix: 'Continue with',
             providers: [
                 {
                     name: "Google",
@@ -59,6 +56,7 @@
         oAuth: {...defaultProps?.oAuth, ...props?.oAuth},
         templates: {...defaultProps?.templates, ...props?.templates},
         links: {...defaultProps?.links, ...props?.links},
+        messages: {...defaultTranslation, ...props?.messages}
     }
     const finalData = {...mergedData, ...data}
 
@@ -73,8 +71,6 @@
                 return RecoveryView;
             case "email":
                 return EmailView;
-            case "error":
-                return ErrorView;
             default:
                 return LoginView;
         }
@@ -85,4 +81,4 @@
 
 <svelte:component this="{currentView}"
                   controller={controller}
-                  translation={translations}/>
+                  translation={data.messages}/>

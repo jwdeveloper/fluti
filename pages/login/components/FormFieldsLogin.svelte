@@ -2,6 +2,7 @@
     import Label from "$lib/fluti/components/label/Label.svelte";
     import type {LoginController} from "../loginController.svelte";
     import Input2 from "../../../../../components/input/Input2.svelte";
+    import type {InputType} from "../../../../../components/input/Input.type";
 
     interface FormFieldsProps {
         transition: any,
@@ -19,7 +20,7 @@
 
 
     let isPasswordShown = $state(false)
-    let passwordType = $derived.by(() => {
+    let passwordType: InputType = $derived.by(() => {
         return isPasswordShown ? 'text' : 'password'
     })
     let passwordIcon = $derived.by(() => {
@@ -29,28 +30,25 @@
 </script>
 
 
-<Label
-        title='Email or login'
-        error={controller.invalidFields?.email}>
+<Label title='Email or login' error={controller.invalidFields?.email}>
 
     <Input2 bind:value={controller.form.email}
             id="form-login"
             placeholder="Enter email address"
-            type="email"
-    />
+            type="email"/>
 
 </Label>
 
 {#if enablePassword}
-
-
     <Label
             error={controller.invalidFields?.password}
             title={'Password'}>
         <Input2
+                bind:value={controller.form.password}
                 onIconClick={()=>{ isPasswordShown = !isPasswordShown}}
                 id="form-password"
                 type={passwordType}
+                invalid={controller.invalidFields?.password !== undefined}
                 placeholder="Enter password"
                 icon={passwordIcon}/>
 
@@ -58,11 +56,14 @@
 {/if}
 
 {#if enableRepeatPassword}
-    <Label title={transition.passwordRepeat ??'Repeat password'}>
+    <Label
+            error={controller.invalidFields?.confirmPassword}
+            title={transition.passwordRepeat ??'Repeat password'}>
         <Input2 bind:value={controller.form.confirmPassword}
                 disabled={controller.isLoading}
                 type="password"
-                placeholder="{transition.passwordRepeat}..."
+                placeholder="Repeat password"
+                invalid={controller.invalidFields?.confirmPassword !== undefined}
                 icon="fa fa-lock"/>
     </Label>
 {/if}

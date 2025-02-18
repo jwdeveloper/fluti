@@ -1,10 +1,11 @@
 import type {LoginFormData, LoginPageProps} from "$lib/fluti/pages/login/loginPageTypes";
 import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
 import {pocketbaseClient} from "$lib/pocketbase-client";
-
+import type {LoginController} from "$lib/fluti/pages/login/loginController.svelte";
 
 let session = useUserSession()
 let handleUserLogin = async (data: LoginFormData) => {
+
     const authData = await pocketbaseClient
         .collection('users')
         //@ts-ignore
@@ -15,6 +16,34 @@ let handleUserLogin = async (data: LoginFormData) => {
     document.cookie += pocketbaseClient.authStore.exportToCookie()
     session.redirectTo("/")
     return true;
+}
+
+let handleError = async (data: LoginFormData, controller: LoginController, error: any) => {
+    if (error.message === 'Failed to authenticate.') {
+        controller.error = ''
+        controller.invalidFields['password'] = controller?.props?.messages?.invalidLoginOrPassword ?? error.message;
+    }
+    if (error.message === 'Failed to create record.') {
+        if (!error?.data) {
+            return
+        }
+        controller.error = ''
+        let data = error.data.data
+        if (data?.email) {
+            controller.invalidFields['email'] = data.email.message;
+            if (data?.email.code === 'validation_not_unique') {
+                controller.invalidFields['email'] = controller?.props?.messages?.registerView.userAlreadyExists;
+            }
+            return
+        }
+
+        if (data?.password) {
+            controller.invalidFields['email'] = ''
+            controller.invalidFields['password'] = data.password.message;
+            return
+        }
+        controller.error = error.message
+    }
 }
 
 let handleSendRecoveryMail = async (data: LoginFormData) => {
@@ -87,7 +116,8 @@ export function pocketbaseLoginPageProps(props?: LoginPageProps): LoginPageProps
         onCheckVerification: handleUserCheckVerification,
         onSendRecoveryMail: handleSendRecoveryMail,
         onRegister: handleUserRegister,
-        onLogin: handleUserLogin
+        onLogin: handleUserLogin,
+        onError: handleError
     }
 
     return {...pocketbaseProps, ...props}

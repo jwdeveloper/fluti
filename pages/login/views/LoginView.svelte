@@ -108,6 +108,7 @@
 
 
         <ButtonLogin
+                isLoading={controller.isLoading}
                 showPrivacyPolicy={true}
                 title={translation.continue}
                 onButtonClick={()=>controller.login()}

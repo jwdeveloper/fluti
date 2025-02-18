@@ -104,8 +104,8 @@
         <img src={logo} alt="logo" style="height: {height-height*0.2}px;"/>
     {/if}
 
-    <i style="font-size: 3em;color: var(--accent-primary)" class="fa fa-line-chart"></i>
-    <h1 style="color: var(--accent-primary)">{title}</h1>
+    <i style="font-size: var(--font-size-huge);color: var(--accent-primary)" class="fa fa-line-chart"></i>
+    <h2 style="color: var(--accent-primary)">{title}</h2>
 
 {/snippet}
 

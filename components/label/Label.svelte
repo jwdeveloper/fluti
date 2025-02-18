@@ -38,7 +38,7 @@
         <div transition:fly={{y:-50}} style="width: 100%;">
 
             <Element
-                    padding="0 0.2em"
+                    padding="0 0.5em"
                     width="100%"
                     gap="0.4em"
                     tag="h5"

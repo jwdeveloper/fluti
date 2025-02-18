@@ -27,11 +27,9 @@
 
     function handleClick(event) {
         value = !value;
-
-
-        if (event?.target)
-            setTimeout(() => event.target.checked = value, 0);
-
+        //
+        // if (event?.target)
+        //     setTimeout(() => event.target.checked = value, 0);
         onClick(value)
     }
 </script>
@@ -40,12 +38,13 @@
 {#snippet InputSnippet()}
 
     <InputPanel
+            onClick={handleClick}
             style="{isFocues?'border: 2px solid var(--text-light); !important':''}"
             className="element-checkbox">
         <input type="checkbox"
                onfocus={()=> isFocues= true}
                onfocusout={()=> isFocues= false}
-               checked={value} tabindex="0"/>
+               bind:checked={value} tabindex="0"/>
         <span class="checkmark">
         <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,9 +64,10 @@
 
 
 {#if children}
-    <Panel onClick={handleClick} panelType="grid" columns="auto 1fr" padding="0" gap="0.5em">
+    <Panel onClick={handleClick}
+           panelType="grid" columns="auto 1fr" padding="0" gap="0.5em">
         <InputSnippet/>
-        <Link >
+        <Link onClick={handleClick}>
             {@render children()}
         </Link>
     </Panel>
@@ -116,6 +116,7 @@
         height: 2em;
         transition: background-color 0.3s ease;
         color: transparent;
+        pointer-events: none;
 
     }
 

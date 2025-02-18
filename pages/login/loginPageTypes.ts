@@ -1,10 +1,12 @@
 import type {LoginController} from "./loginController.svelte";
+import type {i18Section} from "$lib/fluti/services/i18/translateTypes";
 
 export interface LoginFormData {
     email?: string
     password?: string
     confirmPassword?: string
-    acceptRules?: boolean
+    acceptPolicy?: boolean
+    acceptTerms?: boolean
 }
 
 export interface LoginViewProps {
@@ -20,6 +22,36 @@ export interface OAuthProvider {
 }
 
 
+export interface LoginPagePropsTranslations {
+    oAuthPrefix?: string
+    loginButton?: string
+    forgetPassword?: string
+    continue?: string
+    register?: string
+    subtitle?: string
+    invalidLoginOrPassword?: string
+
+    registerView: {
+        top: i18Section
+        button: i18Section
+        iAcceptTerms: string
+        iAcceptPolicy: string,
+
+        fieldCanNotBeEmpty: string,
+        passwordsDoesNotMatch: string,
+        userAlreadyExists: string
+        youMustAccept: string
+
+    }
+
+    emailView: {
+        top: i18Section
+        center: i18Section
+        button: i18Section
+
+    }
+}
+
 export interface LoginPageProps {
 
     oAuth?: {
@@ -33,14 +65,7 @@ export interface LoginPageProps {
         pageRightWindowTemplate?: any
     }
 
-    messages?: {
-        oAuthPrefix?: string
-        loginButton?: string
-        forgetPassword?: string
-        continue?: string
-        register?: string
-        subtitle?: string
-    }
+    messages: LoginPagePropsTranslations,
 
     links?: {
         termsAndCondition?: string
@@ -51,6 +76,7 @@ export interface LoginPageProps {
     }
 
     onLogin?: (data: LoginFormData) => void
+    onError?: (data: LoginFormData, controller: LoginController, error: any) => void
     onOAuthLogin?: (provider: string) => void
     onRegister?: (data: LoginFormData) => void
     onRecovery?: (data: LoginFormData) => void
