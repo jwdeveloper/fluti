@@ -5,6 +5,7 @@
         style = '',
         fontSize = "1.5em",
         margin = "0",
+        vertical = false,
         children = undefined
     } = $props();
 </script>
@@ -12,7 +13,7 @@
 
 {#snippet Bar()}
     <Element width="100%" height="100%">
-        <div class="bar" style='margin: {margin}; {style}'/>
+        <div class={vertical?'bar-vertical':'bar-horizontal'} style='margin: {margin}; {style}'/>
     </Element>
 
 {/snippet}
@@ -37,11 +38,18 @@
 
 <style>
 
-    .bar {
-        background: var(--text-muted);
+    :global(.bar-horizontal) {
+        background: var(--bg-secondary);
         width: 100%;
         border-radius: 0.1em;
         height: 0.1em;
+    }
+
+    :global(.bar-vertical) {
+        background: var(--text-muted);
+        width: 0.1em;
+        border-radius: 0.1em;
+        height: 100%;
     }
 
 </style>

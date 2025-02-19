@@ -53,7 +53,7 @@
 
 <svelte:window onclick={handleClickOutside}/>
 
-<div style="position: relative;  width: 100%" bind:this={rootElement} id={id}>
+<div style="position: relative;  width: 100%;" bind:this={rootElement} id={id}>
     {@render headerSlot()}
     {#if isOpen}
         <div class="wrapper" bind:this={wrapperElement} in:blur use:addArrowController={{target:'input'}}>
@@ -66,8 +66,6 @@
 <style>
     .wrapper {
         position: fixed;
-        /*left: 10px;*/
-        /*top: 110%;*/
         width: 100%;
         height: 100%;
     }

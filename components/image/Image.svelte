@@ -1,6 +1,8 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
+    import Skieleton from "$lib/fluti/components/skieleton/Skieleton.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
 
     let {src, className = ''} = $props()
@@ -39,26 +41,31 @@
     });
 </script>
 
-<figure class="img-container {className}" bind:this={element}>
-    <Loader bind:isLoading={isLoading}/>
-    <img src={src} onload={handleImageLoad}/>
-    <slot/>
-</figure>
+<div bind:this={element} style="height: 100%; width: 100%">
+<Skieleton
+        radius={flutiTheme.radius.medium}
+        height="100%"
+        width="100%" bind:isLoading={isVisible}>
+    <figure class="img-container {className}" >
+        <img src={src} onload={handleImageLoad}/>
+    </figure>
+</Skieleton>
+</div>
+<slot/>
 
 <style>
-    .img-container {
-        position: relative;
-        width: 100%; /* Full width of its container */
+    .img-container
+    {
+        height: 100%;
         padding-top: 100%;
     }
-
     .img-container img {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Ensures the image fills the container proportionally */
-        border-radius: 1em;
+        object-fit: cover;
+        border-radius: var(--radius-medium);
     }
 </style>

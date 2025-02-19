@@ -4,6 +4,8 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import Separator from "$lib/fluti/components/separator/Separator.svelte";
+    import Button2 from "$lib/fluti/components/button/Button2.svelte";
 
 
     interface DefaultMenuItemProps {
@@ -113,12 +115,13 @@
 {/snippet}
 
 {#snippet FloatingBackground()}
+
     <Element
             bind:element={element}
             height={menuDirection === 'row'? '100%': 'auto'}
             width={menuDirection !== 'row'? '100%': 'auto'}
             style="position: absolute; pointer-events: none"
-            radius={flutiTheme.radius.large}
+            radius={flutiTheme.radius.huge}
             background={highlightColor}
     >
     </Element>
@@ -145,12 +148,13 @@
 <style>
 
     .menu-item {
-        padding: 0.9em 1.5em;
+        padding: 0.6em 1.2em;
         border-radius: var(--radius-strong);
         cursor: pointer;
-        transition: all 200ms ease-in-out;
+        transition: all 100ms ease-in-out;
         z-index: var(--z-index-2);
-        font-weight: bold;
+        font-weight: 500;
+        font-size: var(--font-size-medium);
     }
 
     .menu-item:hover {

@@ -20,7 +20,7 @@
     }
 
     textarea {
-        font-size: var(--font-size-huge);
+        font-size: var(--font-size-medium);
         border-radius: var(--radius-medium);
         padding: 1em;
         border: var(--border-size) solid var(--color-darker);

@@ -8,6 +8,7 @@
     import InputView from "$lib/fluti/pages/theme/views/InputView.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
     import ElementView from "$lib/fluti/pages/theme/views/ElementView.svelte";
+    import SkieletonView from "$lib/fluti/pages/theme/views/SkieletonView.svelte";
 
     let views = [
         {
@@ -21,6 +22,10 @@
         {
             name: 'Topography',
             view: HeadersView
+        },
+        {
+            name: 'Skieleton',
+            view: SkieletonView
         },
         {
             name: 'Element',
@@ -56,7 +61,9 @@
 
     <Element
             background={flutiTheme.background.primary}
-            padding="1em" direction="column" align="flex-start" width="100%">
+            padding="1em" height="100%"
+            justify="flex-start"
+            direction="column" align="flex-start" width="100%">
         <Title>{currentView.name}</Title>
         {@render currentView.view()}
     </Element>
