@@ -17,7 +17,7 @@
 
 
     .space-element {
-        --space-tiny: 0.5em;
+        --space-tiny: 0.05em;
         --space-small: 0.8em;
         --space-medium: 1.5em;
         --space-large: 2em;

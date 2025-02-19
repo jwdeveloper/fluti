@@ -35,7 +35,7 @@
         let index = getIndex();
         let fn = 'cubic-bezier(0.175, 0.885, 0.320, 1.275)'
         let animator = animatedElement(element);
-        animator.left(`${step * index}%`, 500, fn);
+        animator.left(`${step * index}%`, 400, fn);
     })
 
     onMount(() => {
@@ -62,7 +62,6 @@
 {/snippet}
 
 <div class="container">
-
     <div bind:this={element} class="btn-bg"/>
     {#each items as item}
         <div tabindex="0"
@@ -84,8 +83,7 @@
 
     .container {
         display: flex;
-        border-radius: var(--radius-medium);
-        border: var(--border-size) solid var(--text-muted);
+        border-radius: var(--radius-large);
         background: var(--bg-tertiary);
         position: relative;
 
@@ -102,9 +100,10 @@
             font-size: var(--font-size-normaler);
             position: relative;
             overflow: hidden;
-            padding: 0.6em 2em;
+            padding: 0.6em 1.2em;
             width: 100%;
             z-index: var(--z-index-1);
+            color: var(--text-muted);
             @media (max-width: 768px) {
                 font-size: var(--font-size-huge);
                 width: 100px;
@@ -112,23 +111,22 @@
         }
 
         .btn-bg {
+
             position: absolute;
             left: 0;
             top: 0;
             z-index: var(--z-index-1);
-            scale: 0.85;
+            scale: 0.9;
             height: 100%;
-            background: var(--bg-primary);
             border: none;
-            display: flex;
-            gap: 0.3em;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-weight: 600;
-            border-radius: var(--radius-medium);
+            font-weight: bold;
+            border-radius: var(--radius-large);
             color: var(--accent-primary);
             font-size: var(--font-size-normaler);
+            background: var(--bg-primary);
         }
     }
 </style>

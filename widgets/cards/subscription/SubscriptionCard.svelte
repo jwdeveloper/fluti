@@ -10,7 +10,7 @@
         id?: string
         name?: string
         description?: string
-        price?: number
+        prices?: number
         features?: string[]
         popular?: boolean
         currency?: string
@@ -24,7 +24,7 @@
         id = '',
         name = '',
         popular = true,
-        price = 0,
+        prices = [],
         description = '',
         features = [],
         onClick = () => {
@@ -63,19 +63,23 @@
              justify="flex-start"
              align="flex-start">
         <Element>
-            <h3>{name}</h3>
+            <h3 style="color: {flutiTheme.color.light}">{name}</h3>
             {#if props?.meta?.badge}
                 {@render PopularBadge(props?.meta?.badge)}
             {/if}
         </Element>
         <h4 style="font-weight: normal">Dla użytkowników</h4>
     </Element>
-    <Element width="100%" justify="flex-start">
-        <Title color="light">{props.prices[0].price}zł/m</Title>
+    <Element gap="0.1em" width="100%" justify="flex-start" align="flex-end">
+        <h1 style="line-height: 1.2em; color: {flutiTheme.color.light}">{props.prices[0].price}</h1>
+        <h3>zł/m</h3>
     </Element>
 
     <Element direction="column" width="100%">
         <Button2 fullWidth={true}
+                 effects={{click:{
+
+                 }}}
                  disabled={props.prices[0].price == 0}
                  variant={!props?.meta?.badge?'outline':"filled"}
                  onClick={()=>onClick(id)}
@@ -87,7 +91,8 @@
 
     <Element direction="column" align="flex-start" width="100%">
         {#each features as feature}
-            <h5 style="font-weight: normal">{feature.name}</h5>
+            <li style="font-weight: normal; font-size: 0.9em">{feature.name}</li>
+            <Space variant="tiny"/>
         {/each}
     </Element>
     <Element width="100%" height="100%" align="flex-end" justify="flex-end">

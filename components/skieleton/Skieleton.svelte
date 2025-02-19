@@ -21,6 +21,7 @@
     let previusCondition = $state(false)
     $effect(() => {
         isLoading
+        console.log(isLoading, 'loading state')
         setTimeout(() => {
             previusCondition = isLoading
         }, timeout)
@@ -52,7 +53,7 @@
         animation: skeleton-loading 1.5s infinite linear;
     }
 
-     :global(.skeleton-element-reversed) {
+    :global(.skeleton-element-reversed) {
         animation: skeleton-loading-reversed 1.5s infinite linear;
     }
 

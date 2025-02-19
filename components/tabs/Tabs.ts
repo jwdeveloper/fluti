@@ -9,6 +9,6 @@ export interface TabsProps {
 
 export interface TabsItem {
     name: string
-    icon: string,
-    component: any,
+    icon?: string,
+    component?: any,
 }
