@@ -89,7 +89,7 @@
         },
         {
             name: 'Statystyki',
-            link: '/profile'
+            link: '/stats'
         },
         {
             name: 'O nas',

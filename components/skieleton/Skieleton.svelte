@@ -3,7 +3,7 @@
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
 
     interface SkeletonProps extends ElementProps {
-        isLoading: boolean
+        isLoading?: boolean
         timeout?: number
         reversed?: boolean
         showChildren?: boolean
