@@ -2,6 +2,8 @@
     import type {SwitchProps} from "./Switch";
     import {onMount} from "svelte";
     import {addRippleEffect} from "../../effects/RippleEffect";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         value = $bindable(true), id = '', onUpdate = () => {
@@ -15,7 +17,7 @@
         onUpdate(value, id)
     }
 
-    const makeAnimation = () => {
+    const makeAnimation = (time=200) => {
         let left = value ? '0' : "100%";
         let leftEnd = value ? '100%' : "0%"
 
@@ -41,7 +43,7 @@
                 }
             ],
             {
-                duration: 200,
+                duration: time,
                 easing: 'ease-out',
                 fill: 'forwards'
             }
@@ -49,58 +51,48 @@
     }
 
     onMount(() => {
-        makeAnimation()
+        makeAnimation(0)
     })
 
 </script>
 
 
-<div id={id} class="container"
-     use:addRippleEffect={{color:"red"}}
-     style="background: {value?'var(--bg-tertiary)':'var(--bg-secondary)'}"
-     onclick={handleClick}>
+<div id={id}
+         class="switch-container"
+         use:addRippleEffect={flutiTheme.background.tertiary}
+         onclick= {handleClick}>
     <div bind:this={element} class="ball"></div>
 </div>
 
 
 <style>
-    .container {
-        padding: 0.3em;
-        border: 2px solid var(--text-primary);
+    :global(.switch-container) {
+        background: var(--bg-primary);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
         color: var(--color-darker);
+        padding: var(--border-size-medium);
         font-size: var(--font-size-big);
         user-select: none;
-        border-radius: 16px;
-        width: 3.2em;
+        border-radius: var(--radius-medium);
+        width: 2.5em;
         cursor: pointer;
         position: relative;
         overflow: hidden;
-
         transition: all 0.2s ease-in-out;
-    }
-    .container:hover
-    {
-        background: var(--text-light);
-        /*border-color: var(--text-muted);*/
-
     }
 
     .ball {
-        height: 1.2em;
+        height: var(--font-size-medium);
         position: relative;
-        width: 1.2em;
-        z-index: 10 !important;
+        width: var(--font-size-medium);
         border-radius: 50%;
-        background: var(--text-neutral);
+            background: var(--text-muted);
+        z-index: var(--z-index-5);
     }
 
     :global(.switch-active) {
         background: var(--text-light) !important;
         border-color: var(--text-light) !important;
-
     }
 
-    .ball:hover {
-        /*background: var(--text-primary);*/
-    }
 </style>

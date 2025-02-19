@@ -141,22 +141,26 @@
                 {#if session.isLogin}
                     <Hint title="Informacje o koncie">
                         <Button2
+                                variant="filled"
                                 fullWidth={true}
                                 onClick={()=> window.location.href='/profile'} icon="fa fa-user">
-                            Konto
+                            Twój profil
                         </Button2>
                     </Hint>
                     <Hint title="Polubione ogłoszenia">
                         <Button2 icon="fa fa-heart  fa-beat"/>
                     </Hint>
                 {:else }
-                    <Button2 onClick={()=> window.location.href='/login'}>
-                        Zaloguj się
-                    </Button2>
+                    <Hint title="Zaloguj się lub utwórz konto">
+                        <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
+                            Zaloguj się
+                        </Button2>
+                    </Hint>
+
                 {/if}
 
                 <Hint title="Zmień motyw">
-                    <Button2 variant="filled" onClick={updateTheme} icon={themeIcon}/>
+                    <Button2 onClick={updateTheme} icon={themeIcon}/>
                 </Hint>
             </Element>
 

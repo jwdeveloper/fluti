@@ -39,17 +39,18 @@
 <style>
 
     :global(.bar-horizontal) {
-        background: var(--bg-secondary);
+        background: var(--bg-secondary) !important;
         width: 100%;
         border-radius: 0.1em;
         height: 0.1em;
     }
 
     :global(.bar-vertical) {
-        background: var(--text-muted);
+        background: var(--text-muted) !important;
         width: 0.1em;
         border-radius: 0.1em;
         height: 100%;
+
     }
 
 </style>

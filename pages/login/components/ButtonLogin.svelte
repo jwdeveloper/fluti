@@ -37,7 +37,7 @@
 
     {#if actionTitle}
         <Link onClick={onActionClick}>
-            <Panel>
+            <Panel >
                 <i class={actionIcon}></i>
                 {actionTitle}
             </Panel>
