@@ -102,7 +102,6 @@
         rows={dimentions.rows}
         width="100%"
         height="100%"
-        radius="0"
         gap="0"
         align="flex-start"
         {...props.panel}>
@@ -110,10 +109,11 @@
     {#if !shouldHideSidePanels}
         {@render renderSlot(props?.left, true)}
     {/if}
-    {@render renderSlot(props?.center, false)}
+
+        {@render renderSlot(props?.center, false)}
 
     {#if !shouldHideSidePanels}
         {@render renderSlot(props?.right, true)}
     {/if}
-
 </Element>
+

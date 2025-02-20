@@ -14,6 +14,7 @@
         title,
         fullWidth = false, style = '',
         offset = "125%",
+        xOffset = "0",
         panelStyle
     }: HintProps = $props();
     let show = $state(false)
@@ -44,7 +45,7 @@
 >
     {#if shouldOpen && title !== undefined}
         <div style="
-        transform: translate(0, {offset});
+        transform: translate({xOffset}, {offset});
         z-index: var(--z-index-3);
         overflow:hidden;
         pointer-events: none;

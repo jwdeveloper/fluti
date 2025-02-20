@@ -1,23 +1,24 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
-    import Title from "$lib/fluti/components/title/Title.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Space from "$lib/fluti/components/space/Space.svelte";
+    import {getCurrencySymbol} from "../../../../../routes/prices/data";
 
     export interface SubscriptionCardProps {
         id?: string
         name?: string
         description?: string
-        prices?: number
+        prices?: any[]
         features?: string[]
         popular?: boolean
         currency?: string
         meta?: {
             badge?: string
         }
-        onClick?: (variant: string) => void
+        paymentPlan?: string
+        paymentStarted?: boolean,
+        onClick?: (variant: any) => void
     }
 
     const {
@@ -27,10 +28,58 @@
         prices = [],
         description = '',
         features = [],
+        paymentStarted = false,
         onClick = () => {
         },
+        paymentPlan = 'monthly',
         ...props
     }: SubscriptionCardProps = $props();
+
+
+    let isLoading = $state(false)
+
+    $effect(() => {
+        paymentStarted
+        if (paymentStarted === false)
+            isLoading = false
+    })
+
+    let getPrice = $derived.by(() => {
+        if (!prices || prices.length === 0)
+            return {
+                price: '0',
+                currency: "usd"
+            };
+
+        let items = prices.filter(e => e.interval === paymentPlan.value);
+        if (items.length === 0)
+            return {
+                price: '0',
+                currency: "usd"
+            };
+
+        return items[0];
+    })
+
+    let getPriceValue = $derived.by(() => {
+        return formatNumberString(getPrice.price + '');
+    })
+
+    function formatNumberString(numStr) {
+        if (!/^\d+$/.test(numStr)) {
+            return numStr;
+        }
+        const len = numStr.length;
+        if (len <= 2) {
+            const formatted = '0.' + numStr.padStart(2, '0');
+            return formatted === '0.00' ? '0' : formatted;
+        }
+        const integerPart = numStr.slice(0, len - 2);
+        const decimalPart = numStr.slice(-2);
+        return decimalPart === '00' ? integerPart : `${integerPart}.${decimalPart}`;
+    }
+
+
 </script>
 
 {#snippet PopularBadge(text)}
@@ -50,7 +99,6 @@
         width="100%"
         direction="column"
         gap="0.8em"
-
         background={flutiTheme.background.primary}
         radius={flutiTheme.radius.large}
         style="position: relative; border:{props?.meta?.badge?'2px solid var(--accent-primary)':''} "
@@ -71,18 +119,31 @@
         <h4 style="font-weight: normal">Dla użytkowników</h4>
     </Element>
     <Element gap="0.1em" width="100%" justify="flex-start" align="flex-end">
-        <h1 style="line-height: 1.2em; color: {flutiTheme.color.light}">{props.prices[0].price}</h1>
-        <h3>zł/m</h3>
+        <h1 style="line-height: 1.2em; color: {flutiTheme.color.light}">{getPriceValue}</h1>
+        <h4>
+            {getCurrencySymbol(getPrice.currency)}/{paymentPlan?.formated}
+        </h4>
     </Element>
 
     <Element direction="column" width="100%">
         <Button2 fullWidth={true}
-                 effects={{click:{
+                 effects={{
+                         rippler:{
+                             color:'white'
+                         },
+                         click:{}}}
 
-                 }}}
-                 disabled={props.prices[0].price == 0}
+                 isLoading={isLoading}
+                 disabled={props.prices[0].price == 0 || paymentStarted}
                  variant={!props?.meta?.badge?'outline':"filled"}
-                 onClick={()=>onClick(id)}
+                 onClick={()=>{
+                     isLoading =true
+                     let data ={
+                        productId: id,
+                        priceId: getPrice.id,
+                     }
+                     onClick(data)
+                 }}
                  style="border-radius: 2em;font-weight: bold; margin-top: 0.5em">
             Wybierz
         </Button2>
