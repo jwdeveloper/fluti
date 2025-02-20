@@ -54,7 +54,8 @@
             radius: props?.radius,
             style: props?.style,
             fontSize: props?.fontSize,
-            margin: props?.margin
+            margin: props?.margin,
+            overflow: props?.overflow
         }
     })
 
@@ -128,7 +129,7 @@
         style:grid-template-columns={finalStyles.columns}
         style:padding={finalStyles.padding}
         style:border-radius={finalStyles.radius}
-        style:overflow={props?.effects?.rippler ? 'hidden': 'unset'}
+        style:overflow={props?.effects?.rippler ? 'hidden': props.overflow}
         style:font-size={props?.fontSize}
         style:margin={props?.margin}
         onclick={onClick}

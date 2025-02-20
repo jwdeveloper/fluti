@@ -7,6 +7,8 @@
     import type {PanelProps} from "$lib/fluti/components/panel/Panel.type";
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
+    import Grid from "$lib/fluti/components/panel/Grid.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     interface WindowLayer {
         visible?: boolean
@@ -210,7 +212,7 @@
                  easing:easeFunction.cubicOut(),
                  duration:getDuration()}}>
 
-            <Panel height={getSize.height}
+            <Element height={getSize.height}
                    onClick={(e)=>{e.stopPropagation()}}
                    width={getSize.width}
                    direction="column"
@@ -224,7 +226,7 @@
                 {#if children}
                     {@render children()}
                 {/if}
-            </Panel>
+            </Element>
 
         </div>
     {/if}

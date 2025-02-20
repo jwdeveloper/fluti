@@ -11,6 +11,7 @@ export interface ElementStyleProps {
     radius?: string
     fontSize?: string
     margin?: string
+    overflow?: string
     display?: "flex" | "grid" | "block" | 'none'
     justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
     align?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
