@@ -1,13 +1,10 @@
 <script lang="ts">
-    import {fly} from "svelte/transition";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
     import {onMount} from "svelte";
     import type {AnimatePropertyOptions} from "$lib/fluti/effects/animations/AnimatorExtensions";
     import type {PanelProps} from "$lib/fluti/components/panel/Panel.type";
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
-    import Grid from "$lib/fluti/components/panel/Grid.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     interface WindowLayer {
@@ -120,6 +117,17 @@
 
     onMount(() => {
         isClient = true;
+        return () => {
+            document.body.style.overflow = 'auto'
+        }
+    })
+
+    $effect(() => {
+        if (visible) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'auto'
+        }
     })
 
 
