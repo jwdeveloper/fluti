@@ -21,7 +21,7 @@
             color?: string
         },
         animation?: {
-            direction?: "left" | "top" | "bottom" | "right",
+            direction?: "left" | "top" | "bottom" | "right" | 'center',
             duration?: number
         },
         children?: any
@@ -133,6 +133,8 @@
                 return -size;
             case "bottom":
                 return size;
+            case "center":
+                return size
             default:
                 return 0
         }
@@ -147,6 +149,8 @@
                 return -size;
             case "right":
                 return size;
+            case "center":
+                return 0
             default:
                 return 0
         }
@@ -188,6 +192,7 @@
                 return {width: height, height: size};
             case "left":
             case "right":
+            case "center":
                 return {width: size, height: height};
         }
     })
@@ -213,14 +218,14 @@
                  duration:getDuration()}}>
 
             <Element height={getSize.height}
-                   onClick={(e)=>{e.stopPropagation()}}
-                   width={getSize.width}
-                   direction="column"
-                   justify=""
-                   align=""
-                   background="var(--bg-primary)"
-                   radius="var(--radius-strong)"
-                   {...panel}
+                     onClick={(e)=>{e.stopPropagation()}}
+                     width={getSize.width}
+                     direction="column"
+                     justify=""
+                     align=""
+                     background="var(--bg-primary)"
+                     radius="var(--radius-strong)"
+                     {...panel}
             >
 
                 {#if children}
