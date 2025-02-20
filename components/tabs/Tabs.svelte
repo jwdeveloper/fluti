@@ -104,10 +104,7 @@
             width: 100%;
             z-index: var(--z-index-1);
             color: var(--text-muted);
-            @media (max-width: 768px) {
-                font-size: var(--font-size-huge);
-                width: 100px;
-            }
+
         }
 
         .btn-bg {
