@@ -4,6 +4,7 @@
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import {getCurrencySymbol} from "../../../../../routes/prices/data";
+    import {blur} from 'svelte/transition'
 
     export interface SubscriptionCardProps {
         id?: string
@@ -151,9 +152,13 @@
     <Space/>
 
     <Element direction="column" align="flex-start" width="100%">
-        {#each features as feature}
-            <li style="font-weight: normal; font-size: 0.9em">{feature.name}</li>
-            <Space variant="tiny"/>
+        {#each features as feature (feature)}
+            <Element>
+                <div class="fa fa-check" style:color={flutiTheme.background.accent} style="font-size: 0.9em"/>
+                <div>
+                    {feature.name}
+                </div>
+            </Element>
         {/each}
     </Element>
     <Element width="100%" height="100%" align="flex-end" justify="flex-end">
