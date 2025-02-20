@@ -4,7 +4,6 @@
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import {getCurrencySymbol} from "../../../../../routes/prices/data";
-    import {blur} from 'svelte/transition'
 
     export interface SubscriptionCardProps {
         id?: string
@@ -106,19 +105,31 @@
         padding="1.5em">
 
 
-    <Element direction="column"
-             gap="0"
-             width="100%"
-             justify="flex-start"
-             align="flex-start">
-        <Element>
-            <h3 style="color: {flutiTheme.color.light}">{name}</h3>
-            {#if props?.meta?.badge}
-                {@render PopularBadge(props?.meta?.badge)}
-            {/if}
+    <Element width="100%">
+
+        <Element direction="column"
+                 gap="0"
+                 width="100%"
+                 justify="flex-start"
+                 align="flex-start">
+            <Element>
+                <h3 style="color: {flutiTheme.color.light}">{name}</h3>
+                {#if props?.meta?.badge}
+                    {@render PopularBadge(props?.meta?.badge)}
+                {/if}
+            </Element>
+            <h4 style="font-weight: normal">Dla użytkowników</h4>
         </Element>
-        <h4 style="font-weight: normal">Dla użytkowników</h4>
+
+        <Element justify="flex-end"
+                 width="100%" height="100%">
+
+            <Button2 effects={{}}
+                     style="cursor: default"
+                     icon="fa fa-crown"/>
+        </Element>
     </Element>
+
     <Element gap="0.1em" width="100%" justify="flex-start" align="flex-end">
         <h1 style="line-height: 1.2em; color: {flutiTheme.color.light}">{getPriceValue}</h1>
         <h4>
