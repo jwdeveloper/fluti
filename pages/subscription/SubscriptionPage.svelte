@@ -8,7 +8,7 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import SideWindow from "$lib/fluti/widgets/window/SideWindow.svelte";
-    import StripeEmbeddedWindow from "$lib/fluti/pages/subscription/StripeEmbeddedWindow.svelte";
+    import SubscriptionStripeCheckout from "$lib/fluti/pages/subscription/SubscriptionStripeCheckout.svelte";
     import defaultSubscriptionPageData from "$lib/fluti/pages/subscription/data";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Space from "$lib/fluti/components/space/Space.svelte";
@@ -89,7 +89,7 @@
             {translations.cancel}
         </Button2>
     </Element>
-    <StripeEmbeddedWindow
+    <SubscriptionStripeCheckout
             stripeKey={props.stripePublicKey}
             clientSecret={paymentWindow.secret}/>
 </SideWindow>
