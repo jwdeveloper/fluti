@@ -143,7 +143,7 @@
                         <Button2
                                 variant="filled"
                                 fullWidth={true}
-                                onClick={()=> window.location.href='/profile'} icon="fa fa-user">
+                                onClick={()=> window.location.href='/profil'} icon="fa fa-user">
                             Twój profil
                         </Button2>
                     </Hint>

@@ -17,15 +17,33 @@ export interface MakePaymentEvent {
     secret: string
 }
 
-export interface SubscriptionProduct {
-
+export interface SubscriptionProductPrice {
+    id: string
+    value: number
+    currency: string
+    period: string
 }
 
-export interface SubscriptionProductCard {
-    key: string
+export interface SubscriptionProductFeature {
+    name: string
+    icon: string
+}
+
+export interface SubscriptionProduct {
+    id: string
     name?: string
-    icon?: string
+    price?: SubscriptionProductPrice
+    prices?: SubscriptionProductPrice[]
     subtitle?: string
+    features?: SubscriptionProductFeature[]
+    meta?: {
+        id?: string
+        index?: string
+        badge?: string
+        badgeColor?: string
+        discount?: string
+        icon?: string
+    }
 }
 
 
@@ -35,7 +53,7 @@ export interface SubscriptionPageProps {
     translations?: SubscriptionPageTranslations
     onFetchProducts?: (event: any) => Promise<SubscriptionProduct[]>
     onMakePayment?: (event: any) => Promise<MakePaymentEvent>
-    cardsOptions?: SubscriptionProductCard[]
+    productsOptions?: SubscriptionProduct[]
     templates?: {
         cardTemplate?: any
         titleTemplate?: any

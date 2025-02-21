@@ -1,20 +1,18 @@
-export function bestPricePerDay(products: any, period: any) {
+import type {SubscriptionProduct} from "$lib/fluti/pages/subscription/types";
+
+export function bestPricePerDay(products: SubscriptionProduct[], period: any) {
 
     let bestPrice = 999999999;
     let currency = "usd"
     for (let product of products) {
         //@ts-ignore
-        let items = product?.prices?.filter(e => e.interval === period.value);
-        //@ts-ignore
-        if (items.length === 0)
+        let price = product.price?.value ?? 0
+        if (price === 0)
             continue
 
-        //@ts-ignore
-        let item = items[0].price;
-        let priceInt = parseInt(item)
-        if (priceInt !== 0 && priceInt < bestPrice) {
-            bestPrice = priceInt
-            currency = items[0].currency;
+        if (price < bestPrice) {
+            bestPrice = price
+            currency = product?.price?.currency ?? 'usd';
         }
     }
 
@@ -43,4 +41,18 @@ export let getCurrencySymbol = (currency: string) => {
         return '€'
 
     return currency;
+}
+
+export function formatNumberString(numStr: string) {
+    if (!/^\d+$/.test(numStr)) {
+        return numStr;
+    }
+    const len = numStr.length;
+    if (len <= 2) {
+        const formatted = '0.' + numStr.padStart(2, '0');
+        return formatted === '0.00' ? '0' : formatted;
+    }
+    const integerPart = numStr.slice(0, len - 2);
+    const decimalPart = numStr.slice(-2);
+    return decimalPart === '00' ? integerPart : `${integerPart}.${decimalPart}`;
 }

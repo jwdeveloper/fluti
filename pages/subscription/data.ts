@@ -37,19 +37,29 @@ const defaultSubscriptionPageData: SubscriptionPageProps = {
             subtitle: "start the journey today"
         }
     },
-    cardsOptions: [
+    productsOptions: [
         {
-            key: 'free',
-            icon: "fa fa-user"
+            id: 'default',
+            subtitle: "standard and free option",
+            meta: {
+                icon: 'fa fa-user'
+            }
         },
         {
-            key: "pro",
-            icon: "fas fa-bolt"
+            id: 'pro',
+            subtitle: "for people who know what they want",
+            meta: {
+                icon: 'fas fa-bolt'
+            }
         },
         {
-            key: 'enterprise',
-            icon: "fa fa-crown"
-        }],
+            id: 'expert',
+            subtitle: "for advanced use cases",
+            meta: {
+                icon: 'fa fa-crown'
+            }
+        }
+    ],
     periodOptions: [
         {
             value: 'month',

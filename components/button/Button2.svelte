@@ -169,8 +169,7 @@
 
     :global(.btn-element:disabled) {
         cursor: not-allowed !important;
-        opacity: 0.6;
-
+        opacity: var(--opacity-medium);
     }
 
     :global(.btn-element:hover) {

@@ -63,7 +63,7 @@
 </script>
 
 
-<Element width="auto" height="100%" direction="column" gap="2em" padding="2em 0 0 0">
+<Element width="100%" height="100%" direction="column" gap="2em" padding="2em 0 0 0">
 
     <TitleLogin title={translation.top.title}
                 description={translation.top.subtitle}

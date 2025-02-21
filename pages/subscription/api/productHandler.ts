@@ -6,8 +6,8 @@ let mapPrice = (price: any) => {
     return {
         id: price.id,
         currency: price.currency,
-        price: price.unit_amount,
-        interval: price?.recurring?.interval ?? 'forever',
+        value: price.unit_amount,
+        period: price?.recurring?.interval ?? 'forever',
     }
 }
 

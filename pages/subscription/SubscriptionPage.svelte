@@ -2,7 +2,7 @@
     import type {
         PaymentPeriodOptions,
         SubscriptionPageProps,
-        SubscriptionPageTranslations, SubscriptionProduct
+        SubscriptionPageTranslations, SubscriptionProduct, SubscriptionProductPrice
     } from "$lib/fluti/pages/subscription/types";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
@@ -23,6 +23,7 @@
     import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
 
     let {
+        productsOptions = defaultSubscriptionPageData.productsOptions ?? [],
         onFetchProducts = defaultSubscriptionPageData.onFetchProducts,
         onMakePayment = defaultSubscriptionPageData.onMakePayment,
         ...props
@@ -46,9 +47,8 @@
         await tryExecuteAction(async () => {
             if (!onFetchProducts)
                 throw new Error('onFetchProducts method not defined!')
-
             isProductsLoading = true
-            const fetchedProducts = await onFetchProducts({})
+            let fetchedProducts = await onFetchProducts({})
             products = fetchedProducts.sort((a: any, b: any) => {
                 const n1 = parseInt(a?.meta?.index ?? 0)
                 const n2 = parseInt(b?.meta?.index ?? 0)
@@ -56,7 +56,6 @@
             });
             isProductsLoading = false
         })
-
     }
 
     const handlePaymentClick = async (event: any) => {
@@ -87,6 +86,40 @@
         }
     }
 
+    let displayedProducts: SubscriptionProduct[] = $derived.by(() => {
+        let finalProducts = []
+        for (let product of products) {
+            let productOptions = productsOptions.find(e => e.id === (product?.meta?.id ?? ''));
+
+            if (productsOptions === undefined) {
+                finalProducts.push(product)
+                continue
+            }
+
+            let price: SubscriptionProductPrice | undefined = product.prices?.find(e => e.period === selectedPaymentPeriod.value);
+            if (price === undefined) {
+                price = {
+                    id: '-1',
+                    period: '',
+                    value: 0,
+                    currency: ''
+                }
+            }
+
+            let finalProduct: SubscriptionProduct = {
+                ...product,
+                ...productOptions,
+                price: price,
+                prices: [],
+                meta: {...product?.meta, ...productOptions?.meta},
+                features: productOptions?.features ?? product?.features ?? [],
+                id: product.id
+            }
+            finalProducts.push(finalProduct)
+        }
+        return finalProducts
+    })
+
     const getPeriodDescription = $derived.by(() => {
         products
         selectedPaymentPeriod
@@ -95,7 +128,7 @@
 
         let description = selectedPaymentPeriod?.description;
         let variables = {
-            ...bestPricePerDay(products, selectedPaymentPeriod)
+            ...bestPricePerDay(displayedProducts, selectedPaymentPeriod)
         }
         for (let key in variables) {
             //@ts-ignore
@@ -162,11 +195,15 @@
 
 {#snippet CardComponent(product)}
     {@const targetComponent = props?.templates?.cardTemplate ?? SubscriptionCard}
-    <svelte:component this={targetComponent}
-                      {...product}
-                      paymentStarted={isPaymentStarted}
-                      paymentPlan={selectedPaymentPeriod}
-                      onClick={handlePaymentClick}/>
+    {@const shouldNotRender = selectedPaymentPeriod.value === 'forever' && product.price?.value === 0}
+    {#if !shouldNotRender}
+        <svelte:component this={targetComponent}
+                          {...product}
+                          translations={translations}
+                          paymentStarted={isPaymentStarted}
+                          paymentPeriod={selectedPaymentPeriod}
+                          onClick={handlePaymentClick}/>
+    {/if}
 {/snippet}
 
 
@@ -174,12 +211,13 @@
 <PeriodComponent/>
 <Element width="100%" gap="1em" mobile={{direction:'column', padding:'0 1em'}}>
     {#if isProductsLoading}
-        <Skieleton radius={flutiTheme.radius.medium} height="500px" width="100%"/>
-        <Skieleton radius={flutiTheme.radius.medium} height="500px" width="100%"/>
-        <Skieleton radius={flutiTheme.radius.medium} height="500px" width="100%"/>
+        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
+        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
+        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
     {:else}
-        {#each products as product}
+        {#each displayedProducts as product (product.id)}
             {@render CardComponent(product)}
         {/each}
     {/if}
 </Element>
+
