@@ -18,18 +18,17 @@
         ...props
     }: SkeletonProps = $props();
 
-    let previusCondition = $state(false)
+    let lastCondition = $state(false)
     $effect(() => {
         isLoading
-        console.log(isLoading, 'loading state')
         setTimeout(() => {
-            previusCondition = isLoading
+            lastCondition = isLoading
         }, timeout)
     })
 </script>
 
 
-{#if previusCondition}
+{#if lastCondition}
     {#if children}
         {@render children()}
     {/if}

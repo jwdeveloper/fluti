@@ -17,16 +17,23 @@
     import {onMount} from "svelte";
     import SubscriptionCard from "$lib/fluti/pages/subscription/SubscriptionCard.svelte";
     import {bestPricePerDay} from "$lib/fluti/pages/subscription/utils";
+    import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
+    import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
+    import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
+    import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
 
     let {
         onFetchProducts = defaultSubscriptionPageData.onFetchProducts,
         onMakePayment = defaultSubscriptionPageData.onMakePayment,
         ...props
     }: SubscriptionPageProps = $props();
+
+    let alerts = useAlert()
+    let userSession = useUserSession()
     let isProductsLoading = $state(false)
     let products: SubscriptionProduct[] = $state([])
     const translations = {...defaultSubscriptionPageData.translations, ...props.translations} as SubscriptionPageTranslations
-    const paymentPeriod = [ ...props.periodOptions ?? defaultSubscriptionPageData.periodOptions ?? []] as PaymentPeriodOptions[]
+    const paymentPeriod = [...props.periodOptions ?? defaultSubscriptionPageData.periodOptions ?? []] as PaymentPeriodOptions[]
     let selectedPaymentPeriod = $state(paymentPeriod[0])
 
     let isPaymentStarted = $state(false)
@@ -36,22 +43,48 @@
     })
 
     const loadProducts = async () => {
-        isProductsLoading = true
-        let fetchedProducts = await onFetchProducts({})
-        products = fetchedProducts.sort((a: any, b: any) => {
-            let n1 = parseInt(a?.meta?.index ?? 0)
-            let n2 = parseInt(b?.meta?.index ?? 0)
-            return n1 - n2;
-        });
-        isProductsLoading = false
+        await tryExecuteAction(async () => {
+            if (!onFetchProducts)
+                throw new Error('onFetchProducts method not defined!')
+
+            isProductsLoading = true
+            const fetchedProducts = await onFetchProducts({})
+            products = fetchedProducts.sort((a: any, b: any) => {
+                const n1 = parseInt(a?.meta?.index ?? 0)
+                const n2 = parseInt(b?.meta?.index ?? 0)
+                return n1 - n2;
+            });
+            isProductsLoading = false
+        })
+
     }
 
     const handlePaymentClick = async (event: any) => {
-        isPaymentStarted = true
-        let madePayment = await onMakePayment(event)
-        paymentWindow.secret = madePayment.secret;
-        paymentWindow.isOpen = true;
-        isPaymentStarted = false
+        await tryExecuteAction(async () => {
+            if (!onMakePayment)
+                throw new Error('onMakePayment method not defined!')
+
+            if (!userSession.isLogin) {
+                useWindow(LoginPopup).open()
+                return
+            }
+
+            isPaymentStarted = true
+            const madePayment = await onMakePayment(event)
+            paymentWindow.secret = madePayment.secret;
+            paymentWindow.isOpen = true;
+            isPaymentStarted = false
+        })
+    }
+
+    const tryExecuteAction = async (action: any) => {
+        try {
+            await action()
+        } catch (e) {
+            alerts.pushAlert(e.message + "", 'error')
+            isPaymentStarted = false
+            isProductsLoading = false
+        }
     }
 
     const getPeriodDescription = $derived.by(() => {
@@ -74,8 +107,8 @@
     onMount(() => {
         loadProducts()
     })
-
 </script>
+
 
 <SideWindow
         bind:visible={paymentWindow.isOpen}

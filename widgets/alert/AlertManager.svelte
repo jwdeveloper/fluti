@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="container">
+<div class="alerts-container">
     {#each alerts.displayedAlerts as alert (alert.id)}
         <Alert {...alert} destroy={()=> alerts.destroy(alert.id)}/>
     {/each}
@@ -14,10 +14,10 @@
 
 <style>
 
-    .container {
+    .alerts-container {
         position: fixed;
         pointer-events: none;
-        z-index: var(--z-index-5);
+        z-index: var(--z-index-6);
         width: 100%;
         gap: 0.5em;
         height: 100%;

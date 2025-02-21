@@ -85,7 +85,7 @@
         },
         {
             name: 'Cennik',
-            link: '/prices'
+            link: '/cennik'
         },
         {
             name: 'Statystyki',
@@ -115,7 +115,7 @@
 
 <Element
         tag="header"
-        display="block" style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-5);">
+        display="block" style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);">
     <Element width="100%"
              bind:element={element}
              background="var(--bg-primary)"

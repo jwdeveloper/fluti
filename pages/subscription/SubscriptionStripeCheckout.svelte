@@ -27,7 +27,6 @@
         stripeEmbeddedCheckout = await client.initEmbeddedCheckout({
             fetchClientSecret: fetchClientSecretMethod,
         });
-        console.log(stripeEmbeddedCheckout)
         stripeEmbeddedCheckout.mount(`#${stripeEmbeddedCheckoutId}`);
     }
 </script>

@@ -30,16 +30,18 @@
     <script async src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
+
+{#if useAlerts}
+    <AlertManager/>
+{/if}
+
+
 {#if useUserSession}
     <UserManager/>
 {/if}
 
 {#if useThemes}
     <ThemeManager/>
-{/if}
-
-{#if useAlerts}
-    <AlertManager/>
 {/if}
 
 {#if useWindows}

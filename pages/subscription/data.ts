@@ -9,6 +9,7 @@ export const handleGetProducts = async () => {
 }
 
 export const handleMakePayment = async (event: any) => {
+
     const response = await fetch('/api/v1/payment', {
         method: 'POST',
         headers: {
@@ -16,6 +17,8 @@ export const handleMakePayment = async (event: any) => {
         },
         body: JSON.stringify(event)
     })
+    console.log(response)
+
     if (!response.ok)
         throw new Error(response.statusText)
     return await response.json();
