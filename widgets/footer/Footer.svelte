@@ -45,11 +45,11 @@
     {#if props?.templates?.logo}
         {@render props?.templates?.logo()}
     {:else}
-        <Element direction="row">
+        <Element direction="row" onClick={()=> window.location.href = '/'}>
             <i style="font-size: var(--font-size-huge);color: var(--accent-primary)" class="fa fa-line-chart"></i>
-            <h2 style="color: {flutiTheme.background.accent}">
+            <h1 style="color: {flutiTheme.background.accent}">
                 {props?.logo?.name ?? domain ?? ''}
-            </h2>
+            </h1>
         </Element>
     {/if}
 {/snippet}
@@ -61,6 +61,7 @@
                     className="social-button"
                     variant="filled"
                     size="large"
+                    onClick={()=> window.open(props?.socialMedia[key]?.url ?? '','_blank')}
                     effects={{click:{}}}
                     background={flutiTheme.background.primary}
                     color={props?.socialMedia[key]?.iconColor ?? flutiTheme.background.accent}
@@ -84,14 +85,65 @@
         padding="3em 10%">
 
 
-    <Element width="100%" justify="flex-start">
-        <Element gap="2em" direction="column">
+    <Element width="100%"
+             display="grid"
+             columns="1fr 1fr"
+             rows="1fr">
+        <Element
+                justify="space-between"
+                align="flex-start"
+                width="100%"
+                height="100%"
+                gap="0"
+                direction="column">
             <LogoComponent/>
+            <h3 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h3>
+            <Space variant="huge"/>
+            <Space variant="huge"/>
+            <Element id="footer-media"
+                     width="100%"
+                     gap="1em"
+                     height="100%"
+                     justify="flex-start">
+                <SocialMediaComponent/>
+            </Element>
 
         </Element>
+
+        <Element width="100%"
+                 justify="flex-end"
+                 align="flex-start"
+                 height="100%"
+                 gap="10em">
+
+            <Element align="flex-start" direction="column">
+                <h3>Company</h3>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+            </Element>
+
+            <Element align="flex-start" direction="column">
+                <h3>Resources</h3>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+                <h4 style="font-weight: normal">Legal</h4>
+            </Element>
+
+            <Element align="flex-start" direction="column">
+                <h3>Legal</h3>
+                <h4 style="font-weight: normal">Terms of service</h4>
+                <h4 style="font-weight: normal">Rodo</h4>
+                <h4 style="font-weight: normal">Data processing</h4>
+                <h4 style="font-weight: normal">Cookies policy</h4>
+            </Element>
+        </Element>
+
+
     </Element>
 
-    <Space/>
     <Separator/>
     <Element id="footer-logo"
              width="100%"
@@ -100,18 +152,21 @@
              rows="1fr"
              height="100%">
 
-        <Element id="footer-media"
-                 width="100%"
-                 gap="1em"
-                 height="100%"
-                 justify="flex-start">
-            <SocialMediaComponent/>
-        </Element>
+        <!--        <Element id="footer-media"-->
+        <!--                 width="100%"-->
+        <!--                 gap="1em"-->
+        <!--                 height="100%"-->
+        <!--                 justify="flex-start">-->
+        <!--            <SocialMediaComponent/>-->
+        <!--        </Element>-->
 
-        <Element width="100%">
+        <div>
+
+        </div>
+        <Element width="100%" height="100%">
             <div style="text-align: center;">
                 <h4>{props?.logo?.slogan}</h4>
-                © {currentYear} {currentDomain}
+                <h4 style="font-weight: normal">© {currentYear} {currentDomain}</h4>
             </div>
         </Element>
     </Element>
