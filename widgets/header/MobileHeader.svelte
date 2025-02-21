@@ -15,7 +15,7 @@
         <Button2
 
                 background={flutiTheme.background.primary}
-                icon="fa fa-home"/>
+                icon={item.icon}/>
         <svelte:element this="a"
                         href={item.link??"/"}
                         class="menu-item">
