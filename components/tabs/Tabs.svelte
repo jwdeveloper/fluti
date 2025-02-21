@@ -3,6 +3,7 @@
     import type {TabsItem, TabsProps} from "./Tabs";
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     let {
         items,
@@ -14,6 +15,7 @@
     let step = 100 / items.length;
 
     const handleClick = (item: TabsItem) => {
+        vibrate();
         selectedItem = item;
         selectedComponent = item.component;
     }

@@ -26,6 +26,10 @@
     }: Fluti = $props();
 </script>
 
+<svelte:head>
+    <script async src="https://js.stripe.com/v3/"></script>
+</svelte:head>
+
 {#if useUserSession}
     <UserManager/>
 {/if}

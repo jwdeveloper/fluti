@@ -2,6 +2,7 @@
     import type {Button2Props} from "$lib/fluti/components/button/Button";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     const {
         variant = 'outline',
@@ -29,9 +30,7 @@
             return
 
         event.stopPropagation();
-        if (navigator)
-            navigator.vibrate(25);
-
+        vibrate();
         onClick(event);
     }
 
