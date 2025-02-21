@@ -21,12 +21,21 @@ export interface SubscriptionProduct {
 
 }
 
+export interface SubscriptionProductCard {
+    key: string
+    name?: string
+    icon?: string
+    subtitle?: string
+}
+
+
 export interface SubscriptionPageProps {
     stripePublicKey: string
     periodOptions?: PaymentPeriodOptions[]
     translations?: SubscriptionPageTranslations
-    onFetchProducts: (event: any) => Promise<SubscriptionProduct[]>
-    onMakePayment: (event: any) => Promise<MakePaymentEvent>
+    onFetchProducts?: (event: any) => Promise<SubscriptionProduct[]>
+    onMakePayment?: (event: any) => Promise<MakePaymentEvent>
+    cardsOptions?: SubscriptionProductCard[]
     templates?: {
         cardTemplate?: any
         titleTemplate?: any

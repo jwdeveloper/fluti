@@ -3,7 +3,7 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Space from "$lib/fluti/components/space/Space.svelte";
-    import {getCurrencySymbol} from "../../../../../routes/prices/data";
+    import {getCurrencySymbol} from "../../../../routes/prices/data";
 
     export interface SubscriptionCardProps {
         id?: string

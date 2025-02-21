@@ -34,17 +34,30 @@ const defaultSubscriptionPageData: SubscriptionPageProps = {
             subtitle: "start the journey today"
         }
     },
+    cardsOptions: [
+        {
+            key: 'free',
+            icon: "fa fa-user"
+        },
+        {
+            key: "pro",
+            icon: "fas fa-bolt"
+        },
+        {
+            key: 'enterprise',
+            icon: "fa fa-crown"
+        }],
     periodOptions: [
         {
             value: 'month',
             name: 'Monthly',
-            description: "Get access to all features, starting from {{pricePerDay}}{{currency}} per day - cancel in any moment",
+            description: "Get access to all features, starting from {{price}}{{currency}} per day - cancel at any moment",
             formated: "monthly"
         },
         {
             value: 'year',
             name: 'Yearly',
-            description: "Get access to all features, starting from {{pricePerDay}}{{currency}} per day - cancel in any moment",
+            description: "Get access to all features, starting from {{price}}{{currency}} per day - cancel at any moment",
             formated: "yearly"
 
         },

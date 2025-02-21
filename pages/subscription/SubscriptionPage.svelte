@@ -15,7 +15,8 @@
     import Skieleton from "$lib/fluti/components/skieleton/Skieleton.svelte";
     import Tabs from "$lib/fluti/components/tabs/Tabs.svelte";
     import {onMount} from "svelte";
-    import SubscriptionCard from "$lib/fluti/widgets/cards/subscription/SubscriptionCard.svelte";
+    import SubscriptionCard from "$lib/fluti/pages/subscription/SubscriptionCard.svelte";
+    import {bestPricePerDay} from "$lib/fluti/pages/subscription/utils";
 
     let {
         onFetchProducts = defaultSubscriptionPageData.onFetchProducts,
@@ -25,7 +26,7 @@
     let isProductsLoading = $state(false)
     let products: SubscriptionProduct[] = $state([])
     const translations = {...defaultSubscriptionPageData.translations, ...props.translations} as SubscriptionPageTranslations
-    const paymentPeriod = [...defaultSubscriptionPageData.periodOptions ?? [], ...props.periodOptions ?? []] as PaymentPeriodOptions[]
+    const paymentPeriod = [ ...props.periodOptions ?? defaultSubscriptionPageData.periodOptions ?? []] as PaymentPeriodOptions[]
     let selectedPaymentPeriod = $state(paymentPeriod[0])
 
     let isPaymentStarted = $state(false)
@@ -46,13 +47,29 @@
     }
 
     const handlePaymentClick = async (event: any) => {
-
         isPaymentStarted = true
         let madePayment = await onMakePayment(event)
         paymentWindow.secret = madePayment.secret;
         paymentWindow.isOpen = true;
         isPaymentStarted = false
     }
+
+    const getPeriodDescription = $derived.by(() => {
+        products
+        selectedPaymentPeriod
+        if (!selectedPaymentPeriod?.description)
+            return ''
+
+        let description = selectedPaymentPeriod?.description;
+        let variables = {
+            ...bestPricePerDay(products, selectedPaymentPeriod)
+        }
+        for (let key in variables) {
+            //@ts-ignore
+            description = description.replaceAll("{{" + key + "}}", variables[key])
+        }
+        return description;
+    })
 
     onMount(() => {
         loadProducts()
@@ -86,7 +103,7 @@
             <h1 style="font-size: 3em">{translations.top.subtitle}</h1>
             <Space variant="small"/>
             <Skieleton width="700px" isLoading={!isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
-                <h4 style="font-weight: normal">{selectedPaymentPeriod?.description ?? ''}</h4>
+                <h4 style="font-weight: normal">{getPeriodDescription}</h4>
             </Skieleton>
         </Element>
     {/if}
