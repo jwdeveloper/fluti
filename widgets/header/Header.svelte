@@ -9,13 +9,14 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
-    interface TopMenuProps {
+    interface HeaderProps {
         height?: number;
         width?: string;
         logo?: string;
         title?: string;
         treashold?: number
         addSpace?: boolean
+        items?: any[]
     }
 
     let {
@@ -24,8 +25,9 @@
         logo = 'logo.png',
         title = '',
         treashold = 100,
-        addSpace = true
-    }: TopMenuProps = $props();
+        addSpace = true,
+        items = []
+    }: HeaderProps = $props();
 
 
     let userData = getContext('user')
@@ -78,23 +80,6 @@
     }
 
 
-    const defaultItems = [
-        {
-            name: 'Wyszukiwarka',
-            link: '/'
-        },
-        {
-            name: 'Cennik',
-            link: '/cennik'
-        },
-        {
-            name: 'Statystyki',
-            link: '/stats'
-        },
-        {
-            name: 'O nas',
-            link: '/about'
-        }]
 </script>
 
 <svelte:window onscroll={onScroll}/>
@@ -134,7 +119,7 @@
             <Element width="100%" justify="center">
                 <DefaultMenu
                         highlightColor={flutiTheme.background.secondary}
-                        items={defaultItems}/>
+                        items={items}/>
             </Element>
             <Element padding="0 1em"
                      justify="flex-start">

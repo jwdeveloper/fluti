@@ -18,6 +18,7 @@
         iconPosition = 'left',
         textSize = 'div',
         isShowText = true,
+        className,
         onClick,
         ...props
     }: Button2Props = $props();
@@ -122,7 +123,7 @@
         width={fullWidth?'100%':'auto'}
         fontSize={fontSize}
         effects={effects}
-        className="btn-element {isIcon?'btn-icon-element':''} {variantClass}"
+        className="btn-element {isIcon?'btn-icon-element':''} {variantClass} {className}"
         gap="1em"
         attributes={{disabled:disabled}}
         onClick={handleClick}
