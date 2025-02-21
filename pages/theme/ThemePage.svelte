@@ -4,7 +4,6 @@
     import DefaultMenu from "$lib/fluti/widgets/menu/DefaultMenu.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import HeadersView from "$lib/fluti/pages/theme/views/HeadersView.svelte";
-    import ThemeSwitch from "../../../../components/widgets/theme/ThemeSwitch.svelte";
     import InputView from "$lib/fluti/pages/theme/views/InputView.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
     import ElementView from "$lib/fluti/pages/theme/views/ElementView.svelte";
@@ -32,7 +31,7 @@
             view: ElementView
         }
     ]
-    let currentView: any = $state(views[3])
+    let currentView: any = $state(views[4])
 </script>
 
 <Element display="grid" columns="200px 1fr"
@@ -50,7 +49,6 @@
              height="100%"
              direction="column"
              background={flutiTheme.background.primary}>
-        <ThemeSwitch/>
         <DefaultMenu
                 currentItemKey={views[0].name}
                 onClick={(item)=> currentView =item}

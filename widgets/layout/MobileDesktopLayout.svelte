@@ -45,15 +45,6 @@
 
     let dimentions = $derived.by(() => {
 
-
-        if (serverRenderConfig.isMobile) {
-            return {
-                rows: '1fr',
-                columns: '1fr'
-            }
-        }
-
-
         if (isInit && shouldHideSidePanels)
             return {
                 rows: '1fr',
@@ -86,7 +77,6 @@
     <Element width="100%"
              height="100%"
              tag={side?"aside":"section"}
-             align="flex-start"
              {...props.slotPanel}>
         {#if slot !== undefined}
             {@render slot()}
@@ -110,7 +100,7 @@
         {@render renderSlot(props?.left, true)}
     {/if}
 
-        {@render renderSlot(props?.center, false)}
+    {@render renderSlot(props?.center, false)}
 
     {#if !shouldHideSidePanels}
         {@render renderSlot(props?.right, true)}

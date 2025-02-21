@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Input2 from "../../../../../components/input/Input2.svelte";
     import type {InputProps2, InputType} from "../../../../../components/input/Input.type";
+    import Input2 from "$lib/fluti/components/input/Input2.svelte";
 
     let {value = $bindable(), ...props}: InputProps2 = $props()
 

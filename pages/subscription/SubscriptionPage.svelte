@@ -4,7 +4,6 @@
         SubscriptionPageProps,
         SubscriptionPageTranslations, SubscriptionProduct, SubscriptionProductPrice
     } from "$lib/fluti/pages/subscription/types";
-    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import SideWindow from "$lib/fluti/widgets/window/SideWindow.svelte";
@@ -21,6 +20,7 @@
     import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
     import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
+    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     let {
         productsOptions = defaultSubscriptionPageData.productsOptions ?? [],
@@ -31,6 +31,7 @@
 
     let alerts = useAlert()
     let userSession = useUserSession()
+    let breakpoints = useBreakpoints();
     let isProductsLoading = $state(false)
     let products: SubscriptionProduct[] = $state([])
     const translations = {...defaultSubscriptionPageData.translations, ...props.translations} as SubscriptionPageTranslations
@@ -168,7 +169,9 @@
             <h1 style="font-size: 4em; line-height: 1em; color: {flutiTheme.color.light};">{translations.top.title}</h1>
             <h1 style="font-size: 3em">{translations.top.subtitle}</h1>
             <Space variant="small"/>
-            <Skieleton width="700px" isLoading={!isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
+            <Skieleton width="700px"
+                       mobile={{width:'100%'}}
+                       isLoading={!isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
                 <h4 style="font-weight: normal">{getPeriodDescription}</h4>
             </Skieleton>
         </Element>
@@ -180,7 +183,7 @@
         {@render props?.templates?.periodTemplate()}
     {:else}
         {#if breakpoints.isMobile}
-            <Element width="100%" margin="2em 0" padding="0 1em">
+            <Element width="100%" margin="2em 0">
                 <Tabs bind:selectedItem={selectedPaymentPeriod} items={paymentPeriod}></Tabs>
             </Element>
         {:else }
@@ -209,10 +212,8 @@
 
 <TitleComponent/>
 <PeriodComponent/>
-<Element width="100%" gap="1em" mobile={{direction:'column', padding:'0 1em'}}>
+<Element width="100%" gap="1em" mobile={{direction:'column'}}>
     {#if isProductsLoading}
-        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
-        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
         <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
     {:else}
         {#each displayedProducts as product (product.id)}

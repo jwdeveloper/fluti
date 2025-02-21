@@ -3,10 +3,18 @@
     import LoginWindow from "$lib/fluti/pages/login/LoginWindow.svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import Separator from "$lib/fluti/components/separator/Separator.svelte";
+    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
+    import {onMount} from "svelte";
 
     const props: LoginPageProps = $props();
-    const breakpoints = useBreakpoints()
+    const breakpoints = useBreakpoints(useServerRenderConfig.isMobile)
+
+    console.log('IS MOBILE SERVER', breakpoints.isMobile)
+
+    onMount(() => {
+        console.log('IS MOBILE CLIENT', breakpoints.isMobile)
+    })
+
 </script>
 
 
@@ -21,11 +29,12 @@
         <LoginWindow {...props}/>
     </Element>
 {:else }
-    <Element width="100%" height="100vh" display="grid" columns="1fr 1fr" gap="0">
+    <Element width="100%" height="100vh"
+             display="grid"
+             columns="1fr 1fr" gap="0">
         <Element height="100%"
                  width="100%"
-                 background="var(--bg-primary)"
-                 >
+                 background="var(--bg-primary)">
             <Element width="50%" direction="column">
                 <LoginWindow {...props}/>
             </Element>

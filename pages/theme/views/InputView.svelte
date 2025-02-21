@@ -1,8 +1,8 @@
 <script lang="ts">
     import Section from "$lib/fluti/pages/theme/common/Section.svelte";
-    import Input2 from "../../../../../components/input/Input2.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties.ts";
+    import Input2 from "$lib/fluti/components/input/Input2.svelte";
 
     let value = $state('hello world')
 

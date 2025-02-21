@@ -1,0 +1,50 @@
+
+.element-input[type='password'] {
+}
+
+.element-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(40%) sepia(100%) saturate(300%) hue-rotate(180deg);
+    /*color: red;*/
+    opacity: 1; /* Ensure visibility */
+    display: none;
+}
+
+
+.element-input[type='color'] {
+
+    height: 3em;
+    width: 3em;
+}
+
+
+.element-input-filled {
+    padding: var(--padding-medium);
+    border: none !important;
+    background: var(--bg-secondary) !important;
+    color: var(--text-light);
+}
+
+.element-input-filled:focus {
+    outline: var(--border-size-medium) solid var(--text-muted) !important;
+    background: var(--bg-secondary) !important;
+}
+
+
+:global(.element-input-filled:-webkit-autofill) {
+    /*box-shadow: 0 0 0 1000px var(--bg-tertiary) inset !important;*/
+    /*background: var(--bg-tertiary);*/
+
+}
+
+.element-input-filled:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.element-input-filled:invalid {
+    border-color: var(--text-error);
+    cursor: not-allowed;
+
+}
+
+

@@ -1,8 +1,8 @@
 <script lang="ts">
     import Label from "$lib/fluti/components/label/Label.svelte";
     import type {LoginController} from "../loginController.svelte";
-    import Input2 from "../../../../../components/input/Input2.svelte";
     import PasswordInput from "$lib/fluti/pages/login/components/PasswordInput.svelte";
+    import Input2 from "$lib/fluti/components/input/Input2.svelte";
 
     interface FormFieldsProps {
         enablePassword?: boolean,

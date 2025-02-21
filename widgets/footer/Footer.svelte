@@ -7,6 +7,7 @@
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
+    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     interface SocialMediaLink {
         url: string
@@ -36,6 +37,7 @@
     }
 
     let props: FooterProps = $props();
+    let breakpoints = useBreakpoints();
 
     const currentYear = new Date().getFullYear();
     const currentDomain = props?.domain ?? window?.location?.hostname ?? '';
@@ -72,6 +74,8 @@
     {/each}
 {/snippet}
 
+
+
 {#if props?.separator}
     <Element width="100%" background={flutiTheme.background.tertiary} height="2px"/>
 {/if}
@@ -82,28 +86,36 @@
         margin="{flutiTheme.padding.medium}em 0 0 0"
         gap="1em"
         direction="column"
+        mobile={{padding:'2em'}}
         padding="3em 10%">
 
 
     <Element width="100%"
              display="grid"
              columns="1fr 1fr"
+             mobile={{columns:"1fr", rows:'1fr', gap:'2em'}}
              rows="1fr">
         <Element
                 justify="space-between"
                 align="flex-start"
                 width="100%"
                 height="100%"
+                mobile={{height:'auto'}}
                 gap="0"
                 direction="column">
             <LogoComponent/>
             <h3 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h3>
-            <Space variant="huge"/>
+
+            {#if breakpoints.isDesktop}
+                <Space variant="huge"/>
+            {/if}
+
             <Space variant="huge"/>
             <Element id="footer-media"
-                     width="100%"
                      gap="1em"
+                     width="100%"
                      height="100%"
+                     mobile={{justify:'space-around'}}
                      justify="flex-start">
                 <SocialMediaComponent/>
             </Element>
@@ -114,6 +126,7 @@
                  justify="flex-end"
                  align="flex-start"
                  height="100%"
+                 mobile={{direction:'column', gap:'2em'}}
                  gap="10em">
 
             <Element align="flex-start" direction="column">
@@ -149,17 +162,9 @@
              width="100%"
              display="grid"
              columns="1fr 1fr 1fr"
+             mobile={{columns:'1fr', rows:'1fr'}}
              rows="1fr"
              height="100%">
-
-        <!--        <Element id="footer-media"-->
-        <!--                 width="100%"-->
-        <!--                 gap="1em"-->
-        <!--                 height="100%"-->
-        <!--                 justify="flex-start">-->
-        <!--            <SocialMediaComponent/>-->
-        <!--        </Element>-->
-
         <div>
 
         </div>
