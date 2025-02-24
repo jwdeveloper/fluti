@@ -29,7 +29,6 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
         const verifier = oauthProvider.codeVerifier;
         const url = new URL(c.req.url);
         const redirectUrl = `${url.protocol}//${url.host}/api/auth/oauth/${provider.toLowerCase()}`;
-        // Set cookies using Hono's c.cookie() method
         setCookie(c, 'oauth_state', encodeURIComponent(state), {
             path: '/',
             secure: true,
@@ -46,7 +45,7 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 
 
         // let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
-        let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}&state=${encodeURIComponent(state)}`;
+        let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
         if (provider.toLowerCase() === 'github') {
             fullUrl = fullUrl.replace("redirect_uri", '')
         }
@@ -94,13 +93,11 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
             deleteCookie(c, verifierCookie);
             deleteCookie(c, stateCookie);
             await returnUserAuthTokens(c, config, '', user)
-            console.log('siema?')
         } catch (e) {
             console.log('Error Signing in with oauth', {...oAuthSgnData, request: ""})
             console.log(e)
             return c.redirect(failedRedirect);
         }
-        console.log('success')
         return c.redirect(successRedirect);
     })
 
