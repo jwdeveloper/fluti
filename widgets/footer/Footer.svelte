@@ -8,12 +8,23 @@
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import Link from "$lib/fluti/components/Link.svelte";
 
     interface SocialMediaLink {
         url: string
         name?: string
         icon?: string
         iconColor?: string
+    }
+
+    interface LinkData {
+        name: string
+        url: string
+    }
+
+    interface LinkSection {
+        title: string
+        links: LinkData[]
     }
 
     interface FooterProps extends ElementProps {
@@ -33,6 +44,7 @@
             slogan?: string;
             image?: string;
         };
+        links?: LinkSection[]
         separator?: boolean
     }
 
@@ -73,7 +85,6 @@
 
     {/each}
 {/snippet}
-
 
 
 {#if props?.separator}
@@ -123,35 +134,26 @@
         </Element>
 
         <Element width="100%"
+                 tag="nav"
                  justify="flex-end"
                  align="flex-start"
                  height="100%"
                  mobile={{direction:'column', gap:'2em'}}
                  gap="10em">
 
-            <Element align="flex-start" direction="column">
-                <h3>Company</h3>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-            </Element>
-
-            <Element align="flex-start" direction="column">
-                <h3>Resources</h3>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-                <h4 style="font-weight: normal">Legal</h4>
-            </Element>
-
-            <Element align="flex-start" direction="column">
-                <h3>Legal</h3>
-                <h4 style="font-weight: normal">Terms of service</h4>
-                <h4 style="font-weight: normal">Rodo</h4>
-                <h4 style="font-weight: normal">Data processing</h4>
-                <h4 style="font-weight: normal">Cookies policy</h4>
-            </Element>
+            {#each props?.links ?? [] as linkSection}
+                <Element align="flex-start" direction="column">
+                    <h3>{linkSection.title}</h3>
+                    <Space variant="tiny"/>
+                    <ul>
+                        {#each linkSection.links as link}
+                            <li>
+                                <Link url={link.url} style="font-weight: normal;margin: 0.1em 0">{link.name}</Link>
+                            </li>
+                        {/each}
+                    </ul>
+                </Element>
+            {/each}
         </Element>
 
 
