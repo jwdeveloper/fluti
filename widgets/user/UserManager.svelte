@@ -1,11 +1,8 @@
 <script lang="ts">
-
-    import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
     import {onMount} from "svelte";
-
-    let userService = useUserSession()
+    import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte";
+    
     onMount(() => {
-        console.log("Loading session...")
-        userService.loadSession();
+        console.log("Loading session...", userSession.loadSession())
     })
 </script>

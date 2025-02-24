@@ -3,6 +3,16 @@ export class UserSession {
     session: any = $state({})
     user: any = $state({})
 
+    token: string = $state('')
+    dbToken: string = $state('')
+
+    setSession2(token: string, dbToken: string) {
+        this.token = token;
+        this.dbToken = dbToken;
+        document.cookie = `token=${encodeURIComponent(JSON.stringify(this.token))}; path=/;`;
+        document.cookie = `dbToken=${encodeURIComponent(JSON.stringify(this.dbToken))}; path=/;`;
+    }
+
     setSession(token: string, data: any) {
         this.session = token;
         this.user = data;
@@ -46,15 +56,13 @@ export class UserSession {
         window.location.href = '/';
     }
 
-
-    loadCookies()
-    {
+    loadCookies() {
         const cookies = document.cookie.split('; ')
             .reduce((acc, cookie) => {
-            const [key, value] = cookie.split('=');
-            acc[key] = decodeURIComponent(value);
-            return acc;
-        }, {} as Record<string, string>);
+                const [key, value] = cookie.split('=');
+                acc[key] = decodeURIComponent(value);
+                return acc;
+            }, {} as Record<string, string>);
         return cookies;
     }
 
@@ -63,14 +71,6 @@ export class UserSession {
             return
         }
         window.location.href = url;
-    }
-
-
-    redirectToLogin() {
-        if (window.location.pathname === '/login') {
-            return
-        }
-        window.location.href = '/login';
     }
 }
 

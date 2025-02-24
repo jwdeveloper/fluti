@@ -1,0 +1,3 @@
+###Get OAuth url
+GET http://localhost:5173/api/auth/oauth/create/google
+Content-Type: application/json

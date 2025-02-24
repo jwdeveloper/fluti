@@ -1,6 +1,13 @@
 import type {LoginController} from "./loginController.svelte";
 import type {i18Section} from "$lib/fluti/services/i18/translateTypes";
 
+export interface LoginResponse {
+    message?: string
+    error?: boolean
+    token: string
+    dbToken: string
+}
+
 export interface LoginFormData {
     email?: string
     password?: string
@@ -54,7 +61,7 @@ export interface LoginPagePropsTranslations {
         button: i18Section
     }
 
-    recoveryView:{
+    recoveryView: {
         top: i18Section
         button: i18Section
     }
@@ -89,6 +96,7 @@ export interface LoginPageProps {
     }
 
     messages: LoginPagePropsTranslations,
+    redirectUrl: string
 
     links?: {
         termsAndCondition?: string
@@ -98,7 +106,7 @@ export interface LoginPageProps {
         page?: string
     }
 
-    onLogin?: (data: LoginFormData) => void
+    onLogin?: (data: LoginFormData, controller: LoginController) => void
     onError?: (data: LoginFormData, controller: LoginController, error: any) => void
     onOAuthLogin?: (provider: string) => void
     onRegister?: (data: LoginFormData) => void

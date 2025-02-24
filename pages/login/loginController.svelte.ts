@@ -48,7 +48,7 @@ export class LoginController {
         this.isLoading = true;
         try {
             this.validate();
-            await action(this.form);
+            await action(this.form, this);
         } catch (e) {
             this.error = e + "";
             if (this.props?.onError)

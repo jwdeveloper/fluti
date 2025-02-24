@@ -1,13 +1,13 @@
 <script lang="ts">
     import {getContext, onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
-    import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
     import DefaultMenu from "$lib/fluti/widgets/menu/DefaultMenu.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
     import {useThemes} from "$lib/fluti/widgets/theme/themeController.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte";
 
     interface HeaderProps {
         height?: number;
@@ -46,7 +46,7 @@
             themes.setTheme('dark-1')
     }
 
-    let session = useUserSession()
+
     let element: HTMLHtmlElement
     let aElement: any
     let scroll = $state(0)
@@ -123,7 +123,7 @@
             </Element>
             <Element padding="0 1em"
                      justify="flex-start">
-                {#if session.isLogin}
+                {#if userSession.isLogin}
                     <Hint title="Informacje o koncie">
                         <Button2
                                 variant="filled"

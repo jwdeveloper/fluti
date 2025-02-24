@@ -17,7 +17,7 @@
     import SubscriptionCard from "$lib/fluti/pages/subscription/SubscriptionCard.svelte";
     import {bestPricePerDay} from "$lib/fluti/pages/subscription/utils";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
-    import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
+    import {useUserSession} from "../login/userClientSession.svelte.ts";
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
     import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";

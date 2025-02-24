@@ -46,7 +46,6 @@ export class FlutiServerBuilderImpl implements FlutiServerBuilder {
         return this;
     }
 
-
     useOAuth(options: OAuthMiddlewareOptions): FlutiServerBuilder {
         this.use(useOAuthMiddleware(options))
         return this;
@@ -100,9 +99,13 @@ export class FlutiServerImpl implements FlutiServer {
         }
         return await handle(event)
     }
-
 }
 
 export let createMiddleware: () => FlutiServerBuilder = () => {
+    return new FlutiServerBuilderImpl();
+}
+
+
+export let createFlutiServer = () => {
     return new FlutiServerBuilderImpl();
 }

@@ -1,5 +1,5 @@
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
-import type {RequestEvent} from "@sveltejs/kit";
+import type {Context} from "hono";
 
 
 export type OAuthEvent = {
@@ -7,7 +7,7 @@ export type OAuthEvent = {
     redirect: string,
     verifier: string,
     code: string,
-    request: RequestEvent
+    request: Context
 }
 
 export type OAuthProviderValidate = (event: OAuthEvent) => Promise<FlutiUser>

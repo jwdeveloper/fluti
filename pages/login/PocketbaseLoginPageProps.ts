@@ -1,24 +1,26 @@
-import type {LoginFormData, LoginPageProps} from "$lib/fluti/pages/login/loginPageTypes";
-import {useUserSession} from "$lib/fluti/services/userSessionController.svelte";
+import type {LoginFormData, LoginPageProps, LoginResponse} from "$lib/fluti/pages/login/loginPageTypes";
 import {pocketbaseClient} from "$lib/pocketbase-client";
 import type {LoginController} from "$lib/fluti/pages/login/loginController.svelte";
+import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
+import userSession from "../../server2/middlewares/session/clientUserSession.svelte.ts";
 
-let session = useUserSession()
-let handleUserLogin = async (data: LoginFormData) => {
-
-    const authData = await pocketbaseClient
-        .collection('users')
-        //@ts-ignore
-        .authWithPassword(data.email, data.password);
-
-    session.setSession(authData.token, authData.record);
-
-    document.cookie += pocketbaseClient.authStore.exportToCookie()
-    session.redirectTo("/")
+const alerts = useAlert()
+const handleUserLogin = async (data: LoginFormData, controller: LoginController) => {
+    let response = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({email: data.email, password: data.password})
+    })
+    let authData = await response.json() as LoginResponse;
+    if (authData.error) {
+        alerts.pushAlert(authData?.message ?? 'Error while login', 'error');
+        return
+    }
+    userSession.loadSession();
+    userSession.redirectTo(controller?.props?.redirectUrl ?? "/")
     return true;
 }
 
-let handleError = async (data: LoginFormData, controller: LoginController, error: any) => {
+const handleError = async (data: LoginFormData, controller: LoginController, error: any) => {
     if (error.message === 'Failed to authenticate.') {
         controller.error = ''
         controller.invalidFields['password'] = controller?.props?.messages?.invalidLoginOrPassword ?? error.message;
@@ -57,40 +59,26 @@ let handleSendRecoveryMail = async (data: LoginFormData) => {
 }
 
 let handleOAuthLogin = async (provider: string) => {
-
-    const authProviders = await pocketbaseClient.collection('users').listAuthMethods();
-    if (!authProviders.oauth2.enabled)
-        throw new Error("OAuth disabled!")
-
-    const oauthProvider = authProviders.oauth2
-        .providers
-        .find(e => e.name === provider.toLowerCase())
-    if (!oauthProvider)
-        throw new Error("OAuth provider " + provider + " not found!")
-
-    const authUrl = oauthProvider.authURL;
-    const state = oauthProvider.state;
-    const verifier = oauthProvider.codeVerifier;
-    const redirectUrl = `${window.location.origin}/oauth/${provider.toLowerCase()}`;
-
-    document.cookie = `oauth_state=${encodeURIComponent(state)}; path=/; Secure; SameSite=Lax`;
-    document.cookie = `oauth_verifier=${encodeURIComponent(verifier)}; path=/; Secure; SameSite=Lax`;
-
-    let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
-    if (provider.toLowerCase() === 'github') {
-        fullUrl = fullUrl.replace("redirect_uri", '')
-    }
-    window.location.href = fullUrl;
+    const response = await fetch(`/api/auth/oauth/create/${provider}`)
+    const json = await response.json()
+    window.location.href = json.url;
     return false;
 }
 
 let handleUserRegister = async (data: LoginFormData) => {
-    await pocketbaseClient.collection('users').create({
-        email: data.email,
-        name: data.email,
-        password: data.password,
-        passwordConfirm: data.password
-    });
+    let response = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+            passwordConfirm: data.password
+        })
+    })
+    let responseData = await response.json();
+    if (responseData.error) {
+        alerts.pushAlert(responseData?.message ?? 'Error while register', 'error');
+        return false;
+    }
     return true;
 }
 
