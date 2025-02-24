@@ -6,6 +6,7 @@ import type {LoginResponse} from "$lib/fluti/pages/login/loginPageTypes";
 import type {SessionMiddlewareConfig} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {deleteCookie, getCookie, setCookie} from 'hono/cookie';
 import {CacheService} from "$lib/fluti/services/CacheService";
+import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
 
 
 export function createSessionApiController(config: SessionMiddlewareConfig) {
@@ -18,32 +19,11 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
         try {
             const authData = await pb.collection('users').authWithPassword(email, password);
             const record = authData.record;
-            const token = await sign(
-                {
-                    id: record.id,
-                    email: record.email,
-                    login: record.email,
-                    avatar: record.avatar,
-                    name: record.name ?? record.email
-                }, config.token.secret);
+            if (record.verified === false)
+                throw new Error("user is not verified")
 
-            let data: LoginResponse = {
-                message: "successful login",
-                error: false,
-                token: token,
-                dbToken: authData.token
-            }
-            setCookie(c, config.token.cookieName, token, {
-                secure: true,
-                sameSite: 'Strict',
-                maxAge: config.token.tokenExpirationTime
-            });
-            setCookie(c, 'db_token', authData.token, {
-                secure: true,
-                sameSite: 'Strict',
-                maxAge: config.token.tokenExpirationTime
-            });
-            return c.json(data);
+            const result = await returnUserAuthTokens(c, config, authData.token, record);
+            return c.json(result);
         } catch (error) {
             return c.json({
                 token: '',

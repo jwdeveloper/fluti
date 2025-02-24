@@ -18,7 +18,8 @@ export async function returnUserAuthTokens(
             email: userRecord.email,
             login: userRecord.email,
             avatar: userRecord.avatar,
-            name: userRecord.name ?? userRecord.email
+            name: userRecord.name ?? userRecord.email,
+            verified: userRecord.verified ?? false
         }, config.token.secret);
 
     let data: LoginResponse = {
