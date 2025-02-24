@@ -2,6 +2,7 @@ import type {LoginFormData, LoginPageProps, LoginResponse} from "$lib/fluti/page
 import {pocketbaseClient} from "$lib/pocketbase-client";
 import type {LoginController} from "$lib/fluti/pages/login/loginController.svelte";
 import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
+//@ts-ignore
 import userSession from "../../server2/middlewares/session/clientUserSession.svelte.ts";
 
 const alerts = useAlert()
