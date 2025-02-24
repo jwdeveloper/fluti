@@ -26,6 +26,7 @@ export interface OAuthProvider {
     iconColor: string,
     borderColor?: string,
     onlyIcon: boolean //shows only icons with name
+    enabled?:boolean
 }
 
 
@@ -96,7 +97,7 @@ export interface LoginPageProps {
     }
 
     messages: LoginPagePropsTranslations,
-    redirectUrl: string
+    redirectUrl?: string
 
     links?: {
         termsAndCondition?: string

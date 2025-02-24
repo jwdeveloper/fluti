@@ -11,7 +11,7 @@
     }
 
     const {controller, onProviderClick}: OAuthLoginProps = $props();
-    const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers ?? [])
+    const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers?.filter(e => e?.enabled !== false) ?? [])
     const translations = controller.props.messages.loginView.oauth;
     const providersIcons = $derived.by(() => {
         return items.filter(e => e.onlyIcon);

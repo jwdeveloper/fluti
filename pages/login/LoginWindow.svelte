@@ -23,8 +23,8 @@
                     name: "Facebook",
                     iconColor: "#1877F2",
                     // borderColor: "#1877F2",
-                    onlyIcon: true
-
+                    onlyIcon: true,
+                    enabled: false,
                 },
                 {
                     name: "Discord",
