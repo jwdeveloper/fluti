@@ -13,7 +13,7 @@ export type HonoMiddleware = (context: Context, next: Next) => Promise<void | Re
 
 export type FlutiUser = {
     id: string,
-    isAdmin?: boolean,
+    admin?: boolean,
     email?: string,
     login?: string,
     verified: boolean
