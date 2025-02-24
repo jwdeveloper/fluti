@@ -5,7 +5,7 @@
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
 
-    let {src, className = ''} = $props()
+    let {src, className = '', rootStyle=''} = $props()
 
     let isLoading = $state(true);
     let isVisible = $state(false);
@@ -20,9 +20,8 @@
         observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    isVisible = true;
-                    isLoading = false;
                     observer.disconnect();
+                    isVisible = true;
                 }
             },
             {
@@ -41,24 +40,28 @@
     });
 </script>
 
-<div bind:this={element} style="height: 100%; width: 100%">
-<Skieleton
-        radius={flutiTheme.radius.medium}
-        height="100%"
-        width="100%" bind:isLoading={isVisible}>
-    <figure class="img-container {className}" >
-        <img src={src} onload={handleImageLoad}/>
-    </figure>
-</Skieleton>
+<div bind:this={element}
+     style="height: 100%; width: 100%; {rootStyle};">
+    <Skieleton
+            radius={flutiTheme.radius.medium}
+            height="100%"
+            width="100%"
+            isLoading={()=>isLoading === true}>
+        <figure class="img-container {className}">
+            {#if isVisible}
+                <img src={src} onload={handleImageLoad}/>
+            {/if}
+        </figure>
+    </Skieleton>
 </div>
 <slot/>
 
 <style>
-    .img-container
-    {
+    .img-container {
         height: 100%;
         padding-top: 100%;
     }
+
     .img-container img {
         position: absolute;
         top: 0;
