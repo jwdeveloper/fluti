@@ -5,6 +5,7 @@ import type {
     SessionMiddlewareConfigFn, UserLoginRequest
 } from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {
+    createLoginWithHeadersMiddleware,
     createSessionApiController,
     createSessionAuthMiddleware,
 } from "$lib/fluti/server2/middlewares/session/api/SessionApiController";
@@ -53,6 +54,7 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
             onConfig(config)
 
         const app: Hono = serverConfig.app;
+        app.use(createLoginWithHeadersMiddleware(config));
         app.use(createSessionAuthMiddleware(config));
         app.route(config.api.endpointPrefix, createSessionApiController(config));
         if (config?.oAuth !== undefined) {

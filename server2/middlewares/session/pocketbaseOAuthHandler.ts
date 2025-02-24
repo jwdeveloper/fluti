@@ -40,6 +40,7 @@ export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
         roles: [],
         country: 'en',
         claims: {},
+        admin: record.record?.admin ?? false,
         profile: {
             name: user.name,
             firstName: user.name,

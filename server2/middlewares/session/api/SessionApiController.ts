@@ -69,6 +69,40 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
     return controller;
 }
 
+export function createLoginWithHeadersMiddleware(config: SessionMiddlewareConfig) {
+
+    return async (c: Context, next: any) => {
+
+        let login = c.req.header("login")
+        if (!login) {
+            return await next();
+        }
+        let password = c.req.header("password");
+
+        if (!login || !password) {
+            return c.json({error: "login and password are required"}, 404)
+        }
+        console.log(`trying to login by header with login ${login} and password ${password}`)
+
+        try {
+            const authData = await pocketbaseClient.collection('users').authWithPassword(login, password);
+            const record = authData.record;
+            if (record.verified === false)
+                throw new Error("user is not verified")
+
+            await returnUserAuthTokens(c, config, authData.token, record);
+        } catch (error) {
+            console.log(error)
+            return c.json({
+                token: '',
+                dbToken: '',
+                message: "Invalid email or password or user is not verified",
+                error: true
+            }, 401);
+        }
+        return await next();
+    }
+}
 
 export function createSessionAuthMiddleware(config: SessionMiddlewareConfig) {
     const cacheService = new CacheService();

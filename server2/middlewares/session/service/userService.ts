@@ -12,14 +12,16 @@ export async function returnUserAuthTokens(
     dbToken: string,
     userRecord: any): Promise<LoginResponse> {
 
+    console.log('user record', userRecord)
     const token = await sign(
         {
             id: userRecord.id,
             email: userRecord.email,
             login: userRecord.email,
-            avatar: userRecord.avatar,
+            avatar: userRecord?.profile?.picture,
             name: userRecord.name ?? userRecord.email,
-            verified: userRecord.verified ?? false
+            verified: userRecord.verified ?? false,
+            admin: userRecord?.admin ?? false
         }, config.token.secret);
 
     let data: LoginResponse = {

@@ -17,6 +17,8 @@ export interface InfiniteScrollProps {
 
     errorTemplate?: any
 
+    noResultsTemplate?: any
+
     threshold?: number
 
     batches?: ItemsBatch[]

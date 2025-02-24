@@ -5,12 +5,14 @@
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Textbox from "$lib/fluti/components/textbox/Textbox.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
 
     let {
         controller = useInfiniteScrollController(),
         itemTemplate = undefined,
         loadingTemplate = defaultLoader,
         errorTemplate = defaultErrorTemplate,
+        noResultsTemplate = defaultNoResultTemplate,
         threshold = 100,
         container
     }: InfiniteScrollProps = $props();
@@ -39,10 +41,10 @@
         });
     };
 
+
 </script>
 
-<svelte:window onresize={onScroll}
-               onscroll={onScroll}/>
+<svelte:window onresize={onScroll} onscroll={onScroll}/>
 
 {#if controller.error}
     {@render errorTemplate(controller.error)}
@@ -51,17 +53,30 @@
              height="auto"
              width="100%"
              {...container}>
-        {#each controller.items as item, index (item.id)}
-            {#if itemTemplate}
-                {@render itemTemplate(item, index)}
-            {/if}
-        {/each}
+        {#if controller.items.length === 0 &&
+        controller.isLoading === false &&
+        useServerRenderConfig.serverSide === false
+        }
+            {@render noResultsTemplate()}
+        {:else}
+            {#each controller.items as item, index (item.id)}
+                {#if itemTemplate}
+                    {@render itemTemplate(item, index)}
+                {/if}
+            {/each}
+        {/if}
         {#if controller.isLoading}
             {@render loadingTemplate()}
         {/if}
     </Element>
 {/if}
 
+
+{#snippet defaultNoResultTemplate()}
+    <Element width="100%" height="100vh" style="position: fixed; z-index: 3; bottom: 0">
+        No result
+    </Element>
+{/snippet}
 
 {#snippet defaultLoader()}
     <Element width="100%" height="100vh" style="position: fixed; z-index: 3; bottom: 0">
