@@ -17,10 +17,10 @@
     import SubscriptionCard from "$lib/fluti/pages/subscription/SubscriptionCard.svelte";
     import {bestPricePerDay} from "$lib/fluti/pages/subscription/utils";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
-    import {useUserSession} from "../login/userClientSession.svelte.ts";
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
     import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte";
 
     let {
         productsOptions = defaultSubscriptionPageData.productsOptions ?? [],
@@ -30,8 +30,6 @@
     }: SubscriptionPageProps = $props();
 
     let alerts = useAlert()
-    let userSession = useUserSession()
-    let breakpoints = useBreakpoints();
     let isProductsLoading = $state(false)
     let products: SubscriptionProduct[] = $state([])
     const translations = {...defaultSubscriptionPageData.translations, ...props.translations} as SubscriptionPageTranslations
