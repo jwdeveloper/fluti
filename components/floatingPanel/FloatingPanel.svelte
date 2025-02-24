@@ -74,7 +74,7 @@
     .root {
         position: relative;
         width: 100%;
-        z-index: 200000;
+        z-index: var(--z-index-4);
     }
 
     .wrapper {
