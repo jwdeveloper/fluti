@@ -1,7 +1,8 @@
 import type {Snippet} from "svelte";
 
 export interface FloatingPanelProps {
-    isOpen: boolean
+    isOpen?: boolean
+    offset?: number,
     parentElement?: HTMLDivElement
 
     headerSlot: Snippet

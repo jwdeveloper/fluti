@@ -1,10 +1,11 @@
 <script lang="ts">
-    import {blur} from "svelte/transition";
+    import {blur,fly,slide,fade} from "svelte/transition";
     import {addArrowController} from "../../effects/ArrowController";
     import type {FloatingPanelProps} from "./FloatingPanelType";
 
     let {
         isOpen = $bindable(false),
+        offset = 0,
         headerSlot,
         contentSlot
     }: FloatingPanelProps = $props();
@@ -53,10 +54,16 @@
 
 <svelte:window onclick={handleClickOutside}/>
 
-<div style="position: relative;  width: 100%;" bind:this={rootElement} id={id}>
-    {@render headerSlot()}
+<div class="root" bind:this={rootElement} id={id}>
+    <div >
+        {@render headerSlot()}
+    </div>
     {#if isOpen}
-        <div class="wrapper" bind:this={wrapperElement} in:blur use:addArrowController={{target:'input'}}>
+        <div class="wrapper"
+             bind:this={wrapperElement}
+             in:fly={{}}
+             out:fly={{duration:100}}
+             use:addArrowController={{target:'input'}}>
             {@render contentSlot()}
         </div>
     {/if}
@@ -64,9 +71,16 @@
 
 
 <style>
+    .root {
+        position: relative;
+        width: 100%;
+        z-index: 200000;
+    }
+
     .wrapper {
-        position: fixed;
+        position: absolute;
         width: 100%;
         height: 100%;
+        z-index: var(--z-index-6);
     }
 </style>

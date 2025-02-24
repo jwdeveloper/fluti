@@ -60,12 +60,19 @@
             placeholder={props.placeholder}
             disabled={props.disabled}
             required={props.required}
+            onclick={props.onClick}
             {...props}
     />
 
     {#if props?.icon}
         <div class="icon" onclick={onIconClick}>
             <i class={props?.icon}></i>
+        </div>
+    {/if}
+
+    {#if props?.textIcon}
+        <div class="text-icon">
+            {props.textIcon}
         </div>
     {/if}
 </div>
@@ -83,13 +90,31 @@
 
         .icon {
             position: absolute;
-            width: 2em;
-            height: 2em;
-            right: 3%;
+            width: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-light);
+            justify-content: flex-end;
+            color: var(--text-muted);
+            padding-right: 1em;
+            pointer-events: none;
+
+            i{
+                pointer-events: all;
+                height: 1em;
+                text-align: center;
+                width: 1em;
+            }
+        }
+
+        .text-icon {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1em;
+            color: var(--text-muted);
+            pointer-events: none;
         }
     }
 

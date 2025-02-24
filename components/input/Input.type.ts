@@ -30,6 +30,7 @@ export interface InputProps2 extends ElementProps {
     onIconClick?: (i: any) => void
     icon?: string
     inputMode?: string
+    textIcon?: string
 }
 
 export type InputType = undefined | 'text' | 'number' | 'email' | 'password' | 'tel' | 'url' |
