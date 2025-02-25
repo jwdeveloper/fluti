@@ -46,6 +46,7 @@
             radius={flutiTheme.radius.medium}
             height="100%"
             width="100%"
+            timeout={0}
             isLoading={()=>isLoading === true}>
         <figure class="img-container {className}">
             {#if isVisible}
