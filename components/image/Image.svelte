@@ -5,7 +5,7 @@
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
 
-    let {src, className = '', rootStyle=''} = $props()
+    let {src, alt='', className = '', rootStyle=''} = $props()
 
     let isLoading = $state(true);
     let isVisible = $state(false);
@@ -50,7 +50,7 @@
             isLoading={()=>isLoading === true}>
         <figure class="img-container {className}">
             {#if isVisible}
-                <img src={src} onload={handleImageLoad}/>
+                <img alt={alt} src={src} onload={handleImageLoad}/>
             {/if}
         </figure>
     </Skieleton>
