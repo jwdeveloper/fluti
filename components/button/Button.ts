@@ -30,6 +30,7 @@ export interface Button2Props extends ElementProps {
     }
     fullWidth?: boolean
     icon?: string
+    label?: string
     iconPosition?: 'left' | 'right'
-    isShowText?:boolean //set to false when you want to show icon in full width button
+    isShowText?: boolean //set to false when you want to show icon in full width button
 }

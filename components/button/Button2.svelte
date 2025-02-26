@@ -19,6 +19,7 @@
         textSize = 'div',
         isShowText = true,
         className,
+        label,
         onClick,
         ...props
     }: Button2Props = $props();
@@ -125,7 +126,8 @@
         effects={effects}
         className="btn-element {isIcon?'btn-icon-element':''} {variantClass} {className}"
         gap="1em"
-        attributes={{disabled:disabled}}
+        attributes={{'aria-label':label?? 'ordinary button', disabled:disabled}}
+
         onClick={handleClick}
         {...props}>
 
