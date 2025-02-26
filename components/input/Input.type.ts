@@ -22,6 +22,7 @@ export interface InputProps2 extends ElementProps {
     readonly?: boolean,
     required?: boolean,
     invalid?: boolean,
+    pattern?:string
     value?: any,
     type?: InputType
     variant?: 'outline' | 'filled'

@@ -24,12 +24,19 @@ let mapProduct = async (product: any) => {
     }
 }
 
-export async function getProducts(event:Context) {
+let cache: any = undefined
+
+export async function getProducts(event: Context) {
+
+    if (cache !== undefined)
+        return event.json(cache)
+
     const products = await stripeClient().products.list();
     const mapped = []
     for (let product of products.data) {
         mapped.push(await mapProduct(product))
     }
+    cache = mapped;
     return event.json(mapped)
 }
 

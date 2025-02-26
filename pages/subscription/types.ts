@@ -7,7 +7,7 @@ export interface SubscriptionPageTranslations {
 }
 
 export interface PaymentPeriodOptions {
-    value: 'month' | 'year' | 'forever'
+    value: 'week'| 'month' | 'year' | 'forever'
     name: string,
     description?: string
     formated?: string
@@ -43,6 +43,7 @@ export interface SubscriptionProduct {
         badgeColor?: string
         discount?: string
         icon?: string
+        active?: string
     }
 }
 

@@ -15,7 +15,9 @@ export function bestPricePerDay(products: SubscriptionProduct[], period: any) {
             currency = product?.price?.currency ?? 'usd';
         }
     }
-
+    if (period.value === 'week') {
+        bestPrice = bestPrice / 700;
+    }
     if (period.value === 'month') {
         bestPrice = bestPrice / 3000;
     }

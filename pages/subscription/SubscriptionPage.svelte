@@ -95,6 +95,9 @@
                 continue
             }
 
+            if (product?.meta?.active === 'false')
+                continue
+
             let price: SubscriptionProductPrice | undefined = product.prices?.find(e => e.period === selectedPaymentPeriod.value);
             if (price === undefined) {
                 price = {
@@ -169,6 +172,7 @@
             <Space variant="small"/>
             <Skieleton width="700px"
                        mobile={{width:'100%'}}
+                       timeout={0}
                        isLoading={!isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
                 <h4 style="font-weight: normal">{getPeriodDescription}</h4>
             </Skieleton>
@@ -212,7 +216,7 @@
 <PeriodComponent/>
 <Element width="100%" gap="1em" mobile={{direction:'column'}}>
     {#if isProductsLoading}
-        <Skieleton radius={flutiTheme.radius.medium} height="505px" width="100%"/>
+        <Skieleton timeout={0} radius={flutiTheme.radius.medium} height="505px" width="100%"/>
     {:else}
         {#each displayedProducts as product (product.id)}
             {@render CardComponent(product)}
