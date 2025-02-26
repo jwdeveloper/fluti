@@ -94,7 +94,7 @@
                 {@const total = controller.pageInfo.count}
                 <div style="
                 color: {flutiTheme.color.muted};
-                text-wrap: nowrap"> {from} - {to}  ogłoszeń z {total}</div>
+                text-wrap: nowrap"> {from} - {to} z {total}</div>
             </Skieleton>
             {@render paginationTemplate?.(controller)}
         </Element>
