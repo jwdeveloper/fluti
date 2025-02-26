@@ -11,6 +11,7 @@ export interface PaginationProps extends ElementProps {
     loadingTemplate?: any,
     paginationTemplate?: any
     itemTemplate?: any
+    noItemsTemplate?: any
     errorTemplate?: any
 
     translations?: {

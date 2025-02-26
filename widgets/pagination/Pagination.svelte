@@ -13,6 +13,7 @@
         paginationPosition = 'both',
         loadingTemplate = DefaultLoadingTemplate,
         itemTemplate = DefaultItemTemplate,
+        noItemsTemplate = DefaultNotItemsTemplate,
         paginationTemplate = DefaultPaginationTemplate,
         errorTemplate = DefaultErrorTemplate,
         children,
@@ -86,9 +87,13 @@
         {#if controller.isLoading}
             {@render loadingTemplate?.()}
         {:else }
-            {#each controller.items as item, index (item.id)}
-                {@render itemTemplate?.(item, index)}
-            {/each}
+            {#if controller.items.length === 0}
+                {@render noItemsTemplate?.(controller)}
+            {:else }
+                {#each controller.items as item, index (item.id)}
+                    {@render itemTemplate?.(item, index)}
+                {/each}
+            {/if}
         {/if}
 
         {#snippet failed(error, reset)}
@@ -148,8 +153,7 @@
         {/each}
 
 
-        <i class="fa-solid fa-circle"
-           style="font-size: 0.05em"></i>
+        <i class="fa-solid fa-circle" style="font-size: 0.05em"></i>
 
 
         <Button2 size="small"
@@ -178,6 +182,10 @@
 
 {#snippet DefaultErrorTemplate(error)}
     <Element>
-        Error
+        Error {error}
+    </Element>
+{/snippet}
+{#snippet DefaultNotItemsTemplate(controller)}
+    <Element width="100%" height="100vh">
     </Element>
 {/snippet}
