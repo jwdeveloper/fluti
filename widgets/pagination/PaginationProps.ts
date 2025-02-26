@@ -31,6 +31,7 @@ export interface PaginationControllerProps {
 }
 
 export interface PaginationPageInfo {
+    count: number
     totalPages: number
     itemsPerPage: number
     page: number

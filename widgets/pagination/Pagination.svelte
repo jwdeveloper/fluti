@@ -23,6 +23,7 @@
 
     let minVisiblePages = 5;
     let visiblePagesButton = $derived.by(() => {
+        controller.pageInfo
         return Math.min(minVisiblePages, controller.pageInfo.totalPages)
     });
 
@@ -81,7 +82,23 @@
 <Element direction="column" width="100%" {...props}>
 
     {#if paginationPosition === 'top' || paginationPosition === 'both'}
-        {@render paginationTemplate?.(controller)}
+
+
+        <Element width="100%" padding={flutiTheme.padding.small}>
+            <Skieleton
+                    width="200px"
+                    height="25px"
+                    isLoading={()=>controller.isLoading}>
+                {@const from = controller.pageInfo.page * controller.pageInfo.itemsPerPage - controller.pageInfo.itemsPerPage + 1}
+                {@const to = controller.pageInfo.page * 10}
+                {@const total = controller.pageInfo.count}
+                <div style="
+                color: {flutiTheme.color.muted};
+                text-wrap: nowrap"> {from} - {to}  ogłoszeń z {total}</div>
+            </Skieleton>
+            {@render paginationTemplate?.(controller)}
+        </Element>
+
     {/if}
     <svelte:boundary>
         {#if controller.isLoading}
@@ -128,7 +145,6 @@
                      icon="fa fa-arrow-left"/>
         </Hint>
 
-
         <Button2 size="small"
                  effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
                  onClick={()=> handleClick(1)}
@@ -152,9 +168,7 @@
             </Hint>
         {/each}
 
-
         <i class="fa-solid fa-circle" style="font-size: 0.05em"></i>
-
 
         <Button2 size="small"
                  effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
@@ -186,6 +200,5 @@
     </Element>
 {/snippet}
 {#snippet DefaultNotItemsTemplate(controller)}
-    <Element width="100%" height="100vh">
-    </Element>
+    <Element width="100%" height="100vh"/>
 {/snippet}

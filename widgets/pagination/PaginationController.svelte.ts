@@ -22,7 +22,7 @@ export function usePaginationController(props?: PaginationControllerProps) {
 
     if (!props) {
         props = {
-            pageInfo: {totalPages: 1, page: 1, itemsPerPage: 10},
+            pageInfo: {totalPages: 1, page: 1, itemsPerPage: 10, count: 0},
             items: [],
             isLoading: true,
             serverSide: true
