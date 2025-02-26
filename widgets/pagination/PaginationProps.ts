@@ -19,6 +19,7 @@ export interface PaginationProps extends ElementProps {
         next?: string
         open?: string
         goToLast?: string
+        goToFirst?: string
     }
 }
 

@@ -17,6 +17,13 @@
         paginationTemplate = DefaultPaginationTemplate,
         errorTemplate = DefaultErrorTemplate,
         children,
+        translations = {
+            previous: 'Previous page',
+            next: "Next page",
+            open: "Open page",
+            goToLast: "Go to the last page",
+            goToFirst: "Go to the first page"
+        },
         ...props
     }: PaginationProps = $props();
 
@@ -136,7 +143,7 @@
              gap="0.3em"
              justify="flex-end">
 
-        <Hint title="Previous page">
+        <Hint title={translations.previous}>
             <Button2 size="small"
                      effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
                      iconPosition="left"
@@ -145,18 +152,20 @@
                      icon="fa fa-arrow-left"/>
         </Hint>
 
-        <Button2 size="small"
-                 effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
-                 onClick={()=> handleClick(1)}
-                 hover={{background:flutiTheme.background.primary}}>
-            1
-        </Button2>
+        <Hint title={translations.goToFirst}>
+            <Button2 size="small"
+                     effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
+                     onClick={()=> handleClick(1)}
+                     hover={{background:flutiTheme.background.primary}}>
+                1
+            </Button2>
+        </Hint>
 
         <i class="fa-solid fa-circle"
            style="font-size: 0.05em"></i>
 
         {#each visiblePages as pageNumber, index (pageNumber)}
-            <Hint title="Open page">
+            <Hint title={translations.open}>
                 <Button2 size="small"
                          effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
                          onClick={()=> handleClick(pageNumber)}
@@ -170,14 +179,16 @@
 
         <i class="fa-solid fa-circle" style="font-size: 0.05em"></i>
 
-        <Button2 size="small"
-                 effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
-                 onClick={()=> handleClick(controller.pageInfo.totalPages)}
-                 hover={{background:flutiTheme.background.primary}}>
-            {controller.pageInfo.totalPages}
-        </Button2>
+        <Hint title={translations.goToLast}>
+            <Button2 size="small"
+                     effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
+                     onClick={()=> handleClick(controller.pageInfo.totalPages)}
+                     hover={{background:flutiTheme.background.primary}}>
+                {controller.pageInfo.totalPages}
+            </Button2>
+        </Hint>
 
-        <Hint title="Next page">
+        <Hint title={translations.next}>
             <Button2 size="small"
                      iconPosition="right"
                      effects={{click:{}, rippler:{color:flutiTheme.color.accent}}}
