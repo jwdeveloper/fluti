@@ -4,10 +4,14 @@
     import {tick} from "svelte";
     import RBush from 'rbush';
     import {getMapMarkerHtml} from "./OpenMap";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let {
         zoom = $bindable(1),
+        viewPos = [53, 18],
         markers = $bindable([]),
+        onClick = (e) => {
+        },
         style,
         onMouseover = () => {
         },
@@ -103,12 +107,39 @@
         if (map === undefined) {
             map = L.map(mapContainer, {
                 zoomControl: false,
-            }).setView([53, 18], Number(zoom));
+            }).setView(viewPos, Number(zoom));
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: ''
             }).addTo(map);
 
+            const defaultStyle = {
+                color: flutiTheme.background.accent,
+                weight: 2,
+                opacity: 0.4,
+                fillColor: flutiTheme.background.accent,
+                fillOpacity: 0.2
+            };
+
+            const hoverStyle = {
+                fillOpacity: 0.4 // Make it lighter on hover
+            };
+
+
+            fetch('/poland.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: defaultStyle,
+                        onEachFeature: (feature, layer) => {
+                            layer.on({
+                                click: onClick,
+                                mouseover: (e) => e.target.setStyle(hoverStyle),
+                                mouseout: (e) => e.target.setStyle(defaultStyle)
+                            });
+                        }
+                    }).addTo(map);
+                });
             // L.control.zoom({
             //     position: 'bottomright'
             // }).addTo(map);
