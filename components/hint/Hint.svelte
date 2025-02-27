@@ -6,6 +6,7 @@
 
     interface HintProps extends ElementProps {
         title?: string | undefined
+        keepVisible?: boolean
     }
 
     let {
@@ -15,9 +16,10 @@
         fullWidth = false, style = '',
         offset = "125%",
         xOffset = "0",
-        panelStyle
+        panelStyle,
+        keepVisible = false,
+        show = $bindable(false)
     }: HintProps = $props();
-    let show = $state(false)
 
     let handleOpen = () => {
         show = true;
@@ -43,7 +45,7 @@
         class="contianer"
         style="  width: {fullWidth?'100%':'auto'} {style}"
 >
-    {#if shouldOpen && title !== undefined}
+    {#if keepVisible || (shouldOpen && title !== undefined)}
         <div style="
         transform: translate({xOffset}, {offset});
         z-index: var(--z-index-3);
@@ -57,7 +59,7 @@
                    padding="0.6em"
                    style="text-wrap: nowrap;">
                 <h5>
-                {title}
+                    {title}
                 </h5>
             </Panel>
         </div>

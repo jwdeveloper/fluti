@@ -8,6 +8,7 @@
     let {
         zoom = $bindable(1),
         markers = $bindable([]),
+        style,
         onMouseover = () => {
         },
         onSelected
@@ -91,7 +92,6 @@
         nearbyItems.forEach(item => {
             markersCluster.addLayer(item.marker);
         });
-        console.log('searching', nearbyItems.length, mapCenter);
 
     }
 
@@ -199,7 +199,7 @@
 </script>
 
 
-<div id="map" bind:this={mapContainer}></div>
+<div id="map" style={style} bind:this={mapContainer}></div>
 
 <style>
     :global(.custom-icon) {
@@ -216,7 +216,6 @@
 
         border: 2px solid var(--bg-accent);
         position: absolute;
-        z-index: 9999;
         transition: scale, 0.2s ease;
 
     }
@@ -237,8 +236,8 @@
     #map {
         height: 100%;
         width: 100%;
-        z-index: 999;
-        background: var(--bg-100);
+        z-index: 1;
+        background: var(--bg-primary);
     }
 </style>
 
