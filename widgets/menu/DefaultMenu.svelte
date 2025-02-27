@@ -4,9 +4,6 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import Separator from "$lib/fluti/components/separator/Separator.svelte";
-    import Button2 from "$lib/fluti/components/button/Button2.svelte";
-
 
     interface DefaultMenuItemProps {
         name: string
@@ -19,7 +16,9 @@
         highlightColor?: string
         textColor?: string
         currentItemKey?: string
+        menuItemClass?: string
         onClick?: (item: DefaultMenuItemProps) => void
+        itemTemplate?: any
     }
 
 
@@ -28,6 +27,8 @@
         highlightColor = flutiTheme.background.tertiary,
         textColor = flutiTheme.color.accent,
         currentItemKey,
+        menuItemClass,
+        itemTemplate = MenuItem,
         onClick = () => {
         },
         ...props
@@ -94,6 +95,7 @@
             aElement.opacity(1, 0)
     }
 
+
 </script>
 
 
@@ -104,7 +106,7 @@
 
     <svelte:element this={elementType}
                     href={item.link??"/"}
-                    class="menu-item"
+                    class="menu-item {menuItemClass}"
                     style='color:{selectedItemKey === elementKey?flutiTheme.background.accent:""}'
                     onclick={()=> handleClick(item)}
                     onmouseenter={setElementSource}>
@@ -132,15 +134,18 @@
         padding="0 1em"
         style="position: relative"
         tag="nav"
-        attributes={{
+        attributes={
+        {
             onmouseenter:(e)=>handleEnter(true,e),
-            onmouseleave:(e)=>handleEnter(false,e)}}
+            onmouseleave:(e)=>handleEnter(false,e)
+        }
+        }
         justify="space-around"
-        align="center"
+        align="flex-end"
         {...props}>
 
     {#each items as item}
-        {@render MenuItem(item)}
+        {@render itemTemplate(item, setElementSource)}
     {/each}
     {@render FloatingBackground()}
 </Element>
@@ -158,6 +163,6 @@
     }
 
     .menu-item:hover {
-        color: var(--text-light);
+        color: var(--accent-primary);
     }
 </style>

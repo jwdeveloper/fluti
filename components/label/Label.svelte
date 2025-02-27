@@ -29,7 +29,7 @@
         </h5>
     {/if}
     {#if children}
-        <Element justify="flex-start" width="100%" style="z-index: {flutiTheme.zIndex.i1}">
+        <Element justify="flex-start" width="100%">
             {@render children()}
         </Element>
     {/if}

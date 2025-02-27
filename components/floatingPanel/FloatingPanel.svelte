@@ -74,13 +74,12 @@
     .root {
         position: relative;
         width: 100%;
-        z-index: var(--z-index-4);
     }
 
     .wrapper {
         position: absolute;
         width: 100%;
         height: 100%;
-        z-index: var(--z-index-6);
+        z-index: var(--z-index-3);
     }
 </style>

@@ -14,3 +14,11 @@ export function removePolishCharacters(str: string): string {
         .replace(/[ĄąĆćĘęŁłŃńÓóŚśŹźŻż]/g, match => diacriticMap[match] || match)
         .toLowerCase();
 }
+
+export function formatNumberToBetterReadable(input: string) {
+    let value = input.replace(/\s/g, "");
+    if (/^\d*$/.test(value))
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+    return input
+}

@@ -4,6 +4,8 @@
     import Panel from "../panel/Panel.svelte";
     import Input from "../input/Input.svelte";
     import FloatingPanel from "../floatingPanel/FloatingPanel.svelte";
+    import Input2 from "$lib/fluti/components/input/Input2.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let {value = $bindable('')} = $props();
     let isOpen = $state(false);
@@ -12,6 +14,7 @@
         "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
         "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"
     ];
+
     let parentElement: HTMLDivElement = $state({})
     const currentDate = new Date();
     let displayedMonth = $state(currentDate.getMonth());
@@ -25,7 +28,6 @@
     };
 
     const handleSelectDay = (day: string) => {
-        isOpen = false;
         selectedDay = day;
         value = selectedDay + "/" + (displayedMonth) + "/" + displayedYear;
     }
@@ -124,7 +126,7 @@
 {#snippet ShowMonths()}
     <Panel width="100%" panelType="grid" columns="repeat(3,1fr)" gap="0.5em">
         {#each monthNames as day}
-            <Panel style="font-weight: bold; text-align: left"
+            <Panel style=" text-align: left"
                    variant="border"
                    ripplerEffect={true}
                    onClick={()=>handleMonthSelect(day)}
@@ -138,7 +140,7 @@
 {#snippet ShowDays()}
     <Panel width="100%" panelType="grid" rows="auto" columns="repeat(7,1fr)" gap="0.1em">
         {#each days as day}
-            <Panel style="font-weight: bold; text-align: center;">
+            <Panel style="; text-align: center;">
                 {day}
             </Panel>
         {/each}
@@ -156,20 +158,20 @@
 
 <FloatingPanel bind:isOpen={isOpen}>
     {#snippet headerSlot()}
-        <Input onClick={handleClick}
+        <Input2 onClick={handleClick}
                readonly={true}
                icon="fa-solid fa-calendar-days"
                bind:value={value}
-               placeholder="Wybierz date"></Input>
+               placeholder="Wybierz date"></Input2>
     {/snippet}
 
     {#snippet contentSlot()}
         <Panel align="center" direction="column"
                radius="0.5em"
-               width="300px"
                gap="0"
+               padding={flutiTheme.padding.medium}
                variant="border"
-               background="var(--bg-100)">
+               background={flutiTheme.background.primary}>
 
             <Panel width="100%" gap="0" panelType="grid" columns="auto 1fr auto">
                 <Panel justify="flex-start">
@@ -208,8 +210,7 @@
 <style>
     .date-picker-element {
         font-weight: bold;
-        font-size: 1.2em;
-        padding: 0.5em;
+        font-size: var(--font-size-medium);
         border-radius: var(--radius);
     }
 
@@ -235,14 +236,6 @@
         background: var(--bg-accent);
         color: var(--bg-100);
 
-    }
-
-    .date-window {
-        position: absolute;
-        top: 110%;
-        width: 300px;
-        left: 0;
-        z-index: 10;
     }
 
     .inactive {

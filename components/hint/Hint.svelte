@@ -51,7 +51,6 @@
         pointer-events: none;
         {panelStyle};
     "
-
              class="hint"
              transition:effect>
             <Panel variant="component-panel-border-dark"
@@ -73,7 +72,6 @@
     .contianer {
         width: auto;
         height: auto;
-
     }
 
     .hint {

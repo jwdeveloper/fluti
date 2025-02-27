@@ -149,8 +149,8 @@
         color: var(--text-primary);
         -webkit-tap-highlight-color: transparent;
 
-        border-top: 1px solid var(--bg-tertiary);
-        border-bottom: 4px solid var(--bg-tertiary);
+        /*border-top: 1px solid var(--bg-tertiary);*/
+        /*border-bottom: 4px solid var(--bg-tertiary);*/
 
         i {
             z-index: var(--z-index-1);
