@@ -112,7 +112,8 @@
                 minZoom: zoom
             }).setView(viewPos, Number(zoom));
             controller.map = map;
-
+            map.on('zoomend', function () {
+            });
             let themes =
                 [
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",  // 0
@@ -128,6 +129,15 @@
                 ];
 
             L.tileLayer(themes[3], {
+                keepBuffer: 6,
+                updateWhenZooming: false,
+                updateWhenIdle: true,
+                reuseTiles: true,
+                zoomAnimation: true,
+                fadeAnimation: false,
+                edgeBufferTiles: 5,
+                continuousWorld: true,
+                tileSize: 128,
                 attribution: '',
             }).addTo(map);
 
