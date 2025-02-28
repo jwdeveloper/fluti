@@ -6,6 +6,16 @@ export class OpenMapController {
         return this.map !== undefined
     }
 
+    zoomIn() {
+        if (!this.isLoaded()) return;
+        this.map.zoomIn();
+    }
+
+    zoomOut() {
+        if (!this.isLoaded()) return;
+        this.map.zoomOut();
+    }
+
     setZoom(zoom: number) {
         if (!this.isLoaded())
             return

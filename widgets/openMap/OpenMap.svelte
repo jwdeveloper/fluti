@@ -12,6 +12,8 @@
         markers = $bindable([]),
         onClick = (m, e) => {
         },
+        onMouseHover = (a, b) => {
+        },
         style,
         onMouseover = () => {
         },
@@ -150,7 +152,11 @@
                         onEachFeature: (feature, layer) => {
                             layer.on({
                                 click: (e) => onClick(map, e),
-                                mouseover: (e) => e.target.setStyle(hoverStyle),
+                                mouseover: (e) => {
+                                    if (onMouseHover(e) === false)
+                                        return
+                                    e.target.setStyle(hoverStyle)
+                                },
                                 mouseout: (e) => e.target.setStyle(defaultStyle)
                             });
                         }
