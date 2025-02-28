@@ -13,11 +13,11 @@
             gap="0"
             direction="column">
         <Button2
-
                 background={flutiTheme.background.primary}
                 icon={item.icon}/>
         <svelte:element this="a"
                         href={item.link??"/"}
+                        style="text-warp:no-wrap;"
                         class="menu-item">
             {item.name}
         </svelte:element>
@@ -25,10 +25,13 @@
 
 {/snippet}
 
-<Element height="100vh"
-         align="flex-end"
+<Element height="100%"
          width="100%" style="
+      min-height: 100vh;
  position: fixed;
+ bottom: 0;
+ left:0;
+ overflow: hidden;
  pointer-events: none;
  z-index: var(--z-index-4)">
 
