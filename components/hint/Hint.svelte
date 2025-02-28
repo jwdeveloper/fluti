@@ -2,6 +2,7 @@
     import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {scale as effect} from "svelte/transition";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+    import FloatingPanel from "$lib/fluti/components/floatingPanel/FloatingPanel.svelte";
 
 
     interface HintProps extends ElementProps {
@@ -39,6 +40,7 @@
 </script>
 
 
+
 <div
         onmouseenter={handleOpen}
         onmouseleave={handleClose}
@@ -48,7 +50,7 @@
     {#if keepVisible || (shouldOpen && title !== undefined)}
         <div style="
         transform: translate({xOffset}, {offset});
-        z-index: var(--z-index-3);
+        z-index: var(--z-index-2);
         overflow:hidden;
         pointer-events: none;
         {panelStyle};
@@ -74,10 +76,11 @@
     .contianer {
         width: auto;
         height: auto;
+        position: relative;
     }
 
     .hint {
-        position: fixed;
+        position: absolute;
         z-index: var(--z-index-4);
     }
 

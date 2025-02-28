@@ -1,16 +1,16 @@
 <script lang="ts">
     import type {OpenMapMarker, OpenMapProps} from "./OpenMap.types";
     import 'leaflet/dist/leaflet.css'
-    import {tick} from "svelte";
     import RBush from 'rbush';
-    import {getMapMarkerHtml} from "./OpenMap";
+    import {getMapMarkerHtml, useOpenMap} from "./OpenMap";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let {
+        controller = useOpenMap(),
         zoom = $bindable(1),
         viewPos = [53, 18],
         markers = $bindable([]),
-        onClick = (e) => {
+        onClick = (m, e) => {
         },
         style,
         onMouseover = () => {
@@ -103,14 +103,30 @@
     async function loadMap() {
         L = await import('leaflet');
         await import('leaflet.markercluster');
-
+        controller.L = L;
         if (map === undefined) {
             map = L.map(mapContainer, {
                 zoomControl: false,
+                minZoom: zoom
             }).setView(viewPos, Number(zoom));
+            controller.map = map;
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: ''
+            let themes =
+                [
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",  // 0
+                    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",  // 1
+                    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",  // 2
+                    "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",  //3
+                    "https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",  //4
+                    "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",  //5
+                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",  //6
+                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",  //7
+                    "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=YOUR_API_KEY",  //8
+                    "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=YOUR_GOOGLE_API_KEY"  //9
+                ];
+
+            L.tileLayer(themes[3], {
+                attribution: '',
             }).addTo(map);
 
             const defaultStyle = {
@@ -133,7 +149,7 @@
                         style: defaultStyle,
                         onEachFeature: (feature, layer) => {
                             layer.on({
-                                click: onClick,
+                                click: (e) => onClick(map, e),
                                 mouseover: (e) => e.target.setStyle(hoverStyle),
                                 mouseout: (e) => e.target.setStyle(defaultStyle)
                             });

@@ -47,7 +47,7 @@
             height="100%"
             width="100%"
             timeout={0}
-            isLoading={()=>isLoading === true}>
+            isLoading={false}>
         <figure class="img-container {className}">
             {#if isVisible}
                 <img alt={alt} src={src} onload={handleImageLoad}/>

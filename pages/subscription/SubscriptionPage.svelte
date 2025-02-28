@@ -170,10 +170,10 @@
             <h1 style="font-size: 4em; line-height: 1em; color: {flutiTheme.color.light};">{translations.top.title}</h1>
             <h1 style="font-size: 3em">{translations.top.subtitle}</h1>
             <Space variant="small"/>
-            <Skieleton width="700px"
+            <Skieleton width="300px"
                        mobile={{width:'100%'}}
                        timeout={0}
-                       isLoading={!isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
+                       isLoading={isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
                 <h4 style="font-weight: normal">{getPeriodDescription}</h4>
             </Skieleton>
         </Element>

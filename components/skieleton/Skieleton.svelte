@@ -5,6 +5,7 @@
     interface SkeletonProps extends ElementProps {
         isLoading?: boolean
         timeout?: number
+        extraFakeLoadingTime?: number
         reversed?: boolean
         showChildren?: boolean
     }
@@ -13,29 +14,51 @@
         isLoading = $bindable(false),
         showChildren = false,
         reversed = false,
-        timeout = 1000,
+        timeout = 100,
+        extraFakeLoadingTime = 0,
         children,
         ...props
     }: SkeletonProps = $props();
 
-    let lastCondition = $state(false)
+
+    let showLoading = $state(isLoading)
     $effect(() => {
         isLoading
-        setTimeout(() => {
-            lastCondition = isLoading
-        }, timeout)
+        if (isLoading === true) {
+            setTimeout(() => {
+                showLoading = isLoading;
+            }, timeout)
+        }
+        if (isLoading === false) {
+            if (extraFakeLoadingTime > 0) {
+                setTimeout(() => {
+                    showLoading = false;
+                }, extraFakeLoadingTime)
+                return
+            }
+
+            showLoading = false;
+
+        }
     })
+    //
+    // let lastCondition = $state(false)
+    // $effect(() => {
+    //     isLoading
+    //     setTimeout(() => {
+    //         lastCondition = isLoading
+    //     }, timeout)
+    // })
 </script>
 
 
-{#if lastCondition}
+{#if !showLoading}
     {#if children}
         {@render children()}
     {/if}
 {:else }
-    <Element
-            className="skeleton-element {reversed?'skeleton-element-reversed':''}"
-            {...props}>
+    <Element className="skeleton-element {reversed?'skeleton-element-reversed':''}"
+             {...props}>
         {#if showChildren && children}
             {@render children()}
         {/if}
@@ -46,7 +69,7 @@
     :global(.skeleton-element) {
         display: inline-block;
         height: 1em;
-        border-radius: 4px;
+        border-radius: var(--radius-medium);
         background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
         background-size: 200% 100%;
         animation: skeleton-loading 1.5s infinite linear;

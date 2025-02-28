@@ -8,7 +8,8 @@
     let {
         items,
         selectedComponent = $bindable(BlankComponent),
-        selectedItem = $bindable(undefined)
+        selectedItem = $bindable(undefined),
+        initialWidth = "100%"
     }: TabsProps = $props();
 
     let element: HTMLHtmlElement;
@@ -64,7 +65,7 @@
 {/snippet}
 
 <div class="container">
-    <div bind:this={element} class="btn-bg"/>
+    <div bind:this={element} class="btn-bg" style="width: {initialWidth}"/>
     {#each items as item}
         <div tabindex="0"
              class="btn-tab"
@@ -107,6 +108,7 @@
             z-index: var(--z-index-1);
             color: var(--text-muted);
 
+
         }
 
         .btn-bg {
@@ -126,6 +128,8 @@
             color: var(--accent-primary);
             font-size: var(--font-size-normaler);
             background: var(--bg-primary);
+
+
         }
     }
 </style>

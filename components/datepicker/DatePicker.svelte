@@ -216,12 +216,12 @@
 
     .date-picker-element:hover {
         cursor: pointer;
-        background: var(--bg-200);
+        background: var(--shadow);
     }
 
     :global(.day-now) {
-        background: var(--bg-accent);
-        color: var(--bg-100);
+        background: var(--accent-primary);
+        color: var(--bg-secondary);
 
     }
 
@@ -233,8 +233,8 @@
     }
 
     :global(.day:hover) {
-        background: var(--bg-accent);
-        color: var(--bg-100);
+        background: var(--accent-primary) ;
+        color: var(--bg-secondary) ;
 
     }
 

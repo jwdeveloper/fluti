@@ -83,6 +83,20 @@
     }
 
 
+    let showLoading = $state(false)
+    $effect(() => {
+        controller.isLoading
+        if (controller.isLoading === true) {
+            setTimeout(() => {
+                showLoading = controller.isLoading;
+            }, 50)
+        }
+        if (controller.isLoading === false) {
+            showLoading = false;
+        }
+    })
+
+
 </script>
 
 
@@ -92,23 +106,18 @@
 
 
         <Element width="100%" padding={flutiTheme.padding.small}>
-            <Skieleton
-                    width="200px"
-                    height="25px"
-                    isLoading={()=>controller.isLoading}>
                 {@const from = controller.pageInfo.page * controller.pageInfo.itemsPerPage - controller.pageInfo.itemsPerPage + 1}
                 {@const to = controller.pageInfo.page * 10}
                 {@const total = controller.pageInfo.count}
                 <div style="
                 color: {flutiTheme.color.muted};
                 text-wrap: nowrap"> {from} - {to} z {total}</div>
-            </Skieleton>
             {@render paginationTemplate?.(controller)}
         </Element>
 
     {/if}
     <svelte:boundary>
-        {#if controller.isLoading}
+        {#if showLoading}
             {@render loadingTemplate?.()}
         {:else }
             {#if controller.items.length === 0}
@@ -201,7 +210,7 @@
 
 {#snippet DefaultLoadingTemplate()}
     {#each postsCount as number}
-        <Skieleton width="100%" height="200px" radius={flutiTheme.radius.huge}/>
+        <Skieleton isLoading={true} width="100%" height="200px" radius={flutiTheme.radius.large}/>
     {/each}
 {/snippet}
 

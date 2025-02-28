@@ -1,7 +1,36 @@
+export class OpenMapController {
+    map: any;
+    L: any
+
+    isLoaded() {
+        return this.map !== undefined
+    }
+
+    setZoom(zoom: number) {
+        if (!this.isLoaded())
+            return
+        this.map.setZoom(zoom);
+
+    }
+
+    setPosition(pos: number[], zoom: number = 7) {
+        if (!this.isLoaded())
+            return
+        this.map.flyTo(pos, zoom, {
+            duration: 0.5,
+            easeLinearity: 0.25,
+        });
+
+    }
+}
 
 
-export function getMapMarkerHtml(item: any) : string
-{
+export function useOpenMap() {
+    return new OpenMapController()
+}
+
+
+export function getMapMarkerHtml(item: any): string {
 
     let price = item.price + "";
 

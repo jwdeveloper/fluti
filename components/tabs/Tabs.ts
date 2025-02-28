@@ -5,6 +5,8 @@ export interface TabsProps {
     selectedItem?: TabsItem | undefined
 
     selectedComponent?: any | undefined
+
+    initialWidth?:string
 }
 
 export interface TabsItem {

@@ -11,7 +11,6 @@
 
 {#if isLoading}
 
-
     <div class="loader" out:blur style="background: {background}">
         {#if children}
             {@render children()}
@@ -37,11 +36,12 @@
         justify-content: center;
         align-items: center;
         backdrop-filter: blur(10px);
-        z-index: var(--z-index-5);
+        border-radius: var(--radius-huge);
+        z-index: var(--z-index-1);
 
         i {
             font-size: 3em;
-            color: var(--text-light);
+            color: var(--accent-primary);
         }
     }
 
