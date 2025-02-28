@@ -15,10 +15,14 @@ export function removePolishCharacters(str: string): string {
         .toLowerCase();
 }
 
-export function formatNumberToBetterReadable(input: string) {
+export function formatNumberToBetterReadable(input: string | number, endfix: string = '') {
+
+    if (typeof input === 'number')
+        input += ""
+
     let value = input.replace(/\s/g, "");
     if (/^\d*$/.test(value))
-        return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + endfix;
 
-    return input
+    return input + endfix
 }
