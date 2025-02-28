@@ -4,6 +4,7 @@
     import RBush from 'rbush';
     import {getMapMarkerHtml, useOpenMap} from "./OpenMap";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     let {
         controller = useOpenMap(),
@@ -161,7 +162,10 @@
                         style: defaultStyle,
                         onEachFeature: (feature, layer) => {
                             layer.on({
-                                click: (e) => onClick(map, e),
+                                click: (e) => {
+                                    vibrate();
+                                    onClick(map, e)
+                                },
                                 mouseover: (e) => {
                                     if (onMouseHover(e) === false)
                                         return
@@ -242,6 +246,7 @@
                 onSelected(item)
             });
             marker.on('mouseover', function (e) {
+
                 onMouseover(item);
             });
             markersCluster.addLayer(marker);
