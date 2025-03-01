@@ -129,18 +129,18 @@
                     "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=YOUR_GOOGLE_API_KEY"  //9
                 ];
 
-            L.tileLayer(themes[3], {
-                keepBuffer: 6,
-                updateWhenZooming: false,
-                updateWhenIdle: true,
-                reuseTiles: true,
-                zoomAnimation: true,
-                fadeAnimation: false,
-                edgeBufferTiles: 5,
-                continuousWorld: true,
-                tileSize: 128,
-                attribution: '',
-            }).addTo(map);
+            // L.tileLayer(themes[3], {
+            //     keepBuffer: 6,
+            //     updateWhenZooming: false,
+            //     updateWhenIdle: true,
+            //     reuseTiles: true,
+            //     zoomAnimation: true,
+            //     fadeAnimation: false,
+            //     edgeBufferTiles: 5,
+            //     continuousWorld: true,
+            //     tileSize: 128,
+            //     attribution: '',
+            // }).addTo(map);
 
             const defaultStyle = {
                 color: flutiTheme.background.accent,
@@ -158,7 +158,9 @@
             fetch('/poland.geojson')
                 .then(response => response.json())
                 .then(data => {
-                    L.geoJSON(data, {
+                    let layer = L.geoJSON(data, {
+                        // renderer: L.canvas(),
+                        // preferCanvas: true,
                         style: defaultStyle,
                         onEachFeature: (feature, layer) => {
                             layer.on({
@@ -175,6 +177,13 @@
                             });
                         }
                     }).addTo(map);
+
+                    map.on('move', () => {
+                        // layer.redraw();
+                    })
+                    map.on('zoom', () => {
+                        // layer.redraw();
+                    })
                 });
             // L.control.zoom({
             //     position: 'bottomright'
