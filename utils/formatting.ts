@@ -39,11 +39,11 @@ export function formatRelativeDate(timestamp: string): string {
     const diffTime = today.getTime() - inputDate.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 14) return "1 week ago";
-    if (diffDays < 21) return "2 weeks ago";
-    if (diffDays < 30) return "3 weeks ago";
-    return `${Math.floor(diffDays / 30)} months ago`;
+    if (diffDays === 0) return "Dzisiaj";
+    if (diffDays === 1) return "Wczoraj";
+    if (diffDays < 7) return `${diffDays} dni temu`;
+    if (diffDays < 14) return "1 tydzień temu";
+    if (diffDays < 21) return "2 tygodnie temu";
+    if (diffDays < 30) return "3 tygodnie temu";
+    return `${Math.floor(diffDays / 30)} miesiąc temu`;
 }

@@ -55,8 +55,11 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
     }
 
 
-    use(): FlutiServer2Builder {
-        throw new Error("Method not implemented.");
+    use(config): FlutiServer2Builder {
+        this.middlewareBuilders.push((inpt)=>
+        {
+            config(inpt)
+        })
     }
 
     create(): FlutiServer2 {
