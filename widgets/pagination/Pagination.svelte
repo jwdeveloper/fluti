@@ -11,6 +11,7 @@
     const {
         controller = usePaginationController(),
         paginationPosition = 'both',
+        enabledBars = true,
         loadingTemplate = DefaultLoadingTemplate,
         itemTemplate = DefaultItemTemplate,
         noItemsTemplate = DefaultNotItemsTemplate,
@@ -102,14 +103,14 @@
 
 <Element direction="column" width="100%" {...props}>
 
-    {#if paginationPosition === 'top' || paginationPosition === 'both'}
+    {#if paginationPosition === 'top' || paginationPosition === 'both' && enabledBars}
 
 
         <Element width="100%" padding={flutiTheme.padding.small}>
-                {@const from = controller.pageInfo.page * controller.pageInfo.itemsPerPage - controller.pageInfo.itemsPerPage + 1}
-                {@const to = controller.pageInfo.page * 10}
-                {@const total = controller.pageInfo.count}
-                <div style="
+            {@const from = controller.pageInfo.page * controller.pageInfo.itemsPerPage - controller.pageInfo.itemsPerPage + 1}
+            {@const to = controller.pageInfo.page * 10}
+            {@const total = controller.pageInfo.count}
+            <div style="
                 color: {flutiTheme.color.muted};
                 text-wrap: nowrap"> {from} - {to} z {total}</div>
             {@render paginationTemplate?.(controller)}
@@ -133,7 +134,7 @@
             {@render errorTemplate?.(error, reset)}
         {/snippet}
     </svelte:boundary>
-    {#if paginationPosition === 'bottom' || paginationPosition === 'both'}
+    {#if paginationPosition === 'bottom' || paginationPosition === 'both' && enabledBars}
         {@render paginationTemplate?.(controller)}
     {/if}
 </Element>

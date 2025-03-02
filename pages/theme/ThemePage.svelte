@@ -8,6 +8,7 @@
     import Title from "$lib/fluti/components/title/Title.svelte";
     import ElementView from "$lib/fluti/pages/theme/views/ElementView.svelte";
     import SkieletonView from "$lib/fluti/pages/theme/views/SkieletonView.svelte";
+    import CounterView from "$lib/fluti/pages/theme/views/CounterView.svelte";
 
     let views = [
         {
@@ -29,9 +30,13 @@
         {
             name: 'Element',
             view: ElementView
+        },
+        {
+            name: 'Counter',
+            view: CounterView
         }
     ]
-    let currentView: any = $state(views[4])
+    let currentView: any = $state(views[5])
 </script>
 
 <Element display="grid" columns="200px 1fr"

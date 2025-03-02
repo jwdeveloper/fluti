@@ -128,18 +128,8 @@
                     "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=YOUR_API_KEY",  //8
                     "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=YOUR_GOOGLE_API_KEY"  //9
                 ];
-
-            // L.tileLayer(themes[3], {
-            //     keepBuffer: 6,
-            //     updateWhenZooming: false,
-            //     updateWhenIdle: true,
-            //     reuseTiles: true,
-            //     zoomAnimation: true,
-            //     fadeAnimation: false,
-            //     edgeBufferTiles: 5,
-            //     continuousWorld: true,
-            //     tileSize: 128,
-            //     attribution: '',
+            //
+            // L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             // }).addTo(map);
 
             const defaultStyle = {

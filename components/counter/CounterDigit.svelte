@@ -2,14 +2,27 @@
 
     import {Spring} from "svelte/motion";
 
-    let {current} = $props();
-
-    $effect(() => {
-        count.target = parseFloat(current);
-    })
+    let {
+        current, index,
+        fontSize,
+        fontWeight,
+        fontColor,
+        distance
+    } = $props();
 
     const count = new Spring(0);
     const offset = $derived(modulo(count.current, 1));
+    const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    let isLetter = $derived.by(() => {
+        return digits.includes(current) === false;
+    })
+
+
+    $effect(() => {
+        current
+        if (!isLetter)
+            count.target = parseFloat(current);
+    })
 
     function modulo(n, m) {
         return ((n % m) + m) % m;
@@ -18,33 +31,48 @@
     function isDigit(value: string): boolean {
         return /^\d+$/.test(value);
     }
-
 </script>
 
 
-{#if isDigit(current)}
-    <div class="counter-viewport">
-        <div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-            <strong class="hidden" aria-hidden="true">{Math.floor(count.current + 1)}</strong>
-            <strong>{Math.floor(count.current)}</strong>
-        </div>
+<div class="counter-viewport" style="
+width: {fontSize}px;
+height: {fontSize}px;
+left:{distance}px;">
+    <div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
+        <strong class="hidden"
+                style="
+                color: {fontColor};
+                font-weight: {fontWeight};
+                font-size: {fontSize}px"
+                aria-hidden="true">
+            {#if isLetter}
+                {current}
+            {:else}
+                {Math.floor(count.current + 1)}
+            {/if}
+        </strong>
+        <strong style="
+                color: {fontColor};
+                font-weight: {fontWeight};
+                font-size: {fontSize}px">
+            {#if isLetter}
+                {current}
+            {:else}
+                {Math.floor(count.current)}
+            {/if}
+        </strong>
     </div>
-{:else}
-    <div class="counter-viewport">
-        <h1>{current}</h1>
-    </div>
-{/if}
+</div>
 
 
 <style>
 
     .counter-viewport {
-        height: 2em;
-        width: 1.1em;
         overflow: hidden;
         text-align: center;
-        position: relative;
         background: transparent;
+        position: relative;
+        position: absolute;
     }
 
     .counter-viewport strong {
@@ -53,12 +81,11 @@
         display: flex;
         width: 100%;
         height: 100%;
-        font-weight: 400;
+        font-weight: 800;
         color: var(--text-light);
-        background: transparent;
-        font-size: 2rem;
         align-items: center;
         justify-content: center;
+        background: transparent;
     }
 
     .counter-digits {

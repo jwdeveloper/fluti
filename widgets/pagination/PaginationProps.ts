@@ -7,6 +7,7 @@ export type PaginationPosition = 'top' | 'bottom' | 'both'
 export interface PaginationProps extends ElementProps {
     controller: PaginationController
     paginationPosition?: PaginationPosition
+    enabledBars?: boolean
 
     loadingTemplate?: any,
     paginationTemplate?: any

@@ -1,21 +1,26 @@
-<script>
+<script lang="ts">
 
     import {blur} from "svelte/transition";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties.ts";
 
     let {
         isLoading = $bindable(true),
         background = 'transparent',
-        children = undefined
+        showSpinner = true,
+        children = undefined,
+        radius = flutiTheme.radius.huge
     } = $props();
 </script>
 
 {#if isLoading}
 
-    <div class="loader" out:blur style="background: {background}">
+    <div class="loader" out:blur style="border-radius: {radius}; background: {background}; ">
         {#if children}
             {@render children()}
         {:else}
-            <i class=" fa fa-spinner fa-spin"></i>
+            {#if showSpinner}
+                <i class=" fa fa-spinner fa-spin"></i>
+            {/if}
         {/if}
     </div>
 
