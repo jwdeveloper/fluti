@@ -1,4 +1,8 @@
 export function removePolishCharacters(str: string): string {
+
+    if (str === null || str === undefined)
+        return undefined;
+
     const diacriticMap: { [key: string]: string } = {
         'Ą': 'a', 'ą': 'a',
         'Ć': 'c', 'ć': 'c',

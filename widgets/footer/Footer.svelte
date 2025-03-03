@@ -173,7 +173,8 @@
         <Element width="100%" height="100%">
             <div style="text-align: center;">
                 <h4>{props?.logo?.slogan}</h4>
-                <h4 style="font-weight: normal">© {currentYear} {currentDomain}</h4>
+                <a href="https://{currentDomain}" target="_blank"
+                   rel="noopener noreferrer">© {currentYear} {currentDomain}</a>
             </div>
         </Element>
     </Element>
