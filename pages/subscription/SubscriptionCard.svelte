@@ -75,7 +75,10 @@
         gap="0.8em"
         background={flutiTheme.background.primary}
         radius={flutiTheme.radius.large}
-        style="max-width: 33.3%;  position: relative; border:{badge.value?'2px solid '+badge.color:''} "
+        style="
+        max-width: 33.3%;
+         position: relative; border:{badge.value?'2px solid '+badge.color:''} "
+        mobile={{style:'max-width: 100%'}}
         padding="1.5em">
 
 
