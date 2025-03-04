@@ -15,6 +15,7 @@
             direction="column">
         <Button2
                 background={flutiTheme.background.primary}
+                onClick={()=> window.location.href = item.link??"/"}
                 icon={item.icon}/>
         <svelte:element this="a"
                         href={item.link??"/"}
@@ -38,12 +39,12 @@
 
 
     <Panel width="100%"
-             padding="0.5em 0"
-             display="grid"
-             gap="0"
-             columns="1fr 1fr 1fr 1fr"
-             style="position: absolute; pointer-events: all; bottom: 0"
-             background={flutiTheme.background.primary}>
+           padding="0.5em 0"
+           display="grid"
+           gap="0"
+           columns="1fr 1fr 1fr 1fr"
+           style="position: absolute; pointer-events: all; bottom: 0"
+           background={flutiTheme.background.primary}>
 
         {#each items as item}
             {@render HeaderButton(item)}
