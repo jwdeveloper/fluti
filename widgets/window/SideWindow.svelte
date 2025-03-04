@@ -222,7 +222,7 @@
              transition:flyWithNoOpacity={{
                  y:y,
                  x:x,
-                 easing:easeFunction.cubicOut(),
+                 easing:easeFunction.cubicInOut(),
                  duration:getDuration()}}>
 
             <Element height={getSize.height}
