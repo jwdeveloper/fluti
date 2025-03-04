@@ -1,7 +1,6 @@
 <script lang="ts">
     import type {InfiniteScrollProps} from "./InfiniteScrollProps.ts";
     import {useInfiniteScrollController} from "./InfiniteScrollController.svelte";
-    import Grid from "$lib/fluti/components/panel/Grid.svelte";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Textbox from "$lib/fluti/components/textbox/Textbox.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";

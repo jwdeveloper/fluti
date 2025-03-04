@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Panel from "../../../../routes/raporty/elements/Panel.svelte";
+    import Panel from "../../components/containers/Panel.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {generateFAQSchema} from "./FaqActions";
     import type {FaqPanelProps} from "./FaqPanelTypes";
