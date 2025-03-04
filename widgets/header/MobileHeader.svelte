@@ -2,6 +2,7 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties.ts";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let {items} = $props();
 
@@ -36,17 +37,17 @@
  z-index: var(--z-index-4)">
 
 
-    <Element width="100%"
+    <Panel width="100%"
              padding="0.5em 0"
              display="grid"
              gap="0"
              columns="1fr 1fr 1fr 1fr"
-             style="position: absolute; pointer-events: all; backdrop-filter: blur(30px); bottom: 0"
-             background={flutiTheme.background.shadow}>
+             style="position: absolute; pointer-events: all; bottom: 0"
+             background={flutiTheme.background.primary}>
 
         {#each items as item}
             {@render HeaderButton(item)}
         {/each}
-    </Element>
+    </Panel>
 
 </Element>

@@ -8,6 +8,7 @@
     //@ts-ignore
     import {usePaginationController} from "$lib/fluti/widgets/pagination/PaginationController.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     const {
         controller = usePaginationController(),
@@ -105,8 +106,6 @@
 <Element direction="column" width="100%" {...props}>
 
     {#if paginationPosition === 'top' || paginationPosition === 'both' && enabledBars}
-
-
         <Element width="100%" padding={flutiTheme.padding.small}>
             {@const from = controller.pageInfo.page * controller.pageInfo.itemsPerPage - controller.pageInfo.itemsPerPage + 1}
             {@const to = controller.pageInfo.page * 10}
@@ -114,7 +113,9 @@
             <div style="
                 color: {flutiTheme.color.muted};
                 text-wrap: nowrap"> {from} - {to} z {total}</div>
-            {@render paginationTemplate?.(controller)}
+            {#if !breakpoints.isMobile}
+                {@render paginationTemplate?.(controller)}
+            {/if}
         </Element>
 
     {/if}
@@ -137,7 +138,9 @@
     </svelte:boundary>
     {#if paginationPosition === 'bottom' || paginationPosition === 'both' && enabledBars}
         <Space/>
-        {@render paginationTemplate?.(controller)}
+        {#if !breakpoints.isMobile}
+            {@render paginationTemplate?.(controller)}
+        {/if}
     {/if}
 </Element>
 
@@ -153,6 +156,11 @@
 {#snippet DefaultPaginationTemplate(controller)}
     <Element width="100%"
              gap="0.3em"
+             mobile={{
+                 justify:'',
+                 style:'display:none;',
+                 gap:''
+             }}
              justify="flex-end">
 
         <Hint title={translations.previous}>
