@@ -8,7 +8,7 @@ export let generateFAQSchema = (items: FaqPanelItem[]) => {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-          ${items.map(generateItemTemplate).join('\n')}        
+          ${items.map(generateItemTemplate).join(',\n')}        
       ]
     }
   </script>
@@ -22,5 +22,5 @@ let generateItemTemplate = (item: FaqPanelItem) => {
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "${item.answer}"
-          }},`
+          }}`
 }
