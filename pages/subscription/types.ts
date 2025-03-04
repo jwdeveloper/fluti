@@ -7,7 +7,7 @@ export interface SubscriptionPageTranslations {
 }
 
 export interface PaymentPeriodOptions {
-    value: 'week'| 'month' | 'year' | 'forever'
+    value: 'week' | 'month' | 'year' | 'forever'
     name: string,
     description?: string
     formated?: string
@@ -51,6 +51,7 @@ export interface SubscriptionProduct {
 export interface SubscriptionPageProps {
     stripePublicKey: string
     periodOptions?: PaymentPeriodOptions[]
+    selectedPeriodIndex?: number
     translations?: SubscriptionPageTranslations
     onFetchProducts?: (event: any) => Promise<SubscriptionProduct[]>
     onMakePayment?: (event: any) => Promise<MakePaymentEvent>

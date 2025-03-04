@@ -75,7 +75,7 @@
         gap="0.8em"
         background={flutiTheme.background.primary}
         radius={flutiTheme.radius.large}
-        style="position: relative; border:{badge.value?'2px solid '+badge.color:''} "
+        style="max-width: 33.3%;  position: relative; border:{badge.value?'2px solid '+badge.color:''} "
         padding="1.5em">
 
 

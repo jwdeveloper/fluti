@@ -43,7 +43,7 @@
 
     onMount(() => {
         if (items.length > 0)
-            handleClick(items[0])
+            handleClick(selectedItem ?? items[0]);
 
         let index = getIndex();
         element.style.width = `${step}%`

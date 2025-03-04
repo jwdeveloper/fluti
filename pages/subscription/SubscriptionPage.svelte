@@ -23,6 +23,7 @@
     import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte";
 
     let {
+        selectedPeriodIndex = 0,
         productsOptions = defaultSubscriptionPageData.productsOptions ?? [],
         onFetchProducts = defaultSubscriptionPageData.onFetchProducts,
         onMakePayment = defaultSubscriptionPageData.onMakePayment,
@@ -30,11 +31,11 @@
     }: SubscriptionPageProps = $props();
 
     let alerts = useAlert()
-    let isProductsLoading = $state(false)
+    let isProductsLoading = $state(true)
     let products: SubscriptionProduct[] = $state([])
     const translations = {...defaultSubscriptionPageData.translations, ...props.translations} as SubscriptionPageTranslations
     const paymentPeriod = [...props.periodOptions ?? defaultSubscriptionPageData.periodOptions ?? []] as PaymentPeriodOptions[]
-    let selectedPaymentPeriod = $state(paymentPeriod[0])
+    let selectedPaymentPeriod = $state(paymentPeriod[selectedPeriodIndex])
 
     let isPaymentStarted = $state(false)
     const paymentWindow = $state({
@@ -168,7 +169,7 @@
     {:else}
         <Element direction="column" width="100%" gap="0" mobile={{direction:'column', padding:'0 1em'}}>
             <h1 style="font-size: 4em; line-height: 1em; color: {flutiTheme.color.light};">{translations.top.title}</h1>
-            <h1 style="font-size: 3em">{translations.top.subtitle}</h1>
+            <h2 style="font-size: 3em">{translations.top.subtitle}</h2>
             <Space variant="small"/>
             <Skieleton width="300px"
                        mobile={{width:'100%'}}
@@ -215,8 +216,9 @@
 <TitleComponent/>
 <PeriodComponent/>
 <Element width="100%" gap="1em" mobile={{direction:'column'}}>
+
     {#if isProductsLoading}
-        <Skieleton timeout={0} radius={flutiTheme.radius.medium} height="505px" width="100%"/>
+        <Skieleton isLoading={true} timeout={0} radius={flutiTheme.radius.medium} height="505px" width="100%"/>
     {:else}
         {#each displayedProducts as product (product.id)}
             {@render CardComponent(product)}
