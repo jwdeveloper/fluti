@@ -15,7 +15,7 @@
         fullWidth = false,
         icon = undefined,
         size = 'medium',
-        iconPosition = 'left',
+        iconPosition = 'right',
         textSize = 'div',
         isShowText = true,
         className,

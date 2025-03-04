@@ -7,6 +7,7 @@
     import type {PaginationProps} from "$lib/fluti/widgets/pagination/PaginationProps";
     //@ts-ignore
     import {usePaginationController} from "$lib/fluti/widgets/pagination/PaginationController.svelte";
+    import Space from "$lib/fluti/components/space/Space.svelte";
 
     const {
         controller = usePaginationController(),
@@ -135,6 +136,7 @@
         {/snippet}
     </svelte:boundary>
     {#if paginationPosition === 'bottom' || paginationPosition === 'both' && enabledBars}
+        <Space/>
         {@render paginationTemplate?.(controller)}
     {/if}
 </Element>
