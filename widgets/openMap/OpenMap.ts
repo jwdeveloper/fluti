@@ -28,10 +28,10 @@ export class OpenMapController {
 
     }
 
-    async showCity(regionName:any, cityData: any) {
+    async showCity(regionName: any, cityName: any) {
         let country = 'poland'
         let region = removePolishCharacters(regionName)
-        let city = removePolishCharacters(cityData.name)
+        let city = removePolishCharacters(cityName)
 
         let response = await fetch(`/geojson/${country}/${region}/${city}/data.geojson`);
         let json = await response.json();
@@ -44,8 +44,12 @@ export class OpenMapController {
             onEachFeature: (feature, layer) => {
             }
         }).addTo(this.map);
+    }
 
-
+    removeCity() {
+        if (this.cityLayer) {
+            this.map.removeLayer(this.cityLayer);
+        }
     }
 
     setPosition(pos: number[], zoom: number = 7) {
