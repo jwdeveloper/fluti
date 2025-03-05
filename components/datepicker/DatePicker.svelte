@@ -6,8 +6,9 @@
     import FloatingPanel from "../floatingPanel/FloatingPanel.svelte";
     import Input2 from "$lib/fluti/components/input/Input2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import type {InputProps2} from "$lib/fluti/components/input/Input.type";
 
-    let {value = $bindable('')} = $props();
+    let {value = $bindable(''), ...props}: InputProps2 = $props();
     let isOpen = $state(false);
     const days = ["Pon", "Wt", "Śr", "Czw", "Pt", "Sb", "Nd"];
     const monthNames = [
@@ -30,6 +31,7 @@
     const handleSelectDay = (day: string) => {
         selectedDay = day;
         value = selectedDay + "/" + (displayedMonth) + "/" + displayedYear;
+        isOpen = false;
     }
 
 
@@ -159,10 +161,12 @@
 <FloatingPanel bind:isOpen={isOpen}>
     {#snippet headerSlot()}
         <Input2 onClick={handleClick}
-               readonly={true}
-               icon="fa-solid fa-calendar-days"
-               bind:value={value}
-               placeholder="Wybierz date"></Input2>
+                readonly={true}
+                icon="fa-solid fa-calendar-days"
+                bind:value={value}
+                placeholder="Wybierz date"
+                {...props}
+        ></Input2>
     {/snippet}
 
     {#snippet contentSlot()}
@@ -233,8 +237,8 @@
     }
 
     :global(.day:hover) {
-        background: var(--accent-primary) ;
-        color: var(--bg-secondary) ;
+        background: var(--accent-primary);
+        color: var(--bg-secondary);
 
     }
 
