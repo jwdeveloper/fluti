@@ -7,6 +7,7 @@
     import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte.js";
     import {addArrowController} from "../../effects/ArrowController";
     import {addClickEffect} from "$lib/fluti/effects/ClickEffect";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
 
     let {
@@ -108,9 +109,7 @@
             return
 
         if (ripplerEffect) {
-            if (navigator)
-                navigator.vibrate(25);
-
+            vibrate();
         }
         event.stopPropagation();
         onClick(event);
