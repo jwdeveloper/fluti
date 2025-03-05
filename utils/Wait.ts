@@ -36,7 +36,7 @@ export function generateUUID() { // Public Domain/MIT
 }
 
 export function vibrate() {
-    if (navigator)
-        navigator.vibrate(25);
+    if (navigator && navigator?.vibrate)
+        navigator?.vibrate(25);
 
 }
