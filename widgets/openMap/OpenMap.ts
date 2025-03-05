@@ -67,9 +67,11 @@ export class OpenMapController {
 
     showSatelite(shouldShow: boolean) {
 
-        if (shouldShow)
-            this.sateliteLayer = this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
-        else {
+        if (shouldShow) {
+            if (!this.sateliteLayer) {
+                this.sateliteLayer = this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+            }
+        } else {
             if (this.sateliteLayer) {
                 this.map.removeLayer(this.sateliteLayer); // ✅ Removes the layer from the map
                 this.sateliteLayer = null; // ✅ Clears reference
