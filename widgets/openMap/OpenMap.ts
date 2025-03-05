@@ -52,15 +52,18 @@ export class OpenMapController {
         }
     }
 
-    setPosition(pos: number[], zoom: number = 7) {
-        if (!this.isLoaded())
-            return
-        this.map.flyTo(pos, zoom, {
-            duration: 0.5,
-            easeLinearity: 0.25,
-        });
+    async setPosition(pos: number[], zoom: number = 7): Promise<void> {
+        if (!this.isLoaded()) return;
 
+        return new Promise((resolve) => {
+            this.map.once("moveend", resolve); // ✅ Resolves when animation is done
+            this.map.flyTo(pos, zoom, {
+                duration: 0.5,
+                easeLinearity: 0.25,
+            });
+        });
     }
+
 
     showSatelite(shouldShow: boolean) {
 
