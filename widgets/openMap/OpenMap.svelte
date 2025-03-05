@@ -149,8 +149,6 @@
                 .then(response => response.json())
                 .then(data => {
                     let layer = L.geoJSON(data, {
-                        // renderer: L.canvas(),
-                        // preferCanvas: true,
                         style: defaultStyle,
                         onEachFeature: (feature, layer) => {
                             layer.on({
@@ -167,18 +165,7 @@
                             });
                         }
                     }).addTo(map);
-
-                    map.on('move', () => {
-                        // layer.redraw();
-                    })
-                    map.on('zoom', () => {
-                        // layer.redraw();
-                    })
                 });
-            // L.control.zoom({
-            //     position: 'bottomright'
-            // }).addTo(map);
-            // L.control.scale({position: "bottomright"}).addTo(map);
             map.on('zoomend moveend', handleMapMove);
         }
 
