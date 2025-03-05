@@ -1,8 +1,11 @@
+import {removePolishCharacters} from "$lib/fluti/utils/formatting";
+
 export class OpenMapController {
     map: any;
     L: any
 
     sateliteLayer: any;
+    cityLayer: any;
 
     isLoaded() {
         return this.map !== undefined
@@ -22,6 +25,26 @@ export class OpenMapController {
         if (!this.isLoaded())
             return
         this.map.setZoom(zoom);
+
+    }
+
+    async showCity(regionName:any, cityData: any) {
+        let country = 'poland'
+        let region = removePolishCharacters(regionName)
+        let city = removePolishCharacters(cityData.name)
+
+        let response = await fetch(`/geojson/${country}/${region}/${city}/data.geojson`);
+        let json = await response.json();
+
+        if (this.cityLayer) {
+            this.map.removeLayer(this.cityLayer);
+        }
+
+        this.cityLayer = this.L.geoJSON(json, {
+            onEachFeature: (feature, layer) => {
+            }
+        }).addTo(this.map);
+
 
     }
 
