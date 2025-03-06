@@ -21,7 +21,7 @@
                         href={item.link??"/"}
                         style="text-warp:no-wrap;"
                         class="menu-item">
-            {item.name}
+            <!--{item.name}-->
         </svelte:element>
     </Element>
 
@@ -39,10 +39,10 @@
 
 
     <Panel width="100%"
-           padding="0.5em 0"
-           display="grid"
-           gap="0"
-           columns="1fr 1fr 1fr 1fr"
+           padding="1em 0"
+           gap="1em"
+           direction="row"
+           justify="space-around"
            style="position: absolute; pointer-events: all; bottom: 0"
            background={flutiTheme.background.primary}>
 

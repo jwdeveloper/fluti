@@ -7,6 +7,7 @@
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     interface FaqPanelItemProps {
         item: FaqPanelItem
@@ -38,7 +39,6 @@
     onMount(() => {
 
     })
-
 </script>
 
 
@@ -57,6 +57,7 @@
              padding="0.8em 1em 0"
              direction="column"
              onClick={()=>{
+                    vibrate()
                      if(selected?.question === item?.question)
                          {
                              selected = undefined
@@ -72,7 +73,18 @@
                  justify="space-between">
             <h3 style="z-index: 1">{item.question}</h3>
             <Button2
-                    onClick={()=> selected = undefined}
+                    onClick={()=>
+                     {
+
+                         if(isVisible)
+                             {
+                                 selected = undefined
+                             }
+                         else
+                             {
+                                 selected =item;
+                             }
+                     }}
                     effects={{click:{}}}
                     variant="text" icon="fa {isVisible?'fa-x':'fa-arrow-down'}" size="medium"/>
         </Element>
