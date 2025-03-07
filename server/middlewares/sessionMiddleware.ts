@@ -1,7 +1,6 @@
 import type {RequestEvent} from "@sveltejs/kit";
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import {redirectTo} from "$lib/fluti/utils/httpUtils";
-import {pocketbaseClient} from "$lib/pocketbase-client";
 
 export interface SessionMiddlewareOptions {
     //default 'name'

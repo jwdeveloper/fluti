@@ -55,6 +55,7 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
     }
 
 
+    // @ts-ignore
     use(config): FlutiServer2Builder {
         this.middlewareBuilders.push((inpt)=>
         {

@@ -1,12 +1,12 @@
 import {type Context, Hono} from 'hono';
 import {sign, verify} from 'hono/jwt';
-import {pocketbaseClient} from "$lib/pocketbase-client";
-import type {LoginResponse} from "$lib/fluti/pages/login/loginPageTypes";
+
 // @ts-ignore
 import type {SessionMiddlewareConfig} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {deleteCookie, getCookie, setCookie} from 'hono/cookie';
 import {CacheService} from "$lib/fluti/services/CacheService";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
+import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 
 
 export function createSessionApiController(config: SessionMiddlewareConfig) {

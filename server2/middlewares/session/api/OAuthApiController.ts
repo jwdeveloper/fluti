@@ -5,12 +5,11 @@ import type {
 import {type Context, Hono} from "hono";
 import {deleteCookie, getCookie, setCookie} from "hono/cookie";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
-import {pocketbaseClient} from "$lib/pocketbase-client";
+import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 
 export function createOAuthApiController(config: SessionMiddlewareConfig) {
     const options = config.oAuth;
     const controller = new Hono();
-
 
     controller.get("/oauth/create/:provider", async (c: Context) => {
         const provider = c.req.param().provider;

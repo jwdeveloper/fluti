@@ -1,22 +1,22 @@
 
 :root {
-    --bg-primary: #0D1317;
-    --bg-secondary: #141A1F;
-    --bg-tertiary: #212B31;
-    --bg-transparent: rgba(50, 90, 90, 0.1);
 
-    --text-light: #E9EFF3;
-    --text-primary: #9DB2C0;
-    --text-neutral: #ACAEB0;
+    --bg-primary: rgba(255, 255, 255);
+    --bg-secondary: rgb(244, 243, 242);
+
+    --bg-transparent: rgba(217, 212, 212, .1);
 
 
-    --opacity-medium: 0.3;
+    --bg-tertiary: #e1dfdf;
 
-    --text-error: rgb(239, 68, 68);
-    --text-accent: white;
+    --text-light: #192638;
+    --text-primary: #34465d;
+    --text-neutral: #a6a6a6;
+    --text-muted: #8c929a;
 
-    --accent-primary: #40EEC8;
-    --accent-color: #ffffff;
+    --shadow: rgba(117, 120, 124, 0.2);
+    --text-error: rgba(239, 68, 68, 0.66);
+    --accent-primary: #5919c9;
 
 
     --radius: 0.3em;
@@ -86,25 +86,23 @@
 
 
 [data-theme="light-1"] {
-    /* 175, 175, 175*/
-    /*--bg-primary: #e1e1e1;*/
-    /*--bg-secondary: #d8d9d9;*/
-
     --bg-primary: rgba(255, 255, 255);
-    --bg-secondary: rgba(255, 255, 255);
-    --bg-transparent: rgba(53, 53, 53, 0.1);
+    --bg-secondary: rgb(244, 243, 242);
+
+    --bg-transparent: rgba(217, 212, 212, .1);
 
 
-    --bg-tertiary: #f3f3f3;
+    --bg-tertiary: #e1dfdf;
 
     --text-light: #192638;
     --text-primary: #34465d;
-    --text-neutral: #4f627a;
+    --text-neutral: #a6a6a6;
     --text-muted: #8c929a;
-    /*--text-muted: rgba(175, 175, 175);*/
-    --text-error: rgb(239, 68, 68);
 
-    --accent-primary: #217fe0;
+    --shadow: rgba(117, 120, 124, 0.2);
+    --text-error: rgba(239, 68, 68, 0.66);
+
+    --accent-primary: #5919c9;
 }
 
 [data-theme="dark-2"] {
@@ -161,6 +159,26 @@
     /* Accent Color */
     --accent-primary: rgba(255, 183, 77, 0.98); /* Warm Amber */
     --accent-primary: #21e05d;
+}
+
+[data-theme='dark-5'] {
+    --bg-primary: #0D1317;
+    --bg-secondary: #141A1F;
+    --bg-tertiary: #212B31;
+    --bg-transparent: rgba(50, 90, 90, 0.1);
+
+    --text-light: #E9EFF3;
+    --text-primary: #9DB2C0;
+    --text-neutral: #ACAEB0;
+
+
+    --opacity-medium: 0.3;
+
+    --text-error: rgb(239, 68, 68);
+    --text-accent: white;
+
+    --accent-primary: #40EEC8;
+    --accent-color: #ffffff;
 
 }
 

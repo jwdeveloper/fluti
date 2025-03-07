@@ -1,9 +1,10 @@
 import type {LoginFormData, LoginPageProps, LoginResponse} from "$lib/fluti/pages/login/loginPageTypes";
-import {pocketbaseClient} from "$lib/pocketbase-client";
+
 import type {LoginController} from "$lib/fluti/pages/login/loginController.svelte";
 import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
 //@ts-ignore
 import userSession from "../../server2/middlewares/session/clientUserSession.svelte.ts";
+import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 
 const alerts = useAlert()
 const handleUserLogin = async (data: LoginFormData, controller: LoginController) => {
