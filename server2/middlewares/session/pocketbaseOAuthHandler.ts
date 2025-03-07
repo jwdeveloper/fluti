@@ -8,7 +8,8 @@ export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUse
     if (!provider) {
         throw new Error("OAuth provider not found!")
     }
-    const result = await pocketbaseClientAdmin().collection('users')
+    const admin = await pocketbaseClientAdmin();
+    const result = await admin.collection('users')
         .authWithOAuth2Code(event.provider,
             event.code,
             event.verifier,
@@ -19,7 +20,8 @@ export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUse
 }
 
 async function getProvider(name: string) {
-    const authProviders = await pocketbaseClientAdmin().collection('users').listAuthMethods();
+    const admin = await pocketbaseClientAdmin();
+    const authProviders = await admin.collection('users').listAuthMethods();
     if (!authProviders.oauth2.enabled)
         throw new Error("OAuth disabled!")
 
