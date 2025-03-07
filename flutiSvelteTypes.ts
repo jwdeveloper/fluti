@@ -8,4 +8,7 @@ export interface FlutiWebSiteData {
             title: string
             description: string
         }
+    google?: {
+        tagId?: string
+    }
 }
