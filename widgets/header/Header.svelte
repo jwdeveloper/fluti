@@ -34,16 +34,16 @@
     let themes = useThemes()
     let themeIcon = $derived.by(() => {
 
-        if (themes.theme === 'dark-1')
+        if (themes.theme === 'dark')
             return 'fa fa-moon'
 
         return 'fa fa-solid fa-sun'
     })
     let updateTheme = () => {
-        if (themes.theme === 'dark-1')
-            themes.setTheme('light-1')
+        if (themes.theme === 'dark')
+            themes.setTheme('light')
         else
-            themes.setTheme('dark-1')
+            themes.setTheme('dark')
     }
 
 

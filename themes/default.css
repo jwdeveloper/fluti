@@ -17,6 +17,7 @@
     --shadow: rgba(117, 120, 124, 0.2);
     --text-error: rgba(239, 68, 68, 0.66);
     --accent-primary: #5919c9;
+    --accent-color: #ffffff;
 
 
     --radius: 0.3em;
@@ -85,7 +86,7 @@
 }
 
 
-[data-theme="light-1"] {
+[data-theme="light"] {
     --bg-primary: rgba(255, 255, 255);
     --bg-secondary: rgb(244, 243, 242);
 
@@ -101,8 +102,36 @@
 
     --shadow: rgba(117, 120, 124, 0.2);
     --text-error: rgba(239, 68, 68, 0.66);
-
     --accent-primary: #5919c9;
+    --accent-color: #ffffff;
+}
+
+[data-theme="dark"] {
+    --accent-primary: #d71e44; /* Darker accent primary */
+    --text-muted: #7f868f; /* Slightly darker muted text */
+    --text-primary: #ffffff; /* A bit darker primary text */
+    --text-primary: #f3ecef; /* A bit darker primary text */
+    --shadow: rgba(30, 30, 31, 0.2); /* Darker shadow for more contrast */
+
+    --bg-primary: #171616; /* Deeper background for a more intense dark theme */
+    --bg-primary: #252121; /* Deeper background for a more intense dark theme */
+    --bg-secondary: #252121; /* Darker secondary background */
+    --bg-secondary: #181414; /* Darker secondary background */
+
+
+    --bg-tertiary: #342f2f; /* Darker tertiary background */
+    --bg-tertiary: #464040; /* Darker tertiary background */
+    /*--bg-transparent: rgba(40, 70, 70, 0.1); !* Slightly darker transparent background *!*/
+    --bg-transparent: rgba(40, 70, 70, 0.01); /* Slightly darker transparent background */
+
+    --text-light: #d1d9e2; /* Lighter text for readability */
+    --text-light: #ffffff; /* Lighter text for readability */
+    --text-neutral: #8e9196; /* Neutral text for better contrast */
+
+    --accent-color: #f7f7f7; /* Slightly lighter accent color for contrast */
+
+    --shadow: rgba(124, 120, 120, 0.15);
+    --shadow: rgba(124, 120, 120, 0.01);
 }
 
 [data-theme="dark-2"] {
@@ -178,7 +207,9 @@
     --text-accent: white;
 
     --accent-primary: #40EEC8;
-    --accent-color: #ffffff;
+}
+
+[data-theme='dark-6'] {
 
 }
 
