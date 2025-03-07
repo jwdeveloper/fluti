@@ -1,9 +1,10 @@
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
-import {pocketbaseClient} from "$lib/pocketbase-client";
+
 import type {Context} from "hono";
 import {json} from "@sveltejs/kit";
 import {stripeClient} from "$lib/stripe-client";
 import {fetchPriceById, fetchProductById, findOrCreateCustomer} from "$lib/fluti/pages/subscription/api/_common";
+import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
 
 type PaymentRequest = {
@@ -23,8 +24,8 @@ export async function registerPayment(event: Context) {
         return event.json({error: "Transaction ID is required"}, {status: 400});
     }
 
-    await pocketbaseClient.collection("_superusers").authWithPassword('admin@admin.com', '12345678')
-    let collection = pocketbaseClient.collection('transaction');
+    let pocketbase = await pocketbaseClientAdmin();
+    let collection = pocketbase.collection('transaction');
     await collection.create({
         userId: user.id,
         status: status,
