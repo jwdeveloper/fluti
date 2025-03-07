@@ -65,7 +65,8 @@
 
 {#if children}
     <Panel onClick={handleClick}
-           panelType="grid" columns="auto 1fr" padding="0" gap="0.5em">
+           panelType="grid"
+           columns="auto 1fr" padding="0" gap="0.5em">
         <InputSnippet/>
         <Link onClick={handleClick}>
             {@render children()}

@@ -30,10 +30,12 @@
         isVisible
         if (!isVisible) {
             animatedElement(element).height("0px", animation.speed);
+            animatedElement(element).opacity(0, animation.speed / 2);
             return
         }
 
         animatedElement(element).height(animation.height, animation.speed);
+        animatedElement(element).opacity(1, animation.speed / 2);
     })
 
     onMount(() => {
@@ -71,7 +73,14 @@
 
         <Element width="100%"
                  justify="space-between">
+
+            <Element>
+                <Button2 icon="fa fa-question"
+                         variant="text"
+                         />
             <h3 style="z-index: 1">{item.question}</h3>
+
+            </Element>
             <Button2
                     onClick={()=>
                      {
@@ -93,7 +102,8 @@
     </Element>
 
     <div>
-        <Element direction="column" style="overflow: hidden; height: 0" bind:element={element} padding="0 1em"
+        <Element direction="column" style="overflow: hidden; opacity: 0; height: 0" bind:element={element}
+                 padding="0 1em"
                  justify="flex-start">
             <Space variant="tiny"/>
             <p style="font-size: {flutiTheme.font.medium}">{item.answer}</p>

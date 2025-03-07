@@ -13,9 +13,12 @@
         height?: number;
         width?: string;
         logo?: string;
+        icon?: string
         title?: string;
         treashold?: number
         addSpace?: boolean
+        showLogin?: boolean
+        showThemes?: boolean
         items?: any[]
     }
 
@@ -24,9 +27,12 @@
         width = "85%",
         logo = 'logo.png',
         title = '',
+        icon = '',
         treashold = 100,
         addSpace = true,
-        items = []
+        items = [],
+        showLogin = true,
+        showThemes = true
     }: HeaderProps = $props();
 
 
@@ -89,7 +95,7 @@
         <img src={logo} alt="logo" style="height: {height-height*0.2}px;"/>
     {/if}
 
-    <i style="font-size: var(--font-size-huge);color: var(--accent-primary)" class="fa fa-line-chart"></i>
+    <i style="font-size: var(--font-size-huge);color: var(--accent-primary)" class="{icon}"></i>
     <h2 style="color: var(--accent-primary)">{title}</h2>
 
 {/snippet}
@@ -123,30 +129,35 @@
             </Element>
             <Element padding="0 1em"
                      justify="flex-start">
-                {#if userSession.isLogin}
-                    <Hint title="Informacje o koncie">
-                        <Button2
-                                variant="filled"
-                                fullWidth={true}
-                                onClick={()=> window.location.href='/profil'} icon="fa fa-user">
-                            Twój profil
-                        </Button2>
-                    </Hint>
-                    <Hint title="Polubione ogłoszenia">
-                        <Button2 icon="fa fa-heart  fa-beat"/>
-                    </Hint>
-                {:else }
-                    <Hint title="Zaloguj się lub utwórz konto">
-                        <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
-                            Zaloguj się
-                        </Button2>
-                    </Hint>
 
+                {#if showLogin}
+                    {#if userSession.isLogin}
+                        <Hint title="Informacje o koncie">
+                            <Button2
+                                    variant="filled"
+                                    fullWidth={true}
+                                    onClick={()=> window.location.href='/profil'} icon="fa fa-user">
+                                Twój profil
+                            </Button2>
+                        </Hint>
+                        <Hint title="Polubione ogłoszenia">
+                            <Button2 icon="fa fa-heart  fa-beat"/>
+                        </Hint>
+                    {:else }
+                        <Hint title="Zaloguj się lub utwórz konto">
+                            <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
+                                Zaloguj się
+                            </Button2>
+                        </Hint>
+
+                    {/if}
                 {/if}
 
-                <Hint title="Zmień motyw">
-                    <Button2 onClick={updateTheme} icon={themeIcon}/>
-                </Hint>
+                {#if showThemes}
+                    <Hint title="Zmień motyw">
+                        <Button2 onClick={updateTheme} icon={themeIcon}/>
+                    </Hint>
+                {/if}
             </Element>
 
         </Element>

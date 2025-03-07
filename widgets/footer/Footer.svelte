@@ -42,6 +42,7 @@
         logo?: {
             name?: string;
             slogan?: string;
+            icon?: string
             image?: string;
         };
         links?: LinkSection[]
@@ -60,7 +61,10 @@
         {@render props?.templates?.logo()}
     {:else}
         <Element direction="row" onClick={()=> window.location.href = '/'}>
-            <i style="font-size: var(--font-size-huge);color: var(--accent-primary)" class="fa fa-line-chart"></i>
+            {#if props?.logo?.icon}
+                <i style="font-size: var(--font-size-huge);color: var(--accent-primary)"
+                   class="{props?.logo?.icon}"></i>
+            {/if}
             <h1 style="color: {flutiTheme.background.accent}">
                 {props?.logo?.name ?? domain ?? ''}
             </h1>
@@ -148,7 +152,8 @@
                     <ul>
                         {#each linkSection.links as link}
                             <li>
-                                <Link url={link.url} style="font-weight: normal;margin: 0.1em 0">{link.name}</Link>
+                                <Link url={link.url}
+                                      style="font-weight: normal;margin: 0.1em 0">{link.name}</Link>
                             </li>
                         {/each}
                     </ul>

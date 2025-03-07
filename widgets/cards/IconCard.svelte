@@ -6,14 +6,21 @@
     import {scale} from 'svelte/transition'
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
+    import Space from "$lib/fluti/components/space/Space.svelte";
+    import type {Variant} from "$lib/fluti/themes/themeTypes";
 
     interface IconCardProps extends ElementProps {
         icon?: string
         title?: string
         subtitle?: string
+        space?: Variant
     }
 
-    let {icon = '', title = '', subtitle = '', ...props}: IconCardProps = $props();
+    let {
+        icon = '',
+        space,
+        title = '', subtitle = '', ...props
+    }: IconCardProps = $props();
 
 
 </script>
@@ -21,9 +28,9 @@
 
 <Element
         width="100%" gap="1em"
-         align="flex-start"
-         justify="flex-start"
-         {...props}>
+        align="flex-start"
+        justify="flex-start"
+        {...props}>
 
     <Element padding="0.2em 0 0 0">
         <Button2 variant="outline" icon={icon} size="large"/>
@@ -36,6 +43,9 @@
         <h3 style="line-height: 1.7em;">
             {title}
         </h3>
+        {#if space}
+            <Space variant={space}/>
+        {/if}
         <h4 style:color={flutiTheme.color.muted} style:font-weight="normal">
             {subtitle}
         </h4>
