@@ -19,7 +19,7 @@ export function useApiMiddleware(onConfig: ApiMiddlewareConfigFn): FlutiServer2M
                 return apiVersions.get(finalVersion)
             }
         }
-        // onConfig(config);
+        onConfig(config);
         apiVersions.forEach((value, key) => {
             flutiConfig.app.route(`/api/${key}`, value)
         })

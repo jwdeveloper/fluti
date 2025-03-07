@@ -57,8 +57,7 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
 
     // @ts-ignore
     use(config): FlutiServer2Builder {
-        this.middlewareBuilders.push((inpt)=>
-        {
+        this.middlewareBuilders.push((inpt) => {
             config(inpt)
         })
     }
@@ -83,11 +82,13 @@ export class FlutiServer2Impl implements FlutiServer2 {
 
 
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any) {
+
         const resolveSvelte = () => {
             return resolve(event);
         }
         return this.app.request(event.request, undefined,
             {
+                ip: event.getClientAddress(),
                 // svelteEvent: event,
                 renderSvelte: resolveSvelte
             });
