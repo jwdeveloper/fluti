@@ -31,7 +31,7 @@ export class ThemeController {
     load() {
         let themeValue = localStorage.getItem("theme");
         if (themeValue === null)
-            themeValue = "dark";
+            themeValue = "light";
         document.documentElement.setAttribute("data-theme", themeValue);
         this.theme = themeValue;
     }
