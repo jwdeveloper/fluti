@@ -14,6 +14,21 @@ export function googleTagBodyContent(tagId: string) {
 
 }
 
+
+export function googleAnalitycsHeadContent(id:string)
+{
+        return `
+        <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '${id}');
+</script>
+        `
+}
+
 export function googleTagHeadContent(tagId: string) {
     return `
         <script>

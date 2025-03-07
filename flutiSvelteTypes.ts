@@ -10,5 +10,6 @@ export interface FlutiWebSiteData {
         }
     google?: {
         tagId?: string
+        analyticsId?: string
     }
 }

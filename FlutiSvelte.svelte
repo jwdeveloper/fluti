@@ -8,7 +8,11 @@
     import '../../index.css'
     import type {FlutiWebSiteData} from "$lib/fluti/flutiSvelteTypes";
     import {onMount} from "svelte";
-    import {googleTagBodyContent, googleTagHeadContent} from "$lib/fluti/widgets/google/googleTagHeadContent";
+    import {
+        googleAnalitycsHeadContent,
+        googleTagBodyContent,
+        googleTagHeadContent
+    } from "$lib/fluti/widgets/google/googleTagHeadContent";
 
 
     interface Fluti {
@@ -48,6 +52,9 @@
         {@html googleTagHeadContent(websiteData?.google?.tagId)}
     {/if}
 
+    {#if websiteData?.google?.analyticsId}
+        {@html googleAnalitycsHeadContent(websiteData?.google?.analyticsId)}
+    {/if}
 
     <script async src="https://js.stripe.com/v3/"></script>
     <title>{websiteData?.title}</title>
