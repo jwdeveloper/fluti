@@ -14,17 +14,25 @@ export function googleTagBodyContent(tagId: string) {
 
 }
 
+export function sendGoogleEvent(name: string, data: any) {
+    //@ts-ignore
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-export function googleAnalitycsHeadContent(id:string)
-{
-        return `
+    gtag('event', name, data);
+    console.log('sending google event', name, data)
+}
+
+export function googleAnalitycsHeadContent(id: string) {
+    return `
         <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', '${id}');
+  gtag('config', '${id}', { debug_mode: true });
 </script>
         `
 }

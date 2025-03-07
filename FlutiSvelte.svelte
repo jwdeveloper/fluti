@@ -90,7 +90,6 @@
     <AlertManager/>
 {/if}
 
-
 {#if useUserSession}
     <UserManager/>
 {/if}
