@@ -8,6 +8,7 @@
     import '../../index.css'
     import type {FlutiWebSiteData} from "$lib/fluti/flutiSvelteTypes";
     import {onMount} from "svelte";
+    import {googleTagBodyContent, googleTagHeadContent} from "$lib/fluti/widgets/google/googleTagHeadContent";
 
 
     interface Fluti {
@@ -34,29 +35,20 @@
         }
     }: Fluti = $props();
 
-    function appendScriptTag() {
-        const tagNoScript = `
-<noscript>
-    <iframe
-        title="google-tag"
-        src="https://www.googletagmanager.com/ns.html?id=${websiteData?.google?.tagId}"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden">
-    </iframe>
-</noscript>`;
-
-        document.body.insertAdjacentHTML("beforeend", tagNoScript);
-    }
-
 
     onMount(() => {
         if (websiteData?.google?.tagId)
-            appendScriptTag();
+            googleTagBodyContent(websiteData?.google?.tagId);
     })
 </script>
 
 <svelte:head>
+
+    {#if websiteData?.google?.tagId}
+        {@html googleTagHeadContent(websiteData?.google?.tagId)}
+    {/if}
+
+
     <script async src="https://js.stripe.com/v3/"></script>
     <title>{websiteData?.title}</title>
     <meta name="description" content={websiteData?.description}>
@@ -84,22 +76,7 @@
     <meta property="al:web:url" content={websiteData.domain}>
     <meta property="al:web:should_fallback" content="true">
 
-    {#if websiteData?.google?.tagId}
-        <script>
-            (function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({
-                    'gtm.start':
-                        new Date().getTime(), event: 'gtm.js'
-                });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', websiteData?.google?.tagId);
-        </script>
-    {/if}
+
 </svelte:head>
 
 {#if useAlerts}
