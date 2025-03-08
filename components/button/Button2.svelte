@@ -183,7 +183,7 @@
 
     :global(.btn-element-outline), :global(.btn-element-filled) {
         border: var(--border-size-medium) solid var(--bg-tertiary);
-        border-bottom: 4px solid var(--bg-tertiary);
+        border-bottom: var(--button-bottom-border-size) solid var(--bg-tertiary);
 
     }
 

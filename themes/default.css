@@ -31,11 +31,11 @@
     --radius-large: 1em; /* 16px */
     --radius-huge: 2em; /* 32px */
 
-    --padding-tiny: 0.3em; /* ~8px */
-    --padding-small: 0.4em; /* ~12px */
-    --padding-medium: 0.65em; /* ~16px (48px total height) */
-    --padding-large: 1.2em; /* ~24px */
-    --padding-huge: 1.6em; /* ~32px */
+    --padding-tiny: 0.3rem; /* ~8px */
+    --padding-small: 0.4rem; /* ~12px */
+    --padding-medium: 0.65rem; /* ~16px (48px total height) */
+    --padding-large: 1.2rem; /* ~24px */
+    --padding-huge: 1.6rem; /* ~32px */
 
     --font-size-tiny: 0.625rem; /* 10px */
     --font-size-small: 0.8rem; /* 42px */
@@ -62,6 +62,9 @@
     --font-size-desktop: 1.1em;
     --font-size-big: 1.2em;
 
+
+    /* used in filled button for the nice border at the button bottom */
+    --button-bottom-border-size: 4px;
 
     --z-index-1: 2;
     --z-index-2: 5;

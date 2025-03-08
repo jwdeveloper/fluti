@@ -1,4 +1,6 @@
-export interface TabsProps {
+import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+
+export interface TabsProps extends ElementProps{
 
     items: TabsItem[],
 
@@ -6,7 +8,7 @@ export interface TabsProps {
 
     selectedComponent?: any | undefined
 
-    initialWidth?:string
+    initialWidth?: string
 }
 
 export interface TabsItem {
