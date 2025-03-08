@@ -1,6 +1,5 @@
 <script lang="ts">
     import {addRippleEffect} from "../../effects/RippleEffect";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {addClickEffect} from "$lib/fluti/effects/ClickEffect";
 
 

@@ -1,14 +1,12 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
-    import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
-    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         title,
         actionTitle,
-        children=undefined,
+        children = undefined,
         isLoading = false,
         actionIcon = 'fa fa-arrow-left',
         buttonProps = undefined,
@@ -21,8 +19,7 @@
 </script>
 
 
-
-<Panel direction="column" width="100%" gap="0.5em" padding="0">
+<Element direction="column" width="100%" gap="0.5em" padding="0">
 
     <Button2 onClick={onButtonClick}
              variant="filled"
@@ -37,10 +34,10 @@
 
     {#if actionTitle}
         <Link onClick={onActionClick}>
-            <Panel >
+            <Element>
                 <i class={actionIcon}></i>
                 {actionTitle}
-            </Panel>
+            </Element>
         </Link>
     {/if}
-</Panel>
+</Element>

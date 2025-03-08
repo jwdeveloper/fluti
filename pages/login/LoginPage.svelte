@@ -1,19 +1,10 @@
 <script lang="ts">
     import type {LoginPageProps} from "$lib/fluti/pages/login/loginPageTypes";
     import LoginWindow from "$lib/fluti/pages/login/LoginWindow.svelte";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
-    import {onMount} from "svelte";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     const props: LoginPageProps = $props();
-    const breakpoints = useBreakpoints(useServerRenderConfig.isMobile)
-
-    console.log('IS MOBILE SERVER', breakpoints.isMobile)
-
-    onMount(() => {
-        console.log('IS MOBILE CLIENT', breakpoints.isMobile)
-    })
 
 </script>
 

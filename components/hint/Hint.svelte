@@ -1,8 +1,7 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {scale as effect} from "svelte/transition";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
-    import FloatingPanel from "$lib/fluti/components/floatingPanel/FloatingPanel.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
 
     interface HintProps extends ElementProps {
@@ -40,7 +39,6 @@
 </script>
 
 
-
 <div
         onmouseenter={handleOpen}
         onmouseleave={handleClose}
@@ -57,9 +55,7 @@
     "
              class="hint"
              transition:effect>
-            <Panel variant="component-panel-border-dark"
-                   padding="0.6em"
-                   style="text-wrap: nowrap;">
+            <Panel padding="0.6em" style="text-wrap: nowrap;">
                 <h5>
                     {title}
                 </h5>

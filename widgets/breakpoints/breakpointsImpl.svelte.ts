@@ -13,8 +13,9 @@ export class BreakpointController {
 
     isMobile = $derived.by(() => {
         if (useServerRenderConfig?.serverSide === true)
-            return this.isServerMobile;
+            return useServerRenderConfig.isMobile;
 
+        console.log('checking if mobile',(!this.isTablet && !this.isDesktop) )
         return !this.isTablet && !this.isDesktop;
     });
     isTablet = $derived.by(() => {
@@ -22,21 +23,12 @@ export class BreakpointController {
     });
     isDesktop = $derived.by(() => {
         if (useServerRenderConfig?.serverSide === true)
-            return !this.isServerMobile;
+            return !useServerRenderConfig.isMobile;
 
         return this.lg.current;
     });
 
     width = $state(0)
-    isServerMobile = false
-
-    constructor(value?: boolean) {
-        this.isServerMobile = value ?? false;
-    }
 }
 
 export let breakpoints: BreakpointController = new BreakpointController();
-
-export let useBreakpoints: (e?: boolean) => BreakpointController = (isMobileView?: boolean) => {
-    return new BreakpointController(isMobileView);
-};

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
     import {
         createCssClass,
@@ -10,6 +9,7 @@
     import {onMount} from "svelte";
     import {addRippleEffect} from "$lib/fluti/effects/RippleEffect";
     import {addClickEffect} from "$lib/fluti/effects/ClickEffect";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
 
     //@ts-ignore
@@ -27,7 +27,6 @@
 
 
     const config = useServerRenderConfig
-    const breakpoints = useBreakpoints()
     const className = getClassName(elementId);
 
     let serverIsMobile = $derived.by(() => {
@@ -73,7 +72,9 @@
     })
 
     let finalStyles: ElementStyleProps = $derived.by(() => {
-        breakpoints.breakpoint
+        breakpoints.isMobile
+        breakpoints.isDesktop
+        breakpoints.isTablet
         if (serverIsMobile)
             return {...defaultStyles, ...props?.mobile};
 

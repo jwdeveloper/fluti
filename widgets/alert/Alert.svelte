@@ -1,10 +1,11 @@
 <script lang="ts">
 
     import {blur} from "svelte/transition";
+
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte.js";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let {message, type, id, destroy} = $props()
 
@@ -44,9 +45,9 @@
     <Panel className="alert alert-{type}"
 
            padding="1em"
-           variant="component-panel-border-dark">
+           >
 
-        <Panel panelType="grid" columns="1fr auto">
+        <Panel display="grid" columns="1fr auto">
 
             <Title tag="h4">
                 {message}

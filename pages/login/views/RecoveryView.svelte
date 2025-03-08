@@ -1,12 +1,10 @@
 <script lang="ts">
     import ButtonLogin from "../components/ButtonLogin.svelte";
-
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import TitleLogin from "../components/TitleLogin.svelte";
     import type {LoginViewProps} from "../loginPageTypes";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
-    import Title from "$lib/fluti/components/title/Title.svelte";
     import {onMount} from "svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let {controller}: LoginViewProps = $props();
 

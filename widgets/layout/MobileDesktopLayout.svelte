@@ -1,9 +1,8 @@
 <script lang="ts">
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import {onMount} from "svelte";
-    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     interface MobileDesktopLayoutProps {
         panel?: ElementProps// props of root panel
@@ -18,8 +17,6 @@
         right?: any
     }
 
-    let serverRenderConfig = useServerRenderConfig
-    let breakpoints = useBreakpoints();
     let props: MobileDesktopLayoutProps = $props();
     let isInit = $state(false)
 

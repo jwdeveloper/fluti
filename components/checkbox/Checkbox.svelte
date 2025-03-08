@@ -1,8 +1,7 @@
 <script lang="ts">
-    import {addRippleEffect} from "../../effects/RippleEffect";
     import InputPanel from "$lib/fluti/components/panel/InputPanel.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Link from "../Link.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         value = $bindable(),
@@ -25,7 +24,7 @@
     }
 
 
-    function handleClick(event) {
+    function handleClick(event:any) {
         value = !value;
         //
         // if (event?.target)
@@ -64,14 +63,14 @@
 
 
 {#if children}
-    <Panel onClick={handleClick}
-           panelType="grid"
+    <Element onClick={handleClick}
+           display="grid"
            columns="auto 1fr" padding="0" gap="0.5em">
         <InputSnippet/>
         <Link onClick={handleClick}>
             {@render children()}
         </Link>
-    </Panel>
+    </Element>
 {:else }
     <InputSnippet/>
 {/if}

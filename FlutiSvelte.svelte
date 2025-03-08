@@ -5,7 +5,7 @@
     import BreakpointManager from "$lib/fluti/widgets/breakpoints/BreakpointManager.svelte";
     import UserManager from "$lib/fluti/widgets/user/UserManager.svelte";
     import './themes/default.css'
-    import '../../index.css'
+    import '../../app.css'
     import type {FlutiWebSiteData} from "$lib/fluti/flutiSvelteTypes";
     import {onMount} from "svelte";
     import {

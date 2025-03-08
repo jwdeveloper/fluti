@@ -174,21 +174,18 @@
 [data-theme="dark-4"] {
 
     --bg-primary: rgb(24, 21, 21);
-    --bg-secondary: rgb(33, 30, 30);;
+    --bg-secondary: rgb(33, 30, 30);
     --bg-tertiary: rgb(51, 48, 48);
     --bg-transparent: rgba(123, 123, 123, 0.1);
 
     --text-light: rgba(245, 245, 245, 1); /* Soft White */
 
-    /* 175, 175, 175*/
 
     --text-primary: rgb(220, 220, 220); /* Light Silver */
     --text-neutral: rgb(124, 120, 120); /* Warm Gray */
     --text-muted: rgb(89, 86, 86); /* Cool Gray */
     --text-error: #e53935; /* Vibrant Red */
 
-    /*!* Accent Color *!*/
-    /* Accent Color */
     --accent-primary: rgba(255, 183, 77, 0.98); /* Warm Amber */
     --accent-primary: #21e05d;
 }

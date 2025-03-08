@@ -1,14 +1,11 @@
 <script lang="ts">
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
+
     import ButtonLogin from "../components/ButtonLogin.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
-    import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
     import type {LoginViewProps} from "../loginPageTypes";
-    import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import TitleLogin from "$lib/fluti/pages/login/components/TitleLogin.svelte";
-    import Space from "$lib/fluti/components/space/Space.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import Label from "$lib/fluti/components/label/Label.svelte";
 

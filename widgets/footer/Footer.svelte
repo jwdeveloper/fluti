@@ -1,5 +1,6 @@
 <script lang="ts">
     import Element from "$lib/fluti/components/panel/Element.svelte";
+
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import * as domain from "node:domain";
@@ -7,8 +8,8 @@
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     interface SocialMediaLink {
         url: string
@@ -50,8 +51,6 @@
     }
 
     let props: FooterProps = $props();
-    let breakpoints = useBreakpoints();
-
     const currentYear = new Date().getFullYear();
     const currentDomain = props?.domain ?? window?.location?.hostname ?? '';
 </script>
