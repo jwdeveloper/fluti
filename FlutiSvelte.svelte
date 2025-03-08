@@ -41,21 +41,22 @@
 
 
     onMount(() => {
-        if (websiteData?.google?.tagId)
-            googleTagBodyContent(websiteData?.google?.tagId);
+        if (websiteData?.google?.tagId) {
+            let bodyTag = googleTagBodyContent(websiteData?.google?.tagId);
+            document.head.insertAdjacentHTML("beforeend", bodyTag);
+
+            let headTag = googleTagHeadContent(websiteData?.google?.tagId);
+            document.head.insertAdjacentHTML("beforeend", headTag);
+        }
+
+        if (websiteData?.google?.analyticsId) {
+            let headTag = googleAnalitycsHeadContent(websiteData?.google?.analyticsId);
+            document.head.insertAdjacentHTML("beforeend", headTag);
+        }
     })
 </script>
 
 <svelte:head>
-
-    {#if websiteData?.google?.tagId}
-        {@html googleTagHeadContent(websiteData?.google?.tagId)}
-    {/if}
-
-    {#if websiteData?.google?.analyticsId}
-        {@html googleAnalitycsHeadContent(websiteData?.google?.analyticsId)}
-    {/if}
-
     <script async src="https://js.stripe.com/v3/"></script>
     <title>{websiteData?.title}</title>
     <meta name="description" content={websiteData?.description}>

@@ -10,7 +10,7 @@ export function googleTagBodyContent(tagId: string) {
     </iframe>
 </noscript>`;
 
-    document.body.insertAdjacentHTML("beforeend", tagNoScript);
+    return tagNoScript;
 
 }
 
