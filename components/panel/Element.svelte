@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
+    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig.svelte";
     import {
         createCssClass,
         type ElementProps,
