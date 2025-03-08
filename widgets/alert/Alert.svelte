@@ -6,6 +6,7 @@
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
     import Panel from "$lib/fluti/components/containers/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {message, type, id, destroy} = $props()
 
@@ -40,14 +41,11 @@
     </Panel>
 {/snippet}
 
-<div transition:blur  onclick={handleClick}>
+<div transition:blur onclick={handleClick}>
 
-    <Panel className="alert alert-{type}"
+    <Element className="alert alert-{type}">
 
-           padding="1em"
-           >
-
-        <Panel display="grid" columns="1fr auto">
+        <Panel display="grid" padding="1em" columns="1fr auto">
 
             <Title tag="h4">
                 {message}
@@ -56,7 +54,7 @@
                 <i class="fa fa-close" onclick={handleDestroy}></i>
             </div>
         </Panel>
-    </Panel>
+    </Element>
 
 
 </div>

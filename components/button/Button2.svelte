@@ -172,7 +172,8 @@
 
     :global(.btn-element:disabled) {
         cursor: not-allowed !important;
-        opacity: var(--opacity-medium);
+        opacity: var(--opacity-medium) !important;
+        color: var(--text-muted);
     }
 
     :global(.btn-element:hover) {

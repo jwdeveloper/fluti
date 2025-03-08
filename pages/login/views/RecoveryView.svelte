@@ -4,7 +4,7 @@
     import type {LoginViewProps} from "../loginPageTypes";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import {onMount} from "svelte";
-    import Panel from "$lib/fluti/components/containers/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {controller}: LoginViewProps = $props();
 
@@ -37,12 +37,12 @@
                      enablePassword={false}
                      enableRepeatPassword={false}
     />
-    <Panel width="100%" padding="0">
+    <Element width="100%" padding="0">
         <ButtonLogin onButtonClick={handleClick}
                      actionTitle="Powrót do logowania"
                      onActionClick={()=> controller.view = "login"}
                      title="Wyślij na email"/>
-    </Panel>
+    </Element>
 
 {/snippet}
 
@@ -52,27 +52,27 @@
                 icon="fa fa-envelope"
                 description="Wiadomość z linkiem do resetu hasła została wysłana na twój maila"
     />
-    <Panel width="100%">
+    <Element width="100%">
         <i class="fa fa-envelope" style="font-size: 4em"></i>
-    </Panel>
-    <Panel width="100%" padding="0">
+    </Element>
+    <Element width="100%" padding="0">
         <ButtonLogin onButtonClick={()=> controller.view = "login"}
                      title={translations.button.title}
                      actionTitle={translations.button.subtitle}/>
-    </Panel>
+    </Element>
 {/snippet}
 
-<Panel padding="0" width="100%" height="100%"
+<Element padding="0" width="100%" height="100%"
        align="space-around" justify="space-evenly"
        gap="0"
        direction="column">
 
 
-    <Panel padding="0" direction="column" gap="1em">
+    <Element padding="0" direction="column" gap="1em">
         {#if isRecoveryView}
             <RecoveryView/>
         {:else}
             <GoBackView/>
         {/if}
-    </Panel>
-</Panel>
+    </Element>
+</Element>

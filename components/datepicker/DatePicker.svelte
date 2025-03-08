@@ -1,12 +1,10 @@
 <script lang="ts">
     import Button from "$lib/fluti/components/button/Button.svelte";
-
-    import Panel from "../panel/Panel.svelte";
-    import Input from "../input/Input.svelte";
     import FloatingPanel from "../floatingPanel/FloatingPanel.svelte";
     import Input2 from "$lib/fluti/components/input/Input2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import type {InputProps2} from "$lib/fluti/components/input/Input.type";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let {value = $bindable(''), ...props}: InputProps2 = $props();
     let isOpen = $state(false);
@@ -115,7 +113,6 @@
            gap="0.5em">
         {#each years as day}
             <Panel style="font-weight: bold; text-align: left"
-                   variant="border"
                    ripplerEffect={true}
                    onClick={()=>handleYearSelect(day)}
                    width="100%">

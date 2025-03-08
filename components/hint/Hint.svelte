@@ -49,13 +49,12 @@
         <div style="
         transform: translate({xOffset}, {offset});
         z-index: var(--z-index-2);
-        overflow:hidden;
         pointer-events: none;
         {panelStyle};
     "
              class="hint"
              transition:effect>
-            <Panel padding="0.6em" style="text-wrap: nowrap;">
+            <Panel padding="0.6em" style="border-width: 2px; text-wrap: nowrap;">
                 <h5>
                     {title}
                 </h5>

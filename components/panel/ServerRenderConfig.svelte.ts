@@ -1,5 +1,5 @@
 import type {RequestEvent} from "@sveltejs/kit";
-import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+import {resetBreakpointServerSide} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
 export class ServerRenderConfig {
     isMobile: boolean = $state(false)
@@ -7,6 +7,7 @@ export class ServerRenderConfig {
 
     checkIfMobile(event: RequestEvent) {
 
+        resetBreakpointServerSide();
         const userAgent = event?.request?.headers?.get('user-agent');
         if (userAgent !== undefined) {
             useServerRenderConfig.serverSide = true
@@ -14,7 +15,6 @@ export class ServerRenderConfig {
         } else {
             useServerRenderConfig.serverSide = false
         }
-        console.log("server config", useServerRenderConfig)
     }
 }
 
