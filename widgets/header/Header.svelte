@@ -116,6 +116,7 @@
         <Element
                 display="grid"
                 columns="22.5fr 55fr 22.5fr"
+                gap="0"
                 width={width}>
 
             <Element hover={{style:"cursor:pointer;"}}
