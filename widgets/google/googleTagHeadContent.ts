@@ -22,7 +22,6 @@ export function sendGoogleEvent(name: string, data: any) {
     }
 
     gtag('event', name, data);
-    console.log('sending google event', name, data)
 }
 
 export function googleAnalitycsHeadContent(id: string) {
