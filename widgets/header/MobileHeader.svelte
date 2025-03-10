@@ -17,7 +17,9 @@
     <Panel padding="0.5em 1em"
            width="100%"
            direction="row"
-           effects={{rippler:{}}}
+           effects={{
+               click:{},
+               rippler:{}}}
            onClick={()=> window.location.href = item.link??"/"}
            display="grid"
            columns="auto 1fr"
