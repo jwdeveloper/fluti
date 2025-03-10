@@ -17,12 +17,13 @@
     <Panel padding="0.5em 1em"
            width="100%"
            direction="row"
+           effects={{rippler:{}}}
+           onClick={()=> window.location.href = item.link??"/"}
            display="grid"
            columns="auto 1fr"
            gap="1em">
         <Button2
                 background={flutiTheme.background.primary}
-                onClick={()=> window.location.href = item.link??"/"}
                 icon={item.icon}/>
         <svelte:element this="a"
                         href={item.link??"/"}
