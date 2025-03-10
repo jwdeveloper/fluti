@@ -130,7 +130,7 @@
                      gap="1em"
                      width="100%"
                      height="100%"
-                     mobile={{justify:'space-around'}}
+                     mobile={{}}
                      justify="flex-start">
                 <SocialMediaComponent/>
             </Element>
