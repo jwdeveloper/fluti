@@ -31,6 +31,7 @@
     interface FooterProps extends ElementProps {
         templates?: {
             logo?: any;
+            center?: any
         };
         domain: string
         socialMedia?: {
@@ -77,7 +78,7 @@
             <Button2
                     className="social-button"
                     variant="filled"
-                    size="large"
+
                     onClick={()=> window.open(props?.socialMedia[key]?.url ?? '','_blank')}
                     effects={{click:{}}}
                     background={flutiTheme.background.primary}
@@ -106,7 +107,7 @@
 
     <Element width="100%"
              display="grid"
-             columns="1fr 1fr"
+             columns="1fr 3fr 1fr"
              mobile={{columns:"1fr", rows:'1fr', gap:'2em'}}
              rows="1fr">
         <Element
@@ -118,7 +119,7 @@
                 gap="0"
                 direction="column">
             <LogoComponent/>
-            <h3 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h3>
+            <h4 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h4>
 
             {#if breakpoints.isDesktop}
                 <Space variant="huge"/>
@@ -133,7 +134,12 @@
                      justify="flex-start">
                 <SocialMediaComponent/>
             </Element>
+        </Element>
 
+        <Element height="100%" width="100%">
+            {#if props?.templates?.center}
+                {@render props?.templates?.center()}
+            {/if}
         </Element>
 
         <Element width="100%"
