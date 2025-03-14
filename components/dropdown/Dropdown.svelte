@@ -23,6 +23,7 @@
             })
         }
 
+        value = items[0].value;
 
     })
 
@@ -39,9 +40,9 @@
 <style>
 
     select {
-        background: var(--bg-secondary);
+        background: var(--bg-primary);
         padding: var(--padding);
-        border: var(--border-size) solid var(--text-muted);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
         border-radius: var(--radius-medium);
         width: 100%;
         color: var(--text-color);
