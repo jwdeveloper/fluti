@@ -7,4 +7,5 @@ export interface LabelProps {
     gap?: string
     style?: string
     labelColor?: string
+    labelFor?:string
 }

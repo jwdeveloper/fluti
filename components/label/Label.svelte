@@ -11,6 +11,7 @@
         error = $bindable(undefined),
         children = undefined,
         style = '',
+        labelFor = '',
         labelColor = 'var(--text-primary)',
         gap = "0.5em",
     }: LabelProps = $props()
@@ -20,7 +21,7 @@
 
 <Element width="100%"
          gap={gap}
-         tag="label"
+
          direction="column"
          style={style}>
     {#if title}
@@ -29,14 +30,16 @@
         </h5>
     {/if}
     {#if children}
-        <Element justify="flex-start" width="100%">
+        <Element
+                tag="label"
+                attributes={{for:labelFor}}
+                justify="flex-start" width="100%">
             {@render children()}
         </Element>
     {/if}
 
     {#if error}
         <div transition:fly={{y:-50}} style="width: 100%;">
-
             <Element
                     padding="0 0.5em"
                     width="100%"
