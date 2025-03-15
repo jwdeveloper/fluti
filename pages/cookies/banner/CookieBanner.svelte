@@ -1,13 +1,18 @@
 <script lang="ts">
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
-    import type {CookiePage} from "$lib/fluti/pages/cookies/cookiePageTypes";
+    import type {CookieCategoryData, CookieItemData, CookiePage} from "$lib/fluti/pages/cookies/cookiePageTypes";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Tabs from "$lib/fluti/components/tabs/Tabs.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import Space from "$lib/fluti/components/space/Space.svelte";
     import CookieCategory from "$lib/fluti/pages/cookies/banner/CookieCategory.svelte";
-    import {categories} from "$lib/fluti/pages/cookies/data";
+    import {categories, providers} from "$lib/fluti/pages/cookies/data";
+    //@ts-ignore
+    import agreement from "../data/Agreement.md";
+    //@ts-ignore
+    import about from "../data/About.md";
+    import snarkdown from "snarkdown";
+
 
     let {translations, controller}: CookiePage = $props();
 
@@ -18,85 +23,60 @@
     ]
     let currentTab = $state(tabItems[0])
     let innerPage = $derived.by(() => currentTab.page)
+    let categoriesData = $state(prepareDataModel());
 
-    let handleAcceptAll = () => {
-        controller.isOpen = false;
-    }
-
-    let categoriesData = $derived.by(() => {
+    function prepareDataModel() {
         let result = []
         for (let category of categories) {
+
+            let resultProviders: CookieCategoryData[] = []
+            let resultItems: CookieItemData[] = []
+
+            providers
+                .filter(pr => pr.items.filter(e => e.categoryType === category.type).length > 0)
+                .forEach(pr => {
+                    resultProviders.push(pr);
+                    resultItems = pr.items.filter(e => e.categoryType === category.type);
+                })
+
             result.push({
                 category: category,
-                providers: [],
-                items: []
+                providers: resultProviders,
+                items: resultItems,
+                isEnabled: true
             })
         }
         return result;
-    });
+    }
+
+    let handleAcceptAll = () => {
+        let data = $state.snapshot(categoriesData);
+        controller.handleSaveClick(data);
+    }
 
 
+    const agreementValue = snarkdown(agreement);
+    const aboutValue = snarkdown(about);
 </script>
 
 
 {#snippet AgreementPage()}
+    {@html agreementValue}
+{/snippet}
 
-    <h4>
-        Niniejsza strona korzysta z plików cookie
-    </h4>
-
-    <p style="font-size: {flutiTheme.font.medium}">
-        Wykorzystujemy pliki cookie do spersonalizowania treści i reklam, aby oferować funkcje społecznościowe i
-        analizować
-        ruch w naszej witrynie. Informacje o tym, jak korzystasz z naszej witryny, udostępniamy partnerom
-        społecznościowym,
-        reklamowym i analitycznym. Partnerzy mogą połączyć te informacje z innymi danymi otrzymanymi od Ciebie lub
-        uzyskanymi podczas korzystania z ich usług.
-    </p>
-
+{#snippet AboutCookiePage()}
+    {@html aboutValue}
 {/snippet}
 
 
 {#snippet DetailsPage()}
     {#each categoriesData as data}
-        <CookieCategory {...data}/>
+        <CookieCategory
+                category={data.category}
+                providers={data.providers}
+                items={data.items}
+                bind:isEnabled={data.isEnabled}/>
     {/each}
-{/snippet}
-
-
-{#snippet AboutCookiePage()}
-    <p style="font-size: {flutiTheme.font.medium}">
-        Pliki cookie (ciasteczka) to małe pliki tekstowe, które mogą być stosowane przez strony internetowe, aby
-        użytkownicy
-        mogli korzystać ze stron w bardziej sprawny sposób.
-    </p>
-    <Space/>
-    <p style="font-size: {flutiTheme.font.medium}">
-        Prawo stanowi, że możemy przechowywać pliki cookie na urządzeniu użytkownika, jeśli jest to niezbędne do
-        funkcjonowania niniejszej strony. Do wszystkich innych rodzajów plików cookie potrzebujemy zezwolenia
-        użytkownika.
-    </p>
-    <Space/>
-    <p style="font-size: {flutiTheme.font.medium}">
-        Niniejsza strona korzysta z różnych rodzajów plików cookie. Niektóre pliki cookie umieszczane są przez usługi
-        stron
-        trzecich, które pojawiają się na naszych stronach.
-    </p>
-    <Space/>
-    <p style="font-size: {flutiTheme.font.medium}">
-        W dowolnej chwili możesz wycofać swoją zgodę w Deklaracji dot. plików cookie na naszej witrynie.
-    </p>
-    <Space/>
-    <p style="font-size: {flutiTheme.font.medium}">
-        Dowiedz się więcej na temat tego, kim jesteśmy, jak można się z nami skontaktować i w jaki sposób przetwarzamy
-        dane
-        osobowe w ramach Polityki prywatności.
-    </p>
-
-    <p style="font-size: {flutiTheme.font.medium}">
-        Prosimy o podanie identyfikatora Pana(Pani) zgody i daty kontaktu z nami w sprawie Pana(Pani) zgody
-    </p>
-
 {/snippet}
 
 
@@ -108,7 +88,7 @@
     <Element justify="flex-end"
              width="100%"
              padding={flutiTheme.padding.large}>
-        <h4>Cookiebot</h4>
+        <h4>{translations.title}</h4>
     </Element>
     <Element width="100%" direction="column">
         <Separator/>

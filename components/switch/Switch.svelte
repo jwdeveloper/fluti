@@ -92,6 +92,7 @@
 
     :global(.switch-active) {
         background: var(--text-light) !important;
+        background: var(--accent-primary) !important;
         border-color: var(--text-light) !important;
     }
 

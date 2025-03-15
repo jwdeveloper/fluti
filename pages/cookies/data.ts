@@ -1,4 +1,29 @@
-import {type CookieCategoryData, CookieCategoryType} from "$lib/fluti/pages/cookies/cookiePageTypes";
+import {
+    type CookieCategoryData,
+    CookieCategoryType,
+    type CookieProviderData
+} from "$lib/fluti/pages/cookies/cookiePageTypes";
+
+export let providers: CookieProviderData[] = [
+    {
+        id: 'google',
+        name: 'google',
+        items: [
+            {
+                title: 'Collecting google analytics',
+                description: 'It collects the google annalists data',
+                providerId: 'google',
+                categoryType: CookieCategoryType.statistics,
+            },
+            {
+                title: 'Collecting google adds',
+                description: 'It collects the google annalists data',
+                providerId: 'google',
+                categoryType: CookieCategoryType.marketing,
+            }
+        ],
+    }
+]
 
 export let categories: CookieCategoryData[] = [
     {

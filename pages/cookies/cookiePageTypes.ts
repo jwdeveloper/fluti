@@ -3,6 +3,7 @@ import {CookieWindowControllerSvelte} from "$lib/fluti/pages/cookies/cookieWindo
 export interface CookiePageMessages {
     acceptAll: string
     customize: string
+    title: string
 
     tabs: {
         agreements: string
@@ -11,9 +12,19 @@ export interface CookiePageMessages {
     }
 }
 
+export interface CookieItemCheckedEvent
+{
+    
+}
+
+export interface CookieCategoryProps {
+    category: CookieCategoryData
+    providers: CookieProviderData[],
+    items: CookieItemData[],
+    isEnabled: boolean
+}
 
 export interface CookiePage {
-
     controller: CookieWindowControllerSvelte
     translations: CookiePageMessages
 }
@@ -42,8 +53,7 @@ export interface CookieItemData {
 
     title: string
     description: string
-    duration: string
-    type: string
+    duration?: string
     providerId: string
-    categoryId: CookieCategoryType
+    categoryType: CookieCategoryType
 }

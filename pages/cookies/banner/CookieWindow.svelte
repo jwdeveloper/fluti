@@ -17,7 +17,8 @@
         controller = useCookieWindow(),
         page = {
             translations: {
-                acceptAll: "Accept all",
+                title: 'cookiebot',
+                acceptAll: "Accept and save",
                 customize: "Customize",
                 tabs: {
                     agreements: "Agreements",
@@ -28,7 +29,6 @@
         }
     }: CookieWindowProps = $props();
 
-
 </script>
 
 
@@ -38,7 +38,5 @@
         allowClose={false}
         animation={{direction:'center'}}
         bind:visible={controller.isOpen}>
-    <CookieBanner  {...page}
-
-                   controller={controller}/>
+    <CookieBanner {...page} controller={controller}/>
 </SideWindow>
