@@ -18,9 +18,10 @@ export function sendGoogleEvent(name: string, data: any) {
     //@ts-ignore
     window.dataLayer = window.dataLayer || [];
     function gtag() {
+        //@ts-ignore
         dataLayer.push(arguments);
     }
-
+        //@ts-ignore
     gtag('event', name, data);
 }
 

@@ -10,46 +10,7 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
-
-    interface SocialMediaLink {
-        url: string
-        name?: string
-        icon?: string
-        iconColor?: string
-    }
-
-    interface LinkData {
-        name: string
-        url: string
-    }
-
-    interface LinkSection {
-        title: string
-        links: LinkData[]
-    }
-
-    interface FooterProps extends ElementProps {
-        templates?: {
-            logo?: any;
-            center?: any
-        };
-        domain: string
-        socialMedia?: {
-            linkedIn?: SocialMediaLink
-            tweeter?: SocialMediaLink
-            facebook?: SocialMediaLink
-            tiktok?: SocialMediaLink
-            youtube?: SocialMediaLink
-        }
-        logo?: {
-            name?: string;
-            slogan?: string;
-            icon?: string
-            image?: string;
-        };
-        links?: LinkSection[]
-        separator?: boolean
-    }
+    import type {FooterProps} from "$lib/fluti/widgets/footer/footerTypes";
 
     let props: FooterProps = $props();
     const currentYear = new Date().getFullYear();
