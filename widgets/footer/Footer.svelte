@@ -65,7 +65,7 @@
                 <i style="font-size: var(--font-size-huge);color: var(--accent-primary)"
                    class="{props?.logo?.icon}"></i>
             {/if}
-            <h1 style="color: {flutiTheme.background.accent}">
+            <h1 style="text-wrap: nowrap; color: {flutiTheme.background.accent}">
                 {props?.logo?.name ?? domain ?? ''}
             </h1>
         </Element>

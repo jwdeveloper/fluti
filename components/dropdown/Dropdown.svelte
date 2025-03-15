@@ -7,7 +7,8 @@
     let {
         placeholder = 'Wybierz opcje',
         value = $bindable(''),
-        items = $bindable([])
+        items = $bindable([]),
+        style = ''
     }: DropdownProps = $props();
 
     onMount(() => {
@@ -29,9 +30,9 @@
 
 </script>
 
-<select bind:value={value}>
+<select bind:value={value} style={style}>
     <option disabled selected>{placeholder}</option>
-    {#each items as item (item.name)}
+    {#each items as item (item.value)}
         <option value={item.value}>{item.name}</option>
     {/each}
 </select>
