@@ -23,7 +23,7 @@
         font-size: var(--font-size-medium);
         border-radius: var(--radius-medium);
         padding: 1em;
-        border: var(--border-size) solid var(--color-darker);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
         scrollbar-width: thin;
         height: 100%;
         width: 100%;

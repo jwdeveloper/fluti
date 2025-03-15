@@ -9,6 +9,7 @@
         value = $bindable(),
         variant = 'outline',
         invalid,
+
         onIconClick = () => {
         },
         ...props
@@ -59,6 +60,8 @@
             type={props.type}
             placeholder={props.placeholder}
             disabled={props.disabled}
+            name={props?.id}
+            pattern={props.regex}
             required={props.required}
             onclick={props.onClick}
             {...props}
