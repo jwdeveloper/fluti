@@ -61,7 +61,7 @@
             placeholder={props.placeholder}
             disabled={props.disabled}
             name={props?.id}
-            pattern={props.regex}
+            pattern={props?.regex}
             required={props.required}
             onclick={props.onClick}
             {...props}
@@ -101,7 +101,7 @@
             padding-right: 1em;
             pointer-events: none;
 
-            i{
+            i {
                 pointer-events: all;
                 height: 1em;
                 text-align: center;

@@ -3,6 +3,7 @@ export interface FlutiWebSiteData {
     title?: string
     description?: string
     country?: string,
+    pageType?: PageType
     tweeter?:
         {
             title: string
@@ -12,4 +13,15 @@ export interface FlutiWebSiteData {
         tagId?: string
         analyticsId?: string
     }
+    stripe?: {
+        url?: string
+    }
 }
+
+export type PageType =
+    'website' |
+    'article' |
+    'product' |
+    'video.other' |
+    'music.song' |
+    'event'
