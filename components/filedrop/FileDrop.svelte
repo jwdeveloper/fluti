@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import ListGroup from "$lib/fluti/components/list/ListGroup.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
 
     let {
@@ -62,10 +62,10 @@
         ondragleave={preventDefaults}>
 
     {#if files.length === 0}
-        <Panel direction="column" width="100%" height="100%">
+        <Element direction="column" width="100%" height="100%">
             <i class="fa fa-file-upload"></i>
             <p>{placeholder}</p>
-        </Panel>
+        </Element>
     {/if}
 
     <input type="file"
@@ -80,7 +80,7 @@
         {#if dropTemplate}
             {@render dropTemplate()}
         {:else}
-        <Panel padding="0" style="max-width: 200px" justify="space-between"
+        <Element padding="0" style="max-width: 200px" justify="space-between"
                direction="row" width="100%">
             <ListGroup isOpen={true}
                        enableDelete={true}
@@ -89,7 +89,7 @@
                        useInsertTemplate={false}
                        allowInsert={true}
                        items={files}/>
-        </Panel>
+        </Element>
         {/if}
 
     {/if}
