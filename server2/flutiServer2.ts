@@ -88,7 +88,7 @@ export class FlutiServer2Impl implements FlutiServer2 {
         }
         return this.app.request(event.request, undefined,
             {
-                ip: event.getClientAddress(),
+                ip: event?.getClientAddress(),
                 // svelteEvent: event,
                 renderSvelte: resolveSvelte
             });
