@@ -33,7 +33,7 @@
 
 
 {#snippet MessageSnippet()}
-    <Panel columns="auto 1fr" style="pointer-events: none">
+    <Panel columns="auto 1fr" style="pointer-events: none; border: 1px solid var(--accent-primary)">
         <Icon icon="fa fa-copy" onClick={handleCopy}/>
         <div onclick={handleCopy} style="user-select: text;">
             {message}
@@ -45,7 +45,9 @@
 
     <Element className="alert alert-{type}">
 
-        <Panel display="grid" padding="1em" columns="1fr auto">
+        <Panel display="grid"
+               style="border: 1px solid var(--accent-primary)"
+               padding="1em" columns="1fr auto">
 
             <Title tag="h4">
                 {message}
