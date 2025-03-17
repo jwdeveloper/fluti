@@ -11,6 +11,19 @@
         style = ''
     }: DropdownProps = $props();
 
+
+    $effect(() => {
+        items
+
+
+        if (items.length === 0)
+            return
+        if (!items.find(e => e.value === value)) {
+            value = items[0].value;
+        }
+
+    })
+
     onMount(() => {
         if (items.length === 0)
             return
