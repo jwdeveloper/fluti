@@ -64,7 +64,7 @@
     {#if files.length === 0}
         <Element direction="column" width="100%" height="100%">
             <i class="fa fa-file-upload"></i>
-            <p>{placeholder}</p>
+            <h5 style="font-weight: normal">{placeholder}</h5>
         </Element>
     {/if}
 
@@ -79,7 +79,6 @@
             {@render dropTemplate()}
         {:else}
         <Element padding="0" justify="space-between"
-                 height="100%"
                direction="row" width="100%">
             <ListGroup isOpen={true}
                        enableDelete={true}
@@ -104,7 +103,7 @@
     }
 
     .drop-area {
-        border: 2px dashed var(--text-muted);
+        border: var(--border-size-large) dashed var(--bg-tertiary);
         padding: 1em 1em;
         text-align: center;
         justify-content: center;
@@ -126,7 +125,7 @@
 
     .drop-area:hover {
         cursor: pointer;
-        border-color: var(--text-light);
+        border-color: var(--text-muted);
         color: var(--text-light);
     }
 
@@ -152,7 +151,7 @@
         justify-content: space-between;
         padding: 0.5em;
         background: var(--bg-100);
-        border: 1px solid var(--color-lighter);
+        border: var(--border-size-medium) solid var(--color-lighter);
         margin-bottom: 0.5em;
         border-radius: 4px;
     }

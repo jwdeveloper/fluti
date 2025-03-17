@@ -120,13 +120,15 @@
                deleteVisible = -1
        }}
          gap="0.3em">
+
+
     <Element direction="column"
              onClick={clickOpen}
-             ripplerEffect={true}
+             effects={{rippler:{}}}
              padding="0"
              width="100%" gap="0">
         <Element
-                panelType="grid"
+                display="grid"
                 columns="auto 1fr auto"
                 style="cursor: pointer"
                 width="100%">
@@ -152,7 +154,10 @@
                 </Element>
             {/if}
         </Element>
+
         <Separator style="margin-bottom: 0"/>
+
+
     </Element>
 
 

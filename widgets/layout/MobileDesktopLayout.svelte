@@ -32,30 +32,30 @@
 
     let getGridTemplate = () => {
 
-
         let width = props?.width ?? "60%"
         let intWidth = parseInt(width) / 100;
         let remainSpace = 1 - intWidth;
+        let side = remainSpace / 2;
 
-        return `${remainSpace / 2}fr ${intWidth}fr ${remainSpace / 2}fr`
+        return `${side * 100}% ${intWidth * 100}% ${side * 100}%`
     }
 
     let dimentions = $derived.by(() => {
 
         if (isInit && shouldHideSidePanels)
             return {
-                rows: '1fr',
-                columns: '1fr'
+                rows: '100%',
+                columns: '100%'
             }
 
         if (shouldBreak) {
             return {
                 rows: getGridTemplate(),
-                columns: "1fr"
+                columns: "100%"
             }
         } else {
             return {
-                rows: '1fr',
+                rows: '100%',
                 columns: getGridTemplate()
             }
         }
