@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     let {
         url = undefined,
@@ -13,9 +14,7 @@
         if (!onClick)
             return
 
-        if (navigator)
-            navigator.vibrate(25);
-
+        vibrate();
         onClick(e)
     }
 
