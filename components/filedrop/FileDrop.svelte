@@ -75,12 +75,11 @@
 
 
     {#if files.length > 0}
-
-
         {#if dropTemplate}
             {@render dropTemplate()}
         {:else}
-        <Element padding="0" style="max-width: 200px" justify="space-between"
+        <Element padding="0" justify="space-between"
+                 height="100%"
                direction="row" width="100%">
             <ListGroup isOpen={true}
                        enableDelete={true}
