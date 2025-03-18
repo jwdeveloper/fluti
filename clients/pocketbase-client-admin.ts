@@ -19,6 +19,7 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
         return pocketbase;
     } catch (error) {
         console.log("Can connect to datavase", url, login, password)
+        console.log(error)
         throw new Error(error)
     }
 
