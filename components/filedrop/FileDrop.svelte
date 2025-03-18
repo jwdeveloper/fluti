@@ -4,16 +4,25 @@
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
 
 
+    interface FileDropProps {
+        maxSize?: number
+        maxFiles?: number
+        placeholder?: string
+    }
+
     let {
         placeholder = "Drag and drop files here, or click to upload",
         dropTemplate = undefined,
         onDrop = undefined,
         files = $bindable([]),
-        maxSize = 1024 * 100,
+        maxSize = 100,
+        maxFiles = 100,
         messages = {
-            fileName: 'File too big'
+            fileName: 'File too big',
+            tooManyFiles: 'Too many files, limit is',
+
         }
-    } = $props();
+    }: FileDropProps = $props();
 
 
     let fileSelectElement: HTMLHtmlElement;
@@ -24,11 +33,15 @@
             if (files.find((f: File) => f.name === file.name))
                 continue;
 
-            if (file.size > maxSize) {
+            if (file.size > maxSize * 1024 * 1024) {
                 useAlert().pushAlert(messages.fileName)
                 continue;
             }
 
+            if (files.length + 1 > maxFiles) {
+                useAlert().pushAlert(messages.tooManyFiles + " " + maxFiles)
+                continue
+            }
 
             files.push(file);
         }
