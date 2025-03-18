@@ -1,6 +1,7 @@
 <script lang="ts">
     import ListGroup from "$lib/fluti/components/list/ListGroup.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
 
 
     let {
@@ -8,8 +9,9 @@
         dropTemplate = undefined,
         onDrop = undefined,
         files = $bindable([]),
+        maxSize = 1024 * 100,
         messages = {
-            fileName: 'File to big'
+            fileName: 'File too big'
         }
     } = $props();
 
@@ -17,17 +19,16 @@
     let fileSelectElement: HTMLHtmlElement;
 
     const handleFiles = (newFiles: FileList) => {
-        console.log("Drop event detected");
         let array = Array.from(newFiles);
         for (let file of array) {
-            if (files.find((f: File) => f.name === file.name)) continue;
+            if (files.find((f: File) => f.name === file.name))
+                continue;
 
-            console.log(`${file.name} size: ${file.size}`);
-
-            if (file.size > 10*1024*1024) {
-                console.log(`${file.name} is too big (size: ${file.size} bytes)`);
+            if (file.size > maxSize) {
+                useAlert().pushAlert(messages.fileName)
                 continue;
             }
+
 
             files.push(file);
         }
