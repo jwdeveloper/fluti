@@ -1,15 +1,19 @@
 import PocketBase from 'pocketbase';
 import {PUBLIC_POCKETBASE_URL, PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL} from "$env/static/public";
+
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
 
 let admin;
 
-export async function pocketbaseClientAdmin(): PocketBase {
+export async function pocketbaseClientAdmin(login?: string, password?: string): PocketBase {
     if (admin) {
         return admin;
     }
+    login = login ?? 'admin@admin.com'
+    password = password ?? '1234567890'
+
     let pocketbase = new PocketBase(url);
-    await pocketbase.collection('_superusers').authWithPassword('admin@admin.com', '12345678');
+    await pocketbase.collection('_superusers').authWithPassword(login, password);
     admin = pocketbase;
     return pocketbase;
 }

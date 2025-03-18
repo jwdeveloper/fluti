@@ -7,7 +7,9 @@
         placeholder = "Drag and drop files here, or click to upload",
         dropTemplate = undefined,
         onDrop = undefined,
-        files = $bindable([])
+        onValidate = () => {
+        },
+        files = $bindable([]),
     } = $props();
 
 
@@ -18,6 +20,10 @@
         for (let file of array) {
             if (files.find((f: File) => f.name === file.name))
                 continue
+
+            if (onValidate && onValidate(file) === true) {
+                continue
+            }
 
             files.push(file)
         }
