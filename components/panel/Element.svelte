@@ -102,7 +102,7 @@
             effects.push(addRippleEffect(element, effectsOptions?.rippler?.color))
         }
         if (effectsOptions?.click)
-            effects.push(addClickEffect(element))
+            effects.push(addClickEffect(element,effectsOptions?.click?.frames))
 
         return () => {
             //@ts-ignore

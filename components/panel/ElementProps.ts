@@ -29,6 +29,7 @@ export interface ElementEffectsProps {
 
     click?: {
         animation?: string
+        frames?: any[]
     }
 
 }
