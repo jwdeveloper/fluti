@@ -7,29 +7,33 @@
         placeholder = "Drag and drop files here, or click to upload",
         dropTemplate = undefined,
         onDrop = undefined,
-        onValidate = () => {
-        },
         files = $bindable([]),
+        messages = {
+            fileName: 'File to big'
+        }
     } = $props();
 
 
     let fileSelectElement: HTMLHtmlElement;
 
     const handleFiles = (newFiles: FileList) => {
+        console.log("Drop event detected");
         let array = Array.from(newFiles);
         for (let file of array) {
-            if (files.find((f: File) => f.name === file.name))
-                continue
+            if (files.find((f: File) => f.name === file.name)) continue;
 
-            if (onValidate && onValidate(file) === true) {
-                continue
+            console.log(`${file.name} size: ${file.size}`);
+
+            if (file.size > 10*1024*1024) {
+                console.log(`${file.name} is too big (size: ${file.size} bytes)`);
+                continue;
             }
 
-            files.push(file)
+            files.push(file);
         }
 
         if (onDrop) {
-            onDrop(files)
+            onDrop(files);
         }
     };
 
