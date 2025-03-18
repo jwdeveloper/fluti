@@ -5,7 +5,7 @@
 
     let {
         placeholder = "Drag and drop files here, or click to upload",
-        dropTemplate=undefined,
+        dropTemplate = undefined,
         onDrop = undefined,
         files = $bindable([])
     } = $props();
@@ -22,7 +22,7 @@
             files.push(file)
         }
 
-        if(onDrop) {
+        if (onDrop) {
             onDrop(files)
         }
     };
@@ -62,12 +62,13 @@
         ondragleave={preventDefaults}>
 
     {#if files.length === 0}
-        <Element direction="column" width="100%" height="100%">
+        <Element direction="column"
+                 width="100%" height="100%">
             <i class="fa fa-file-upload"></i>
             <h5 style="font-weight: normal">{placeholder}</h5>
         </Element>
-    {/if}
 
+    {/if}
     <input type="file"
            multiple
            bind:this={fileSelectElement}
@@ -76,18 +77,22 @@
 
     {#if files.length > 0}
         {#if dropTemplate}
-            {@render dropTemplate()}
+            <svelte:component this={dropTemplate}
+                              handleDelete={handleDelete}
+                              items={files}></svelte:component>
         {:else}
-        <Element padding="0" justify="space-between"
-               direction="row" width="100%">
-            <ListGroup isOpen={true}
-                       enableDelete={true}
-                       onDelete={handleDelete}
-                       onInsert={handleInsert}
-                       useInsertTemplate={false}
-                       allowInsert={true}
-                       items={files}/>
-        </Element>
+            <Element padding="0" justify="space-between"
+                     direction="row" width="100%">
+
+                <ListGroup isOpen={true}
+                           enableDelete={true}
+                           onDelete={handleDelete}
+                           onInsert={handleInsert}
+                           useInsertTemplate={false}
+                           allowInsert={true}
+                           items={files}/>
+
+            </Element>
         {/if}
 
     {/if}
@@ -111,7 +116,9 @@
         border-radius: 0.8em;
         position: relative;
         width: 100%;
-        height: 100%;
+        max-height: 300px;
+        overflow: scroll;
+        height: auto;
 
         i {
             font-size: 4em;

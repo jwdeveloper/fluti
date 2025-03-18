@@ -12,6 +12,7 @@
         children = undefined,
         style = '',
         labelFor = '',
+        fullHeight = false,
         labelColor = 'var(--text-primary)',
         gap = "0.5em",
     }: LabelProps = $props()
@@ -21,7 +22,7 @@
 
 <Element width="100%"
          gap={gap}
-
+         height={fullHeight?'100%':"auto"}
          direction="column"
          style={style}>
     {#if title}
@@ -33,7 +34,7 @@
         <Element
                 tag="label"
                 attributes={{for:labelFor}}
-                justify="flex-start" width="100%">
+                justify="flex-start" width="100%" height={fullHeight?'100%':"auto"}>
             {@render children()}
         </Element>
     {/if}

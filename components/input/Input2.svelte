@@ -155,6 +155,7 @@
     :global(.element-input-invalid), :global(.element-input:invalid) {
         border-color: var(--text-error);
         background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%);
+
         border-radius: var(--radius-medium);
     }
 

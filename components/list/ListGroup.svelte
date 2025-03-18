@@ -163,7 +163,7 @@
 
     {#if isListOpen}
         <div transition:slide
-             style="height: auto; width: 100%; scrollbar-width: thin; overflow-y: auto; padding: 0.1em 0.1em">
+             style="height: auto; text-wrap: auto; width: 100%; scrollbar-width: thin; overflow-y: auto; padding: 0.1em 0.1em">
             {#each items as item}
                 <Button
                         size="btn-small"
@@ -176,15 +176,14 @@
                         onClick={()=> handleSelect(item)}
                         onMouseOver={(e)=> deleteVisible = item.name}
                         fullWidth={true}>
-                    <Panel width="100%"
-                           justify="space-between" padding="0">
+                    <Element width="100%" justify="space-between" padding="0">
                         {item.name}
                         {#if deleteVisible === item.name && enableDelete === true}
                             <i onclick={()=>console.log('siema')}
                                transition:blur={{delay:0.3, duration:0.3}}
                                class="fa fa-trash"/>
                         {/if}
-                    </Panel>
+                    </Element>
                 </Button>
             {/each}
         </div>

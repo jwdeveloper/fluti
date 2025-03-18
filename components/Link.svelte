@@ -30,7 +30,7 @@
 <style>
 
     .offer-url {
-        margin: 1em 0 1.5em 0;
+        /*margin: 1em 0 1.5em 0;*/
         font-size: var(--font-size-small);
         color: var(--text-primary);
         font-weight: bold;
