@@ -1,9 +1,26 @@
 <script lang="ts">
 
 
-    import type {InputProps} from "$lib/fluti/components/input/Input.type";
+    import type {InputProps, InputProps2} from "$lib/fluti/components/input/Input.type";
 
-    let {value = $bindable(''), placeholder = "...start typing", style = ''}: InputProps = $props();
+    let {
+        value = $bindable(''),
+        placeholder = "...start typing",
+        maxCharacters = -1,
+        style = ''
+    }: InputProps2 = $props();
+
+    $effect(() => {
+        if (maxCharacters <= 0) {
+
+            return
+        }
+
+        if (value.length > maxCharacters) {
+            maxCharacters = maxCharacters.splice(0, maxCharacters);
+        }
+
+    })
 </script>
 
 <textarea bind:value={ value} placeholder={placeholder} style={style}>
