@@ -12,9 +12,15 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     login = login ?? 'admin@admin.com'
     password = password ?? '1234567890'
 
-    let pocketbase = new PocketBase(url);
-    await pocketbase.collection('_superusers').authWithPassword(login, password);
-    admin = pocketbase;
-    return pocketbase;
+    try {
+        let pocketbase = new PocketBase(url);
+        await pocketbase.collection('_superusers').authWithPassword(login, password);
+        admin = pocketbase;
+        return pocketbase;
+    } catch (error) {
+        console.log("Can connect to datavase", url, login, password)
+        throw new Error(error)
+    }
+
 }
 
