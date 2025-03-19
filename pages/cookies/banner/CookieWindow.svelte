@@ -55,13 +55,13 @@
 {#if controller.isOpenBanner && !controller.isOpen}
 
     <div style="
+     height: 100%;
+     width: 100%;
      position: fixed;
-      height: 100%;
      display: flex;
      align-items: flex-end;
      pointer-events: none;
      justify-content: flex-end;
-     width: 100%;
      z-index: var(--z-index-5)
 ">
 
