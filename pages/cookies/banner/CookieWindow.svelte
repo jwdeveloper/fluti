@@ -39,11 +39,7 @@
         controller.openCookiesWindow();
     })
 
-    let showBanner = $state(true);
 
-    function toggleBanner() {
-        showBanner = !showBanner;
-    }
 </script>
 
 
@@ -56,7 +52,7 @@
         bind:visible={controller.isOpen}>
     <CookieBanner {...page} controller={controller}/>
 </SideWindow>
-{#if showBanner}
+{#if controller.isOpenBanner && !controller.isOpen}
 
     <div style="
     position: fixed; height: 100%;
@@ -79,8 +75,8 @@
                    class="text-indigo-600 whitespace-nowrap  hover:underline">{page.translations.whatAreCookies}</a>
             </div>
             <div class="flex gap-4 items-center flex-shrink-0">
-                <Button2 onClick={toggleBanner}> {page.translations.customize}</Button2>
-                <Button2 onClick={toggleBanner} variant="filled">{page.translations.acceptAll}</Button2>
+                <Button2 onClick={()=>controller.handleEditCookiesClick()}> {page.translations.customize}</Button2>
+                <Button2 onClick={()=>controller.handleSaveClick({})} variant="filled">{page.translations.acceptAll}</Button2>
             </div>
         </Panel>
 
