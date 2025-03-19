@@ -24,7 +24,7 @@
                 title: 'cookiebot',
                 acceptAll: "Accept and save",
                 customize: "Customize",
-                whatAreCookies:"What are cookies",
+                whatAreCookies: "What are cookies",
                 shortDescription: "This website uses cookies to ensure you get the best experience on our website.",
                 tabs: {
                     agreements: "Agreements",
@@ -55,12 +55,16 @@
 {#if controller.isOpenBanner && !controller.isOpen}
 
     <div style="
-    position: fixed; height: 100%;
+     position: fixed;
+      height: 100%;
      display: flex;
      align-items: flex-end;
      pointer-events: none;
      justify-content: flex-end;
-     width: 100%; z-index: var(--z-index-5)">
+     width: 100%;
+     z-index: var(--z-index-5)
+">
+
 
         <Panel
                 display="grid"
@@ -76,7 +80,8 @@
             </div>
             <div class="flex gap-4 items-center flex-shrink-0">
                 <Button2 onClick={()=>controller.handleEditCookiesClick()}> {page.translations.customize}</Button2>
-                <Button2 onClick={()=>controller.handleSaveClick({})} variant="filled">{page.translations.acceptAll}</Button2>
+                <Button2 onClick={()=>controller.handleSaveClick({})}
+                         variant="filled">{page.translations.acceptAll}</Button2>
             </div>
         </Panel>
 
