@@ -4,7 +4,8 @@ export interface CookiePageMessages {
     acceptAll: string
     customize: string
     title: string
-
+    whatAreCookies: string,
+    shortDescription: string
     tabs: {
         agreements: string
         details: string
@@ -12,9 +13,8 @@ export interface CookiePageMessages {
     }
 }
 
-export interface CookieItemCheckedEvent
-{
-    
+export interface CookieItemCheckedEvent {
+
 }
 
 export interface CookieCategoryProps {
