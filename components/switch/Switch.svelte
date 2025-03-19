@@ -87,7 +87,7 @@
         width: var(--font-size-medium);
         border-radius: 50%;
             background: var(--text-muted);
-        z-index: var(--z-index-5);
+        z-index: var(--z-index-4);
     }
 
     :global(.switch-active) {

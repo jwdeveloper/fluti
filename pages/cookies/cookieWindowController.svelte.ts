@@ -2,14 +2,19 @@ import type {CookieCategoryProps} from "$lib/fluti/pages/cookies/cookiePageTypes
 
 export class CookieWindowControllerSvelte {
 
-    isOpen: boolean = $state(true)
+    isOpen: boolean = $state(false)
 
-    handleSaveClick(data: CookieCategoryProps[])
-    {
-        console.log('saved data', data)
+    openCookiesWindow() {
+        if (localStorage.getItem("cookie-window-accepted")) {
+            this.isOpen = false;
+            return
+        }
+        this.isOpen = true;
+    }
 
-
-
+    handleSaveClick(data: CookieCategoryProps[]) {
+        localStorage.setItem("cookie-window-accepted", JSON.stringify(data))
+        this.isOpen = false;
     }
 
 }

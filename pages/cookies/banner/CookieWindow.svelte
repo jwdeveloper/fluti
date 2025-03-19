@@ -6,6 +6,7 @@
     } from "$lib/fluti/pages/cookies/cookieWindowController.svelte";
     import CookieBanner from "$lib/fluti/pages/cookies/banner/CookieBanner.svelte";
     import type {CookiePage} from "$lib/fluti/pages/cookies/cookiePageTypes";
+    import {onMount} from "svelte";
 
     interface CookieWindowProps {
         controller?: CookieWindowControllerSvelte
@@ -29,12 +30,18 @@
         }
     }: CookieWindowProps = $props();
 
+    onMount(()=>
+    {
+        controller.openCookiesWindow();
+    })
+
 </script>
 
 
 <SideWindow
         height="50vh"
         size="50vw"
+        allowScroll={false}
         allowClose={false}
         animation={{direction:'center'}}
         bind:visible={controller.isOpen}>

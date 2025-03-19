@@ -21,6 +21,7 @@
             direction?: "left" | "top" | "bottom" | "right" | 'center',
             duration?: number
         },
+        allowScroll?: boolean
         allowClose?: boolean
         children?: any
     }
@@ -32,6 +33,7 @@
         visible = $bindable(false),
         panel = {},
         allowClose = true,
+        allowScroll = true,
         ...options
     }: WindowLayer = $props();
     let rootElement: HTMLDivElement;
@@ -125,6 +127,11 @@
 
     onMount(() => {
         isClient = true;
+
+        if (allowScroll === false) {
+            document.body.style.overflow = 'hidden';
+        }
+
         return () => {
             document.body.style.overflow = 'auto'
         }

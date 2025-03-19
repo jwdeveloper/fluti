@@ -25,7 +25,7 @@ export interface CookieCategoryProps {
 }
 
 export interface CookiePage {
-    controller: CookieWindowControllerSvelte
+    controller?: CookieWindowControllerSvelte
     translations: CookiePageMessages
 }
 
