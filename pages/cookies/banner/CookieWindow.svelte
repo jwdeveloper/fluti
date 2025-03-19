@@ -65,16 +65,15 @@
      z-index: var(--z-index-5)
 ">
 
-
         <Panel
-                display="grid"
-                style="border-top: 1px solid var(--accent-primary); pointer-events: all"
-                columns="1fr auto"
-                radius="0"
                 mobile={{
                     columns:"1fr",
                     rows:"1fr auto",
                 }}
+                radius="0"
+                display="grid"
+                style="border-top: 1px solid var(--accent-primary); pointer-events: all"
+                columns="1fr auto"
                 padding="1.5em 2em"
                 width="100%">
             <div>
