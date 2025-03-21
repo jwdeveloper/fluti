@@ -152,6 +152,13 @@
         opacity: var(--opacity-medium);
     }
 
+    :global(.element-input[readonly]) {
+        background: var(--bg-secondary);
+        cursor: default;
+        opacity: 0.6;
+        color: var(--text-muted);
+    }
+
     :global(.element-input-invalid), :global(.element-input:invalid) {
         border-color: var(--text-error);
         background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%);
@@ -176,4 +183,3 @@
     }
 
 </style>
-
