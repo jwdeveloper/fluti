@@ -23,5 +23,6 @@ export async function invokeClickEffect(element: HTMLElement, frames: any[]) {
     for (let frame of frames) {
         await ae.scale(frame.scale, frame.time)
     }
-    ae.scale(initScale)
+    // ae.scale(initScale)
+    await ae.scale(null, 0)
 }
