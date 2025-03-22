@@ -9,6 +9,7 @@
         name: string
         key?: string
         link?: string
+        onClick?: () => void
     }
 
     interface DefaultMenuProps extends ElementProps {
@@ -49,7 +50,12 @@
     })
 
     const handleClick = (item: DefaultMenuItemProps) => {
+
+
         selectedItemKey = item.key
+        if (item.onClick)
+            item.onClick();
+
         onClick(item)
     }
 

@@ -4,6 +4,7 @@ export interface FlutiWebSiteData {
     description?: string
     country?: string,
     pageType?: PageType
+    pages?: CommonPages[]
     tweeter?:
         {
             title: string
@@ -16,6 +17,11 @@ export interface FlutiWebSiteData {
     stripe?: {
         url?: string
     }
+}
+
+export interface CommonPages {
+    name: string,
+    url: string
 }
 
 export type PageType =

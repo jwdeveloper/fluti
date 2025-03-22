@@ -25,6 +25,7 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
             const result = await returnUserAuthTokens(c, config, authData.token, record);
             return c.json(result);
         } catch (error) {
+            console.log(error)
             return c.json({
                 token: '',
                 dbToken: '',
