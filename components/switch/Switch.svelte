@@ -17,17 +17,17 @@
         onUpdate(value, id)
     }
 
-    const makeAnimation = (time=200) => {
+    const makeAnimation = (time = 200) => {
         let left = value ? '0' : "100%";
         let leftEnd = value ? '100%' : "0%"
 
         let transform = value ? 'translate(0, 0)' : "translate(-100%, 0)"
         let transformEnd = value ? 'translate(-100%, 0)' : "translate(0, 0)"
 
-        if (value)
-            element.classList.add("switch-active")
-        else
-            element.classList.remove("switch-active")
+        // if (value)
+        //     element.classList.add("switch-active")
+        // else
+        //     element.classList.remove("switch-active")
 
 
         element.animate(
@@ -58,16 +58,15 @@
 
 
 <div id={id}
-         class="switch-container"
-         use:addRippleEffect={flutiTheme.background.tertiary}
-         onclick= {handleClick}>
+     class="switch-container {value?'switch-active':''}"
+     use:addRippleEffect={flutiTheme.background.tertiary}
+     onclick={handleClick}>
     <div bind:this={element} class="ball"></div>
 </div>
 
 
 <style>
     :global(.switch-container) {
-        background: var(--bg-primary);
         border: var(--border-size-medium) solid var(--bg-tertiary);
         color: var(--color-darker);
         padding: var(--border-size-medium);
@@ -79,21 +78,25 @@
         position: relative;
         overflow: hidden;
         transition: all 0.2s ease-in-out;
+        background: var(--bg-tertiary);
+
     }
+
 
     .ball {
         height: var(--font-size-medium);
         position: relative;
         width: var(--font-size-medium);
         border-radius: 50%;
-            background: var(--text-muted);
         z-index: var(--z-index-2);
+        background: var(--bg-primary);
     }
 
     :global(.switch-active) {
-        background: var(--text-light) !important;
-        background: var(--accent-primary) !important;
-        border-color: var(--text-light) !important;
+        /*background: var(--text-light) !important;*/
+        /*background: var(--accent-primary) !important;*/
+        /*border-color: var(--text-light) !important;*/
+        background: var(--accent-primary);
     }
 
 </style>
