@@ -15,11 +15,13 @@
     let logoVisible = $state(false)
     let logo = "logo.png"
 
+
     let translation = controller.props.messages.loginView;
 
     onMount(() => {
         logoVisible = true;
     })
+
 </script>
 
 
@@ -45,8 +47,10 @@
          margin-bottom: 1em;
          padding: 0 var(--padding-medium)">
         {translation.rules.accept}
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/terms">{translation.rules.terms}</a>,
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/privacy">{translation.rules.policy}</a>
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}"
+           href={controller?.props?.links?.termsAndCondition ?? "/blog/terms" }>{translation.rules.terms}</a>,
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}"
+           href={controller?.props?.links?.privacyPolicy ?? "/blog/privacy" }>{translation.rules.policy}</a>
     </h6>
 {/snippet}
 

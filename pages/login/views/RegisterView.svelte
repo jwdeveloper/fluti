@@ -85,18 +85,18 @@
             enablePassword={true}
             enableRepeatPassword={true}
             controller={controller}
-            />
+    />
 
     <Element direction="column" width="100%" align="flex-start">
         <Label error={controller?.invalidFields['acceptPolicy']} gap="0">
             <Checkbox bind:value={controller.form.acceptPolicy}>
-                {@render LinkContent("/blog/privacy", controller.props.messages.loginView.rules.policy)}
+                {@render LinkContent(controller?.props?.links?.privacyPolicy ?? "/blog/privacy", controller.props.messages.loginView.rules.policy)}
             </Checkbox>
         </Label>
 
         <Label error={controller?.invalidFields['acceptTerms']} gap="0">
             <Checkbox bind:value={controller.form.acceptTerms}>
-                {@render LinkContent("/blog/terms", controller.props.messages.loginView.rules.terms)}
+                {@render LinkContent(controller?.props?.links?.privacyPolicy ?? "/blog/terms", controller.props.messages.loginView.rules.terms)}
             </Checkbox>
         </Label>
     </Element>
