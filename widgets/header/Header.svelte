@@ -20,6 +20,7 @@
         showLogin?: boolean
         showThemes?: boolean
         items?: any[]
+        children?: any[]
     }
 
     let {
@@ -32,7 +33,8 @@
         addSpace = true,
         items = [],
         showLogin = true,
-        showThemes = true
+        showThemes = true,
+        children = undefined
     }: HeaderProps = $props();
 
 
@@ -107,62 +109,67 @@
 <Element
         tag="header"
         display="block" style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);">
+
+
     <Element width="100%"
              bind:element={element}
              background="var(--bg-primary)"
              style="box-shadow: 0 0 1em 0.1em var(--shadow)"
+             display="grid"
+             columns="1fr"
+             rows="1fr 1fr"
+             direction="column"
              height='{height}px'>
 
-        <Element
-                display="grid"
-                columns="22.5fr 55fr 22.5fr"
-                gap="0"
-                width={width}>
 
-            <Element hover={{style:"cursor:pointer;"}}
-                     onClick={()=> window.location.href='/'} padding="0 1em">
-                <Logo/>
-            </Element>
-            <Element width="100%" justify="center">
-                <DefaultMenu
-                        highlightColor={flutiTheme.background.secondary}
-                        items={items}/>
-            </Element>
-            <Element padding="0 1em"
-                     justify="flex-start">
+            <Element
+                    display="grid"
+                    columns="22.5fr 55fr 22.5fr"
+                    gap="0"
+                    width={width}>
 
-                {#if showLogin}
-                    {#if userSession.isLogin}
-                        <Hint title="Informacje o koncie">
-                            <Button2
-                                    variant="filled"
-                                    fullWidth={true}
-                                    onClick={()=> window.location.href='/profil'} icon="fa fa-user">
-                                Twój profil
-                            </Button2>
-                        </Hint>
-                        <Hint title="Polubione ogłoszenia">
-                            <Button2 icon="fa fa-heart  fa-beat"/>
-                        </Hint>
-                    {:else }
-                        <Hint title="Zaloguj się lub utwórz konto">
-                            <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
-                                Zaloguj się
-                            </Button2>
-                        </Hint>
+                <Element hover={{style:"cursor:pointer;"}}
+                         onClick={()=> window.location.href='/'} padding="0 1em">
+                    <Logo/>
+                </Element>
+                <Element width="100%" justify="center">
+                    <DefaultMenu
+                            highlightColor={flutiTheme.background.secondary}
+                            items={items}/>
+                </Element>
+                <Element padding="0 1em"
+                         justify="flex-start">
 
+                    {#if showLogin}
+                        {#if userSession.isLogin}
+                            <Hint title="Informacje o koncie">
+                                <Button2
+                                        variant="filled"
+                                        fullWidth={true}
+                                        onClick={()=> window.location.href='/profil'} icon="fa fa-user">
+                                    Twój profil
+                                </Button2>
+                            </Hint>
+                            <Hint title="Polubione ogłoszenia">
+                                <Button2 icon="fa fa-heart  fa-beat"/>
+                            </Hint>
+                        {:else }
+                            <Hint title="Zaloguj się lub utwórz konto">
+                                <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
+                                    Zaloguj się
+                                </Button2>
+                            </Hint>
+
+                        {/if}
                     {/if}
-                {/if}
 
-                {#if showThemes}
-                    <Hint title="Zmień motyw">
-                        <Button2 onClick={updateTheme} icon={themeIcon}/>
-                    </Hint>
-                {/if}
+                    {#if showThemes}
+                        <Hint title="Zmień motyw">
+                            <Button2 onClick={updateTheme} icon={themeIcon}/>
+                        </Hint>
+                    {/if}
+                </Element>
             </Element>
-
-        </Element>
-
-
     </Element>
+
 </Element>

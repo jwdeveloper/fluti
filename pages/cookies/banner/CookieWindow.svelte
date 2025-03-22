@@ -74,18 +74,27 @@
                 display="grid"
                 style="border-top: 1px solid var(--accent-primary); pointer-events: all"
                 columns="1fr auto"
-                padding="1.5em 2em"
+                padding="1.5em 10%"
                 width="100%">
-            <div>
-                {page.translations.shortDescription} 🍪
-                <a href="https://www.cloudflare.com/pl-pl/learning/privacy/what-are-cookies/"
-                   class="text-indigo-600 whitespace-nowrap  hover:underline">{page.translations.whatAreCookies}</a>
-            </div>
-            <div class="flex gap-4 items-center flex-shrink-0">
-                <Button2 onClick={()=>controller.handleEditCookiesClick()}> {page.translations.customize}</Button2>
-                <Button2 onClick={()=>controller.handleSaveClick({})}
-                         variant="filled">{page.translations.acceptAll}</Button2>
-            </div>
+
+            <Element width="100%"
+                     align="flex-end"
+                     direction="column">
+
+                <Element width="100%" justify="flex-start">
+                    <h3>{page.translations.whatAreCookies}</h3>
+                </Element>
+                <p>
+                    {page.translations.shortDescription} 🍪
+                    <a href="https://www.cloudflare.com/pl-pl/learning/privacy/what-are-cookies/"
+                       class="text-indigo-600 whitespace-nowrap  hover:underline">{page.translations.whatAreCookies}</a>
+                </p>
+                <Element>
+                    <Button2 onClick={()=>controller.handleEditCookiesClick()}> {page.translations.customize}</Button2>
+                    <Button2 onClick={()=>controller.handleSaveClick({})}
+                             variant="filled">{page.translations.acceptAll}</Button2>
+                </Element>
+            </Element>
         </Panel>
 
     </div>
