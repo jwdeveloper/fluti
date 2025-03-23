@@ -30,6 +30,13 @@
         });
     }
 
+    let getIcon = $derived.by(()=>
+    {
+        if(type === 'success')
+            return "fa-solid fa-exclamation"
+
+        return "fa fa-warning"
+    })
 </script>
 
 
@@ -46,15 +53,16 @@
 {/snippet}
 
 <div transition:blur onclick={handleClick}>
-    <Element className="alert alert-{type}">
+    <Element className="alert ">
 
         <Panel display="grid"
                background='red'
+               className="alert-{type}"
                color="white"
                style="border: 1px solid red"
                padding="0.5em 1em" columns="1fr auto 1fr">
 
-            <i class="fa fa-warning"></i>
+            <i class={getIcon}></i>
             <h4>
                 {message}
             </h4>
@@ -68,6 +76,11 @@
 
 <style>
 
+    :global(.alert-success)
+    {
+        background-color: green !important;
+        border-color: green !important;
+    }
 
     .alert {
 
