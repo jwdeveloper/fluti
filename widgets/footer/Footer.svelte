@@ -72,7 +72,8 @@
 
     <Element width="100%"
              display="grid"
-             columns="1fr 3fr 1fr"
+             columns={props?.templates?.center ?  "1fr 3fr 1fr" : "auto 1fr"}
+             gap="1em"
              mobile={{columns:"1fr", rows:'1fr', gap:'2em'}}
              rows="1fr">
         <Element
@@ -101,23 +102,24 @@
             </Element>
         </Element>
 
-        <Element height="100%" width="100%">
-            {#if props?.templates?.center}
+        {#if props?.templates?.center}
+            <Element height="100%" width="100%">
                 {@render props?.templates?.center()}
-            {/if}
-        </Element>
+            </Element>
+        {/if}
 
         <Element width="100%"
                  tag="nav"
                  justify="flex-end"
                  align="flex-start"
                  height="100%"
-                 mobile={{direction:'column', gap:'2em'}}
-                 gap="10em">
+                 mobile={{direction:'column', gap:'2em'}}>
 
             {#each props?.links ?? [] as linkSection}
-                <Element align="flex-start" direction="column">
-                    <h3>{linkSection.title}</h3>
+                <Element align="flex-start"
+                         width="100%"
+                         direction="column">
+                    <h3 style="width: 100%;">{linkSection.title}</h3>
                     <Space variant="tiny"/>
                     <ul>
                         {#each linkSection.links as link}
