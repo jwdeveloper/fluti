@@ -1,8 +1,8 @@
 <script lang="ts">
 
     import {SortState, type TableColumnHeaderProps} from "./Table";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Button from "$lib/fluti/components/button/Button.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {table, column}: TableColumnHeaderProps = $props();
     let state = $state(SortState.None);
@@ -52,14 +52,14 @@
 </script>
 
 
-<Panel panelType="flex" justify="flex-start"
+<Element panelType="flex" justify="flex-start"
        padding="0"
        columns="1fr 1fr"
        gap="0.5em">
     <Button onClick={handleClick} size="btn-small" icon={icon} style="color: var(--color)">
         {column.text}
     </Button>
-</Panel>
+</Element>
 
 
 <style>
