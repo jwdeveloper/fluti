@@ -36,15 +36,20 @@
         return show;
     })
 
+    let getHtmlLines = $derived.by(() => {
+        if (!title)
+            return []
+
+        return title.split("\\n")
+    });
 </script>
 
 
-<div
-        onmouseenter={handleOpen}
-        onmouseleave={handleClose}
-        class="contianer"
-        style="  width: {fullWidth?'100%':'auto'} {style}"
->
+<div onmouseenter={handleOpen}
+     onmouseleave={handleClose}
+     class="contianer"
+     style="width: {fullWidth?'100%':'auto'} {style}">
+
     {#if keepVisible || (shouldOpen && title !== undefined)}
         <div style="
         transform: translate({xOffset}, {offset});
@@ -56,11 +61,16 @@
              transition:effect>
             <Panel padding="0.6em" style="border-width: 2px; text-wrap: nowrap;">
                 <h5>
-                    {title}
+                    {#each getHtmlLines as line}
+                        <div>
+                            {line}
+                        </div>
+                    {/each}
                 </h5>
             </Panel>
         </div>
     {/if}
+
     {#if children}
         {@render children()}
     {/if}
