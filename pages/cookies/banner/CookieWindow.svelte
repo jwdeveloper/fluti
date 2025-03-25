@@ -56,7 +56,8 @@
 
     <div style="
      height: 100%;
-     width: 100%;
+     width: 30%;
+
      position: fixed;
      display: flex;
      align-items: flex-end;
@@ -70,18 +71,17 @@
                     columns:"1fr",
                     rows:"1fr auto",
                 }}
-                radius="0"
                 display="grid"
-                style="border-top: 1px solid var(--accent-primary); pointer-events: all"
+                style="border: 1px solid var(--accent-primary); pointer-events: all"
                 columns="1fr auto"
                 padding="1.5em 10%"
-                width="100%">
+                >
 
-            <Element width="100%"
-                     align="flex-end"
+            <Element
+                     align="flex-start"
                      direction="column">
 
-                <Element width="100%" justify="flex-start">
+                <Element  justify="flex-start">
                     <h3>{page.translations.whatAreCookies}</h3>
                 </Element>
                 <p>
