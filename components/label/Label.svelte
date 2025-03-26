@@ -26,7 +26,7 @@
          direction="column"
          style={style}>
     {#if title}
-        <h5 style="align-self: flex-start">
+        <h5 style="align-self: flex-start; color: {labelColor};">
             {title}
         </h5>
     {/if}
