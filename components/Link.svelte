@@ -4,6 +4,7 @@
     let {
         url = undefined,
         style = '',
+        openInNewWindow = true,
         onClick = () => {
         }
     } = $props();
@@ -20,7 +21,7 @@
 
 </script>
 
-<a class="offer-url" onclick={handleClick} href={url} target="_blank"
+<a class="offer-url" onclick={handleClick} href={url} target={openInNewWindow?"_blank":''}
    style="{style}; "
    rel="noopener noreferrer">
     <slot/>
