@@ -11,6 +11,7 @@
         error = $bindable(undefined),
         children = undefined,
         style = '',
+        labelStyle = '',
         labelFor = '',
         fullHeight = false,
         labelColor = 'var(--text-primary)',
@@ -26,7 +27,7 @@
          direction="column"
          style={style}>
     {#if title}
-        <h5 style="align-self: flex-start; color: {labelColor};">
+        <h5 style="align-self: flex-start; color: {labelColor}; {labelStyle}">
             {title}
         </h5>
     {/if}
