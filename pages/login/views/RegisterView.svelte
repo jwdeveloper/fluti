@@ -96,7 +96,7 @@
 
         <Label error={controller?.invalidFields['acceptTerms']} gap="0">
             <Checkbox bind:value={controller.form.acceptTerms}>
-                {@render LinkContent(controller?.props?.links?.privacyPolicy ?? "/blog/terms", controller.props.messages.loginView.rules.terms)}
+                {@render LinkContent(controller?.props?.links?.termsAndCondition ?? "/blog/terms", controller.props.messages.loginView.rules.terms)}
             </Checkbox>
         </Label>
     </Element>
