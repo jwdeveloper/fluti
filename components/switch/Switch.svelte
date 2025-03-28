@@ -6,7 +6,7 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
-        value = $bindable(true), id = '', onUpdate = () => {
+        value = $bindable(false), id = '', onUpdate = () => {
         }
     }: SwitchProps = $props();
     let element: HTMLDivElement;
@@ -50,8 +50,9 @@
         );
     }
 
-    onMount(() => {
-        makeAnimation(0)
+    $effect(() => {
+        value
+        makeAnimation()
     })
 
 </script>
