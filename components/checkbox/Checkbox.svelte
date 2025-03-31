@@ -22,6 +22,12 @@
         return value === false
     })
 
+    $effect(() => {
+        value
+        if (onClick)
+            onClick(value);
+    })
+
     let chandleUpdate = (e: any) => {
         e.stopPropagation();
         e.preventDefault();

@@ -51,10 +51,6 @@
         }
     };
 
-    const removeFile = (fileToRemove: File) => {
-        let index = files.indexOf(fileToRemove)
-        files.splice(index, 1);
-    };
 
     const handleDrop = (event: DragEvent) => {
         event.preventDefault();
@@ -96,7 +92,13 @@
     <input type="file"
            multiple
            bind:this={fileSelectElement}
-           onchange={(e: Event) => handleFiles((e.target?.files))}/>
+           onchange={(e: Event) =>{
+               const target = e.target;
+        if (target?.files) {
+            handleFiles(target.files);
+            target.value = '';
+        }
+           } }/>
 
 
     {#if files.length > 0}
