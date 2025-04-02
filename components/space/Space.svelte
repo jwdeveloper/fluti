@@ -7,11 +7,11 @@
     }
 
     const {variant = 'medium'}: SpaceProps = $props();
-    const variantName = `var(--space-${variant})`
+    const variantName = $derived.by(() => `var(--space-${variant})`)
 
 </script>
 
-<div class="space-element" style="margin-top: {variantName}"/>
+<div class="space-element" style="margin-top: {variantName};"/>
 
 <style>
 

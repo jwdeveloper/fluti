@@ -6,12 +6,18 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
-        value = $bindable(false), id = '', onUpdate = () => {
+        value = $bindable(false),
+        id = '',
+        readonly = false,
+        onUpdate = () => {
         }
     }: SwitchProps = $props();
     let element: HTMLDivElement;
 
     const handleClick = () => {
+        if (readonly)
+            return
+
         value = !value;
         makeAnimation();
         onUpdate(value, id)
@@ -60,9 +66,10 @@
 
 <div id={id}
      class="switch-container {value?'switch-active':''}"
+     style="opacity: {readonly?0.5:1}"
      use:addRippleEffect={flutiTheme.background.tertiary}
      onclick={handleClick}>
-    <div bind:this={element} class="ball"></div>
+    <div bind:this={element} class="ball"/>
 </div>
 
 

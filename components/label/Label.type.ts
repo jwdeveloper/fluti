@@ -8,5 +8,6 @@ export interface LabelProps {
     style?: string
     labelColor?: string
     labelFor?: string
+    labelStyle?: string
     fullHeight?: boolean
 }

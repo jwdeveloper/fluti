@@ -4,7 +4,8 @@ export interface DropdownItem {
 }
 
 export interface DropdownProps {
-    value: string
+    style?: string
+    value: string | number
     items: string[] | DropdownItem[]
     placeholder?: string
 }
