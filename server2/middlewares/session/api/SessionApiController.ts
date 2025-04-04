@@ -1,9 +1,9 @@
 import {type Context, Hono} from 'hono';
-import {sign, verify} from 'hono/jwt';
+import {verify} from 'hono/jwt';
 
 // @ts-ignore
 import type {SessionMiddlewareConfig} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
-import {deleteCookie, getCookie, setCookie} from 'hono/cookie';
+import {deleteCookie, getCookie} from 'hono/cookie';
 import {CacheService} from "$lib/fluti/services/CacheService";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";

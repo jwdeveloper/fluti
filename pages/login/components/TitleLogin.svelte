@@ -1,5 +1,6 @@
 <script>
     import IconCard from "$lib/fluti/widgets/cards/IconCard.svelte";
+
     let {title, description, icon} = $props();
 </script>
 

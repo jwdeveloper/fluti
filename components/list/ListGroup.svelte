@@ -8,17 +8,8 @@
     import WindowActions from "$lib/fluti/widgets/window/WindowActions.svelte";
     import Input from "$lib/fluti/components/input/Input.svelte";
     import Label from "$lib/fluti/components/label/Label.svelte";
-    import {
-        blur,
-        crossfade,
-        draw,
-        fade,
-        fly,
-        scale,
-        slide
-    } from 'svelte/transition';
+    import {blur, slide} from 'svelte/transition';
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
-    import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Panel from "$lib/fluti/components/containers/Panel.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
 

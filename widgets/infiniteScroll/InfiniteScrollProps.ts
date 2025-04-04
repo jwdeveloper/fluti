@@ -1,5 +1,4 @@
 import type {InfiniteScrollController} from "./InfiniteScrollController.svelte.js";
-import type {PanelProps} from "$lib/fluti/components/panel/Panel.type";
 import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
 
 export interface ItemsBatch {

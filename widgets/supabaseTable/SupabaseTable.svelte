@@ -3,7 +3,6 @@
 
     import {supabase} from "$lib/supabase-client";
     import {SortState, type TableFetchRequest, type TableFetchResponse} from "$lib/fluti/components/table/Table";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
     import {scale as effectTrans} from "svelte/transition";
     import {useWindow, WindowCloseReason, WindowHandle} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";

@@ -2,7 +2,6 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import * as domain from "node:domain";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";

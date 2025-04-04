@@ -10,9 +10,11 @@
         letterDelay: number
         input: string
         tag: string
+        style?: string,
+        className?: string
     }
 
-    let {prefix = "", options = [], tag = "span", delay = 2000, letterDelay = 100}: TyperProps = $props();
+    let {prefix = "", style = '', className='', options = [], tag = "span", delay = 2000, letterDelay = 100}: TyperProps = $props();
 
     let index = 0; // Current word index
     let charIndex = 0; // Character index
@@ -54,7 +56,7 @@
 
 <Element>
 
-    <svelte:element this={tag}>
+    <svelte:element this={tag} style={style} class={className}>
         {currentText}
     </svelte:element>
 </Element>

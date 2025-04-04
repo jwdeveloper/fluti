@@ -1,4 +1,4 @@
-import type {OAuthMiddlewareOptions, OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+import type {OAuthMiddlewareOptions} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 
 import type {FlutiServerMiddleware} from "$lib/fluti/server/serverTypes";
 import type {RequestEvent} from "@sveltejs/kit";

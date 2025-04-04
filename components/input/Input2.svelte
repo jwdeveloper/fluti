@@ -1,9 +1,7 @@
 <script lang="ts">
-    import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {InputProps2} from "./Input.type";
     import {onMount} from "svelte";
     import './input2.css'
-    import Hint from "$lib/fluti/components/hint/Hint.svelte";
 
     let {
         value = $bindable(),

@@ -1,7 +1,6 @@
 <script lang="ts">
 
     import type {ArticleProps} from "./Article.types.ts";
-    import Panel from "../panel/Panel.svelte";
 
     let {rows = 'auto 1fr', content = '', columns = '1fr', padding='1em', style=''}: ArticleProps = $props()
 

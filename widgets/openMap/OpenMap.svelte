@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {OpenMapMarker, OpenMapProps} from "./OpenMap.types";
+    import type {OpenMapProps} from "./OpenMap.types";
     import 'leaflet/dist/leaflet.css'
     import RBush from 'rbush';
     import {getMapMarkerHtml, useOpenMap} from "./OpenMap";
