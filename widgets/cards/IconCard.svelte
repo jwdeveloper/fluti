@@ -33,7 +33,9 @@
         {...props}>
 
     <Element padding="0.2em 0 0 0">
-        <Button2 variant="outline" icon={icon} size="large"/>
+        <Button2 variant="outline"
+                 radius="50%"
+                 icon={icon} size="large"/>
     </Element>
     <Element direction="column"
              justify="flex-start"
