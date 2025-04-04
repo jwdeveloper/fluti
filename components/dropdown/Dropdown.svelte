@@ -1,8 +1,6 @@
 <script lang="ts">
     import type {DropdownProps} from "$lib/fluti/components/dropdown/dropdownTypes";
     import {onMount} from "svelte";
-    import InputPanel from "$lib/fluti/components/panel/InputPanel.svelte";
-    import Input from "$lib/fluti/components/input/Input.svelte";
 
     let {
         placeholder = 'Wybierz opcje',

@@ -2,7 +2,6 @@
 
     import type {ButtonProps} from "./Button";
     import './Button.css';
-    import Spinner from "../loader/Spinner.svelte";
     import JumpingDots from "$lib/fluti/components/loader/JumpingDots.svelte";
     import {addRippleEffect} from "../../effects/RippleEffect";
 

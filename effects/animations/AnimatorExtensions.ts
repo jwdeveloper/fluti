@@ -1,5 +1,5 @@
 import {all} from "$lib/fluti/utils/Wait";
-import {doAnimateProperty, animatedElement, defaultTime} from "./AnimatedElement";
+import {animatedElement, defaultTime, doAnimateProperty} from "./AnimatedElement";
 
 export function addElement(content: any) {
     //@ts-ignore

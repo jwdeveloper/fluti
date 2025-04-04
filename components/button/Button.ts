@@ -1,6 +1,5 @@
-import type {Component, Snippet} from "svelte";
+import type {Snippet} from "svelte";
 import type {HTMLButtonAttributes} from "svelte/elements";
-import type {PanelProps} from "$lib/fluti/components/panel/Panel.type";
 import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
 import type {Variant} from "$lib/fluti/themes/themeTypes";
 

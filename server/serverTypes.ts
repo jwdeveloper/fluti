@@ -4,7 +4,7 @@ import type {SessionMiddlewareOptions} from "$lib/fluti/server/middlewares/sessi
 import type {RouteMiddlewareOptions} from "$lib/fluti/server/middlewares/route/routeMiddleware";
 import type {OAuthMiddlewareOptions} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 import type {ApiMiddlewareOptions} from "$lib/fluti/server/middlewares/api/apiMiddleware";
-import type {Context,Next} from "hono";
+import type {Context, Next} from "hono";
 
 export type OneOrMore<T> = T | [T, ...T[]] | T[]
 

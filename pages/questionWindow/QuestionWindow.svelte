@@ -1,6 +1,6 @@
 <script lang="ts">
     import Button from "$lib/fluti/components/button/Button.svelte";
-    import {WindowCloseReason, WindowHandle} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte.js";
+    import {WindowCloseReason} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte.js";
 
     let {message, window} = $props()
 </script>

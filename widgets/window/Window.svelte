@@ -1,11 +1,5 @@
 <script lang="ts">
-    import {
-
-        blur,
-        slide,
-        scale,
-        fly
-    } from 'svelte/transition';
+    import {blur, scale} from 'svelte/transition';
     import {WindowCloseReason} from "./WindowManagerImpl.svelte.js";
 
     let {

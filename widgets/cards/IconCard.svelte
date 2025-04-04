@@ -3,9 +3,6 @@
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
-    import {scale} from 'svelte/transition'
-    import {onMount} from "svelte";
-    import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import type {Variant} from "$lib/fluti/themes/themeTypes";
 

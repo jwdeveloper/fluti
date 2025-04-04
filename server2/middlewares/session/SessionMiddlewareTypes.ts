@@ -1,5 +1,5 @@
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
-import type {OAuthEvent, OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+import type {OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 
 export interface UserLoginRequest {
     login: string

@@ -4,7 +4,6 @@
 
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte.js";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
-    import Title from "$lib/fluti/components/title/Title.svelte";
     import Panel from "$lib/fluti/components/containers/Panel.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";

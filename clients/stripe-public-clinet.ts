@@ -1,5 +1,6 @@
-import { PUBLIC_STRIPE_KEY } from "$env/static/public";
+import {PUBLIC_STRIPE_KEY} from "$env/static/public";
 import Stripe from "stripe";
+
 let _client: Stripe;
 
 export const stripePublicClient = () => {

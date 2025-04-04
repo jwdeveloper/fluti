@@ -1,9 +1,7 @@
 <script lang="ts">
     import type {SwitchProps} from "./Switch";
-    import {onMount} from "svelte";
     import {addRippleEffect} from "../../effects/RippleEffect";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         value = $bindable(false),

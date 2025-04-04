@@ -1,7 +1,6 @@
-import {redirect, type RequestEvent, text} from "@sveltejs/kit";
+import {redirect, type RequestEvent} from "@sveltejs/kit";
 import type {MiddlewareOptions, PathOptions, RouteOptionsBuilder} from "$lib/fluti/server/middlewares/route/routeTypes";
 import {RouteOptionsBuilderImpl} from "$lib/fluti/server/middlewares/route/routeOptionsBuilderImpl";
-import {redirectTo} from "$lib/fluti/utils/httpUtils";
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 
 export type RouteMiddlewareOptions = (options: RouteOptionsBuilder) => void

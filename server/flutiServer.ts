@@ -1,4 +1,4 @@
-import {json, redirect, type RequestEvent, text} from "@sveltejs/kit";
+import {type RequestEvent} from "@sveltejs/kit";
 
 import type {
     FlutiServer,
@@ -7,10 +7,7 @@ import type {
     FlutiServerOptions
 } from "$lib/fluti/server/serverTypes";
 import {type SessionMiddlewareOptions, useSessionMiddleware} from "$lib/fluti/server/middlewares/sessionMiddleware";
-import {
-    type RouteMiddlewareOptions,
-    useRouteMiddleware
-} from "$lib/fluti/server/middlewares/route/routeMiddleware";
+import {type RouteMiddlewareOptions, useRouteMiddleware} from "$lib/fluti/server/middlewares/route/routeMiddleware";
 import type {OAuthMiddlewareOptions} from "./middlewares/oauth/oAuthTypes";
 import {useOAuthMiddleware} from "$lib/fluti/server/middlewares/oauth/oAuthMiddleware";
 import {type ApiMiddlewareOptions, useApiMiddleware} from "$lib/fluti/server/middlewares/api/apiMiddleware";

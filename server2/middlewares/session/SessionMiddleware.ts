@@ -2,7 +2,8 @@ import type {FlutiServer2Middleware} from "$lib/fluti/server2/flutiServer2Types"
 import type {Hono} from "hono";
 import type {
     SessionMiddlewareConfig,
-    SessionMiddlewareConfigFn, UserLoginRequest
+    SessionMiddlewareConfigFn,
+    UserLoginRequest
 } from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {
     createLoginWithHeadersMiddleware,

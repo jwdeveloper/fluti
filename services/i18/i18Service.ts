@@ -1,6 +1,6 @@
 import {CacheService} from "$lib/fluti/services/CacheService";
 import * as fs from "node:fs";
-import {parse, stringify} from 'yaml'
+import {parse} from 'yaml'
 import path from 'path';
 
 let cache = new CacheService();

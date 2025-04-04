@@ -1,7 +1,7 @@
 <script lang="ts">
 
 
-    import type {InputProps, InputProps2} from "$lib/fluti/components/input/Input.type";
+    import type {InputProps2} from "$lib/fluti/components/input/Input.type";
 
     let {
         value = $bindable(''),

@@ -2,7 +2,7 @@
     import OAuthLogin from "../components/OAuthLogin.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
-    import {blur, scale, fly, slide} from "svelte/transition";
+    import {fly} from "svelte/transition";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import {onMount} from "svelte";
     import type {LoginViewProps} from "../loginPageTypes";

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Title from "$lib/fluti/components/title/Title.svelte";
     import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";

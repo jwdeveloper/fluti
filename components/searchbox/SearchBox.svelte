@@ -2,9 +2,7 @@
     import Input from "$lib/fluti/components/input/Input.svelte";
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
-    import {
-        scale,
-    } from 'svelte/transition';
+    import {scale,} from 'svelte/transition';
     import FloatingPanel from "$lib/fluti/components/floatingPanel/FloatingPanel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import {onMount} from "svelte";

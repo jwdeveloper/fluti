@@ -1,16 +1,14 @@
 <script lang="ts">
 
 
-
     import Form from "$lib/fluti/components/form/Form.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Label from "$lib/fluti/components/label/Label.svelte";
     import Input from "$lib/fluti/components/input/Input.svelte";
     import {WindowCloseReason} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
     import Button from "$lib/fluti/components/button/Button.svelte";
     import type {SupabaseFormProps} from "./SupabaseComponentTypes";
     import {addArrowController} from "$lib/fluti/effects/ArrowController";
-    import {onMount, tick} from "svelte";
+    import {onMount} from "svelte";
 
     let {item, window, table, isEdit}: SupabaseFormProps = $props();
 

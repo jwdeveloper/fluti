@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import {cubicOut} from 'svelte/easing';
     import type {TableController} from "$lib/fluti/components/table/TableImpl.svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {blur, fly, slide, fade} from "svelte/transition";
+    import {fly} from "svelte/transition";
     import {addArrowController} from "../../effects/ArrowController";
     import type {FloatingPanelProps} from "./FloatingPanelType";
 

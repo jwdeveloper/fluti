@@ -16,20 +16,9 @@ import {
     elasticOut,
     expoIn,
     expoInOut,
-    expoOut,
-    linear,
     quadIn,
     quadInOut,
-    quadOut,
-    quartIn,
-    quartInOut,
-    quartOut,
-    quintIn,
-    quintInOut,
-    quintOut,
-    sineIn,
-    sineInOut,
-    sineOut
+    quadOut
 } from 'svelte/easing';
 
 export class EaseFunctions {
