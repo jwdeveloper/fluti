@@ -110,7 +110,7 @@
 }
 
 [data-theme="dark"] {
-    --accent-primary: #d71e44; /* Darker accent primary */
+    --accent-primary: #5343b9; /* Darker accent primary */
     --text-muted: #7f868f; /* Slightly darker muted text */
     --text-primary: #ffffff; /* A bit darker primary text */
     --text-primary: #f3ecef; /* A bit darker primary text */
