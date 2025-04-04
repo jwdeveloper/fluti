@@ -34,9 +34,7 @@
                 }
             })
         }
-
         value = items[0].value;
-
     })
 
 </script>
