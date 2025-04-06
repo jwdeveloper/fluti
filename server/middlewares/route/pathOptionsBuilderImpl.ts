@@ -1,6 +1,6 @@
-import type {PathOptions, PathOptionsBuilder, FlutiRequestHandler} from "./routeTypes";
+import type {FlutiRequestHandler, PathOptions, PathOptionsBuilder} from "./routeTypes";
 import type {FlutiUser, OneOrMore} from "$lib/fluti/server/serverTypes";
-import {json, redirect, text, type RequestEvent} from "@sveltejs/kit";
+import {json, redirect, type RequestEvent, text} from "@sveltejs/kit";
 
 export class PathOptionsBuilderImpl implements PathOptionsBuilder {
 

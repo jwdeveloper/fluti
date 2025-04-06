@@ -2,7 +2,9 @@
     import type {
         PaymentPeriodOptions,
         SubscriptionPageProps,
-        SubscriptionPageTranslations, SubscriptionProduct, SubscriptionProductPrice
+        SubscriptionPageTranslations,
+        SubscriptionProduct,
+        SubscriptionProductPrice
     } from "$lib/fluti/pages/subscription/types";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";

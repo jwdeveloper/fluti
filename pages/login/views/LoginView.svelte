@@ -2,7 +2,7 @@
     import OAuthLogin from "../components/OAuthLogin.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
-    import {blur, scale, fly, slide} from "svelte/transition";
+    import {fly} from "svelte/transition";
     import FormFieldsLogin from "../components/FormFieldsLogin.svelte";
     import {onMount} from "svelte";
     import type {LoginViewProps} from "../loginPageTypes";
@@ -13,13 +13,15 @@
 
     let {controller}: LoginViewProps = $props();
     let logoVisible = $state(false)
-    let logo = "icons/logo.png"
+    let logo = "logo.png"
+
 
     let translation = controller.props.messages.loginView;
 
     onMount(() => {
         logoVisible = true;
     })
+
 </script>
 
 
@@ -45,8 +47,10 @@
          margin-bottom: 1em;
          padding: 0 var(--padding-medium)">
         {translation.rules.accept}
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/terms">{translation.rules.terms}</a>,
-        <a style="border-bottom: 1px solid {flutiTheme.color.light}" href="/blog/privacy">{translation.rules.policy}</a>
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}"
+           href={controller?.props?.links?.termsAndCondition ?? "/blog/terms" }>{translation.rules.terms}</a>,
+        <a style="border-bottom: 1px solid {flutiTheme.color.light}"
+           href={controller?.props?.links?.privacyPolicy ?? "/blog/privacy" }>{translation.rules.policy}</a>
     </h6>
 {/snippet}
 

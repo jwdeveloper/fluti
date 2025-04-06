@@ -17,8 +17,6 @@ export const handleMakePayment = async (event: any) => {
         },
         body: JSON.stringify(event)
     })
-    console.log(response)
-
     if (!response.ok)
         throw new Error(response.statusText)
     return await response.json();

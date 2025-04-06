@@ -11,6 +11,10 @@
         error = $bindable(undefined),
         children = undefined,
         style = '',
+        invalid = false,
+        labelStyle = '',
+        labelFor = '',
+        fullHeight = false,
         labelColor = 'var(--text-primary)',
         gap = "0.5em",
     }: LabelProps = $props()
@@ -20,32 +24,37 @@
 
 <Element width="100%"
          gap={gap}
-         tag="label"
+         height={fullHeight?'100%':"auto"}
          direction="column"
          style={style}>
     {#if title}
-        <h5 style="align-self: flex-start">
+        <h5 style="align-self: flex-start; color: {labelColor}; {labelStyle}">
             {title}
         </h5>
     {/if}
     {#if children}
-        <Element justify="flex-start" width="100%">
+        <Element
+                tag="label"
+                attributes={{for:labelFor}}
+                style="z-index: 1;"
+                justify="flex-start" width="100%" height={fullHeight?'100%':"auto"}>
             {@render children()}
         </Element>
     {/if}
 
-    {#if error}
+    {#if invalid}
         <div transition:fly={{y:-50}} style="width: 100%;">
-
             <Element
                     padding="0 0.5em"
                     width="100%"
                     gap="0.4em"
                     tag="h5"
-                    style="color:var(--text-error);"
+                    color={flutiTheme.color.error}
                     justify="flex-start">
-                <i style="align-self: flex-start; margin-top: 0.4em" class="fa fa-warning"/>
-                {error}
+                <i class="fa fa-warning"/>
+                <div>
+                    {error}
+                </div>
             </Element>
         </div>
 

@@ -2,7 +2,8 @@ import type {FlutiServer2Middleware} from "$lib/fluti/server2/flutiServer2Types"
 import type {Hono} from "hono";
 import type {
     SessionMiddlewareConfig,
-    SessionMiddlewareConfigFn, UserLoginRequest
+    SessionMiddlewareConfigFn,
+    UserLoginRequest
 } from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {
     createLoginWithHeadersMiddleware,
@@ -53,6 +54,10 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
         }
         if (onConfig)
             onConfig(config)
+
+        if (config.token.secret) {
+            console.error("JWT_TOKEN_SECRET is empty! Make sure fill its data otherwise login page will not working!")
+        }
 
         const app: Hono = serverConfig.app;
         app.use(createLoginWithHeadersMiddleware(config));

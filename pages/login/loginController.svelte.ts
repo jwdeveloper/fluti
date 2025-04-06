@@ -43,7 +43,6 @@ export class LoginController {
     async executeAction(action: any) {
         if (action === undefined)
             return
-
         let status = true;
         this.isLoading = true;
         try {

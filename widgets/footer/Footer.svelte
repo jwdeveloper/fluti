@@ -1,74 +1,38 @@
 <script lang="ts">
     import Element from "$lib/fluti/components/panel/Element.svelte";
+
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import * as domain from "node:domain";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Link from "$lib/fluti/components/Link.svelte";
-
-    interface SocialMediaLink {
-        url: string
-        name?: string
-        icon?: string
-        iconColor?: string
-    }
-
-    interface LinkData {
-        name: string
-        url: string
-    }
-
-    interface LinkSection {
-        title: string
-        links: LinkData[]
-    }
-
-    interface FooterProps extends ElementProps {
-        templates?: {
-            logo?: any;
-        };
-        domain: string
-        socialMedia?: {
-            linkedIn?: SocialMediaLink
-            tweeter?: SocialMediaLink
-            facebook?: SocialMediaLink
-            tiktok?: SocialMediaLink
-            youtube?: SocialMediaLink
-        }
-        logo?: {
-            name?: string;
-            slogan?: string;
-            icon?: string
-            image?: string;
-        };
-        links?: LinkSection[]
-        separator?: boolean
-    }
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import type {FooterProps} from "$lib/fluti/widgets/footer/footerTypes";
 
     let props: FooterProps = $props();
-    let breakpoints = useBreakpoints();
-
     const currentYear = new Date().getFullYear();
     const currentDomain = props?.domain ?? window?.location?.hostname ?? '';
 </script>
 
 {#snippet LogoComponent()}
+
     {#if props?.templates?.logo}
         {@render props?.templates?.logo()}
     {:else}
-        <Element direction="row" onClick={()=> window.location.href = '/'}>
-            {#if props?.logo?.icon}
-                <i style="font-size: var(--font-size-huge);color: var(--accent-primary)"
-                   class="{props?.logo?.icon}"></i>
-            {/if}
-            <h1 style="color: {flutiTheme.background.accent}">
-                {props?.logo?.name ?? domain ?? ''}
-            </h1>
-        </Element>
+
+        {#if props?.logo}
+            <Element direction="row" onClick={()=> window.location.href = '/'}>
+                {#if props?.logo?.icon}
+                    <i style="font-size: var(--font-size-huge);color: var(--accent-primary)"
+                       class="{props?.logo?.icon}"></i>
+                {/if}
+                <h1 style="text-wrap: nowrap; color: {flutiTheme.background.accent}">
+                    {props?.logo?.name ?? domain ?? ''}
+                </h1>
+            </Element>
+        {/if}
     {/if}
 {/snippet}
 
@@ -78,7 +42,7 @@
             <Button2
                     className="social-button"
                     variant="filled"
-                    size="large"
+
                     onClick={()=> window.open(props?.socialMedia[key]?.url ?? '','_blank')}
                     effects={{click:{}}}
                     background={flutiTheme.background.primary}
@@ -107,7 +71,8 @@
 
     <Element width="100%"
              display="grid"
-             columns="1fr 1fr"
+             columns={props?.templates?.center ?  "1fr 3fr 1fr" : "auto 1fr"}
+             gap="1em"
              mobile={{columns:"1fr", rows:'1fr', gap:'2em'}}
              rows="1fr">
         <Element
@@ -119,7 +84,7 @@
                 gap="0"
                 direction="column">
             <LogoComponent/>
-            <h3 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h3>
+            <h4 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h4>
 
             {#if breakpoints.isDesktop}
                 <Space variant="huge"/>
@@ -130,24 +95,30 @@
                      gap="1em"
                      width="100%"
                      height="100%"
-                     mobile={{justify:'space-around'}}
+                     mobile={{}}
                      justify="flex-start">
                 <SocialMediaComponent/>
             </Element>
-
         </Element>
+
+        {#if props?.templates?.center}
+            <Element height="100%" width="100%">
+                {@render props?.templates?.center()}
+            </Element>
+        {/if}
 
         <Element width="100%"
                  tag="nav"
                  justify="flex-end"
                  align="flex-start"
                  height="100%"
-                 mobile={{direction:'column', gap:'2em'}}
-                 gap="10em">
+                 mobile={{direction:'column', gap:'2em'}}>
 
             {#each props?.links ?? [] as linkSection}
-                <Element align="flex-start" direction="column">
-                    <h3>{linkSection.title}</h3>
+                <Element align="flex-start"
+                         width="100%"
+                         direction="column">
+                    <h3 style="width: 100%;">{linkSection.title}</h3>
                     <Space variant="tiny"/>
                     <ul>
                         {#each linkSection.links as link}

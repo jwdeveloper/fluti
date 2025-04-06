@@ -31,11 +31,11 @@
     --radius-large: 1em; /* 16px */
     --radius-huge: 2em; /* 32px */
 
-    --padding-tiny: 0.3em; /* ~8px */
-    --padding-small: 0.4em; /* ~12px */
-    --padding-medium: 0.65em; /* ~16px (48px total height) */
-    --padding-large: 1.2em; /* ~24px */
-    --padding-huge: 1.6em; /* ~32px */
+    --padding-tiny: 0.3rem; /* ~8px */
+    --padding-small: 0.4rem; /* ~12px */
+    --padding-medium: 0.65rem; /* ~16px (48px total height) */
+    --padding-large: 1.2rem; /* ~24px */
+    --padding-huge: 1.6rem; /* ~32px */
 
     --font-size-tiny: 0.625rem; /* 10px */
     --font-size-small: 0.8rem; /* 42px */
@@ -62,6 +62,9 @@
     --font-size-desktop: 1.1em;
     --font-size-big: 1.2em;
 
+
+    /* used in filled button for the nice border at the button bottom */
+    --button-bottom-border-size: 4px;
 
     --z-index-1: 2;
     --z-index-2: 5;
@@ -107,7 +110,7 @@
 }
 
 [data-theme="dark"] {
-    --accent-primary: #d71e44; /* Darker accent primary */
+    --accent-primary: #5343b9; /* Darker accent primary */
     --text-muted: #7f868f; /* Slightly darker muted text */
     --text-primary: #ffffff; /* A bit darker primary text */
     --text-primary: #f3ecef; /* A bit darker primary text */
@@ -171,21 +174,18 @@
 [data-theme="dark-4"] {
 
     --bg-primary: rgb(24, 21, 21);
-    --bg-secondary: rgb(33, 30, 30);;
+    --bg-secondary: rgb(33, 30, 30);
     --bg-tertiary: rgb(51, 48, 48);
     --bg-transparent: rgba(123, 123, 123, 0.1);
 
     --text-light: rgba(245, 245, 245, 1); /* Soft White */
 
-    /* 175, 175, 175*/
 
     --text-primary: rgb(220, 220, 220); /* Light Silver */
     --text-neutral: rgb(124, 120, 120); /* Warm Gray */
     --text-muted: rgb(89, 86, 86); /* Cool Gray */
     --text-error: #e53935; /* Vibrant Red */
 
-    /*!* Accent Color *!*/
-    /* Accent Color */
     --accent-primary: rgba(255, 183, 77, 0.98); /* Warm Amber */
     --accent-primary: #21e05d;
 }
@@ -236,10 +236,11 @@ body, html {
 ol, ul {
     list-style: inside;
     padding: inherit;
+    padding: 0;
 }
 
 p {
-    font-size: var(--font-size-normal)
+    font-size: var(--font-size-medium) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {

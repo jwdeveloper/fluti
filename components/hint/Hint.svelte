@@ -1,8 +1,7 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import {scale as effect} from "svelte/transition";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
-    import FloatingPanel from "$lib/fluti/components/floatingPanel/FloatingPanel.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
 
     interface HintProps extends ElementProps {
@@ -37,35 +36,41 @@
         return show;
     })
 
+    let getHtmlLines = $derived.by(() => {
+        if (!title)
+            return []
+
+        return title.split("\\n")
+    });
 </script>
 
 
+<div onmouseenter={handleOpen}
+     onmouseleave={handleClose}
+     class="contianer"
+     style="width: {fullWidth?'100%':'auto'} {style}">
 
-<div
-        onmouseenter={handleOpen}
-        onmouseleave={handleClose}
-        class="contianer"
-        style="  width: {fullWidth?'100%':'auto'} {style}"
->
     {#if keepVisible || (shouldOpen && title !== undefined)}
         <div style="
         transform: translate({xOffset}, {offset});
         z-index: var(--z-index-2);
-        overflow:hidden;
         pointer-events: none;
         {panelStyle};
     "
              class="hint"
              transition:effect>
-            <Panel variant="component-panel-border-dark"
-                   padding="0.6em"
-                   style="text-wrap: nowrap;">
+            <Panel padding="0.6em" style="border-width: 2px; text-wrap: nowrap;">
                 <h5>
-                    {title}
+                    {#each getHtmlLines as line}
+                        <div>
+                            {line}
+                        </div>
+                    {/each}
                 </h5>
             </Panel>
         </div>
     {/if}
+
     {#if children}
         {@render children()}
     {/if}

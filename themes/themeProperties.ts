@@ -72,6 +72,7 @@ export const flutiTheme = {
         neutral: textNeutral,
         muted: textMuted,
         error: textError,
+        warning: `var(--text-warning)`,
         accent: textAccent,
     }
 }

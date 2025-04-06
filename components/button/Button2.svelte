@@ -172,7 +172,8 @@
 
     :global(.btn-element:disabled) {
         cursor: not-allowed !important;
-        opacity: var(--opacity-medium);
+        opacity: var(--opacity-medium) !important;
+        color: var(--text-muted);
     }
 
     :global(.btn-element:hover) {
@@ -183,7 +184,7 @@
 
     :global(.btn-element-outline), :global(.btn-element-filled) {
         border: var(--border-size-medium) solid var(--bg-tertiary);
-        border-bottom: 4px solid var(--bg-tertiary);
+        border-bottom: var(--button-bottom-border-size) solid var(--bg-tertiary);
 
     }
 

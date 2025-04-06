@@ -1,21 +1,32 @@
 <script lang="ts">
-    import {addRippleEffect} from "../../effects/RippleEffect";
     import InputPanel from "$lib/fluti/components/panel/InputPanel.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Link from "../Link.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
-        value = $bindable(),
+        value = $bindable(false),
         onClick = (event: MouseEvent) => {
         },
         onUpdate = (input: boolean) => {
         },
         children = undefined,
-        style = ''
+        style = '',
+        required = false
     } = $props();
 
     let isFocues = $state(false)
+    let isInvalid = $derived.by(() => {
+        if (required === false)
+            return false
 
+        return value === false
+    })
+
+    $effect(() => {
+        value
+        if (onClick)
+            onClick(value);
+    })
 
     let chandleUpdate = (e: any) => {
         e.stopPropagation();
@@ -25,12 +36,9 @@
     }
 
 
-    function handleClick(event) {
+    function handleClick(event: any) {
         value = !value;
-        //
-        // if (event?.target)
-        //     setTimeout(() => event.target.checked = value, 0);
-        onClick(value)
+
     }
 </script>
 
@@ -40,11 +48,14 @@
     <InputPanel
             onClick={handleClick}
             style="{isFocues?'border: 2px solid var(--text-light); !important':''}"
-            className="element-checkbox">
+            className="element-checkbox {isInvalid ? 'invalid' : ''}">
+
         <input type="checkbox"
+               required={true}
                onfocus={()=> isFocues= true}
                onfocusout={()=> isFocues= false}
                bind:checked={value} tabindex="0"/>
+
         <span class="checkmark">
         <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,14 +75,14 @@
 
 
 {#if children}
-    <Panel onClick={handleClick}
-           panelType="grid"
-           columns="auto 1fr" padding="0" gap="0.5em">
+    <Element
+            display="grid"
+            columns="auto 1fr" padding="0" gap="0.5em">
         <InputSnippet/>
         <Link onClick={handleClick}>
             {@render children()}
         </Link>
-    </Panel>
+    </Element>
 {:else }
     <InputSnippet/>
 {/if}
@@ -118,9 +129,18 @@
         transition: background-color 0.3s ease;
         color: transparent;
         pointer-events: none;
+    }
+
+    :global(.invalid) {
+        border-color: var(--text-error);
+        background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%) !important;
 
     }
 
+    /* Optional: Red color on hover if invalid */
+    :global(.invalid:hover) {
+        border-color: darkred !important;
+    }
 
     .checkmark svg {
         width: 15px;

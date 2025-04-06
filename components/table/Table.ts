@@ -1,5 +1,5 @@
 import type {TableController} from "./TableImpl.svelte.js";
-import type {Component, Snippet} from "svelte";
+import type {Snippet} from "svelte";
 
 
 export interface TableColumnHeaderProps {

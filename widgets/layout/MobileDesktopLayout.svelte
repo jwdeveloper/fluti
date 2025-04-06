@@ -1,9 +1,8 @@
 <script lang="ts">
-    import {useBreakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import {onMount} from "svelte";
-    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
 
     interface MobileDesktopLayoutProps {
         panel?: ElementProps// props of root panel
@@ -18,8 +17,6 @@
         right?: any
     }
 
-    let serverRenderConfig = useServerRenderConfig
-    let breakpoints = useBreakpoints();
     let props: MobileDesktopLayoutProps = $props();
     let isInit = $state(false)
 
@@ -35,30 +32,30 @@
 
     let getGridTemplate = () => {
 
-
         let width = props?.width ?? "60%"
         let intWidth = parseInt(width) / 100;
         let remainSpace = 1 - intWidth;
+        let side = remainSpace / 2;
 
-        return `${remainSpace / 2}fr ${intWidth}fr ${remainSpace / 2}fr`
+        return `${side * 100}% ${intWidth * 100}% ${side * 100}%`
     }
 
     let dimentions = $derived.by(() => {
 
         if (isInit && shouldHideSidePanels)
             return {
-                rows: '1fr',
-                columns: '1fr'
+                rows: '100%',
+                columns: '100%'
             }
 
         if (shouldBreak) {
             return {
                 rows: getGridTemplate(),
-                columns: "1fr"
+                columns: "100%"
             }
         } else {
             return {
-                rows: '1fr',
+                rows: '100%',
                 columns: getGridTemplate()
             }
         }

@@ -2,7 +2,6 @@
     import Title from "$lib/fluti/components/title/Title.svelte";
     import Input from "$lib/fluti/components/input/Input.svelte";
     import ListGroup from "$lib/fluti/components/list/ListGroup.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import type {ListWindowProps} from "./ListWindowTypes";
     import {addArrowController} from "$lib/fluti/effects/ArrowController";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";

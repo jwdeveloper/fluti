@@ -1,35 +1,56 @@
-import type {Context} from "hono";
 import stripe from "stripe";
+import type {Context} from "hono";
+import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
+import {STRIPE_WEBHOOK} from "$env/static/private";
 
+//http://localhost:5173/api/payment/webhook
+//stripe trigger payment_intent.created
+// stripe listen --forward-to http://localhost:5173/api/payment/webhook
+// stripe trigger payment_intent.succeeded
+
+
+async function getEvent(c: Context) {
+    const sig = c.req.header('stripe-signature');
+
+    const rawBody = await c.req.text();
+    if (rawBody === null)
+        return false
+
+    return stripe.webhooks.constructEvent(rawBody, sig!, STRIPE_WEBHOOK);
+}
 
 export async function handleWebhook(c: Context) {
-    const sig = c.req.header('stripe-signature');
-    const rawBody = c.req.raw.body;
-    let event;
-    const endpointSecret = 'whsec_5bb2d74afce40ef3f720ad1faafb336ef4c0ada85061215609a1776370fadd9c'
+    console.log('webhook event init!')
     try {
-        //@ts-ignore
-        event = stripe.webhooks.constructEvent(rawBody, sig!, endpointSecret);
-    } catch (err: any) {
-        console.error(`Webhook signature verification failed: ${err.message}`);
-        return c.text(`Webhook Error: ${err.message}`, 400);
+        const event = await getEvent(c);
+        if (event === false) {
+            console.log('unexpected error while handling webhook')
+            return c.json({error: 'unexpected error'})
+        }
+
+        const pocketbase = await pocketbaseClientAdmin();
+        const subscriptions = await pocketbase.collection('subscriptions');
+        console.log('webhook event!', event.type)
+
+        // Handle Stripe events
+        switch (event.type) {
+            case 'payment_intent.succeeded':
+                const paymentIntent = event.data.object;
+                console.log('PaymentIntent succeeded:', paymentIntent);
+                break;
+
+            case 'checkout.session.completed':
+                const session = event.data.object;
+                console.log('Checkout Session completed:', session);
+                break;
+
+            default:
+                console.log(`Unhandled event type: ${event.type}`);
+        }
+        return c.json({event: event.data})
+
+    } catch (error) {
+        // console.log('error webhook', error)
+        return c.json({error: error})
     }
-
-    // Handle Stripe events
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log('PaymentIntent succeeded:', paymentIntent);
-            break;
-
-        case 'checkout.session.completed':
-            const session = event.data.object;
-            console.log('Checkout Session completed:', session);
-            break;
-
-        default:
-            console.log(`Unhandled event type: ${event.type}`);
-    }
-
-    return c.text('Webhook received', 200);
 }

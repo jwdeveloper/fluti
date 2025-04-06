@@ -4,7 +4,7 @@
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Textbox from "$lib/fluti/components/textbox/Textbox.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
+    import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig.svelte";
 
     let {
         controller = useInfiniteScrollController(),

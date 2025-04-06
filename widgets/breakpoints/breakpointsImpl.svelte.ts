@@ -1,5 +1,5 @@
 import {MediaQuery} from "svelte/reactivity";
-import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig";
+import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderConfig.svelte";
 
 
 export class BreakpointController {
@@ -11,10 +11,11 @@ export class BreakpointController {
     xl = new MediaQuery('min-width: 1280px', true);
     xxl = new MediaQuery('min-width: 1440px', true);
 
+    width = $state(0)
     isMobile = $derived.by(() => {
-        if (useServerRenderConfig?.serverSide === true)
-            return this.isServerMobile;
-
+        if (useServerRenderConfig.serverSide) {
+            return useServerRenderConfig.isMobile;
+        }
         return !this.isTablet && !this.isDesktop;
     });
     isTablet = $derived.by(() => {
@@ -22,21 +23,25 @@ export class BreakpointController {
     });
     isDesktop = $derived.by(() => {
         if (useServerRenderConfig?.serverSide === true)
-            return !this.isServerMobile;
+            return !useServerRenderConfig.isMobile;
 
         return this.lg.current;
     });
-
-    width = $state(0)
-    isServerMobile = false
-
-    constructor(value?: boolean) {
-        this.isServerMobile = value ?? false;
-    }
 }
 
 export let breakpoints: BreakpointController = new BreakpointController();
 
-export let useBreakpoints: (e?: boolean) => BreakpointController = (isMobileView?: boolean) => {
-    return new BreakpointController(isMobileView);
-};
+let counter = 0;
+
+export function setCounter(num: number) {
+    counter = num;
+}
+
+export function getCounter() {
+    return counter;
+}
+
+
+export function resetBreakpointServerSide() {
+    breakpoints = new BreakpointController()
+}

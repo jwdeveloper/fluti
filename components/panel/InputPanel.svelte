@@ -1,9 +1,9 @@
 <script lang="ts">
 
-    import type {PanelProps} from "./Panel.type";
-    import Panel from "./Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
+    import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
 
-    let {children = undefined, ...data}: PanelProps = $props();
+    let {children = undefined, ...data}: ElementProps = $props();
 
 
     // ripplerEffectColor="var(--text-neutral)"
@@ -12,7 +12,7 @@
 </script>
 
 
-<Panel
+<Element
        radius="var(--radius-medium)"
        background="var(--bg-tertiary)"
        padding="0"
@@ -20,4 +20,4 @@
      >
 
     {@render children()}
-</Panel>
+</Element>

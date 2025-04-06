@@ -1,6 +1,4 @@
-import type {
-    OAuthMiddlewareOptions, SessionMiddlewareConfig,
-} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
+import type {SessionMiddlewareConfig,} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 
 import {type Context, Hono} from "hono";
 import {deleteCookie, getCookie, setCookie} from "hono/cookie";

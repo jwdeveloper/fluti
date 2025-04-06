@@ -1,15 +1,12 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Input from "$lib/fluti/components/input/Input.svelte";
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
-    import {
-        scale,
-    } from 'svelte/transition';
+    import {scale,} from 'svelte/transition';
     import FloatingPanel from "$lib/fluti/components/floatingPanel/FloatingPanel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import {onMount} from "svelte";
-    import Separator from "$lib/fluti/components/separator/Separator.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
 
     const handleItemSelection = async (item: any) => {
@@ -82,7 +79,7 @@
         isLoading = $bindable(false),
         readOnly = false,
         placeholderTemplate = undefined,
-        style='',
+        style = '',
         template = itemTemplate,
         footer = undefined,
         ...data
@@ -127,7 +124,7 @@
             {placeholder}
         </div>
     {:else}
-        <Panel
+        <Element
                 padding="0"
                 columns="repeat(auto-fill, minmax(auto, 1fr))"
                 justify="flex-start"
@@ -140,38 +137,38 @@
                     {selected[key].text}
                 </div>
             {/each}
-        </Panel>
+        </Element>
 
     {/if}
 
 {/snippet}
 
 {#snippet itemTemplate(item)}
-    <Panel columns="1fr 1fr"
-           onClick={()=>handleItemSelection(item)}
-           height="100%"
-           ripplerEffect={true}
-           className="item-template"
-           width="100%">
+    <Element columns="1fr 1fr"
+             onClick={()=>handleItemSelection(item)}
+             height="100%"
+             effects={{rippler:{}}}
+             className="item-template"
+             width="100%">
 
         {#if multiSelect}
-            <Panel padding="0" justify="flex-start">
+            <Element padding="0" justify="flex-start">
                 <Checkbox value={selected[item.value]}/>
-            </Panel>
+            </Element>
         {/if}
-        <Panel width="100%" height="100%" padding="0 0.5em" justify="flex-start">
+        <Element width="100%" height="100%" padding="0 0.5em" justify="flex-start">
             <div style="text-wrap: nowrap">
                 {item.text}
             </div>
-        </Panel>
+        </Element>
         {#if !multiSelect}
-            <Panel justify="flex-end" height="100%" style="color: var(--bg-accent)">
+            <Element justify="flex-end" height="100%" style="color: var(--bg-accent)">
                 {#if item.value === value.value}
                     <i class="fa fa-check"/>
                 {/if}
-            </Panel>
+            </Element>
         {/if}
-    </Panel>
+    </Element>
 {/snippet}
 
 <FloatingPanel bind:isOpen={open}>
@@ -182,7 +179,7 @@
               icon={icon}
               style="width: 100%; {style};"
               onClick={handleOpen}>
-            <Panel width="100%" padding="0 0.5em">
+            <Element width="100%" padding="0 0.5em">
                 <div style="text-wrap: nowrap; font-weight: 400; width: 100%">
                     {#if placeholderTemplate}
                         {@render placeholderTemplate()}
@@ -202,13 +199,13 @@
                         {/if}
                     {/if}
                 </div>
-            </Panel>
+            </Element>
         </Icon>
 
     {/snippet}
 
     {#snippet contentSlot()}
-        <Panel direction="column"
+        <Element direction="column"
                width="200px"
                background="var(--bg-primary)"
                padding="0.5em"
@@ -224,17 +221,17 @@
                overflow="hidden">
 
             {#if enableSearch}
-                <Panel
-                       direction="column"
-                       gap="0.1em"
-                       width="100%">
+                <Element
+                        direction="column"
+                        gap="0.1em"
+                        width="100%">
                     <Input placeholder={searchPlaceHolder}
                            bind:value={input}
                            icon="fa fa-search"/>
-                </Panel>
+                </Element>
             {/if}
 
-            <Panel
+            <Element
                     direction="column"
                     width="100%"
                     height="100%"
@@ -254,16 +251,16 @@
                 {#each displayedItems as item (item.value)}
                     {@render template(item)}
                 {/each}
-            </Panel>
+            </Element>
 
             {#if footer}
                 <div class="separator">
                 </div>
-                <Panel width="100%" justify="flex-start" padding="0.5em">
+                <Element width="100%" justify="flex-start" padding="0.5em">
                     {@render footer(input, open)}
-                </Panel>
+                </Element>
             {/if}
-        </Panel>
+        </Element>
     {/snippet}
 </FloatingPanel>
 

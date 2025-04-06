@@ -1,14 +1,13 @@
 <script lang="ts">
-    import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {InputProps2} from "./Input.type";
     import {onMount} from "svelte";
     import './input2.css'
-    import Hint from "$lib/fluti/components/hint/Hint.svelte";
 
     let {
         value = $bindable(),
         variant = 'outline',
         invalid,
+
         onIconClick = () => {
         },
         ...props
@@ -59,6 +58,8 @@
             type={props.type}
             placeholder={props.placeholder}
             disabled={props.disabled}
+            name={props?.id}
+            pattern={props?.regex}
             required={props.required}
             onclick={props.onClick}
             {...props}
@@ -98,7 +99,7 @@
             padding-right: 1em;
             pointer-events: none;
 
-            i{
+            i {
                 pointer-events: all;
                 height: 1em;
                 text-align: center;
@@ -149,9 +150,17 @@
         opacity: var(--opacity-medium);
     }
 
+    :global(.element-input[readonly]) {
+        background: var(--bg-secondary);
+        cursor: default;
+        opacity: 0.6;
+        color: var(--text-muted);
+    }
+
     :global(.element-input-invalid), :global(.element-input:invalid) {
         border-color: var(--text-error);
         background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%);
+
         border-radius: var(--radius-medium);
     }
 
@@ -172,4 +181,3 @@
     }
 
 </style>
-

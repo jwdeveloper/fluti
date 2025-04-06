@@ -1,7 +1,5 @@
 <script lang="ts">
     import type {InputProps} from "./Input.type";
-    import Icon from "$lib/fluti/components/icon/Icon.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import InputPanel from "$lib/fluti/components/panel/InputPanel.svelte";
     import {onMount} from "svelte";
 

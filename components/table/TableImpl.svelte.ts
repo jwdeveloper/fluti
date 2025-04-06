@@ -2,9 +2,9 @@ import {
     type TableColumn,
     type TableControllerProps,
     type TableFetchResponse,
-    type TableItem,
     TableItemAction,
-    TableItemState, type TableQuery
+    TableItemState,
+    type TableQuery
 } from "./Table";
 
 export class TableController<T> {

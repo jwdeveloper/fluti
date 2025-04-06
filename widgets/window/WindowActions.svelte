@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Button from "$lib/fluti/components/button/Button.svelte";
     import {WindowCloseReason, type WindowHandle} from "./WindowManagerImpl.svelte.js";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
 

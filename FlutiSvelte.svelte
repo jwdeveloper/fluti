@@ -7,6 +7,12 @@
     import './themes/default.css'
     import '../../app.css'
     import type {FlutiWebSiteData} from "$lib/fluti/flutiSvelteTypes";
+    import {onMount} from "svelte";
+    import {
+        googleAnalitycsHeadContent,
+        googleTagBodyContent,
+        googleTagHeadContent
+    } from "$lib/fluti/widgets/google/googleTagHeadContent";
 
 
     interface Fluti {
@@ -32,10 +38,26 @@
             }
         }
     }: Fluti = $props();
+
+
+    onMount(() => {
+        if (websiteData?.google?.tagId) {
+            let bodyTag = googleTagBodyContent(websiteData?.google?.tagId);
+            document.head.insertAdjacentHTML("beforeend", bodyTag);
+
+            let headTag = googleTagHeadContent(websiteData?.google?.tagId);
+            document.head.insertAdjacentHTML("beforeend", headTag);
+        }
+
+        if (websiteData?.google?.analyticsId) {
+            let headTag = googleAnalitycsHeadContent(websiteData?.google?.analyticsId);
+            document.head.insertAdjacentHTML("beforeend", headTag);
+        }
+    })
 </script>
 
 <svelte:head>
-    <script async src="https://js.stripe.com/v3/"></script>
+    <script async src={websiteData.stripe?.url ?? 'https://js.stripe.com/v3/'}></script>
     <title>{websiteData?.title}</title>
     <meta name="description" content={websiteData?.description}>
 
@@ -48,6 +70,7 @@
     <meta property="og:locale" content="pl_PL"/>
     <meta property="og:url" content={websiteData.domain}>
     <meta property="og:image" content="{websiteData.domain}/social.png">
+    <meta property="og:type" content="{websiteData.pageType ?? 'website'}"/>
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content={websiteData?.tweeter?.title ?? websiteData?.title}>
@@ -61,13 +84,13 @@
 
     <meta property="al:web:url" content={websiteData.domain}>
     <meta property="al:web:should_fallback" content="true">
-</svelte:head>
 
+
+</svelte:head>
 
 {#if useAlerts}
     <AlertManager/>
 {/if}
-
 
 {#if useUserSession}
     <UserManager/>

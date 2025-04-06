@@ -2,7 +2,6 @@
     import Counter from "$lib/fluti/components/counter/Counter.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
-    import CounterDigit from "$lib/fluti/components/counter/CounterDigit.svelte";
     import Section from "$lib/fluti/pages/theme/common/Section.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 

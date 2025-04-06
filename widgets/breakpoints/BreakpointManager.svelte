@@ -1,18 +1,9 @@
 <script lang="ts">
 
-
     import {onMount} from "svelte";
-    import {useBreakpoints} from "./breakpointsImpl.svelte.js";
-
-    let controller = useBreakpoints("");
 
     function updateBreakpoint() {
-        const width = window.innerWidth;
-        controller.width = width;
-        if (width < 640) controller.breakpoint = 'sm';
-        else if (width < 768) controller.breakpoint = 'md';
-        else if (width < 1024) controller.breakpoint = 'lg';
-        else controller.breakpoint = 'xl';
+        //TODO REMOVE
     }
 
     onMount(() => {

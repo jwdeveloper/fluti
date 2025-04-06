@@ -42,7 +42,7 @@
         align-items: center;
         backdrop-filter: blur(10px);
         border-radius: var(--radius-huge);
-        z-index: var(--z-index-1);
+        z-index: var(--z-index-2);
 
         i {
             font-size: 3em;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Spring, Tween} from 'svelte/motion';
+    import {Tween} from 'svelte/motion';
     import {easeFunction} from "$lib/fluti/utils/ease";
 
     let {

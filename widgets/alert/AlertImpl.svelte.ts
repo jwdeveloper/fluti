@@ -6,6 +6,11 @@ export class AlertController {
     alerts: any[] = $state([]);
     isProcessing: boolean = false; // To track if the first alert is being processed
 
+
+    pushAlertSuccess(message: string) {
+        return this.pushAlert(message, 'success')
+    }
+
     pushAlert(message: string, type?: string, time: number = 5000) {
         const alert = {
             id: Math.random().toString(36).substring(7),

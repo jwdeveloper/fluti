@@ -1,14 +1,28 @@
 <script lang="ts">
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import ListGroup from "$lib/fluti/components/list/ListGroup.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
 
+
+    interface FileDropProps {
+        maxSize?: number
+        maxFiles?: number
+        placeholder?: string
+    }
 
     let {
         placeholder = "Drag and drop files here, or click to upload",
-        dropTemplate=undefined,
+        dropTemplate = undefined,
         onDrop = undefined,
-        files = $bindable([])
-    } = $props();
+        files = $bindable([]),
+        maxSize = 100,
+        maxFiles = 100,
+        messages = {
+            fileName: 'File too big',
+            tooManyFiles: 'Too many files, limit is',
+
+        }
+    }: FileDropProps = $props();
 
 
     let fileSelectElement: HTMLHtmlElement;
@@ -17,20 +31,26 @@
         let array = Array.from(newFiles);
         for (let file of array) {
             if (files.find((f: File) => f.name === file.name))
+                continue;
+
+            if (file.size > maxSize * 1024 * 1024) {
+                useAlert().pushAlert(messages.fileName)
+                continue;
+            }
+
+            if (files.length + 1 > maxFiles) {
+                useAlert().pushAlert(messages.tooManyFiles + " " + maxFiles)
                 continue
+            }
 
-            files.push(file)
+            files.push(file);
         }
 
-        if(onDrop) {
-            onDrop(files)
+        if (onDrop) {
+            onDrop(files);
         }
     };
 
-    const removeFile = (fileToRemove: File) => {
-        let index = files.indexOf(fileToRemove)
-        files.splice(index, 1);
-    };
 
     const handleDrop = (event: DragEvent) => {
         event.preventDefault();
@@ -62,34 +82,43 @@
         ondragleave={preventDefaults}>
 
     {#if files.length === 0}
-        <Panel direction="column" width="100%" height="100%">
+        <Element direction="column"
+                 width="100%" height="100%">
             <i class="fa fa-file-upload"></i>
-            <p>{placeholder}</p>
-        </Panel>
-    {/if}
+            <h5 style="font-weight: normal">{placeholder}</h5>
+        </Element>
 
+    {/if}
     <input type="file"
            multiple
            bind:this={fileSelectElement}
-           onchange={(e: Event) => handleFiles((e.target?.files))}/>
+           onchange={(e: Event) =>{
+               const target = e.target;
+        if (target?.files) {
+            handleFiles(target.files);
+            target.value = '';
+        }
+           } }/>
 
 
     {#if files.length > 0}
-
-
         {#if dropTemplate}
-            {@render dropTemplate()}
+            <svelte:component this={dropTemplate}
+                              handleDelete={handleDelete}
+                              items={files}></svelte:component>
         {:else}
-        <Panel padding="0" style="max-width: 200px" justify="space-between"
-               direction="row" width="100%">
-            <ListGroup isOpen={true}
-                       enableDelete={true}
-                       onDelete={handleDelete}
-                       onInsert={handleInsert}
-                       useInsertTemplate={false}
-                       allowInsert={true}
-                       items={files}/>
-        </Panel>
+            <Element padding="0" justify="space-between"
+                     direction="row" width="100%">
+
+                <ListGroup isOpen={true}
+                           enableDelete={true}
+                           onDelete={handleDelete}
+                           onInsert={handleInsert}
+                           useInsertTemplate={false}
+                           allowInsert={true}
+                           items={files}/>
+
+            </Element>
         {/if}
 
     {/if}
@@ -105,7 +134,7 @@
     }
 
     .drop-area {
-        border: 2px dashed var(--text-muted);
+        border: var(--border-size-large) dashed var(--bg-tertiary);
         padding: 1em 1em;
         text-align: center;
         justify-content: center;
@@ -113,7 +142,9 @@
         border-radius: 0.8em;
         position: relative;
         width: 100%;
-        height: 100%;
+        max-height: 300px;
+        overflow: scroll;
+        height: auto;
 
         i {
             font-size: 4em;
@@ -127,7 +158,7 @@
 
     .drop-area:hover {
         cursor: pointer;
-        border-color: var(--text-light);
+        border-color: var(--text-muted);
         color: var(--text-light);
     }
 
@@ -153,7 +184,7 @@
         justify-content: space-between;
         padding: 0.5em;
         background: var(--bg-100);
-        border: 1px solid var(--color-lighter);
+        border: var(--border-size-medium) solid var(--color-lighter);
         margin-bottom: 0.5em;
         border-radius: 4px;
     }

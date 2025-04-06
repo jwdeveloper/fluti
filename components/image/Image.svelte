@@ -1,6 +1,5 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import Skieleton from "$lib/fluti/components/skieleton/Skieleton.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 

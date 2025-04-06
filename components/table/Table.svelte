@@ -2,7 +2,7 @@
     import type {TableProps} from "./Table";
     import Loader from "$lib/fluti/components/loader/Loader.svelte";
     import TableColumnHeader from "./TableColumnHeader.svelte";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {table}: TableProps = $props();
 
@@ -87,9 +87,9 @@
                                     <svelte:component this={column.rowTemplate} item={item}/>
                                 {/if}
                             {:else}
-                                <Panel justify="flex-start" padding="0em 1em">
+                                <Element justify="flex-start" padding="0em 1em">
                                     {getItemValue(item, column.key)}
-                                </Panel>
+                                </Element>
                             {/if}
                         </td>
                     {/each}

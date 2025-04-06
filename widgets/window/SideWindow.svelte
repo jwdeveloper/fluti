@@ -21,6 +21,8 @@
             direction?: "left" | "top" | "bottom" | "right" | 'center',
             duration?: number
         },
+        allowScroll?: boolean
+        allowClose?: boolean
         children?: any
     }
 
@@ -30,6 +32,8 @@
         height = "100%",
         visible = $bindable(false),
         panel = {},
+        allowClose = true,
+        allowScroll = true,
         ...options
     }: WindowLayer = $props();
     let rootElement: HTMLDivElement;
@@ -71,6 +75,12 @@
         }
     })
 
+    function handleClick() {
+        if (!allowClose)
+            return
+
+        visible = !visible;
+    }
 
     function makeBackgroundColorAnimation() {
         let color = options?.background?.color;
@@ -117,6 +127,11 @@
 
     onMount(() => {
         isClient = true;
+
+        if (allowScroll === false) {
+            document.body.style.overflow = 'hidden';
+        }
+
         return () => {
             document.body.style.overflow = 'auto'
         }
@@ -129,7 +144,6 @@
             document.body.style.overflow = 'auto'
         }
     })
-
 
     let y = $derived.by(() => {
         if (!isClient)
@@ -177,7 +191,6 @@
         }
     })
 
-
     let align = $derived.by(() => {
         if (!isClient)
             return 'none'
@@ -212,7 +225,7 @@
 </script>
 
 <div class="root"
-     onclick={()=> visible = !visible}
+     onclick={handleClick}
      bind:this={rootElement}>
     {#if visible}
         <div class="window-container"

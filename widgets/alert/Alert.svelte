@@ -1,10 +1,12 @@
 <script lang="ts">
 
     import {blur} from "svelte/transition";
+
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte.js";
-    import Panel from "$lib/fluti/components/panel/Panel.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
-    import Title from "$lib/fluti/components/title/Title.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let {message, type, id, destroy} = $props()
 
@@ -27,11 +29,21 @@
         });
     }
 
+    let getIcon = $derived.by(()=>
+    {
+        if(type === 'success')
+            return "fa-solid fa-exclamation"
+
+        return "fa fa-warning"
+    })
 </script>
 
 
 {#snippet MessageSnippet()}
-    <Panel columns="auto 1fr" style="pointer-events: none">
+    <Panel columns="auto 1fr"
+           background={flutiTheme.color.error}
+
+           style="pointer-events: none; border: 1px solid var(--accent-primary)">
         <Icon icon="fa fa-copy" onClick={handleCopy}/>
         <div onclick={handleCopy} style="user-select: text;">
             {message}
@@ -39,30 +51,35 @@
     </Panel>
 {/snippet}
 
-<div transition:blur  onclick={handleClick}>
+<div transition:blur onclick={handleClick}>
+    <Element className="alert ">
 
-    <Panel className="alert alert-{type}"
+        <Panel display="grid"
+               background='red'
+               className="alert-{type}"
+               color="white"
+               style="border: 1px solid red"
+               padding="0.5em 1em" columns="1fr auto 1fr">
 
-           padding="1em"
-           variant="component-panel-border-dark">
-
-        <Panel panelType="grid" columns="1fr auto">
-
-            <Title tag="h4">
+            <i class={getIcon}></i>
+            <h4>
                 {message}
-            </Title>
+            </h4>
             <div style="display: flex; justify-content: flex-end;">
                 <i class="fa fa-close" onclick={handleDestroy}></i>
             </div>
         </Panel>
-    </Panel>
-
-
+    </Element>
 </div>
 
 
 <style>
 
+    :global(.alert-success)
+    {
+        background-color: green !important;
+        border-color: green !important;
+    }
 
     .alert {
 
