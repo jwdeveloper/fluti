@@ -88,7 +88,8 @@
         columns={dimentions.columns}
         rows={dimentions.rows}
         width="100%"
-        height="100%"
+        height="auto"
+        style="min-height: 100%"
         gap="0"
         align="flex-start"
         {...props.panel}>
