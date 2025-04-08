@@ -11,19 +11,11 @@
     let {
         zIndex = 0,
         style,
+        element=$bindable(undefined),
         ...props
     }: PanelProps = $props();
 
-    let element: HTMLHtmlElement;
-    let aElement;
 
-    onMount(() => {
-        if (!element)
-            return
-
-        aElement = animatedElement(element)
-
-    })
 
 </script>
 
