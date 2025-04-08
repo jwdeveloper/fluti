@@ -43,11 +43,12 @@
         animationHook = animatedElement(element);
 
         animationHook.scale(1)
-        animationHook.opacity(1, 800)
 
         await all(() => {
-           animationHook.move("0, 0px", 700)
-        },200, (index+1) * 30)
+            animationHook.move("0, 0px", 700)
+            animationHook.opacity(1, 800)
+
+        }, 200, 100 + (index + 1) * 30)
 
     }
 
@@ -68,6 +69,7 @@
 {#snippet UserInfo()}
     <Element direction="column"
              height="100%"
+             justify="flex-start"
              align="flex-start">
         <img src={item.picture}>
         <Space variant="small"/>
@@ -79,7 +81,6 @@
 
 <Panel
         bind:element={element}
-        background="transparent"
         direction="column"
         align="flex-start"
         display="grid"
