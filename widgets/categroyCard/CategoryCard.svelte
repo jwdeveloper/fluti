@@ -4,6 +4,7 @@
     import {invokeClickEffect} from "$lib/fluti/effects/ClickEffect";
     import {scale} from "svelte/transition";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         data = undefined,
@@ -51,7 +52,7 @@
 </script>
 
 
-<Panel width="100%"
+<Element width="100%"
        ripplerEffect={true}
        align="flex-start"
        className="element-category-card"
@@ -62,7 +63,7 @@
        onMouseOver={mouseOver}
        background='var(--bg-transparent)'
        justify="flex-start">
-    <Panel bind:element={iconElement} style="z-index: var(--z-index-3)">
+    <Element bind:element={iconElement} style="z-index: var(--z-index-3)">
         <Icon
                 style="
                         background: var(--bg-secondary);
@@ -74,10 +75,10 @@
                 icon='fa {icon}'>
         </Icon>
 
-    </Panel>
+    </Element>
     {@const isData = data !== ''}
     {#if isData}
-        <Panel direction="column" gap="0"
+        <Element direction="column" gap="0"
                justify="flex-start"
                style="z-index: var(--z-index-3)"
                width="100%"
@@ -92,7 +93,7 @@
                    color="primary">
                 {data}
             </Title>
-        </Panel>
+        </Element>
 
     {:else}
         <Title
@@ -113,7 +114,7 @@
             </Hint>
         </div>
     {/if}
-</Panel>
+</Element>
 
 
 
