@@ -4,7 +4,7 @@
     import {exampleTestamonials} from "$lib/fluti/sections/testamonial/exampleData";
     import TestamonialElement from "$lib/fluti/sections/testamonial/TestamonialElement.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
-    import {fly} from "svelte/transition";
+    import SectionContainer from "$lib/fluti/sections/SectionContainer.svelte";
 
     let {
         items = exampleTestamonials(),
@@ -17,16 +17,8 @@
 </script>
 
 
-<Element style="min-height: 100vh;
- height: 100%;
- width: 100%"
-         direction="column"
-         justify="space-between"
-         align="flex-start"
-         overflow="hidden"
-         padding="5% 5%"
-         {...props}
->
+<SectionContainer {...props}>
+
 
     <Element width="100%" direction="column" align="flex-start">
         <h1 style="font-weight: 500; font-size: 4em">{title}</h1>
@@ -52,8 +44,7 @@
         {/each}
     </Element>
     <Space/>
-</Element>
-
+</SectionContainer>
 
 
 
