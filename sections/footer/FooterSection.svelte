@@ -8,6 +8,7 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import FooterCompanyInfo from "$lib/fluti/sections/footer/FooterCompanyInfo.svelte";
     import FooterLogoElement from "$lib/fluti/sections/footer/FooterLogoElement.svelte";
+    import Button2 from "$lib/fluti/components/button/Button2.svelte";
 
     const {
         showLogo = true,
@@ -82,6 +83,17 @@
     <FooterCompanyInfo {...companyInfo}/>
 {/snippet}
 
+{#snippet SocialMedia()}
+    <Element
+            justify="flex-start"
+            gap="2em"
+            width="100%">
+        <i style="font-size: 1.8rem;" class="fa fa-brands fa-facebook"/>
+        <i style="font-size: 1.8rem;" class="fa fa-brands fa-x"/>
+        <i style="font-size: 1.8rem;" class="fa fa-brands fa-linkedin"/>
+    </Element>
+{/snippet}
+
 
 <SectionContainer
         background="{flutiTheme.background.primary}"
@@ -119,6 +131,7 @@
     </Element>
 
     <Space variant="huge"/>
+    {@render SocialMedia()}
     <Space variant="huge"/>
     {@render FooterBottomElement()}
 </SectionContainer>
