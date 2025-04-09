@@ -8,14 +8,14 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import FooterCompanyInfo from "$lib/fluti/sections/footer/FooterCompanyInfo.svelte";
     import FooterLogoElement from "$lib/fluti/sections/footer/FooterLogoElement.svelte";
-    import {exampleCompoanyInfo, exampleMessages} from "$lib/fluti/sections/footer/exampleData";
 
     const {
         showLogo = true,
-        logoUrl = 'favicon.ico',
+        logoUrl = '/favicon.ico',
         linksColumns = [],
-        messages = exampleMessages(),
-        companyInfo = exampleCompoanyInfo(),
+        messages,
+        companyInfo,
+        commonLinks,
         ...props
     }: FooterSectionProps = $props();
 
@@ -49,7 +49,8 @@
             <Element width="100%"
                      mobile={{justify:'center'}}
                      justify="flex-start">
-                <h3 style="font-weight: 300;">© {year} {messages.allRightsReserved}</h3>
+                <h3 style="font-weight: 300;">
+                    © { companyInfo ? companyInfo.companyName : ''} {year} {messages ? messages?.allRightsReserved : ''}</h3>
             </Element>
             {@render PrivacyLinks()}
         </Element>
@@ -63,9 +64,15 @@
             direction="column">
         <h3 style="text-wrap: nowrap; font-weight: 500; font-size: 1.5em;">{item.title}</h3>
         <Space variant="small"/>
-        {#each item.links as link}
-            <Link><h3 style="font-weight: 100;">{link.name}</h3></Link>
-        {/each}
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            {#each item.links as link}
+                <li style="text-decoration: none">
+                    <a href={link.url}>
+                        <h3 class="footer-link" style="font-weight: 100;">{link.name}</h3>
+                    </a>
+                </li>
+            {/each}
+        </ul>
     </Element>
 {/snippet}
 {#snippet LogoElement()}
@@ -115,3 +122,19 @@
     <Space variant="huge"/>
     {@render FooterBottomElement()}
 </SectionContainer>
+
+<style>
+    .footer-link {
+        font-weight: 100;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: all 0.1s ease-out;
+        border-bottom: 2px solid transparent;
+
+    }
+
+    .footer-link:hover {
+        color: var(--text-light);
+        border-bottom: 2px solid var(--text-light);
+    }
+</style>

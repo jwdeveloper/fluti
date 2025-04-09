@@ -12,9 +12,9 @@
     {/if}
     <Element direction="column" gap="0">
         <h1 style="line-height: 32px">
-            {props.companyInfo.companyName}
+            {props.companyInfo?.companyName}
         </h1>
-        {#if props.companyInfo.slogan}
+        {#if props.companyInfo?.slogan}
             <Element width="100%" justify="flex-end">
                 <h4 style="font-weight: normal">
                     {props.companyInfo.slogan}

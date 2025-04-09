@@ -14,6 +14,13 @@ export interface FooterLinks {
     url: string
 }
 
+export interface FooterCommonLinks {
+    privacy: string
+    terms: string
+    cookies: string
+}
+
+
 export interface FooterCompanyInfo {
     companyName: string
     slogan?: string
@@ -27,7 +34,7 @@ export interface FooterSectionProps extends ElementProps {
     messages?: FooterMessages
     linksColumns: FooterLinksColumns[]
     companyInfo: FooterCompanyInfo
-
+    commonLinks: FooterCommonLinks
     logoUrl: string
     showLogo: boolean
 }
