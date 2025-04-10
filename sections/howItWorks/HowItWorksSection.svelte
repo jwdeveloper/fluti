@@ -13,9 +13,9 @@
     <Element width="100%"
              align="flex-start"
              height="auto"
-             mobile={{columns:'1fr', rows:"1fr"}}
-             display="grid"
-             columns="1fr 1fr">
+             justify="flex-start"
+             direction="column"
+    >
         <Element
                 width="100%"
                 direction="column"
@@ -33,11 +33,10 @@
             font-size: 3.5em">{props?.title}</h1>
         </Element>
 
-        {#if !breakpoints.isMobile}
-            <Element>
-                <h3 style="font-weight: normal">{props?.summary}</h3>
-            </Element>
-        {/if}
+        <Space variant="small"/>
+        <Element width="50%">
+            <h3 style="font-weight: normal">{props?.summary}</h3>
+        </Element>
     </Element>
 {/snippet}
 
@@ -57,7 +56,7 @@
              columns="1fr 1fr 1fr"
              height="100%">
         {#each props.steps as step, index}
-                <StepCard index={index} item={step}/>
+            <StepCard index={index} item={step}/>
         {/each}
     </Element>
 
