@@ -48,8 +48,7 @@
             animationHook.move("0, 0px", 700)
             animationHook.opacity(1, 800)
 
-        }, 200, 100 + (index + 1) * 30)
-
+        }, 0, 100 + (index + 1) * 30)
     }
 
 </script>
