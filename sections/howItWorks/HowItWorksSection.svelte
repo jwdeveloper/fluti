@@ -5,6 +5,7 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import StepCard from "$lib/fluti/sections/howItWorks/StepCard.svelte";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let props: HowItWorksSectionProps = $props();
 </script>
@@ -34,7 +35,7 @@
         </Element>
 
         <Space variant="small"/>
-        <Element width="50%">
+        <Element width="50%" mobile={{width:'100%'}}>
             <h3 style="font-weight: normal">{props?.summary}</h3>
         </Element>
     </Element>
@@ -48,7 +49,7 @@
     <Space/>
     {@render TopSection()}
     <Space/>
-    <Element width="100%"
+    <Panel width="100%"
              align="flex-start"
              display="grid"
              mobile={{rows:'1fr 1fr 1fr', columns:'1fr'}}
@@ -58,7 +59,7 @@
         {#each props.steps as step, index}
             <StepCard index={index} item={step}/>
         {/each}
-    </Element>
+    </Panel>
 
 
 </SectionContainer>
