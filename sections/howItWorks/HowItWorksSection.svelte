@@ -46,7 +46,8 @@
         justify="flex-start"
         style="min-height: auto"
         {...props}>
-    <Space/>
+    <Space variant="huge"/>
+    <Space variant="huge"/>
     {@render TopSection()}
     <Space/>
     <Panel width="100%"
