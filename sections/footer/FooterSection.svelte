@@ -96,6 +96,7 @@
 
 
 <SectionContainer
+        tag="footer"
         background="{flutiTheme.background.primary}"
         style="min-height: auto"
         padding="5% 5% 0"

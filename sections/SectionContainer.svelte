@@ -9,6 +9,7 @@
  height: 100%;
  width: 100%"
          direction="column"
+         tag="section"
          justify="space-between"
          align="flex-start"
          overflow="hidden"
