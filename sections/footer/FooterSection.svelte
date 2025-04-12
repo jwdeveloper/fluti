@@ -99,6 +99,7 @@
         tag="footer"
         background="{flutiTheme.background.primary}"
         style="min-height: auto"
+        mobile={{padding:'10%'}}
         padding="5% 5% 0"
         {...props}>
 

@@ -15,28 +15,29 @@
     let animationHook;
 
     onMount(() => {
-        animationHook = animatedElement(element);
-        animationHook.opacity(0, 0)
-        animationHook.move("0, 300px", 0)
-
-        const observer = new IntersectionObserver((entries) => {
-            for (const entry of entries) {
-                if (entry.isIntersecting) {
-                    animate();
-                    observer.unobserve(element);
-                }
-            }
-        }, {
-            threshold: 0.5,
-        });
-
-        if (element) {
-            observer.observe(element);
-        }
-
-        return () => {
-            observer.disconnect();
-        }
+        // animationHook = animatedElement(element);
+        // animationHook.opacity(0, 0)
+        // animationHook.move("0, 300px", 0)
+        //
+        // const observer = new IntersectionObserver((entries) => {
+        //     for (const entry of entries) {
+        //         if (entry.isIntersecting) {
+        //             animate();
+        //             observer.unobserve(element);
+        //         }
+        //     }
+        // }, {
+        //     threshold: 0.5,
+        // });
+        //
+        // if (element) {
+        //     observer.observe(element);
+        // }
+        //
+        // return () => {
+        //     observer.disconnect();
+        // }
+        //
     })
 
     async function animate() {
