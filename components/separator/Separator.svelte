@@ -39,7 +39,7 @@
 <style>
 
     :global(.bar-horizontal) {
-        background: var(--bg-secondary) !important;
+        background: var(--text-muted) !important;
         width: 100%;
         border-radius: 0.1em;
         height: 0.1em;
