@@ -10,6 +10,7 @@ import {useApiMiddleware} from "$lib/fluti/server2/middlewares/api/ApiMiddleware
 import type {ApiMiddlewareConfigFn} from "$lib/fluti/server2/middlewares/api/ApiMiddlewareTypes";
 import type {SessionMiddlewareConfigFn} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {useSessionMiddleware} from "$lib/fluti/server2/middlewares/session/SessionMiddleware";
+import {type SideMapMiddlewareFn, useSideMapMiddleware} from "$lib/fluti/server2/middlewares/sidemap/SideMapMiddleware";
 
 
 export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
@@ -25,6 +26,7 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
         }
     }
 
+
     async defaultMiddleware(context: Context, next: Next) {
         const honoResult: any = await next();
         const shouldRenderSvelte = context?.res.status === 404 && context?.res.url === '';
@@ -39,6 +41,12 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
         onConfig(this.config)
         return this;
     }
+
+    useSideMap(onConfig: SideMapMiddlewareFn): FlutiServer2Builder {
+        this.middlewareBuilders.push(useSideMapMiddleware(onConfig))
+        return this;
+    }
+
 
     useApi(onConfig: ApiMiddlewareConfigFn): FlutiServer2Builder {
         this.middlewareBuilders.push(useApiMiddleware(onConfig))
