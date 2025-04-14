@@ -7,13 +7,13 @@
         radius = "4px",
         maxValue = 100,
         duration=500,
-        currentValue = 50,
+        value = 50,
         color = 'var(--accent-primary)'
     } = $props();
 
 
     const getWidth = $derived.by(() => {
-        return ((currentValue / maxValue) * 100);
+        return ((value / maxValue) * 100);
     })
     // const tween = Spring.of(() => getWidth, {
     //     damping: 0.5,
@@ -22,7 +22,7 @@
     // });
 
     const easing = (t) => {
-        if (currentValue > 0)
+        if (value > 0)
             return Math.min(easeFunction.backOut()(t), 1);
 
         return Math.max(easeFunction.circOut()(t), 0);
