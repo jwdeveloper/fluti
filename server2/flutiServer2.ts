@@ -101,8 +101,8 @@ export class FlutiServer2Impl implements FlutiServer2 {
         let transformChunk = async (e: any) => {
             e.done = true;
             return e.html
-                .replace("%fluti.theme%", theme)
-                .replace("%fluti.lang%", lang);
+                .replace("%fluti.theme%", theme.substring(0, Math.min(10, lang.length)))
+                .replace("%fluti.lang%", lang.substring(0, Math.min(10, lang.length)));
         }
         let resolveSvelte = () => {
             return resolve(event, {
