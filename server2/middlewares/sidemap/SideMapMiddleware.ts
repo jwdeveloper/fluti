@@ -52,7 +52,8 @@ class SideMapMiddlewareImpl implements SideMapMiddleware {
         }
         let pathsStrings = this.paths.map(singlePathToString).join("\n ");
 
-        return `<?xml version="1.0" encoding="UTF-8" ?>
+        return `
+        <?xml version="1.0" encoding="UTF-8"?>
 		<urlset
 			xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
 			xmlns:xhtml="https://www.w3.org/1999/xhtml"
@@ -76,7 +77,8 @@ export function useSideMapMiddleware(fn: SideMapMiddlewareFn): FlutiServer2Middl
 
     return (server) => {
         server.app.get("/sidemap.xml", (e: Context) => {
-            return e.text(map, {
+            return new Response(map, {
+                status: 200,
                 headers: {
                     'Content-Type': 'application/xml; charset=utf-8'
                 }
