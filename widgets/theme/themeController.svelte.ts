@@ -29,18 +29,21 @@ export class ThemeController {
     }
 
     load() {
-        let themeValue = localStorage.getItem("theme");
-        if (themeValue === null || themeValue === undefined || themeValue === '') {
-            themeValue = document.documentElement.getAttribute("data-theme") ?? "light";
-            localStorage.setItem("theme", themeValue);
+        const cookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('theme='));
+
+        const themeValue = cookie?.split('=')[1];
+
+        if (themeValue) {
+            document.documentElement.setAttribute("data-theme", themeValue);
+            this.theme = themeValue;
         }
-        document.documentElement.setAttribute("data-theme", themeValue);
-        this.theme = themeValue;
     }
 
     setTheme(name: string) {
         document.documentElement.setAttribute("data-theme", name);
-        localStorage.setItem("theme", name);
+        document.cookie = `theme=${name}; path=/; max-age=31536000`; // 1 year
         this.theme = name;
     }
 

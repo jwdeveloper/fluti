@@ -34,5 +34,18 @@ export interface FlutiServer2Config {
      */
     app: Hono
 
+    /**
+     * Default theme "light"
+     * Then theme is found in headers "theme" then use it from headers
+     * It replaces %fluti.theme% in app.html with value
+     */
+    defaultTheme: string
+
+    /**
+     * Default theme "en"
+     * Then theme is found in headers "lang" then use it from headers
+     * It replaces %fluti.lang% in app.html with value
+     */
+    defaultLang: string
 
 }

@@ -23,6 +23,8 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
         this.app = new Hono();
         this.config = {
             app: this.app,
+            defaultTheme: 'light',
+            defaultLang: 'en'
         }
     }
 
@@ -83,20 +85,34 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
 export class FlutiServer2Impl implements FlutiServer2 {
 
     app: Hono
+    config: FlutiServer2Config
 
     constructor(config: FlutiServer2Config) {
         this.app = config.app;
+        this.config = config;
     }
 
 
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any) {
 
-        const resolveSvelte = () => {
-            return resolve(event);
+        const theme = event.cookies.get("theme") ?? this.config.defaultTheme;
+        const lang = event.cookies.get("lang") ?? this.config.defaultLang;
+
+        let transformChunk = async (e: any) => {
+            e.done = true;
+            return e.html
+                .replace("%fluti.theme%", theme)
+                .replace("%fluti.lang%", lang);
         }
+        let resolveSvelte = () => {
+            return resolve(event, {
+                transformPageChunk: transformChunk
+            });
+        }
+
         return this.app.request(event.request, undefined,
             {
-                ip: event?.getClientAddress(),
+                ip: event?.getClientAddress?.(),
                 // svelteEvent: event,
                 renderSvelte: resolveSvelte
             });
