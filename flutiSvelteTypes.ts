@@ -31,3 +31,5 @@ export type PageType =
     'video.other' |
     'music.song' |
     'event'
+
+export type Direction = "left" | 'right' | 'top' | 'bottom'

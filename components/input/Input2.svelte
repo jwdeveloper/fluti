@@ -7,7 +7,6 @@
         value = $bindable(),
         variant = 'outline',
         invalid,
-
         onIconClick = () => {
         },
         ...props
@@ -76,6 +75,10 @@
             {props.textIcon}
         </div>
     {/if}
+
+    <div style="position: absolute; height: 100%;width: 100%;">
+        <slot/>
+    </div>
 </div>
 
 

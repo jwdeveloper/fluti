@@ -3,18 +3,25 @@ type CacheItem = {
     expiresAt?: number; // timestamp in milliseconds
 };
 
-export class CacheService {
-    private cache = new Map<string, CacheItem>();
+export class CacheService<K = string, V = any> {
+    protected cache = new Map<K, V>();
 
-    set(key: string, value: any, durationSeconds?: number) {
+    set(key: K, value: V, durationSeconds?: number) {
         const expiresAt = durationSeconds
             ? Date.now() + durationSeconds * 1000
             : undefined;
 
-        this.cache.set(key, { value, expiresAt });
+        this.cache.set(key, {value, expiresAt});
     }
 
-    get(key: string): any | undefined {
+    setIfEmpty(key: K, value: V): V {
+        if (!this.has(key))
+            this.set(key, value);
+        //@ts-ignore
+        return this.get(key);
+    }
+
+    get(key: K): V | undefined {
         const item = this.cache.get(key);
         if (!item) return undefined;
 
@@ -26,7 +33,7 @@ export class CacheService {
         return item.value;
     }
 
-    has(key: string): boolean {
+    has(key: K): boolean {
         const item = this.cache.get(key);
         if (!item) return false;
 
@@ -65,4 +72,5 @@ export class CacheService {
             }
         }
     }
+
 }
