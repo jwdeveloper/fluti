@@ -2,11 +2,13 @@ export interface FlutiWebSiteData {
     domain: string
     title?: string
     description?: string
+    keywords?: string
     country?: string,
     pageType?: PageType
     pages?: CommonPages[]
     tweeter?:
         {
+            image?: string
             title: string
             description: string
         }
