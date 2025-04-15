@@ -44,8 +44,9 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
         return this;
     }
 
-    useSideMap(onConfig: SideMapMiddlewareFn): FlutiServer2Builder {
-        this.middlewareBuilders.push(useSideMapMiddleware(onConfig))
+    async useSideMap(onConfig: SideMapMiddlewareFn): Promise<FlutiServer2Builder> {
+        let middleware = await useSideMapMiddleware(onConfig);
+        this.middlewareBuilders.push(middleware)
         return this;
     }
 
@@ -67,15 +68,15 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
 
     // @ts-ignore
     use(config): FlutiServer2Builder {
-        this.middlewareBuilders.push((inpt) => {
+        this.middlewareBuilders.push(async (inpt) => {
             config(inpt)
         })
     }
 
-    create(): FlutiServer2 {
+    async create(): Promise<FlutiServer2> {
         this.app.use(this.defaultMiddleware);
         for (let middlewareBuilder of this.middlewareBuilders) {
-            middlewareBuilder(this.config)
+            await middlewareBuilder(this.config)
         }
         return new FlutiServer2Impl(this.config);
     }

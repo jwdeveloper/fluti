@@ -69,13 +69,13 @@ class SideMapMiddlewareImpl implements SideMapMiddleware {
 }
 
 
-export function useSideMapMiddleware(fn: SideMapMiddlewareFn): FlutiServer2Middleware {
+export async function useSideMapMiddleware(fn: SideMapMiddlewareFn): Promise<FlutiServer2Middleware> {
 
     let sideMap = new SideMapMiddlewareImpl();
-    fn(sideMap);
+    await fn(sideMap);
     let map = sideMap.build();
 
-    return (server) => {
+    return async (server) => {
         server.app.get("/sidemap.xml", (e: Context) => {
             return new Response(map, {
                 status: 200,
