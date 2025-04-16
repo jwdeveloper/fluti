@@ -89,7 +89,7 @@
     <meta property="al:web:url" content={websiteData.domain}>
     <meta property="al:web:should_fallback" content="true">
 
-    <link rel="canonical" href={websiteData.domain}>
+    <link rel="canonical" href={websiteData?.url ?? websiteData?.domain}>
 </svelte:head>
 
 {#if useAlerts}

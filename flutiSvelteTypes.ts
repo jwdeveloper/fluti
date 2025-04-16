@@ -1,6 +1,7 @@
 export interface FlutiWebSiteData {
     domain: string
     title?: string
+    url?: string
     description?: string
     keywords?: string
     country?: string,

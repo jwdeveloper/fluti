@@ -1,6 +1,7 @@
 <script lang="ts">
     import snarkdown from "snarkdown";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import {browser} from "$app/environment";
 
     interface MdToHtmlProps {
         children?: any,
@@ -8,10 +9,9 @@
     }
 
     const {children, cacheKey}: MdToHtmlProps = $props()
-    const isBrowser = typeof window !== 'undefined';
     let htmlContent = $state('');
 
-    if (!isBrowser && children) {
+    if (!browser && children) {
         htmlContent = serverRenderHtml();
     }
 
