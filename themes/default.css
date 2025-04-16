@@ -6,7 +6,6 @@
 
     --bg-transparent: rgba(217, 212, 212, .1);
 
-
     --bg-tertiary: #e1dfdf;
 
     --text-light: #192638;
@@ -39,7 +38,7 @@
 
     --font-size-tiny: 0.625rem; /* 10px */
     --font-size-small: 0.8rem; /* 42px */
-    --font-size-medium: 1em; /* 16px */
+    --font-size-medium: 1rem; /* 16px */
     --font-size-large: 1.2rem; /* 24px */
     --font-size-huge: 1.8rem; /* 32px */
     --font-size-extra-huge: 2.25rem;
@@ -273,16 +272,16 @@ h6 {
 
 p {
     code {
-        background: var(--bg-tertiary);
+        /*background: var(--bg-tertiary);*/
         padding: 0.1em 0.5em;
         border-radius: 0.2em;
-        color: var(--text-primary) !important;
+        /*color: var(--text-primary) !important;*/
     }
 }
 
 pre {
     code {
-        color: var(--text-muted) !important;
+        /*color: var(--text-muted) !important;*/
     }
 }
 

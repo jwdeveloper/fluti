@@ -127,7 +127,6 @@
         className="btn-element {isIcon?'btn-icon-element':''} {variantClass} {className}"
         gap="1em"
         attributes={{'aria-label':label?? 'ordinary button', disabled:disabled}}
-
         onClick={handleClick}
         {...props}>
 
