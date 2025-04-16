@@ -71,7 +71,7 @@
              height="100%"
              justify="flex-start"
              align="flex-start">
-        <img src={item.picture}>
+        <img alt={item.name} src={item.picture}>
         <Space variant="small"/>
         <h3 style="line-height: 1em">{item.name}</h3>
         <h4 style="font-weight: 200">{item.position}</h4>
