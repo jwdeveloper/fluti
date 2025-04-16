@@ -2,11 +2,20 @@
     import snarkdown from "snarkdown";
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
-    const {children} = $props()
+    interface MdToHtmlProps {
+        children?: any,
+        cacheKey?: string
+    }
+
+    const {children, cacheKey}: MdToHtmlProps = $props()
     const isBrowser = typeof window !== 'undefined';
     let htmlContent = $state('');
 
     if (!isBrowser && children) {
+        htmlContent = serverRenderHtml();
+    }
+
+    function serverRenderHtml(): string {
         let elementOutput = {
             out: ''
         }
@@ -17,7 +26,7 @@
             .split('\n')
             .map(line => line.trimStart())
             .join('\n');
-        htmlContent = snarkdown(content);
+        return snarkdown(content);
     }
 
 </script>
