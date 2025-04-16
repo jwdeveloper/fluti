@@ -56,7 +56,7 @@
         :global(h2) {
             font-size: clamp(1.75rem, 4.5vw, 2rem);
             font-weight: 600;
-            margin: 1.4em 0 0.6em;
+            margin: 1em 0 0.6em;
         }
 
         :global(h3) {
