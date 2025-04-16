@@ -14,18 +14,18 @@ export interface FlutiServer2Builder {
 
     useSession(onConfig?: SessionMiddlewareConfigFn): FlutiServer2Builder
 
-    useSideMap(onConfig?: SideMapMiddlewareFn): FlutiServer2Builder
+    useSideMap(onConfig?: SideMapMiddlewareFn): Promise<FlutiServer2Builder>
 
     useAuthorization(): FlutiServer2Builder
 
-    create(): FlutiServer2
+    create(): Promise<FlutiServer2>
 }
 
 export interface FlutiServer2 {
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any): any
 }
 
-export type FlutiServer2Middleware = (config: FlutiServer2Config) => void;
+export type FlutiServer2Middleware = (config: FlutiServer2Config) => Promise<void>;
 
 export interface FlutiServer2Config {
 
