@@ -2,6 +2,7 @@
     import type {SwitchProps} from "./Switch";
     import {addRippleEffect} from "../../effects/RippleEffect";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import {onMount} from "svelte";
 
     let {
         value = $bindable(false),
@@ -12,10 +13,12 @@
     }: SwitchProps = $props();
     let element: HTMLDivElement;
 
+    let previousValue = value;
     const handleClick = () => {
         if (readonly)
             return
 
+        previousValue = value;
         value = !value;
         makeAnimation();
         onUpdate(value, id)
@@ -54,9 +57,16 @@
         );
     }
 
+    onMount(() => {
+        makeAnimation()
+    })
+
     $effect(() => {
         value
-        makeAnimation()
+        if (value != previousValue) {
+            previousValue = value;
+            makeAnimation()
+        }
     })
 
 </script>

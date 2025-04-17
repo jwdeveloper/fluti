@@ -18,10 +18,10 @@
     }
 
     let items = [
-        {color: "rgba(241,101,14,0.88)", image: 'screenshots/s1.png', ...sectionData},
-        {color: "rgba(0,149,255,0.67)", image: 'screenshots/s2.png', ...sectionData},
-        {color: "rgba(7,81,222,0.95)", image: 'screenshots/s3.png', ...sectionData},
-        {color: "rgba(155,24,220,0.67)", image: 'screenshots/s4.png', ...sectionData},
+        {color: "rgba(241,101,14,0.88)", image: '/screenshots/s1.png', ...sectionData},
+        {color: "rgba(0,149,255,0.67)", image: '/screenshots/s2.png', ...sectionData},
+        {color: "rgba(7,81,222,0.95)", image: '/screenshots/s3.png', ...sectionData},
+        {color: "rgba(155,24,220,0.67)", image: '/screenshots/s4.png', ...sectionData},
     ]
     let borderColor = $derived.by(() => {
         return items[activeId].color;
