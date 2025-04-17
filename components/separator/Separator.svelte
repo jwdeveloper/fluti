@@ -20,7 +20,7 @@
 
 {#if children}
     <Element gap="1em" width="100%">
-        <Bar/>
+        {@render Bar()}
         <Element
                 height="100%"
                 fontSize={fontSize}
@@ -28,12 +28,13 @@
                 style="
          text-wrap: nowrap;
          font-weight: bold;">
-            {@render children()}
+            {@render children?.()}
         </Element>
-        <Bar/>
+        {@render Bar()}
     </Element>
+
 {:else }
-    <Bar/>
+    {@render Bar()}
 {/if}
 
 <style>

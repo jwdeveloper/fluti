@@ -132,10 +132,12 @@
 
     </Element>
 
-    <Space variant="huge"/>
-    {@render SocialMedia()}
+<!--    <Space variant="huge"/>-->
+<!--    {@render SocialMedia()}-->
+<!--    -->
     <Space variant="huge"/>
     {@render FooterBottomElement()}
+
 </SectionContainer>
 
 <style>
