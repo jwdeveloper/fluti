@@ -6,6 +6,7 @@
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import LeftRightInteraction from "$lib/fluti/components/interaction/LeftRightInteraction.svelte";
 
     interface WindowLayer {
         visible?: boolean
@@ -224,6 +225,8 @@
 
 </script>
 
+<!--<LeftRightInteraction onInteraction={(e)=> visible =false}/>-->
+
 <div class="root"
      onclick={handleClick}
      bind:this={rootElement}>
@@ -262,8 +265,9 @@
 <style>
     .window-container {
         width: 100%;
-        min-height: 100%;
-        height: auto;
+        min-height: 100vh;
+        /*height: auto;*/
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
