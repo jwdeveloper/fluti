@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type {TestamonialSectionProps} from "$lib/fluti/sections/testamonial/types";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import TextAndImageItem from "$lib/fluti/sections/textAndImageSection/TextAndImageItem.svelte";
     import {onMount} from "svelte";
@@ -9,22 +8,10 @@
     import type {TextAndImageSectionProps} from "$lib/fluti/sections/textAndImageSection/types";
 
     let props: TextAndImageSectionProps = $props();
+    let items = $state(props?.items ?? [])
     let activeId: number = $state(0);
-
-    let sectionData = {
-        subTitle: "Oczyść umysł",
-        title: "Twórz zadania w mgnieniu oka",
-        text: "Poświęciliśmy ponad dekadę ulepszając Todoist do tego stopnia, by mógł stać się intuicyjnym menedżerem Twoich myśli. Zapisuj i porządkuj zadania w mgnieniu oka, korzystając ze swobodnego, naturalnego języka."
-    }
-
-    let items = [
-        {color: "rgba(241,101,14,0.88)", image: '/screenshots/s1.png', ...sectionData},
-        {color: "rgba(0,149,255,0.67)", image: '/screenshots/s2.png', ...sectionData},
-        {color: "rgba(7,81,222,0.95)", image: '/screenshots/s3.png', ...sectionData},
-        {color: "rgba(155,24,220,0.67)", image: '/screenshots/s4.png', ...sectionData},
-    ]
     let borderColor = $derived.by(() => {
-        return items[activeId].color;
+        return items[activeId]?.color ?? 'white';
     })
 
     let item = $derived.by(() => {
@@ -69,8 +56,8 @@
 {#snippet MobileImplementation()}
     <SectionContainer>
         <Element
-                 direction="column"
-                 justify="flex-start">
+                direction="column"
+                justify="flex-start">
             {#each items as item, index}
                 <TextAndImageItem key={index} subTitleColor={item.color} item={item}/>
                 <img alt={item.text} style="border: 0.01em solid {borderColor}" src={item.image}>
@@ -99,17 +86,20 @@
                      direction="column">
                 <img style="
             box-shadow: 0 0 2em 0.01em {borderColor};
-            border: 0.01em solid {borderColor}" src={item.image}>
+            border: 0.01em solid {borderColor}" src={item?.image ?? ''}>
             </Element>
         </div>
     </div>
 
 {/snippet}
 
-{#if breakpoints.isMobile}
-    {@render MobileImplementation()}
-{:else}
-    {@render DesktopImplementation()}
+
+{#if item !== undefined}
+    {#if breakpoints.isMobile}
+        {@render MobileImplementation()}
+    {:else}
+        {@render DesktopImplementation()}
+    {/if}
 {/if}
 
 

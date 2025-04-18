@@ -7,6 +7,7 @@
     import SectionContainer from "$lib/fluti/sections/SectionContainer.svelte";
     import {onMount} from "svelte";
     import {range} from "$lib/fluti/utils/range";
+    import {createReviewSchemaScriptTag} from "$lib/fluti/sections/testamonial/schemaJson";
 
     let {
         items = exampleTestamonials(),
@@ -26,6 +27,9 @@
 
 </script>
 
+<svelte:head>
+    {@html createReviewSchemaScriptTag(items, title, subtitle)}
+</svelte:head>
 
 <SectionContainer {...props}>
 
@@ -36,7 +40,7 @@
     </Element>
     <Space variant="huge"/>
     <div class="move-element"
-         >
+    >
         {#each range(2) as _}
             {#each items as item, index}
                 {#if testamonialTemplate}

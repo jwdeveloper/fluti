@@ -5,6 +5,12 @@ export interface TextAndImageSectionProps extends ElementProps {
     items?: TextAndImageSectionItem[]
 }
 
+
+export interface TextAndImageSectionItemProps extends ElementProps {
+    item: TextAndImageSectionItem
+    key: string | number
+}
+
 export interface TextAndImageSectionItem {
     subTitle: string,
     title: string,

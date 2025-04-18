@@ -241,9 +241,9 @@
                  easing:easeFunction.cubicInOut(),
                  duration:getDuration()}}>
 
-            <Element height={getSize.height}
+            <Element height={getSize?.height ?? 'auto'}
                      onClick={(e)=>{e.stopPropagation()}}
-                     width={getSize.width}
+                     width={getSize?.width ?? 'auto'}
                      direction="column"
                      justify=""
                      align=""

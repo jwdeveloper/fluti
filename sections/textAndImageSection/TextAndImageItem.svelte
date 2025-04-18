@@ -1,14 +1,13 @@
 <script lang="ts">
     import Space from "$lib/fluti/components/space/Space.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+    import type {TextAndImageSectionItemProps} from "$lib/fluti/sections/textAndImageSection/types";
 
     let {
-        key = '',
-        subTitleColor = '',
+        key,
         item,
         ...props
-    }: ElementProps = $props();
+    }: TextAndImageSectionItemProps = $props();
 
 </script>
 
@@ -23,7 +22,7 @@
             align="flex-start"
             {...props}
     >
-        <h3 style="color: {subTitleColor}">{item.subTitle}</h3>
+        <h3 style="color: {item.color}">{item.subTitle}</h3>
         <h2>{item.title}</h2>
         <Space/>
         <h3 style="font-weight: normal">
