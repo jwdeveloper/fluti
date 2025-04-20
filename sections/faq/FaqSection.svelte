@@ -3,8 +3,9 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {generateFAQSchema} from "./FaqActions";
     import type {FaqPanelProps} from "./FaqPanelTypes";
-    import FaqPanelItem from "./FaqPanelItem.svelte";
+    import FaqSectionItem from "./FaqSectionItem.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import Space from "$lib/fluti/components/space/Space.svelte";
 
     let {
         items,
@@ -26,15 +27,17 @@
 </svelte:head>
 
 
-<Element color={flutiTheme.color.light} padding="1em">
-    <h1>{messages?.title}</h1>
+<Element color={flutiTheme.color.light} padding="1em 0">
+    <h2 style="font-weight: 500;
+             line-height: 1em;
+            font-size: 3.5em">{messages?.title}</h2>
 </Element>
-
+<Space/>
 <Panel align="flex-start" padding="1em" gap="0.5em">
 
     {#each items as item}
-        <FaqPanelItem item={item}
-                      animation={animation}
-                      bind:selected={selected}/>
+        <FaqSectionItem item={item}
+                        animation={animation}
+                        bind:selected={selected}/>
     {/each}
 </Panel>

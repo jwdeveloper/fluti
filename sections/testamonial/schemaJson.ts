@@ -17,12 +17,19 @@ export function createReviewSchemaScriptTag(items: Testamonial[], title: string,
             worstRating: 1
         }
     }));
+    const totalStars = items.reduce((sum, item) => sum + item.stars, 0);
+    const averageRating = (totalStars / items.length).toFixed(1); // rounded to one decimal
 
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: title,
         description: subTitle,
+        aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: averageRating,
+            reviewCount: items.length
+        },
         review: reviews
     };
 
