@@ -53,14 +53,14 @@
 </script>
 
 
-<Element height="100%"
-         align="flex-start"
-         justify="flex-start"
-         display="grid"
-         padding="2em"
-         bind:element={element}
-         rows="auto 1fr"
-         width="100%">
+<Panel height="100%"
+       align="flex-start"
+       justify="flex-start"
+       display="grid"
+       padding="2em"
+       bind:element={element}
+       rows="auto 1fr"
+       width="100%">
     <Element gap="1em" justify="flex-start" align="flex-start">
         <h2 style="font-weight: 400; font-size: 6em;">0{props.index + 1}</h2>
     </Element>
@@ -84,4 +84,4 @@
     <Element width="100%" justify="flex-start">
         <!--        <Button2 size="large">Zobacz więcej</Button2>-->
     </Element>
-</Element>
+</Panel>

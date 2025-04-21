@@ -50,11 +50,11 @@
     <Space/>
     <Panel width="100%"
            align="flex-start"
+           padding="0.5em"
            display="grid"
            mobile={{
                  padding:"0",
                  rows:'1fr 1fr 1fr', columns:'1fr'}}
-           gap="2em"
            columns="1fr 1fr 1fr"
            height="100%">
         {#each props.steps as step, index}
