@@ -6,10 +6,12 @@
     import SideWindow from "$lib/fluti/widgets/window/SideWindow.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
+    import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
 
-    let {items} = $props();
+    let {items}: HeaderSectionProps = $props();
 
     let openWindow = $state(false)
+
 </script>
 
 

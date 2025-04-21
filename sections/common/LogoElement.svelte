@@ -1,23 +1,24 @@
 <script lang="ts">
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {FooterSectionProps} from "$lib/fluti/sections/footer/types";
+    import type {LogoElementProps} from "$lib/fluti/sections/common/types";
 
-    let props: FooterSectionProps = $props()
+    let props: LogoElementProps = $props()
 </script>
 
 
-<Element gap="1.6em">
+<Element gap="0.5em">
     {#if props.showLogo}
-        <img src={props.logoUrl}>
+        <img src={props.url}>
     {/if}
     <Element direction="column" gap="0">
-        <h1 style="line-height: 32px">
-            {props.companyInfo?.companyName}
-        </h1>
-        {#if props.companyInfo?.slogan}
+        <h2 style="line-height: 18px">
+            {props.name}
+        </h2>
+        {#if props.slogan}
             <Element width="100%" justify="flex-end">
                 <h4 style="font-weight: normal">
-                    {props.companyInfo.slogan}
+                    {props.slogan}
                 </h4>
             </Element>
         {/if}
@@ -25,9 +26,12 @@
 </Element>
 
 <style>
+    h2{
+        font-size: 1.4em;
+    }
     img {
-        height: 80px;
-        width: 80px;
+        height: 60px;
+        width: 60px;
         object-fit: cover;
         border-radius: 50%;
     }

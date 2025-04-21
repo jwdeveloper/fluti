@@ -106,7 +106,7 @@
                  padding="0 1em"
                  justify="flex-start">
             <Space variant="tiny"/>
-            <p style="font-size: {flutiTheme.font.medium}">{item.answer}</p>
+            <h3 style="font-weight: normal">{item.answer}</h3>
         </Element>
     </div>
 </Element>

@@ -7,8 +7,7 @@
     import Link from "$lib/fluti/components/Link.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
     import FooterCompanyInfo from "$lib/fluti/sections/footer/FooterCompanyInfo.svelte";
-    import FooterLogoElement from "$lib/fluti/sections/footer/FooterLogoElement.svelte";
-    import Button2 from "$lib/fluti/components/button/Button2.svelte";
+    import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
 
     const {
         showLogo = true,
@@ -76,8 +75,10 @@
         </ul>
     </Element>
 {/snippet}
-{#snippet LogoElement()}
-    <FooterLogoElement linksColumns={[]} showLogo={showLogo} logoUrl={logoUrl} companyInfo={companyInfo}/>
+{#snippet LogoCustomElement()}
+    <LogoElement showLogo={showLogo} url={logoUrl}
+                 slogan={companyInfo?.slogan}
+                 name={companyInfo?.companyName}/>
     <Space variant="huge"/>
     <Space variant="huge"/>
     <FooterCompanyInfo {...companyInfo}/>
@@ -115,7 +116,7 @@
                 align="flex-start"
                 width="100%"
                 justify="flex-start" height="100%" direction="column">
-            {@render LogoElement()}
+            {@render LogoCustomElement()}
         </Element>
 
 
@@ -132,9 +133,9 @@
 
     </Element>
 
-<!--    <Space variant="huge"/>-->
-<!--    {@render SocialMedia()}-->
-<!--    -->
+    <!--    <Space variant="huge"/>-->
+    <!--    {@render SocialMedia()}-->
+    <!--    -->
     <Space variant="huge"/>
     {@render FooterBottomElement()}
 

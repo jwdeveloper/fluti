@@ -117,7 +117,7 @@
         width: 100%;
         padding: 0 15%;
         display: grid;
-        gap: 2em;
+        gap: 3em;
         grid-template-columns: 1fr 1fr;
         background: var(--bg-primary);
         padding-bottom: 3em;
@@ -125,13 +125,14 @@
 
     .image-root {
         /*background: green;*/
+        /*background: red;*/
     }
 
     :global(.sticky-panel) {
         position: sticky;
         top: 0;
 
-        padding: 1rem;
+        /*padding: 1rem;*/
         /*background: red;*/
         padding-top: 150px;
         /*box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);*/
