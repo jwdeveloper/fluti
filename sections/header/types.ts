@@ -3,6 +3,7 @@ import type {LogoElementProps} from "$lib/fluti/sections/common/types";
 
 export interface HeaderSectionProps extends ElementProps {
     icon?: string
+    hideAfterScroll?: boolean
     title?: string;
     treashold?: number
     addSpace?: boolean

@@ -22,6 +22,7 @@
         addSpace = true,
         items = [],
         showLogin = true,
+        hideAfterScroll = true,
         showThemes = true,
         children = undefined,
         ...props
@@ -65,6 +66,10 @@
         if (!aElement)
             return
 
+        if (!hideAfterScroll)
+            return;
+
+        // return;
         // aElement.height(isOpen ? height + "px" : 0, 300)
         aElement.opacity(isOpen ? 1 : 0, 200)
         return
@@ -117,8 +122,8 @@
 
             <Element
                     hover={{style:"cursor:pointer;"}}
-                     onClick={()=> window.location.href='/'}
-                     justify="flex-start">
+                    onClick={()=> window.location.href='/'}
+                    justify="flex-start">
                 <LogoElement {...logo}/>
             </Element>
             <Element
