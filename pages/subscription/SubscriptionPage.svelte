@@ -20,7 +20,6 @@
     import {bestPricePerDay} from "$lib/fluti/pages/subscription/utils";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
     import {useWindow} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
-    import LoginPopup from "../../../../routes/login/LoginPopup.svelte";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte";
 
@@ -66,7 +65,7 @@
                 throw new Error('onMakePayment method not defined!')
 
             if (!userSession.isLogin) {
-                useWindow(LoginPopup).open()
+                // useWindow(LoginPopup).open()
                 return
             }
 
@@ -215,8 +214,8 @@
 {/snippet}
 
 
-<TitleComponent/>
-<PeriodComponent/>
+{@render TitleComponent()}
+{@render PeriodComponent()}
 <Element width="100%" gap="1em" mobile={{direction:'column'}}>
 
     {#if isProductsLoading}

@@ -4,6 +4,7 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import type {MouseEvent} from "hono/dist/types/jsx";
 
     interface DefaultMenuItemProps {
         name: string
@@ -49,14 +50,20 @@
         selectedItemKey = currentItemKey ?? window.location.pathname;
     })
 
-    const handleClick = (item: DefaultMenuItemProps) => {
+    const handleClick = (item: DefaultMenuItemProps, event: MouseEvent) => {
 
+        event.preventDefault();
 
+        let result: any = true;
         selectedItemKey = item.key
         if (item.onClick)
-            item.onClick();
+            result = item.onClick();
 
-        onClick(item)
+        result = onClick(item)
+        if (result === false)
+            return
+        
+        window.location.href = item?.link ?? '/'
     }
 
     let targetElement: HTMLHtmlElement
@@ -114,7 +121,7 @@
                     href={item.link??"/"}
                     class="menu-item {menuItemClass}"
                     style='color:{selectedItemKey === elementKey?flutiTheme.background.accent:""}'
-                    onclick={()=> handleClick(item)}
+                    onclick={(e)=> handleClick(item,e)}
                     onmouseenter={setElementSource}>
         {item.name}
     </svelte:element>

@@ -6,7 +6,6 @@ export class ServerRenderConfig {
     serverSide: boolean = $state(false)
 
     checkIfMobile(event: RequestEvent) {
-
         // const ip = event.getClientAddress();
         resetBreakpointServerSide();
         const userAgent = event?.request?.headers?.get('user-agent');
@@ -16,6 +15,7 @@ export class ServerRenderConfig {
         } else {
             useServerRenderConfig.serverSide = false
         }
+
     }
 }
 

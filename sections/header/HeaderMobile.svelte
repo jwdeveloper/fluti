@@ -7,8 +7,9 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
+    import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
 
-    let {items}: HeaderSectionProps = $props();
+    let {items,...props}: HeaderSectionProps = $props();
 
     let openWindow = $state(false)
 
@@ -49,7 +50,8 @@
          padding={flutiTheme.padding.large}>
 
     <div></div>
-    <h1 style="color: {flutiTheme.background.accent}">cenograf.pl</h1>
+<!--    <LogoElement {...props.logo}/>-->
+    <h1 style="color: {flutiTheme.background.accent}">{props.logo.name}</h1>
     <Element width="100%" justify="flex-end">
         <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
     </Element>
