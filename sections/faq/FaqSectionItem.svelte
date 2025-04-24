@@ -11,6 +11,7 @@
 
     interface FaqPanelItemProps {
         item: FaqPanelItem
+        index?: number
         animation: FaqPanelItemAnimation
         selected: FaqPanelItem | undefined
     }
@@ -18,6 +19,7 @@
     let {
         selected = $bindable(undefined),
         animation,
+        index,
         item
     }: FaqPanelItemProps = $props();
     let element: HTMLHtmlElement;
@@ -77,8 +79,8 @@
             <Element>
                 <Button2 icon="fa fa-question"
                          variant="text"
-                         />
-            <h3 style="z-index: 1">{item.question}</h3>
+                />
+                <h3 style="z-index: 1">{item.question}</h3>
 
             </Element>
             <Button2

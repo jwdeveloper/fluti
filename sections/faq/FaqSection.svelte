@@ -51,9 +51,10 @@
     <Space/>
     <Panel align="flex-start" padding="1em" gap="0.5em">
 
-        {#each items as item}
+        {#each items as item, index}
             <FaqSectionItem item={item}
                             animation={animation}
+                            index={index}
                             bind:selected={selected}/>
         {/each}
     </Panel>
