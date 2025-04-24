@@ -23,6 +23,7 @@
     </Element>
 {/if}
 
+{@render props?.children?.()}
 
 <style>
 

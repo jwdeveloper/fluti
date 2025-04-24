@@ -53,6 +53,12 @@
                     © { companyInfo ? companyInfo.companyName : ''} {year} {messages ? messages?.allRightsReserved : ''}</h3>
             </Element>
             {@render PrivacyLinks()}
+            <Element width="100%"
+                     mobile={{justify:'center'}}
+                     justify="flex-end">
+                {@render SocialMedia()}
+            </Element>
+
         </Element>
         <Space variant="huge"/>
     </Element>
@@ -121,11 +127,7 @@
                      justify="flex-start">
                 {@render LogoCustomElement()}
             </Element>
-            <Element width="100%"
-                     mobile={{justify:'center'}}
-                     justify="flex-end">
-                {@render SocialMedia()}
-            </Element>
+
         </Element>
 
         <Space variant="large"/>

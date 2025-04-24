@@ -16,6 +16,6 @@
     {:else}
         <HeaderDesktop {...props}/>
     {/if}
-    <Space variant="large"/>
-    <Space variant="large"/>
+<!--    <Space variant="large"/>-->
+<!--    <Space variant="large"/>-->
 </Element>
