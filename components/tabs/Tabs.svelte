@@ -67,7 +67,7 @@
     <div></div>
 {/snippet}
 
-<Element radius={flutiTheme.radius.large}
+<Element radius='19px'
          background={flutiTheme.background.tertiary}
          width="100%"
          style="position: relative"
@@ -77,7 +77,7 @@
     {#each items as item}
         <div tabindex="0"
              class="btn-tab"
-             style="color: {selectedItem?.name === item.name?'var(--text-light)':''}"
+             style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
              onkeydown={(e)=> handleKeyDown(e,item)}
              onclick={() => handleClick(item)}>
             <i class="{item.icon}"></i>
@@ -93,7 +93,8 @@
 
 
     .btn-tab {
-        font-weight: 600;
+        /*font-weight: 600;*/
+        font-weight: 400;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -110,6 +111,7 @@
         color: var(--text-muted);
 
 
+
     }
 
     .btn-bg {
@@ -124,10 +126,10 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        font-weight: bold;
         border-radius: var(--radius-large);
         color: var(--accent-primary);
         font-size: var(--font-size-normaler);
         background: var(--bg-primary);
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .08);
     }
 </style>
