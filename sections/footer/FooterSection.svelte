@@ -62,7 +62,7 @@
             align="flex-start"
             justify="flex-start"
             direction="column">
-        <h3 style="text-wrap: nowrap; font-weight: 500; font-size: 1.5em;">{item.title}</h3>
+        <h3 style="text-wrap: nowrap; font-weight: 500; font-size: 1.5rem;">{item.title}</h3>
         <Space variant="small"/>
         <ul style="list-style: none; padding: 0; margin: 0;">
             {#each item.links as link}
@@ -87,8 +87,7 @@
 {#snippet SocialMedia()}
     <Element
             justify="flex-start"
-            gap="2em"
-            width="100%">
+            gap="2em">
         <i style="font-size: 1.8rem;" class="fa fa-brands fa-facebook"/>
         <i style="font-size: 1.8rem;" class="fa fa-brands fa-x"/>
         <i style="font-size: 1.8rem;" class="fa fa-brands fa-linkedin"/>
@@ -105,19 +104,33 @@
         {...props}>
 
     <Element width="100%"
-             display="grid"
-             columns="1.5fr 2.5fr"
+             direction="column"
              align="flex-start"
              mobile={{columns:'1fr', rows:'1fr minmax(50%, auto)'}}
              rows="1fr"
              height="100%">
 
         <Element
-                align="flex-start"
+                align="center"
                 width="100%"
-                justify="flex-start" height="100%" direction="column">
-            {@render LogoCustomElement()}
+                mobile={{gap:'3em', direction:'column'}}
+                justify="space-between">
+
+            <Element width="100%"
+                     mobile={{justify:'center'}}
+                     justify="flex-start">
+                {@render LogoCustomElement()}
+            </Element>
+            <Element width="100%"
+                     mobile={{justify:'center'}}
+                     justify="flex-end">
+                {@render SocialMedia()}
+            </Element>
         </Element>
+
+        <Space variant="large"/>
+        <Space variant="large"/>
+        <Space variant="large"/>
 
 
         <Element width="100%"

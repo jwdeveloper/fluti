@@ -1,4 +1,5 @@
 import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
+import type {TitleAndTextElementProps} from "$lib/fluti/sections/common/types";
 
 
 export interface TextAndImageSectionProps extends ElementProps {
@@ -11,10 +12,6 @@ export interface TextAndImageSectionItemProps extends ElementProps {
     key: string | number
 }
 
-export interface TextAndImageSectionItem {
-    subTitle: string,
-    title: string,
-    text: string
-    color: string
+export interface TextAndImageSectionItem extends TitleAndTextElementProps {
     image: string
 }

@@ -1,3 +1,5 @@
+import type {Variant} from "$lib/fluti/themes/themeTypes";
+
 export interface LogoElementProps {
 
     showLogo?: boolean
@@ -5,3 +7,13 @@ export interface LogoElementProps {
     name?: string
     slogan?: string
 }
+
+export interface TitleAndTextElementProps {
+    color?: string
+    subTitle: string
+    title: string
+    text?: string
+    spaceSize?: Variant
+    textWidth?: string
+}
+

@@ -37,8 +37,10 @@ export interface SubscriptionProduct {
     subtitle?: string
     features?: SubscriptionProductFeature[]
     meta?: {
+        //stripe metadata: id
         id?: string
         index?: string
+        //stripe metadata: badge
         badge?: string
         badgeColor?: string
         discount?: string

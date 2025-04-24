@@ -1,18 +1,22 @@
 <script lang="ts">
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import HowItWorksSection from "$lib/fluti/sections/howItWorks/HowItWorksSection.svelte";
+
     let props: ElementProps = $props();
 </script>
 
-<Element style="min-height: 100vh;
+<Element
+        mobile={{height:'auto',padding:'1em'}}
+        style="min-height: 100vh;
  height: 100%;
  width: 100%"
-         direction="column"
-         tag="section"
-         justify="space-between"
-         align="flex-start"
-         overflow="hidden"
-         padding="5% 5%"
-         {...props}>
+        direction="column"
+        tag="section"
+        justify="space-between"
+        align="flex-start"
+        overflow="hidden"
+        padding="5% 5%"
+        {...props}>
     <slot/>
 </Element>

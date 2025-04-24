@@ -6,6 +6,8 @@
     import StepCard from "$lib/fluti/sections/howItWorks/StepCard.svelte";
     import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
     import Panel from "$lib/fluti/components/containers/Panel.svelte";
+    import TitleAndTextElement from "$lib/fluti/sections/common/TitleAndTextElement.svelte";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
     let props: HowItWorksSectionProps = $props();
 </script>
@@ -17,33 +19,21 @@
              justify="flex-start"
              direction="column"
     >
-        <Element
-                width="100%"
-                direction="column"
-                align="flex-start">
-
-            <h5 style="font-weight: 100;
-             font-size: 1.2em;
-             line-height: .5em;
-             margin-left: 0.2em">
-                {props?.subtitle}
-            </h5>
-            <Space variant="small"/>
-            <h1 style="font-weight: 500;
-             line-height: 1em;
-            font-size: 3.5em">{props?.title}</h1>
-        </Element>
-
-        <Space variant="small"/>
-        <Element width="50%" mobile={{width:'100%'}}>
-            <h3 style="font-weight: normal">{props?.summary}</h3>
-        </Element>
+        <TitleAndTextElement
+                color={flutiTheme.background.accent}
+                subTitle={props?.subtitle}
+                textWidth="50%"
+                title={props?.title}
+                text={props?.summary}
+        />
     </Element>
 {/snippet}
 
 
 <SectionContainer
+        align="flex-end"
         justify="flex-start"
+        direction="column"
         style="min-height: auto"
         {...props}>
     {@render TopSection()}

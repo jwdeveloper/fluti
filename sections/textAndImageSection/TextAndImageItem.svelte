@@ -2,6 +2,8 @@
     import Space from "$lib/fluti/components/space/Space.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import type {TextAndImageSectionItemProps} from "$lib/fluti/sections/textAndImageSection/types";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import TitleAndTextElement from "$lib/fluti/sections/common/TitleAndTextElement.svelte";
 
     let {
         key,
@@ -21,25 +23,9 @@
             height="auto" direction="column"
             align="flex-start"
             {...props}
+
     >
-        <h3 style="color: {item.color}">{item.subTitle}</h3>
-        <h2>{item.title}</h2>
-        <Space/>
-        <h3 style="font-weight: normal">
-            {item.text}
-        </h3>
+
+            <TitleAndTextElement {...item}/>
     </Element>
 </Element>
-
-<style>
-
-    h3 {
-        font-weight: 500;
-    }
-
-    h2 {
-        font-weight: 500;
-        font-size: 2.5em;
-    }
-
-</style>

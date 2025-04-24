@@ -8,6 +8,8 @@
     import {onMount} from "svelte";
     import {range} from "$lib/fluti/utils/range";
     import {createReviewSchemaScriptTag} from "$lib/fluti/sections/testamonial/schemaJson";
+    import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import TitleAndTextElement from "$lib/fluti/sections/common/TitleAndTextElement.svelte";
 
     let {
         items = exampleTestamonials(),
@@ -35,10 +37,13 @@
 
 
     <Element width="100%" direction="column" align="flex-start">
-        <h1 style="font-weight: 500; font-size: 4em">{title}</h1>
-        <h4 style="font-weight: 400; font-size: 1.8em; margin-left: 0.2em">{subtitle}</h4>
+        <TitleAndTextElement
+                color={flutiTheme.background.accent}
+                subTitle={subtitle}
+                textWidth="50%"
+                title={title}
+        />
     </Element>
-    <Space variant="huge"/>
     <div class="move-element"
     >
         {#each range(2) as _}
