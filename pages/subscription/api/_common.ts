@@ -1,7 +1,7 @@
 // Fetch product from Stripe
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
+import {stripeClient} from "$lib/fluti/pages/subscription/api/stripe-client";
 //@ts-ignore
-import {stripeClient} from "$lib/stripe-client";
 
 export async function fetchProductById(client: any, productId: string) {
     try {

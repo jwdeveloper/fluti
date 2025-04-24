@@ -2,9 +2,9 @@ import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 
 import type {Context} from "hono";
 import {json} from "@sveltejs/kit";
-import {stripeClient} from "$lib/stripe-client";
 import {fetchPriceById, fetchProductById, findOrCreateCustomer} from "$lib/fluti/pages/subscription/api/_common";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
+import {stripeClient} from "$lib/fluti/pages/subscription/api/stripe-client";
 
 
 type PaymentRequest = {

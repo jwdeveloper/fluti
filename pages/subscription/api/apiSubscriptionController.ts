@@ -4,12 +4,17 @@ import {handleWebhook} from "$lib/fluti/pages/subscription/api/webhookHandler";
 import {createPaymentSession, registerPayment} from "$lib/fluti/pages/subscription/api/paymentHandler";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
+
 const usePaymentsMiddleware = new Hono()
 usePaymentsMiddleware.post("/", createPaymentSession)
 usePaymentsMiddleware.get("/products", getProducts)
 usePaymentsMiddleware.get('/:status/:id', registerPayment);
 usePaymentsMiddleware.post("/webhook", handleWebhook)
-
+// usePaymentsMiddleware.get("/products", (e)=>
+// {
+//     return e.text("ada");
+// })
+// usePaymentsMiddleware.basePath("/payment")
 
 async function createCollection() {
     try {
@@ -61,11 +66,11 @@ async function updateAllSubscriptionStatuses() {
 }
 
 async function setupPaymentsApi() {
-    await createCollection();
-    await updateAllSubscriptionStatuses();
+    // await createCollection();
+    // await updateAllSubscriptionStatuses();
 }
 
-setupPaymentsApi();
+await setupPaymentsApi();
 
 export default usePaymentsMiddleware
 
