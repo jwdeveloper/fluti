@@ -5,6 +5,7 @@
         style = '',
         fontSize = "1.5em",
         margin = "0",
+        height='',
         vertical = false,
         children = undefined
     } = $props();

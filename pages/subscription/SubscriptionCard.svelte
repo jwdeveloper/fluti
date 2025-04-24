@@ -9,6 +9,8 @@
         SubscriptionPageTranslations,
         SubscriptionProduct
     } from "$lib/fluti/pages/subscription/types";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
+    import Separator from "$lib/fluti/components/separator/Separator.svelte";
 
     export interface SubscriptionCardProps extends SubscriptionProduct {
         paymentStarted?: boolean,
@@ -68,7 +70,7 @@
 
 
 
-<Element
+<Panel
         height="100%"
         width="100%"
         direction="column"
@@ -109,6 +111,7 @@
             {/if}
         </Element>
     </Element>
+    <Separator style="height: 0.05em"></Separator>
 
     <Element gap="0.1em" width="100%" justify="flex-start" align="flex-end">
         <h1 style="line-height: 1.2em; color: {flutiTheme.color.light}">{getPriceValue}</h1>
@@ -154,5 +157,5 @@
     </Element>
     <Element width="100%" height="100%" align="flex-end" justify="flex-end">
     </Element>
-</Element>
+</Panel>
 

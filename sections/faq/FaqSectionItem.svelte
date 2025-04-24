@@ -76,10 +76,11 @@
         <Element width="100%"
                  justify="space-between">
 
-            <Element>
-                <Button2 icon="fa fa-question"
-                         variant="text"
-                />
+            <Element padding="0 1em">
+<!--                <Button2 icon="fa fa-question"-->
+<!--                         variant="text"-->
+<!--                />-->
+<!--                -->
                 <h3 style="z-index: 1">{item.question}</h3>
 
             </Element>
@@ -100,15 +101,17 @@
                     variant="text" icon="fa {isVisible?'fa-x':'fa-arrow-down'}" size="medium"/>
         </Element>
         <Space variant="small"/>
-        <Separator/>
+        <Separator style="height: 0.02em"/>
     </Element>
 
     <div>
-        <Element direction="column" style="overflow: hidden; opacity: 0; height: 0" bind:element={element}
-                 padding="0 1em"
+        <Element direction="column"
+
+                 style="overflow: hidden; opacity: 0; height: 0" bind:element={element}
+                 padding="0 2em"
                  justify="flex-start">
             <Space variant="tiny"/>
-            <h3 style="font-weight: normal">{item.answer}</h3>
+            <h3 style="font-weight: normal;">{item.answer}</h3>
         </Element>
     </div>
 </Element>
