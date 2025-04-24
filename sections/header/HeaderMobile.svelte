@@ -9,7 +9,7 @@
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
     import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
 
-    let {items,...props}: HeaderSectionProps = $props();
+    let {items, currentPath,...props}: HeaderSectionProps = $props();
 
     let openWindow = $state(false)
 

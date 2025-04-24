@@ -1,5 +1,6 @@
 import type {Context} from "hono";
 import {stripeClient} from "$lib/fluti/pages/subscription/api/stripe-client";
+import {CacheService} from "$lib/fluti/services/CacheService";
 
 
 let mapPrice = (price: any) => {
@@ -24,19 +25,18 @@ let mapProduct = async (product: any) => {
     }
 }
 
-let cache: any = undefined
+let cache = new CacheService();
 
 export async function getProducts(event: Context) {
-    //
-    // if (cache !== undefined)
-    //     return event.json(cache)
-
+    if (cache.has('products')) {
+        return event.json(cache.get('products'))
+    }
     const products = await stripeClient().products.list();
     const mapped = []
     for (let product of products.data) {
         mapped.push(await mapProduct(product))
     }
-    cache = mapped;
+    cache.set('products', mapped, 60);
     return event.json(mapped)
 
 }

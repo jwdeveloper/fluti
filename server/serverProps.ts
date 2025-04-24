@@ -2,9 +2,12 @@ import {useServerRenderConfig} from "$lib/fluti/components/panel/ServerRenderCon
 import type {RequestEvent} from "@sveltejs/kit";
 
 export function returnServerProps(event: RequestEvent) {
+    let isUserLogin = event.cookies.get('session_token') !== undefined
     useServerRenderConfig.checkIfMobile(event)
     return {
         url: event.url.toString(),
-        domain: event.url.origin
+        isUser: isUserLogin,
+        domain: event.url.origin,
+        route: event.url.pathname
     }
 }

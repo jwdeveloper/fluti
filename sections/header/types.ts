@@ -7,6 +7,8 @@ export interface HeaderSectionProps extends ElementProps {
     treashold?: number
     addSpace?: boolean
     showLogin?: boolean
+    isUserLogin?: boolean
+    currentPath?: string
     showThemes?: boolean
     items?: HeaderItem[]
     children?: any

@@ -17,6 +17,7 @@
         width = "85%",
         logo,
         title = '',
+        currentPath,
         icon = '',
         treashold = 100,
         addSpace = true,
@@ -24,6 +25,7 @@
         showLogin = true,
         hideAfterScroll = true,
         showThemes = true,
+        isUserLogin=false,
         children = undefined,
         ...props
     }: HeaderSectionProps = $props();
@@ -81,6 +83,7 @@
         scroll = value
     }
 
+    console.log('current path is ', currentPath)
 
 </script>
 
@@ -130,6 +133,7 @@
 
                     width="100%" justify="center">
                 <DefaultMenu
+                        currentItemKey={currentPath}
                         highlightColor={flutiTheme.background.secondary}
                         items={items}/>
             </Element>
@@ -137,7 +141,7 @@
                     justify="flex-end">
 
                 {#if showLogin}
-                    {#if userSession.isLogin}
+                    {#if isUserLogin}
                         <Hint title="Informacje o koncie">
                             <Button2
                                     variant="filled"
