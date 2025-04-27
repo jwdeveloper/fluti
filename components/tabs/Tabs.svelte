@@ -11,10 +11,10 @@
         items,
         selectedComponent = $bindable(BlankComponent),
         selectedItem = $bindable(undefined),
-        initialWidth = "100%",
         ...props
     }: TabsProps = $props();
 
+    let initWidth = (100 / items.length) + "%"
     let elementPointer: HTMLHtmlElement;
     let step = 100 / items.length;
 
@@ -73,7 +73,7 @@
          style="position: relative"
          {...props}>
 
-    <div bind:this={elementPointer} class="btn-bg" style="width: {initialWidth}"/>
+    <div bind:this={elementPointer} class="btn-bg" style="width: {initWidth}"/>
     {#each items as item}
         <div tabindex="0"
              class="btn-tab"
@@ -109,7 +109,6 @@
         width: 100%;
         z-index: var(--z-index-1);
         color: var(--text-muted);
-
 
 
     }

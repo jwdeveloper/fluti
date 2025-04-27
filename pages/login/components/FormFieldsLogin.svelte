@@ -3,6 +3,7 @@
     import type {LoginController} from "../loginController.svelte";
     import PasswordInput from "$lib/fluti/pages/login/components/PasswordInput.svelte";
     import Input2 from "$lib/fluti/components/input/Input2.svelte";
+    import EmailField from "$lib/fluti/components/input/custom/EmailField.svelte";
 
     interface FormFieldsProps {
         enablePassword?: boolean,
@@ -20,15 +21,11 @@
 </script>
 
 
-<Label title={translations.email.title} error={controller.invalidFields?.email}>
+<EmailField
+        title={translations.email.title}
+        bind:value={controller.form.email}
+/>
 
-    <Input2 bind:value={controller.form.email}
-            id="email"
-            invalid={controller.invalidFields?.email !== undefined}
-            placeholder={translations.email.subtitle}
-            type="email"/>
-
-</Label>
 
 {#if enablePassword}
     <Label

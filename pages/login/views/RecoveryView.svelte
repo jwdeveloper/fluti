@@ -70,7 +70,7 @@
 
     <Element padding="0" direction="column" gap="1em">
         {#if isRecoveryView}
-            <RecoveryView/>
+            {@render RecoveryView()}
         {:else}
             <GoBackView/>
         {/if}

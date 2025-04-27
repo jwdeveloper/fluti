@@ -101,7 +101,10 @@
                     variant="text" icon="fa {isVisible?'fa-x':'fa-arrow-down'}" size="medium"/>
         </Element>
         <Space variant="small"/>
-        <Separator style="height: 0.02em"/>
+
+        <Separator
+
+                style="height: 0.05em"/>
     </Element>
 
     <div>

@@ -12,6 +12,7 @@
 {#if breakpoints.isMobile}
     <Element height="100%"
              width="100%"
+             style="position: fixed; top: 0; width: 100%; width: 100%; z-index: var(--z-index-5);"
              background="var(--bg-primary)"
              align="flex-start"
              justify="flex-start"
@@ -21,6 +22,7 @@
     </Element>
 {:else }
     <Element width="100%" height="100vh"
+             style="position: fixed; top: 0; width: 100%; width: 100%; z-index: var(--z-index-5);"
              display="grid"
              columns="1fr 1fr" gap="0">
         <Element height="100%"
@@ -32,7 +34,8 @@
         </Element>
 
         {#if props?.templates?.pageRightWindowTemplate}
-            <svelte:component this={props?.templates?.pageRightWindowTemplate} {...props}/>
+<!--            <svelte:component this={props?.templates?.pageRightWindowTemplate} {...props}/>-->
+            {@render props?.templates?.pageRightWindowTemplate()}
         {:else}
             <Element height="100%" background="var(--accent-primary)" radius="0"/>
         {/if}

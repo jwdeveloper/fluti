@@ -7,6 +7,7 @@
     let {
         textWidth = "100%",
         spaceSize = 'tiny',
+        textColor,
         ...props
     }: TitleAndTextElementProps = $props();
 </script>
@@ -17,7 +18,7 @@
 {#if props?.text}
     <Space variant={spaceSize}/>
     <Element width={textWidth}>
-        <h3 style="font-weight: normal; color: {flutiTheme.color.muted}">
+        <h3 style="font-weight: normal; color: {textColor ?? flutiTheme.color.muted}">
             {props.text}
         </h3>
     </Element>

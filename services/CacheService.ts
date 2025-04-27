@@ -10,7 +10,7 @@ export class CacheService<K = string, V = any> {
         const expiresAt = durationSeconds
             ? Date.now() + durationSeconds * 1000
             : undefined;
-
+        //@ts-ignore
         this.cache.set(key, {value, expiresAt});
     }
 
@@ -25,11 +25,13 @@ export class CacheService<K = string, V = any> {
         const item = this.cache.get(key);
         if (!item) return undefined;
 
+        //@ts-ignore
         if (item.expiresAt && item.expiresAt < Date.now()) {
             this.cache.delete(key);
             return undefined;
         }
 
+        //@ts-ignore
         return item.value;
     }
 
@@ -37,6 +39,7 @@ export class CacheService<K = string, V = any> {
         const item = this.cache.get(key);
         if (!item) return false;
 
+        //@ts-ignore
         if (item.expiresAt && item.expiresAt < Date.now()) {
             this.cache.delete(key);
             return false;
@@ -51,10 +54,13 @@ export class CacheService<K = string, V = any> {
     }
 
     getOrSet(key: string, value: any, durationSeconds?: number): any {
+        //@ts-ignore
         if (this.has(key)) {
+        //@ts-ignore
             return this.get(key);
         }
 
+        //@ts-ignore
         this.set(key, value, durationSeconds);
         return value;
     }
@@ -67,10 +73,36 @@ export class CacheService<K = string, V = any> {
     private cleanupExpired() {
         const now = Date.now();
         for (const [key, item] of this.cache) {
+            //@ts-ignore
             if (item.expiresAt && item.expiresAt < now) {
                 this.cache.delete(key);
             }
         }
     }
 
+    /**
+     *
+     * @param options
+     * - duration in sections
+     * - when key is empty then method content became key
+     */
+    cachedMethod<TArgs extends any[], TResult>(options: {
+        duration: number;
+        method: (...args: TArgs) => Promise<TResult>;
+        key?: string
+    }): (...args: TArgs) => Promise<TResult> {
+        const {duration, method, key} = options;
+        let cacheKey: string = key ?? method + "";
+        return async (...args: TArgs) => {
+            //@ts-ignore
+            const cached = this.get(cacheKey);
+            if (cached)
+                return cached as TResult;
+
+            const data = await method(...args);
+            //@ts-ignore
+            this.set(cacheKey, data, duration);
+            return data;
+        };
+    }
 }

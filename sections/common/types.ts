@@ -15,5 +15,6 @@ export interface TitleAndTextElementProps {
     text?: string
     spaceSize?: Variant
     textWidth?: string
+    textColor?: string
 }
 

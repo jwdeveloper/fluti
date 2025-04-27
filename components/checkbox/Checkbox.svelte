@@ -78,13 +78,13 @@
     <Element
             display="grid"
             columns="auto 1fr" padding="0" gap="0.5em">
-        <InputSnippet/>
+        {@render InputSnippet()}
         <Link onClick={handleClick}>
             {@render children()}
         </Link>
     </Element>
 {:else }
-    <InputSnippet/>
+        {@render InputSnippet()}
 {/if}
 
 <style>

@@ -29,6 +29,7 @@
     <Element
             style="position: relative; "
             align="flex-start"
+            height="130px" width="130px"
             onClick={()=> window.location.href = '/'}
             mobile={{height:'0px',style:'top:80px', align:'flex-end'}}>
         {#if logoVisible}
@@ -62,7 +63,7 @@
     {#if controller.props?.templates?.logoTemplate}
         <svelte:component this={controller.props.templates.logoTemplate} {...controller.props}/>
     {:else}
-        <Logo/>
+        {@render Logo()}
     {/if}
 
     {#if translation.top.subtitle}

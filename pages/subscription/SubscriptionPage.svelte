@@ -172,11 +172,11 @@
             <h1 style="font-size: 4em; line-height: 1em; color: {flutiTheme.color.light};">{translations.top.title}</h1>
             <h2 style="font-size: 3em">{translations.top.subtitle}</h2>
             <Space variant="small"/>
-            <Skieleton width="300px"
+            <Skieleton width="410px"
                        mobile={{width:'100%'}}
                        timeout={0}
-                       isLoading={isProductsLoading} height="25px" radius={flutiTheme.radius.huge}>
-                <h4 style="font-weight: normal">{getPeriodDescription}</h4>
+                       isLoading={isProductsLoading} height="35px" radius={flutiTheme.radius.huge}>
+                <h3 style="font-weight: normal">{getPeriodDescription}</h3>
             </Skieleton>
         </Element>
     {/if}
@@ -219,7 +219,7 @@
 <Element width="100%" gap="1em" mobile={{direction:'column'}}>
 
     {#if isProductsLoading}
-        <Skieleton isLoading={true} timeout={0} radius={flutiTheme.radius.medium} height="505px" width="100%"/>
+        <Skieleton isLoading={true} timeout={0} radius={flutiTheme.radius.medium} height="505px" width="auto"/>
     {:else}
         {#each displayedProducts as product (product.id)}
             {@render CardComponent(product)}

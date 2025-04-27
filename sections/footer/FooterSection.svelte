@@ -12,13 +12,14 @@
     const {
         showLogo = true,
         logoUrl = '/favicon.ico',
-        linksColumns = [],
+        linksColumns,
         messages,
         companyInfo,
         commonLinks,
         ...props
     }: FooterSectionProps = $props();
 
+    console.log('LINKS is', props, linksColumns)
 
     const year = new Date().getFullYear();
 </script>

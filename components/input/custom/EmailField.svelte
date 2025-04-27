@@ -5,7 +5,8 @@
     let {
         value = $bindable(''),
         required = false,
-        label = undefined
+        label = undefined,
+        title="Email"
     } = $props();
 
     let invalid = $state(false);
@@ -29,7 +30,7 @@
     })
 
 </script>
-<Label title="Email"
+<Label title={title}
        labelFor="email_field"
        info="email_field"
        error={errorMessage}

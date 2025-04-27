@@ -2,6 +2,8 @@ import type {LoginPagePropsTranslations} from "$lib/fluti/pages/login/loginPageT
 
 export let loginPagePolishTranslations: LoginPagePropsTranslations = {
 
+
+
     emailView: {
         top: {
             title: "Prawie gotowe",

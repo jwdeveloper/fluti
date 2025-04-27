@@ -25,7 +25,7 @@
         showLogin = true,
         hideAfterScroll = true,
         showThemes = true,
-        isUserLogin=false,
+        isUserLogin = false,
         children = undefined,
         ...props
     }: HeaderSectionProps = $props();
@@ -59,8 +59,10 @@
         return scroll <= treashold;
     })
 
+    let elementHeight: number = $state(height)
     onMount(() => {
         aElement = animatedElement(element)
+        elementHeight = element.getBoundingClientRect().height;
     })
 
     $effect(() => {
@@ -72,7 +74,7 @@
             return;
 
         // return;
-        // aElement.height(isOpen ? height + "px" : 0, 300)
+        aElement.height(isOpen ? elementHeight + "px" : 0, 300)
         aElement.opacity(isOpen ? 1 : 0, 200)
         return
     })
@@ -91,20 +93,21 @@
 
 
 {#if addSpace}
-    <Element id="menu-space" width="100%" height="{height}px"/>
+    <Element id="menu-space"
+             background={props?.background}
+             width="100%" height="{height}px"/>
 {/if}
 
 <Element
         tag="header" display="block"
-        style="position: fixed;
-         width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);">
+        style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);">
 
 
     <Element width="100%"
              bind:element={element}
              background={flutiTheme.background.primary}
              style="box-shadow: 0 0 1em 0.1em var(--shadow)"
-             height="100%"
+             height="auto"
              gap="0"
              direction="column">
 

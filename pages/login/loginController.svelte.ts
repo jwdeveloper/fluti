@@ -4,7 +4,7 @@ export class LoginController {
     view: 'login' | 'register' | 'recovery' | 'email' | 'error' = $state('login')
     isLoading = $state(false)
     error = $state('')
-    form: LoginFormData = $state({})
+    form: LoginFormData = $state({email: ''})
     //@ts-ignore
     props: LoginPageProps = $state()
     invalidFields: Record<string, any> = $state({})
@@ -16,7 +16,7 @@ export class LoginController {
 
     reset() {
         this.form = {
-            email: undefined,
+            email: '',
             password: undefined,
             confirmPassword: undefined,
             acceptPolicy: false,

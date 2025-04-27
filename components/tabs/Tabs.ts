@@ -7,8 +7,6 @@ export interface TabsProps extends ElementProps{
     selectedItem?: TabsItem | undefined
 
     selectedComponent?: any | undefined
-
-    initialWidth?: string
 }
 
 export interface TabsItem {
