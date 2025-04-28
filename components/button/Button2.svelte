@@ -180,6 +180,14 @@
         background: var(--bg-transparent);
     }
 
+    :global(.btn-element-outline)
+    {
+        background: var(--bg-primary) ;
+    }
+
+    /*:global(.btn-element-outline) {*/
+    /*    background: inherit;*/
+    /*}*/
 
     :global(.btn-element-outline), :global(.btn-element-filled) {
         border: var(--border-size-medium) solid var(--bg-tertiary);
@@ -189,16 +197,11 @@
 
     :global(.btn-element-outline:hover) {
         border-color: var(--text-muted);
-        background: var(--bg-transparent);
-
         border-color: color-mix(in srgb, var(--bg-tertiary) 80%, black 20%);
 
     }
 
 
-    :global(.btn-element-outline) {
-        background: inherit;
-    }
 
 
     :global(.btn-element-filled) {
