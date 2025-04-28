@@ -52,16 +52,18 @@
         height: 700px;
         /*transition: all 200ms ease-in-out;*/
 
-        transform: perspective(1000px) rotateY(25deg) scale(0.9) rotateX(10deg);
-        filter: blur(2px);
+        transform: perspective(3000px) rotateX(8deg) rotateY(-3deg) rotateZ(4deg) scale(0.9);
+        filter: blur(0.05em);
         /*opacity: 0.5;*/
         transition: 0.6s ease all;
 
         &:hover {
-            transform: perspective(800px) rotateY(-15deg) translateY(-50px) rotateX(10deg) scale(1);
+            transform: perspective(3000px) rotateX(4deg) rotateY(-0deg) rotateZ(0deg) scale(0.95);
+
+        /*transform: perspective(6000px) rotateX(8deg) rotateY(-180deg) rotateZ(4deg) scale(0.9);*/
             filter: blur(0);
             opacity: 1;
-        box-shadow: 0 0 2em 0.1em rgba(0, 0, 0, 0.5);
+            /*box-shadow: 0 0 2em 0.1em rgba(0, 0, 0, 0.5);*/
 
         }
     }

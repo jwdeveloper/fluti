@@ -67,15 +67,18 @@
     </SectionContainer>
 {/snippet}
 {#snippet DesktopImplementation()}
-    <div class="root">
+    <div class="root" style="background: {props?.background}">
 
 
         <Element height="auto"
                  direction="column"
-                 justify="flex-start">
+                 justify="flex-start"
+        >
             <div style="height: 300px"/>
             {#each items as item, index}
-                <TextAndImageItem key={index} subTitleColor={item.color} item={item}/>
+                <TextAndImageItem key={index} subTitleColor={item.color}
+                                  selected={index === activeId}
+                                  item={item}/>
             {/each}
         </Element>
 

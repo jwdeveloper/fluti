@@ -8,6 +8,7 @@
     let {
         key,
         item,
+        selected,
         ...props
     }: TextAndImageSectionItemProps = $props();
 
@@ -16,7 +17,7 @@
 <Element height="60vh"
          mobile={{height:'auto'}}
          id={key}
-         className="text-item"
+         className="text-item {selected?'text-item-selected':''}"
          align="flex-start">
     <Element
 
@@ -26,6 +27,23 @@
 
     >
 
-            <TitleAndTextElement {...item}/>
+        <TitleAndTextElement {...item}/>
     </Element>
 </Element>
+
+
+<style>
+    :global(.text-item) {
+        transition: opacity 200ms ease-in-out;
+        opacity: 0.1;
+
+        @media (max-width: 600px) {
+            opacity: 1;
+        }
+    }
+
+    :global(.text-item-selected) {
+        opacity: 1;
+    }
+
+</style>
