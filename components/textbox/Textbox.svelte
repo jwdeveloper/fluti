@@ -29,7 +29,7 @@
 
 <style>
     textarea::placeholder {
-        color: var(--text-muted); /* Change to your desired color */
+        /*color: var(--text-muted); !* Change to your desired color *!*/
     }
 
     textarea:focus {
