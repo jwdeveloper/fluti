@@ -50,6 +50,12 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
     return object;
 }
 
+function fixJson(text:string) {
+    return text
+        .replace(/,\s*}/g, '}')   // Remove comma before }
+        .replace(/,\s*]/g, ']');   // (optional) Remove comma before ]
+}
+
 function extractJson(text: string) {
     const regex = /```json\s*([\s\S]*?)\s*```/i;
     const match = text.match(regex);
@@ -58,7 +64,8 @@ function extractJson(text: string) {
         throw new Error('No JSON block found between ```json and ```');
     }
 
-    const jsonString = match[1];
+    let jsonString = match[1];
+    jsonString = fixJson(jsonString)
 
     try {
         return JSON.parse(jsonString);
