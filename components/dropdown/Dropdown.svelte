@@ -6,14 +6,19 @@
         placeholder = 'Wybierz opcje',
         value = $bindable(''),
         items = $bindable([]),
+        onUpdate,
         style = ''
     }: DropdownProps = $props();
 
 
     $effect(() => {
+        value
+        if (onUpdate)
+            onUpdate(value)
+    })
+
+    $effect(() => {
         items
-
-
         if (items.length === 0)
             return
         if (!items.find(e => e.value === value)) {

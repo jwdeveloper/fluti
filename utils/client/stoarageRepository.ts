@@ -16,14 +16,14 @@ export interface IStorageMapper {
     load(key: string, defaultValue?: any): void
 }
 
-export interface IStorageSave {
+export interface IStorageRepository {
 
-    saveToStorage(mapper: StorageMapper): boolean | void
+    saveToStorage(mapper: StorageRepository): boolean | void
 
-    loadFromStorage(mapper: StorageMapper): boolean | void
+    loadFromStorage(mapper: StorageRepository): boolean | void
 }
 
-export class StorageMapper implements IStorageMapper {
+export class StorageRepository implements IStorageMapper {
 
 
     save(key: string, object: any, defaultValue?: any): void {
@@ -49,7 +49,7 @@ export class StorageMapper implements IStorageMapper {
     }
 }
 
-const mapper = new StorageMapper();
+const mapper = new StorageRepository();
 
 export function handleSaveToLocalStorage(target: object): boolean {
     if (isStorageSave(target)) {
@@ -82,7 +82,7 @@ export function handleLoadFromLocalStorage(target: object): boolean {
 }
 
 
-function isStorageSave(obj: any): obj is IStorageSave {
+function isStorageSave(obj: any): obj is IStorageRepository {
     return typeof obj.saveToStorage === 'function' &&
         typeof obj.loadFromStorage === 'function';
 }
