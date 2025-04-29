@@ -1,5 +1,6 @@
-import PocketBase, {RecordService} from 'pocketbase';
+import PocketBase, {type RecordListOptions, type RecordModel, RecordService} from 'pocketbase';
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
+import {PocketFilter, pocketFilter} from "$lib/fluti/utils/pocketFilter";
 
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
 
@@ -32,7 +33,39 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     }
 }
 
-export async function pocketbaseCollection(collection: string) : Promise<RecordService> {
+export async function pocketbaseCollection(collection: string): Promise<RecordService> {
     let client = await pocketbaseClientAdmin();
     return client.collection(collection)
 }
+
+
+export async function getPocketCollection(collectionName: string): Promise<PocketbaseCollection> {
+    let client = await pocketbaseClientAdmin();
+    let collection = client.collection(collectionName);
+    let pocketCollection = new PocketbaseCollection(collection);
+    return pocketCollection;
+}
+
+export class PocketbaseCollection {
+    collection: RecordService
+
+    constructor(collection: RecordService) {
+        this.collection = collection;
+    }
+
+    async first(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<RecordModel | undefined> {
+        let result = new PocketFilter();
+        let filter = action(result)
+        try {
+            let result = await this.collection.getFirstListItem(filter, options);
+            return result;
+        } catch (error) {
+            if (error?.status === 404)
+                return undefined;
+
+            console.log(error)
+        }
+        return undefined;
+    }
+}
+
