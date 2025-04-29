@@ -7,10 +7,11 @@
         value = $bindable(),
         variant = 'outline',
         invalid,
-        onIconClick = () => {
-        },
+        onClick=()=>{},
+        onIconClick = () => {},
         ...props
     }: InputProps2 = $props()
+
     let element: HTMLHtmlElement;
 
     let updatedFromEffect = false;
@@ -28,6 +29,8 @@
     })
 
     onMount(() => {
+
+
         const updateValue = (event: Event) => {
             if (updatedFromEffect)
                 return
@@ -49,7 +52,7 @@
 </script>
 
 
-<div class="root">
+<div class="root" onclick={(e)  => onClick(e)}>
     <input
             bind:this={element}
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
@@ -60,7 +63,7 @@
             name={props?.id}
             pattern={props?.regex}
             required={props.required}
-            onclick={props.onClick}
+
             {...props}
     />
 
