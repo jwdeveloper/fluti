@@ -1,4 +1,4 @@
-import PocketBase from 'pocketbase';
+import PocketBase, {RecordService} from 'pocketbase';
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
 
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
@@ -9,7 +9,7 @@ const sessions = new Map<string, SessionData>();
 const ONE_HOUR = 60 * 30 * 1000;
 
 //@ts-ignore
-export async function pocketbaseClientAdmin(login?: string, password?: string):Promise<PocketBase> {
+export async function pocketbaseClientAdmin(login?: string, password?: string): Promise<PocketBase> {
     login = login ?? 'admin@admin.com'
     password = password ?? '1234567890'
 
@@ -32,3 +32,7 @@ export async function pocketbaseClientAdmin(login?: string, password?: string):P
     }
 }
 
+export async function pocketbaseCollection(collection: string) : Promise<RecordService> {
+    let client = await pocketbaseClientAdmin();
+    return client.collection(collection)
+}
