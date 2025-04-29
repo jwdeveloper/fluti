@@ -65,14 +65,18 @@
 <Element width="100%"
          id="Mobile-header"
          display="grid"
-         columns="1fr 1fr 1fr"
+         columns="auto 1fr auto"
          fontSize={flutiTheme.font.huge}
          background={flutiTheme.background.primary}
          padding={flutiTheme.padding.large}>
 
-    <div></div>
-<!--    <h1 style="color: {flutiTheme.background.accent}">{props.logo.name}</h1>-->
-            <LogoElement {...props.logo}/>
+    <Element>
+<!--        <Button2 size="small" icon="fa fa-arrow-left"></Button2>-->
+    </Element>
+
+    <Element width="100%" >
+        <LogoElement {...props.logo}/>
+    </Element>
 
     <Element width="100%" justify="flex-end">
         <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
