@@ -6,6 +6,7 @@
 
     interface FileDropProps {
         maxSize?: number
+        files: any[]
         maxFiles?: number
         placeholder?: string
     }

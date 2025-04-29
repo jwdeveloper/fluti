@@ -1,25 +1,42 @@
 export interface GeminiConfig {
     apiKey: string
-    prompt: string
+    prompt?: string
+    image?: string
     systemMessage?: string
-    model?: string | 'gemini-2.0-flash-lite' | 'gemma-2-27b-it'
+    model?: string | 'gemini-2.0-flash-lite' | 'gemma-2-27b-it' | 'gemini-2.0-flash' | 'gemini-pro-vision'
 }
 
 export async function askGemini(config: GeminiConfig): Promise<any> {
     let model = config?.model ?? 'gemini-2.0-flash-lite'
     let api = 'streamGenerateContent'
+
+    if (config.image)
+        api = 'generateContent'
+    //https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:${api}?key=${config.apiKey}`;
     const body = {
         systemInstruction: {
             parts: [{text: config.systemMessage}]
         },
-        contents: [
-            {
-                parts: [{text: config.prompt}]
-            }
-        ],
-
+        contents: [{parts: []}],
     };
+
+    if (config.image) {
+        let imagePrompt = {
+            inline_data: {
+                mime_type: "image/jpeg",
+                data: config.image,
+            },
+        }
+        //@ts-ignore
+        body.contents[0].parts.push(imagePrompt)
+    }
+
+    if (config.prompt) {
+        let content = {text: config.prompt}
+        //@ts-ignore
+        body.contents[0].parts.push(content)
+    }
 
     const response = await fetch(url, {
         method: 'POST',
@@ -28,13 +45,22 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
     });
 
     if (!response.ok) {
-        console.log(response)
-        throw new Error(`Response AI error ${prompt}:`)
+        let text = await response.text();
+        console.log("ERROR", text, body, response)
+
+        throw new Error(`Response AI error ${config.prompt}:`)
     }
 
-    const result = await response.json();
+    let result = await response.json();
+    let resultList = [];
+    if (Array.isArray(result)) {
+        resultList = result;
+    } else {
+        resultList = [result];
+    }
+
     let resultMessage = ''
-    for (let item of result) {
+    for (let item of resultList) {
         for (let candidate of item.candidates) {
             let parts = candidate.content.parts ?? [];
             for (let part of parts) {
@@ -44,13 +70,13 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
         // console.log("Gemini response:", item.candidates);
     }
     if (!resultMessage.includes("json")) {
-        throw new Error(`Response is not JSON ${prompt}: ${resultMessage}`)
+        throw new Error(`Response is not JSON ${config.prompt}: ${resultMessage}`)
     }
     let object = extractJson(resultMessage);
     return object;
 }
 
-function fixJson(text:string) {
+function fixJson(text: string) {
     return text
         .replace(/,\s*}/g, '}')   // Remove comma before }
         .replace(/,\s*]/g, ']');   // (optional) Remove comma before ]
