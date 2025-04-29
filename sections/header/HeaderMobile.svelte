@@ -8,11 +8,17 @@
     import Separator from "$lib/fluti/components/separator/Separator.svelte";
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
     import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
+    import {vibrate} from "$lib/fluti/utils/Wait";
 
     let {items, currentPath, ...props}: HeaderSectionProps = $props();
 
     let openWindow = $state(false)
 
+
+    function handleItemClick(item: any) {
+        vibrate();
+        window.location.href = item.link ?? "/"
+    }
 </script>
 
 
@@ -25,12 +31,11 @@
             background={selected?flutiTheme.background.accent:flutiTheme.background.secondary}
             color={selected?flutiTheme.background.primary:''}
             direction="row"
-            onClick={()=> window.location.href = item.link??"/"}
+            onClick={handleItemClick}
             justify="space-between"
             gap="0em">
         <svelte:element this="a"
                         href={item.link??"/"}
-
                         style="text-warp:no-wrap;"
         >
             {item.name}
