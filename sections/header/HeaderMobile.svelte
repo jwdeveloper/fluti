@@ -31,7 +31,7 @@
             background={selected?flutiTheme.background.accent:flutiTheme.background.secondary}
             color={selected?flutiTheme.background.primary:''}
             direction="row"
-            onClick={handleItemClick}
+            onClick={()=>handleItemClick(item)}
             justify="space-between"
             gap="0em">
         <svelte:element this="a"
