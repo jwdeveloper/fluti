@@ -81,6 +81,7 @@
 />
 <SideWindow
         panel={{radius: 'var(--radius-large) 0 0 var(--radius-large)'}}
+        animation={{duration:300}}
         bind:visible={openWindow} size="80%">
     <Element height="100%"
              direction='column'
