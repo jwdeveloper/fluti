@@ -14,9 +14,37 @@
         ...props
     }: TabsProps = $props();
 
-    let initWidth = (100 / items.length) + "%"
     let elementPointer: HTMLHtmlElement;
+    let animator: any;
+
+    let isVertical = $derived.by(() => props?.direction == 'row')
+    let innerSize = (100 / items.length) + "%"
     let step = 100 / items.length;
+
+    let flyingElementStyles = $derived.by(() => {
+        if (isVertical) {
+            return `width: ${innerSize};`
+        }
+        return `height:${innerSize}; width:100%`
+    })
+
+    onMount(()=>
+    {
+        animator = animatedElement(elementPointer)
+    })
+
+    $effect(() => {
+        props.direction
+        let index = getIndex();
+        if (isVertical) {
+            elementPointer.style.width = `${step}%`
+            elementPointer.style.left = `${index * step}%`
+            animator.top(0, 0);
+        } else {
+            elementPointer.style.top = `0`
+            animator.left(0, 0);
+        }
+    })
 
     const handleClick = (item: TabsItem) => {
         vibrate();
@@ -40,26 +68,26 @@
     $effect(() => {
         let index = getIndex();
         let fn = 'cubic-bezier(0.175, 0.885, 0.320, 1.275)'
-        let animator = animatedElement(elementPointer);
-        animator.left(`${step * index}%`, 400, fn);
+        if (isVertical) {
+            animator.left(`${step * index}%`, 400, fn);
+        } else {
+            animator.top(`${step * index}%`, 400, fn);
+        }
     })
 
     onMount(() => {
         if (items.length > 0)
             handleClick(selectedItem ?? items[0]);
-
-        let index = getIndex();
-        elementPointer.style.width = `${step}%`
-        elementPointer.style.left = `${index * step}%`
     })
 
 
     function handleKeyDown(event: KeyboardEvent, item: TabsItem) {
         if (event.key === "Enter" || event.code === "Enter") {
-            event.preventDefault(); // Prevent default behavior if needed
+            event.preventDefault();
             handleClick(item);
         }
     }
+
 </script>
 
 
@@ -67,25 +95,31 @@
     <div></div>
 {/snippet}
 
-<Element radius='19px'
-         background={flutiTheme.background.tertiary}
-         width="100%"
-         style="position: relative"
-         {...props}>
+<Element
+        radius='22px'
+        background={flutiTheme.background.tertiary}
+        width="100%"
+        padding="0.5em">
 
-    <div bind:this={elementPointer} class="btn-bg" style="width: {initWidth}"/>
-    {#each items as item}
-        <div tabindex="0"
-             class="btn-tab"
-             style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
-             onkeydown={(e)=> handleKeyDown(e,item)}
-             onclick={() => handleClick(item)}>
-            <i class="{item.icon}"></i>
-            <div>
-                {item.name}
+    <Element
+            width="100%"
+            style="position: relative;"
+            {...props}>
+
+        <div bind:this={elementPointer} class="btn-bg" style={flyingElementStyles}/>
+        {#each items as item}
+            <div tabindex="0"
+                 class="btn-tab"
+                 style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
+                 onkeydown={(e)=> handleKeyDown(e,item)}
+                 onclick={() => handleClick(item)}>
+                <i class="{item.icon}"></i>
+                <div>
+                    {item.name}
+                </div>
             </div>
-        </div>
-    {/each}
+        {/each}
+    </Element>
 </Element>
 
 
@@ -119,13 +153,13 @@
         left: 0;
         top: 0;
         z-index: var(--z-index-1);
-        scale: 0.9;
         height: 100%;
         border: none;
         justify-content: center;
         align-items: center;
         cursor: pointer;
         border-radius: var(--radius-large);
+
         color: var(--accent-primary);
         font-size: var(--font-size-normaler);
         background: var(--bg-primary);

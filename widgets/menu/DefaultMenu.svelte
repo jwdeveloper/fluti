@@ -62,8 +62,9 @@
         result = onClick(item)
         if (result === false)
             return
-        
-        window.location.href = item?.link ?? '/'
+
+        if (item.link)
+            window.location.href = item?.link ?? '/'
     }
 
     let targetElement: HTMLHtmlElement
