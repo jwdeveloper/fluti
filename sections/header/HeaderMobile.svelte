@@ -9,6 +9,8 @@
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
     import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
     import {vibrate} from "$lib/fluti/utils/Wait";
+    import LeftRightInteraction from "$lib/fluti/components/interaction/LeftRightInteraction.svelte";
+    import type {Direction} from "$lib/fluti/flutiSvelteTypes";
 
     let {items, currentPath, ...props}: HeaderSectionProps = $props();
 
@@ -18,6 +20,15 @@
     function handleItemClick(item: any) {
         vibrate();
         window.location.href = item.link ?? "/"
+    }
+
+    function handleInteraction(event: Direction) {
+        if (openWindow === false)
+            return
+
+        if (event === 'left')
+            openWindow = false;
+        vibrate();
     }
 </script>
 
@@ -65,7 +76,9 @@
         <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
     </Element>
 </Element>
-
+<LeftRightInteraction
+        onInteraction={handleInteraction}
+/>
 <SideWindow
         panel={{radius: 'var(--radius-large) 0 0 var(--radius-large)'}}
         bind:visible={openWindow} size="80%">
