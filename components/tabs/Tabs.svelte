@@ -17,7 +17,13 @@
     let elementPointer: HTMLHtmlElement;
     let animator: any;
 
-    let isVertical = $derived.by(() => props?.direction == 'row')
+    let isVertical = $derived.by(() => {
+        if (!props?.direction)
+            return true;
+        if (props?.direction.includes('row'))
+            return true
+        return false;
+    })
     let innerSize = (100 / items.length) + "%"
     let step = 100 / items.length;
 
@@ -28,8 +34,7 @@
         return `height:${innerSize}; width:100%`
     })
 
-    onMount(()=>
-    {
+    onMount(() => {
         animator = animatedElement(elementPointer)
     })
 

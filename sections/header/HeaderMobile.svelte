@@ -9,7 +9,7 @@
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
     import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
 
-    let {items, currentPath,...props}: HeaderSectionProps = $props();
+    let {items, currentPath, ...props}: HeaderSectionProps = $props();
 
     let openWindow = $state(false)
 
@@ -17,27 +17,32 @@
 
 
 {#snippet HeaderButton(item)}
-    <Panel padding="0.5em 1em"
-           width="100%"
-           direction="row"
-           effects={{
-               click:{},
-               rippler:{}}}
-           onClick={()=> window.location.href = item.link??"/"}
-           display="grid"
-           columns="auto 1fr"
-           gap="1em">
-        <Button2
-                background={flutiTheme.background.primary}
-                icon={item.icon}/>
+    {@const selected = currentPath === (item?.link ?? false)}
+    <Element
+            padding="0 0 0 1em"
+            width="100%"
+            radius={flutiTheme.radius.large}
+            background={selected?flutiTheme.background.secondary:''}
+            color={selected?flutiTheme.background.accent:''}
+            direction="row"
+            onClick={()=> window.location.href = item.link??"/"}
+            justify="space-between"
+            gap="0em">
         <svelte:element this="a"
                         href={item.link??"/"}
+
                         style="text-warp:no-wrap;"
-                        class="menu-item">
+        >
             {item.name}
         </svelte:element>
-    </Panel>
 
+        <Button2
+                variant='text'
+                color={selected?flutiTheme.background.accent:''}
+                size="large"
+                icon={item.icon}/>
+
+    </Element>
 {/snippet}
 
 
@@ -50,14 +55,15 @@
          padding={flutiTheme.padding.large}>
 
     <div></div>
-<!--    <LogoElement {...props.logo}/>-->
     <h1 style="color: {flutiTheme.background.accent}">{props.logo.name}</h1>
     <Element width="100%" justify="flex-end">
         <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
     </Element>
 </Element>
 
-<SideWindow bind:visible={openWindow} size="80%">
+<SideWindow
+        panel={{radius: 'var(--radius-large) 0 0 var(--radius-large)'}}
+        bind:visible={openWindow} size="80%">
     <Element height="100%"
              direction='column'
              width="100%"
@@ -66,13 +72,12 @@
              align="flex-start">
         <Space variant="small"/>
 
-        <Element width="100%" justify="flex-end">
-            <Button2 onClick={()=>openWindow = false} icon="fa fa-x" size="large" variant="text"/>
+        <Element width="100%" justify="space-between" align="flex-start">
+            <LogoElement {...props.logo}/>
+            <Button2 onClick={()=>openWindow = false} icon="fa fa-x" size="medium" variant="text"/>
         </Element>
         <Element width="100%">
-            <Separator/>
         </Element>
-        <Space/>
         {#each items as item}
             {@render HeaderButton(item)}
         {/each}

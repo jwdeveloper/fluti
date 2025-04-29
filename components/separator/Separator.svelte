@@ -14,7 +14,7 @@
 
 {#snippet Bar()}
     <Element width="100%" height="100%">
-        <div class={vertical?'bar-vertical':'bar-horizontal'} style='margin: {margin}; {style}'/>
+        <div class={vertical?'bar-vertical':'bar-horizontal'} style='margin: {margin}; height:{height}; {style}'/>
     </Element>
 
 {/snippet}
