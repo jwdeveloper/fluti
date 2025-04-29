@@ -71,7 +71,9 @@
          padding={flutiTheme.padding.large}>
 
     <div></div>
-    <h1 style="color: {flutiTheme.background.accent}">{props.logo.name}</h1>
+<!--    <h1 style="color: {flutiTheme.background.accent}">{props.logo.name}</h1>-->
+            <LogoElement {...props.logo}/>
+
     <Element width="100%" justify="flex-end">
         <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
     </Element>

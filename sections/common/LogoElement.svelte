@@ -27,7 +27,11 @@
 
 <style>
     h2{
-        font-size: 1.4em;
+        font-size: 1.4rem;
+    }
+
+    h4{
+        font-size: 0.9rem;
     }
     img {
         height: 60px;
