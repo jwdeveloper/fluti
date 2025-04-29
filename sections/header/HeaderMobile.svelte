@@ -22,8 +22,8 @@
             padding="0 0 0 1em"
             width="100%"
             radius={flutiTheme.radius.large}
-            background={selected?flutiTheme.background.secondary:''}
-            color={selected?flutiTheme.background.accent:''}
+            background={selected?flutiTheme.background.accent:flutiTheme.background.secondary}
+            color={selected?flutiTheme.background.primary:''}
             direction="row"
             onClick={()=> window.location.href = item.link??"/"}
             justify="space-between"
@@ -38,7 +38,7 @@
 
         <Button2
                 variant='text'
-                color={selected?flutiTheme.background.accent:''}
+                color={selected?flutiTheme.background.primary:''}
                 size="large"
                 icon={item.icon}/>
 
