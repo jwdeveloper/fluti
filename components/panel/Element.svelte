@@ -147,6 +147,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        transition: all 200ms ease-in-out;
         gap: 0.5em;
     }
 

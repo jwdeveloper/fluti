@@ -1,4 +1,9 @@
-import PocketBase, {type RecordListOptions, type RecordModel, RecordService} from 'pocketbase';
+import PocketBase, {
+    type RecordFullListOptions,
+    type RecordListOptions,
+    type RecordModel,
+    RecordService
+} from 'pocketbase';
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
 import {PocketFilter, pocketFilter} from "$lib/fluti/utils/pocketFilter";
 
@@ -33,13 +38,8 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     }
 }
 
-export async function pocketbaseCollection(collection: string): Promise<RecordService> {
-    let client = await pocketbaseClientAdmin();
-    return client.collection(collection)
-}
 
-
-export async function getPocketCollection(collectionName: string): Promise<PocketbaseCollection> {
+export async function pocketbaseCollection(collectionName: string): Promise<PocketbaseCollection> {
     let client = await pocketbaseClientAdmin();
     let collection = client.collection(collectionName);
     let pocketCollection = new PocketbaseCollection(collection);
@@ -51,6 +51,24 @@ export class PocketbaseCollection {
 
     constructor(collection: RecordService) {
         this.collection = collection;
+    }
+
+    async all<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordFullListOptions): Promise<T[]> {
+        let result = new PocketFilter();
+        let filter = action(result)
+
+        let fullOptions = {
+            filter: filter,
+            ...options
+        }
+        try {
+            let result = await this.collection.getFullList(fullOptions);
+            //@ts-ignore
+            return result;
+        } catch (error) {
+            console.log(error)
+        }
+        return [];
     }
 
     async first(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<RecordModel | undefined> {
