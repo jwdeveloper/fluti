@@ -119,9 +119,12 @@
                  onkeydown={(e)=> handleKeyDown(e,item)}
                  onclick={() => handleClick(item)}>
                 <i class="{item.icon}"></i>
-                <div>
-                    {item.name}
-                </div>
+                {#if item.name}
+                    <div>
+                        {item.name}
+                    </div>
+                {/if}
+
             </div>
         {/each}
     </Element>

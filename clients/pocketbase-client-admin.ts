@@ -71,7 +71,7 @@ export class PocketbaseCollection {
         return [];
     }
 
-    async first(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<RecordModel | undefined> {
+    async first<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<T | undefined> {
         let result = new PocketFilter();
         let filter = action(result)
         try {
