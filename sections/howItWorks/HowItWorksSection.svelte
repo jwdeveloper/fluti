@@ -22,7 +22,7 @@
         <TitleAndTextElement
                 color={flutiTheme.background.accent}
                 subTitle={props?.subtitle}
-                textWidth="50%"
+                textWidth={breakpoints.isMobile?"100%":"50%"}
                 title={props?.title}
                 text={props?.summary}
         />

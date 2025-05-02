@@ -3,13 +3,15 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import TitleAndTextElement from "$lib/fluti/sections/common/TitleAndTextElement.svelte";
-    import Panel from "$lib/fluti/components/containers/Panel.svelte";
     import Space from "$lib/fluti/components/space/Space.svelte";
+    import {breakpoints} from "$lib/fluti/widgets/breakpoints/breakpointsImpl.svelte";
+
 </script>
 
 
 <Element
         padding="5% 15%"
+        margin={breakpoints.isMobile?"20% 0":""}
         background={flutiTheme.background.accent}>
 
 
@@ -24,6 +26,7 @@
         <Element direction="column" align="flex-start">
 
             <TitleAndTextElement title="Zaanagarzuj się"
+                                 color={flutiTheme.color.accent}
                                  textColor={flutiTheme.color.accent}
                                  subTitle="Nauczyciele"
                                  textWidth="80%"
@@ -40,14 +43,15 @@
             </Button2>
         </Element>
 
-        <Element height="100%">
-
-            <Element
-                    tag="img"
-                    radius="1em"
-                    attributes={{src:"screenshots/learn-pc.png"}}>
-        </Element>
+        {#if !breakpoints.isMobile}
+            <Element height="100%">
+                <Element
+                        tag="img"
+                        radius="1em"
+                        attributes={{src:"screenshots/learn-pc.png"}}>
+                </Element>
+            </Element>
+        {/if}
     </Element>
-</Element>
 
 </Element>

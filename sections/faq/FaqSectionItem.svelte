@@ -81,6 +81,7 @@
 
             </Element>
             <Button2
+                    style="z-index: 1"
                     onClick={()=>
                      {
 

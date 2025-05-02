@@ -83,9 +83,9 @@
         justify-content: space-between;
         align-items: baseline;
         gap: var(--gap);
-        inline-size: -moz-max-content;
         inline-size: max-content;
         width: max-content;
+
         animation: scroll-left 60s linear infinite;
     }
 
