@@ -7,7 +7,6 @@
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
-    import userSession from "$lib/fluti/server2/middlewares/session/clientUserSession.svelte.js";
     import type {HeaderSectionProps} from "$lib/fluti/sections/header/types";
     import CompanyInfo from "$lib/fluti/sections/header/components/CompanyInfo.svelte";
     import LogoElement from "$lib/fluti/sections/common/LogoElement.svelte";
@@ -149,7 +148,7 @@
                             <Button2
                                     variant="filled"
                                     fullWidth={true}
-                                    onClick={()=> window.location.href='/profil'} icon="fa fa-user">
+                                    onClick={()=> window.location.href='/profile'} icon="fa fa-user">
                                 Twój profil
                             </Button2>
                         </Hint>

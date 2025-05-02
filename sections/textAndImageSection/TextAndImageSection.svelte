@@ -82,6 +82,7 @@
             {/each}
         </Element>
 
+
         <div class="image-root">
             <Element display="block"
                      style="position: sticky"

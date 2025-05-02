@@ -4,6 +4,7 @@ import {type Context, Hono} from "hono";
 import {deleteCookie, getCookie, setCookie} from "hono/cookie";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
+import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
 export function createOAuthApiController(config: SessionMiddlewareConfig) {
     const options = config.oAuth;
@@ -11,7 +12,8 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 
     controller.get("/oauth/create/:provider", async (c: Context) => {
         const provider = c.req.param().provider;
-        const authProviders = await pocketbaseClient.collection('users').listAuthMethods();
+        const client = await pocketbaseClientAdmin();
+        const authProviders = await client.collection('users').listAuthMethods();
         if (!authProviders.oauth2.enabled)
             throw new Error("OAuth disabled!")
 
@@ -42,6 +44,7 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 
 
         // let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
+        console.log('redirect url is', redirectUrl)
         let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
         if (provider.toLowerCase() === 'github') {
             fullUrl = fullUrl.replace("redirect_uri", '')
@@ -92,7 +95,8 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
             await returnUserAuthTokens(c, config, '', user)
         } catch (e) {
             console.log('Error Signing in with oauth', {...oAuthSgnData, request: ""})
-            console.log(e)
+            //@ts-ignore
+            console.log(e, JSON.stringify(e.response))
             return c.redirect(failedRedirect);
         }
         return c.redirect(successRedirect);

@@ -36,9 +36,15 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
     });
 
     controller.post(`/logout`, (c) => {
+
         deleteCookie(c, config.token.cookieName);
         deleteCookie(c, 'db_token');
         return c.json({message: 'Logged out successfully'});
+    });
+    controller.get(`/logout`, (c) => {
+        deleteCookie(c, config.token.cookieName);
+        deleteCookie(c, 'db_token');
+        return c.redirect('/');
     });
 
     controller.post(`/register`, async (c) => {
@@ -60,7 +66,7 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
         } catch (error: any) {
             return c.json({
                 error: true,
-                data: error?.response?.data ?? {},
+                data: JSON.stringify(error?.response?.data) ?? {},
                 message: 'invalid registration data'
             }, 400);
         }

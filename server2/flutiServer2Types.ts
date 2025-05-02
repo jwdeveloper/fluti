@@ -25,7 +25,7 @@ export interface FlutiServer2 {
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any): any
 }
 
-export type FlutiServer2Middleware = (config: FlutiServer2Config) => Promise<void>;
+export type FlutiServer2Middleware = (config: FlutiServer2Config) => Promise<void> | void;
 
 export interface FlutiServer2Config {
 

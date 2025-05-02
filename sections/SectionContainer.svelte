@@ -1,7 +1,6 @@
 <script lang="ts">
     import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import HowItWorksSection from "$lib/fluti/sections/howItWorks/HowItWorksSection.svelte";
 
     let props: ElementProps = $props();
 </script>

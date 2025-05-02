@@ -11,6 +11,8 @@
         items,
         selectedComponent = $bindable(BlankComponent),
         selectedItem = $bindable(undefined),
+        onClick = () => {
+        },
         ...props
     }: TabsProps = $props();
 
@@ -55,6 +57,8 @@
         vibrate();
         selectedItem = item;
         selectedComponent = item.component;
+        if (onClick)
+            onClick(item)
     }
 
     const getIndex = () => {
@@ -70,6 +74,7 @@
         return index;
     }
 
+
     $effect(() => {
         let index = getIndex();
         let fn = 'cubic-bezier(0.175, 0.885, 0.320, 1.275)'
@@ -83,6 +88,7 @@
     onMount(() => {
         if (items.length > 0)
             handleClick(selectedItem ?? items[0]);
+
     })
 
 
@@ -118,7 +124,18 @@
                  style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
                  onkeydown={(e)=> handleKeyDown(e,item)}
                  onclick={() => handleClick(item)}>
-                <i class="{item.icon}"></i>
+
+                {#if item.icon}
+                    <Element
+                            width="100%"
+                            justify="flex-start"
+                            padding="0 1em"
+                            style="position: absolute; width: 100%; pointer-events: none">
+                        <Element width="30px">
+                            <i class="{item.icon}"></i>
+                        </Element>
+                    </Element>
+                {/if}
                 {#if item.name}
                     <div>
                         {item.name}

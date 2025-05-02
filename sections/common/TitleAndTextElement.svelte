@@ -7,7 +7,7 @@
     let {
         textWidth = "100%",
         spaceSize = 'tiny',
-        textColor,
+        textColor = 'var(--text-muted)',
         ...props
     }: TitleAndTextElementProps = $props();
 </script>

@@ -19,7 +19,6 @@ async function pocketbaseUserLogin(request: UserLoginRequest) {
 }
 
 export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): FlutiServer2Middleware {
-
     return (serverConfig) => {
         const config: SessionMiddlewareConfig = {
             contextPropertyName: 'user',
@@ -55,10 +54,9 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
         if (onConfig)
             onConfig(config)
 
-        if (config.token.secret) {
-            console.error("JWT_TOKEN_SECRET is empty! Make sure fill its data otherwise login page will not working!")
+        if (config?.token?.secret === undefined || config?.token?.secret === '') {
+            console.error("[ERROR AND WARNING] env variable JWT_TOKEN_SECRET is empty! Make sure fill its data otherwise login page will not working!")
         }
-
         const app: Hono = serverConfig.app;
         app.use(createLoginWithHeadersMiddleware(config));
         app.use(createSessionAuthMiddleware(config));

@@ -26,8 +26,8 @@
             {...props}
 
     >
-
         <TitleAndTextElement {...item}/>
+        <Space/>
     </Element>
 </Element>
 

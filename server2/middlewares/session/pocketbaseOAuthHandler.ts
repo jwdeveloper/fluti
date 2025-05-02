@@ -10,7 +10,8 @@ export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUse
     }
     const admin = await pocketbaseClientAdmin();
     const result = await admin.collection('users')
-        .authWithOAuth2Code(event.provider,
+        .authWithOAuth2Code(
+            event.provider,
             event.code,
             event.verifier,
             event.redirect)
