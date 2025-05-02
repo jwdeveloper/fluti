@@ -23,7 +23,6 @@
         item
     }: FaqPanelItemProps = $props();
     let element: HTMLHtmlElement;
-
     let isVisible = $derived.by(() => {
         return selected?.question === item?.question;
     })
@@ -36,6 +35,7 @@
             return
         }
 
+        console.log('height is', animation.height)
         animatedElement(element).height(animation.height, animation.speed);
         animatedElement(element).opacity(1, animation.speed / 2);
     })
@@ -77,10 +77,6 @@
                  justify="space-between">
 
             <Element padding="0 1em">
-<!--                <Button2 icon="fa fa-question"-->
-<!--                         variant="text"-->
-<!--                />-->
-<!--                -->
                 <h3 style="z-index: 1">{item.question}</h3>
 
             </Element>
@@ -101,15 +97,11 @@
                     variant="text" icon="fa {isVisible?'fa-x':'fa-arrow-down'}" size="medium"/>
         </Element>
         <Space variant="small"/>
-
-        <Separator
-
-                style="height: 0.05em"/>
+        <Separator style="height: 0.05em"/>
     </Element>
 
     <div>
         <Element direction="column"
-
                  style="overflow: hidden; opacity: 0; height: 0" bind:element={element}
                  padding="0 2em"
                  justify="flex-start">

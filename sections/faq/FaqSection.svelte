@@ -42,6 +42,7 @@
 <!--             line-height: 1em;-->
 <!--            font-size: 3.5em">{messages?.title}</h2>-->
 <!--    </Element>-->
+
     <TitleAndTextElement
             color={flutiTheme.background.accent}
             subTitle="FAQ - czyli częste pytania"
