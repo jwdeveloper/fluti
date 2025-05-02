@@ -41,11 +41,14 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
         deleteCookie(c, 'db_token');
         return c.json({message: 'Logged out successfully'});
     });
+
     controller.get(`/logout`, (c) => {
         deleteCookie(c, config.token.cookieName);
         deleteCookie(c, 'db_token');
         return c.redirect('/');
     });
+
+
 
     controller.post(`/register`, async (c) => {
         const {email, password, passwordConfirm} = await c.req.json();
