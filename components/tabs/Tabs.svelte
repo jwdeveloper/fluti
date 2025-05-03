@@ -57,6 +57,9 @@
         vibrate();
         selectedItem = item;
         selectedComponent = item.component;
+
+        if (selectedItem.onClick)
+            selectedItem.onClick(item)
         if (onClick)
             onClick(item)
     }

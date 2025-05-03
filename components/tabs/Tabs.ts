@@ -14,4 +14,5 @@ export interface TabsItem {
     name: string
     icon?: string,
     component?: any,
+    onClick?: (tabItem: TabsItem) => void
 }
