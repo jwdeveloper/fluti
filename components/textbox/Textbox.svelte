@@ -6,24 +6,30 @@
     let {
         value = $bindable(''),
         placeholder = "...start typing",
+        focus = false,
         maxCharacters = -1,
         style = ''
     }: InputProps2 = $props();
 
+    let element: HTMLHtmlElement;
+
+    $effect(() => {
+        if (focus && element)
+            element.focus()
+    })
+
     $effect(() => {
         if (maxCharacters <= 0) {
-
             return
         }
 
         if (value.length > maxCharacters) {
             maxCharacters = maxCharacters.splice(0, maxCharacters);
         }
-
     })
 </script>
 
-<textarea bind:value={ value} placeholder={placeholder} style={style}>
+<textarea bind:this={element} bind:value={ value} placeholder={placeholder} style={style}>
 </textarea>
 
 
