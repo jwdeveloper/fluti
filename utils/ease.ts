@@ -29,7 +29,9 @@ export function animateToPosition(
     from: Pos,
     to: Pos,
     onUpdate: (pos: Pos) => void,
-    duration = 400
+    duration = 400,
+    easeFun=easeFunction.quadOut()
+
 ): Promise<void> {
 
     if (currentAnimation) {
@@ -52,16 +54,14 @@ export function animateToPosition(
             }
         }, duration + 100); // 100ms buffer
 
-        function easeOutQuad(t: number) {
-            return t * (2 - t);
-        }
+
 
         function step(time: number) {
             if (canceled) return;
 
             const elapsed = time - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = easeOutQuad(progress);
+            const eased = easeFun(progress);
 
             onUpdate({
                 x: startX + deltaX * eased,
