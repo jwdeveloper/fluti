@@ -112,9 +112,13 @@ export function useShortcutsManager(actionsProvider: () => ShortcutAction[], onS
 
     if (!onShortcutTriggered) {
         onShortcutTriggered = (actions) => {
-            console.log('siema?')
-            for (let action of actions)
-                action.method();
+            for (let action of actions) {
+                try {
+                    action.method();
+                } catch (error) {
+                    console.log('Error executing shortcut action:', action, error);
+                }
+            }
         }
     }
 
