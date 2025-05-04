@@ -1,5 +1,6 @@
 import type {ElementProps} from "$lib/fluti/components/panel/ElementProps";
 
+//@ts-ignore
 export interface TabsProps extends ElementProps {
 
     items: TabsItem[],
@@ -7,6 +8,8 @@ export interface TabsProps extends ElementProps {
     selectedItem?: TabsItem | undefined
 
     selectedComponent?: any | undefined
+
+    onClick?: (tabItem: TabsItem, event: MouseEvent | KeyboardEvent | undefined) => void
 }
 
 export interface TabsItem {
@@ -14,5 +17,5 @@ export interface TabsItem {
     name: string
     icon?: string,
     component?: any,
-    onClick?: (tabItem: TabsItem) => void
+    onClick?: (tabItem: TabsItem, event: MouseEvent | KeyboardEvent | undefined) => void
 }

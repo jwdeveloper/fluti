@@ -53,15 +53,15 @@
         }
     })
 
-    const handleClick = (item: TabsItem) => {
+    const handleClick = (item: TabsItem, event: MouseEvent) => {
         vibrate();
         selectedItem = item;
         selectedComponent = item.component;
 
         if (selectedItem.onClick)
-            selectedItem.onClick(item)
+            selectedItem.onClick(item, event)
         if (onClick)
-            onClick(item)
+            onClick(item, event)
     }
 
     const getIndex = () => {
@@ -90,7 +90,7 @@
 
     onMount(() => {
         if (items.length > 0)
-            handleClick(selectedItem ?? items[0]);
+            handleClick(selectedItem ?? items[0], undefined);
 
     })
 
@@ -98,7 +98,7 @@
     function handleKeyDown(event: KeyboardEvent, item: TabsItem) {
         if (event.key === "Enter" || event.code === "Enter") {
             event.preventDefault();
-            handleClick(item);
+            handleClick(item, event);
         }
     }
 
@@ -126,7 +126,7 @@
                  class="btn-tab"
                  style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
                  onkeydown={(e)=> handleKeyDown(e,item)}
-                 onclick={() => handleClick(item)}>
+                 onclick={(e) => handleClick(item,e)}>
 
                 {#if item.icon}
                     <Element

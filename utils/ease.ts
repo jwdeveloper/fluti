@@ -21,6 +21,39 @@ import {
     quadOut
 } from 'svelte/easing';
 
+export type Pos = { x: number; y: number }
+
+export function animateToPosition(from: Pos,
+                                  to: Pos,
+                                  onUpdate: (pos: Pos) => void,
+                                  duration = 400) {
+    const startX = from.x;
+    const startY = from.y;
+    const deltaX = to.x - startX;
+    const deltaY = to.y - startY;
+    const startTime = performance.now();
+
+    function easeOutQuad(t: number) {
+        return t * (2 - t);
+    }
+
+    function step(time: number) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutQuad(progress);
+        const pos = {
+            x: startX + deltaX * eased,
+            y: startY + deltaY * eased
+        }
+        onUpdate(pos)
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
+    }
+
+    requestAnimationFrame(step);
+}
+
 export class EaseFunctions {
     backIn() {
         return backIn;
