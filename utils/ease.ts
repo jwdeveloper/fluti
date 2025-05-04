@@ -21,37 +21,72 @@ import {
     quadOut
 } from 'svelte/easing';
 
-export type Pos = { x: number; y: number }
+type Pos = { x: number; y: number };
 
-export function animateToPosition(from: Pos,
-                                  to: Pos,
-                                  onUpdate: (pos: Pos) => void,
-                                  duration = 400) {
-    const startX = from.x;
-    const startY = from.y;
-    const deltaX = to.x - startX;
-    const deltaY = to.y - startY;
-    const startTime = performance.now();
+let currentAnimation: { cancel: () => void } | null = null;
 
-    function easeOutQuad(t: number) {
-        return t * (2 - t);
+export function animateToPosition(
+    from: Pos,
+    to: Pos,
+    onUpdate: (pos: Pos) => void,
+    duration = 400
+): Promise<void> {
+
+    if (currentAnimation) {
+        currentAnimation.cancel();
     }
 
-    function step(time: number) {
-        const elapsed = time - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = easeOutQuad(progress);
-        const pos = {
-            x: startX + deltaX * eased,
-            y: startY + deltaY * eased
-        }
-        onUpdate(pos)
-        if (progress < 1) {
-            requestAnimationFrame(step);
-        }
-    }
+    return new Promise((resolve) => {
+        const startX = from.x;
+        const startY = from.y;
+        const deltaX = to.x - startX;
+        const deltaY = to.y - startY;
+        const startTime = performance.now();
+        let canceled = false;
 
-    requestAnimationFrame(step);
+        let timeout = setTimeout(() => {
+            if (!canceled) {
+                canceled = true;
+                currentAnimation = null;
+                resolve(); // resolve to avoid stuck promises
+            }
+        }, duration + 100); // 100ms buffer
+
+        function easeOutQuad(t: number) {
+            return t * (2 - t);
+        }
+
+        function step(time: number) {
+            if (canceled) return;
+
+            const elapsed = time - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easeOutQuad(progress);
+
+            onUpdate({
+                x: startX + deltaX * eased,
+                y: startY + deltaY * eased,
+            });
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                clearTimeout(timeout);
+                currentAnimation = null;
+                resolve();
+            }
+        }
+
+        currentAnimation = {
+            cancel: () => {
+                canceled = true;
+                clearTimeout(timeout);
+                currentAnimation = null;
+            }
+        };
+
+        requestAnimationFrame(step);
+    });
 }
 
 export class EaseFunctions {
