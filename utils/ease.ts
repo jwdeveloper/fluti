@@ -34,9 +34,9 @@ export function animateToPosition(
 
 ): Promise<void> {
 
-    if (currentAnimation) {
-        currentAnimation.cancel();
-    }
+    // if (currentAnimation) {
+    //     currentAnimation.cancel();
+    // }
 
     return new Promise((resolve) => {
         const startX = from.x;

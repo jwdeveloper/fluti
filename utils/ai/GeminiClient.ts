@@ -3,10 +3,13 @@ export interface GeminiConfig {
     prompt?: string
     image?: string
     systemMessage?: string
+    jsonOutput?: boolean
     model?: string | 'gemini-2.0-flash-lite' | 'gemma-2-27b-it' | 'gemini-2.0-flash' | 'gemini-pro-vision'
 }
 
 export async function askGemini(config: GeminiConfig): Promise<any> {
+
+    let returnJson = config?.jsonOutput ?? true
     let model = config?.model ?? 'gemini-2.0-flash-lite'
     let api = 'streamGenerateContent'
 
@@ -69,6 +72,10 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
         }
         // console.log("Gemini response:", item.candidates);
     }
+
+    if (!returnJson)
+        return resultMessage;
+
     if (!resultMessage.includes("json")) {
         throw new Error(`Response is not JSON ${config.prompt}: ${resultMessage}`)
     }

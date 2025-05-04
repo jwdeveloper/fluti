@@ -5,6 +5,7 @@
 
     let {
         value = $bindable(''),
+        selectedText = $bindable(''),
         placeholder = "...start typing",
         focus = false,
         maxCharacters = -1,
@@ -18,6 +19,12 @@
             element.focus()
     })
 
+    function handleSelection() {
+        const start = element.selectionStart;
+        const end = element.selectionEnd;
+        selectedText = value.slice(start, end);
+    }
+
     $effect(() => {
         if (maxCharacters <= 0) {
             return
@@ -29,7 +36,9 @@
     })
 </script>
 
-<textarea bind:this={element} bind:value={ value} placeholder={placeholder} style={style}>
+<textarea
+        onselect={handleSelection}
+        bind:this={element} bind:value={ value} placeholder={placeholder} style={style}>
 </textarea>
 
 
