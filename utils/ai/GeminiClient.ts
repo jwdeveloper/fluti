@@ -4,7 +4,15 @@ export interface GeminiConfig {
     image?: string
     systemMessage?: string
     jsonOutput?: boolean
-    model?: string | 'gemini-2.0-flash-lite' | 'gemma-2-27b-it' | 'gemini-2.0-flash' | 'gemini-pro-vision'
+    model?:
+        string |
+        'learnlm-2.0-flash-experimental' |
+        'gemini-2.5-pro-preview-03-25' |
+        'gemini-2.5-flash-preview-04-17' |
+        'gemini-2.0-flash-lite' |
+        'gemma-2-27b-it' |
+        'gemini-2.0-flash' |
+        'gemini-pro-vision'
 }
 
 export async function askGemini(config: GeminiConfig): Promise<any> {
@@ -22,8 +30,14 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
             parts: [{text: config.systemMessage}]
         },
         contents: [{parts: []}],
+        generationConfig: {}
     };
 
+    if (config.jsonOutput) {
+        body.generationConfig = {
+            responseMimeType: "application/json",
+        }
+    }
     if (config.image) {
         let imagePrompt = {
             inline_data: {
@@ -76,9 +90,6 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
     if (!returnJson)
         return resultMessage;
 
-    if (!resultMessage.includes("json")) {
-        throw new Error(`Response is not JSON ${config.prompt}: ${resultMessage}`)
-    }
     let object = extractJson(resultMessage);
     return object;
 }
@@ -89,7 +100,19 @@ function fixJson(text: string) {
         .replace(/,\s*]/g, ']');   // (optional) Remove comma before ]
 }
 
-function extractJson(text: string) {
+
+function extractJson(resultMessage: string) {
+    try {
+        return JSON.parse(resultMessage);
+    } catch (e) {
+        return extractJsonFromText(resultMessage)
+    }
+}
+
+function extractJsonFromText(text: string) {
+    if (!text.includes("json")) {
+        throw new Error(`Response is not JSON: ${text}`)
+    }
     const regex = /```json\s*([\s\S]*?)\s*```/i;
     const match = text.match(regex);
 
