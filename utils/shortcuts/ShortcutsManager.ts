@@ -1,9 +1,8 @@
-import {canvasController} from "../../../../routes/canva/canvasController.svelte";
-
 export interface ShortcutAction {
     name: string,
     method: any,
     shortcuts: string[],
+    tags?: string[]
     icon?: string,
     displayedName?: string,
     path?: string,

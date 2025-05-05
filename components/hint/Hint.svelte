@@ -18,6 +18,7 @@
         xOffset = "0",
         panelStyle,
         keepVisible = false,
+        fontSize='',
         show = $bindable(false)
     }: HintProps = $props();
 
@@ -60,7 +61,7 @@
              class="hint"
              transition:effect>
             <Panel padding="0.6em" style="border-width: 2px; text-wrap: nowrap;">
-                <h5>
+                <h5 style="font-size: {fontSize}">
                     {#each getHtmlLines as line}
                         <div>
                             {line}
