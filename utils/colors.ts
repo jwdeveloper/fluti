@@ -1,7 +1,4 @@
-
-
-export function randomColor():string
-{
+export function randomColor(): string {
     const letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++) {
@@ -53,6 +50,38 @@ export function hexToHue(hex: string): number {
     }
 
     return h;
+}
+
+export function getHexColorBrightness(hex: string): number {
+    // Normalize using CSS parser (e.g. convert "red" → "#ff0000")
+    //@ts-ignore
+    hex = parseCssColorToHex(hex);
+
+    if (!hex) {
+        throw new Error("Invalid CSS color");
+    }
+
+    hex = hex.replace(/^#/, '');
+
+    // Expand shorthand (#abc → #aabbcc)
+    if (hex.length === 3 || hex.length === 4) {
+        hex = hex.split('').map(c => c + c).join('');
+    }
+
+    // Support #RRGGBB and #RRGGBBAA
+    if (hex.length !== 6 && hex.length !== 8) {
+        throw new Error("Invalid hex color format");
+    }
+
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    const a = hex.length === 8 ? parseInt(hex.slice(6, 8), 16) / 255 : 1;
+
+    // Perceived brightness formula (normalized to 0–1), affected by alpha
+    const brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    return brightness * a;
 }
 
 export function adjustHexIntensity(hex: string, intensity: number): string {
