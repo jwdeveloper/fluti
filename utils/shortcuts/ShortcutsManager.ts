@@ -2,41 +2,39 @@ export interface ShortcutAction {
     name: string,
     method: any,
     shortcuts: string[],
-    tags?: string[]
+    tags?: string[],
     icon?: string,
     displayedName?: string,
     path?: string,
     description?: string,
+    preventDefault?: boolean
     undo?: any,
     trackable?: boolean
 }
 
 export class ShortcutsManager {
-    private queue: any[];
-    private callback: (action: ShortcutAction[]) => void
-    private actionsProvider: () => ShortcutAction[]
-    private queueSize: number;
-    private lastKeyPressTime: number;
+    private queue: string[] = [];
+    private heldKeys = new Set<string>();
+    private callback: (action: ShortcutAction[]) => void = () => {
+    };
+    private actionsProvider: () => ShortcutAction[];
+    private queueSize: number = 2;
+    private lastKeyPressTime: number = Date.now();
 
     constructor(actionsProvider: () => ShortcutAction[]) {
-        this.queueSize = 5;
         this.actionsProvider = actionsProvider;
-        this.callback = () => {
-        }
-        this.queue = []
-        this.lastKeyPressTime = Date.now();
     }
 
     bind() {
-        let a = this.handleKeyPress.bind(this);
-        let b = this.handleExecute.bind(this);
-        window.addEventListener('keydown', a)
-        //@ts-ignore
-        window.addEventListener('keyup', b)
+        const keydownHandler = this.handleKeyPress.bind(this);
+        const keyupHandler = this.handleKeyUp.bind(this);
+
+        window.addEventListener('keydown', keydownHandler);
+        window.addEventListener('keyup', keyupHandler);
+
         return () => {
-            window.removeEventListener('keydown', a)
-            //@ts-ignore
-            window.removeEventListener('keyup', b)
+            window.removeEventListener('keydown', keydownHandler);
+            window.removeEventListener('keyup', keyupHandler);
         }
     }
 
@@ -45,84 +43,96 @@ export class ShortcutsManager {
     }
 
     validateShortcut(shortcut: string): boolean {
-        let symbols = shortcut.split(" ")
-        if (this.queue.length < symbols.length)
-            return false;
+        const keys = shortcut.split(" ").map(k => k.toLowerCase());
 
-        for (let i = 0; i < symbols.length; i++) {
-            let symbol = symbols[symbols.length - 1 - i].toLowerCase();
-            let pressed = this.queue[this.queue.length - 1 - i].toLowerCase();
-            if (symbol !== pressed) {
+
+        //check held keys
+        if (this.heldKeys.size === keys.length) {
+            let result = false;
+            for (let i = 0; i < keys.length; i++) {
+                const expected = keys[keys.length - 1 - i];
+                result = this.heldKeys.has(expected);
+                if (!result)
+                    break;
+            }
+            if (result === true)
+                return true;
+        }
+
+
+        if (this.queue.length < keys.length) {
+            return false;
+        }
+
+        for (let i = 0; i < keys.length; i++) {
+            const expected = keys[keys.length - 1 - i];
+            const actual = this.queue[this.queue.length - 1 - i];
+            if (expected !== actual) {
                 return false;
             }
-
         }
+
         return true;
     }
 
-    handleExecute(event: KeyboardEvent) {
+    handleKeyUp(event: KeyboardEvent) {
+        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        console.log('keyup', key);
 
-        // console.log(this.queue)
-        let actions = this.actionsProvider()
-        let result: ShortcutAction[] = []
-        for (let action of actions) {
-            let valid = false;
-            for (let shortcut of action.shortcuts) {
-                if (!this.validateShortcut(shortcut)) {
-                    continue
+
+        const actions = this.actionsProvider();
+        const result: ShortcutAction[] = [];
+
+        for (const action of actions) {
+            for (const shortcut of action.shortcuts) {
+                if (this.validateShortcut(shortcut)) {
+                    result.push(action);
+                    break;
                 }
-                valid = true;
             }
-            if (valid)
-                result.push(action)
         }
-        if (result.length == 0)
-            return
-        this.queue = []
-        this.callback(result)
+        this.heldKeys.delete(key);
+        if (result.length > 0) {
+            this.queue = [];
+            this.callback(result);
+        }
     }
 
     handleKeyPress(event: KeyboardEvent) {
 
-
-        let key = event.key;
-        if (key === 'Meta')
-            key = 'alt';
-        console.log(key)
+        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        this.heldKeys.add(key);
 
         const currentTime = Date.now();
         if (currentTime - this.lastKeyPressTime > 500) {
             this.queue = [];
-            this.queue.push(key)
-            this.lastKeyPressTime = Date.now();
-            return;
         }
 
-        this.lastKeyPressTime = Date.now();
-        this.queue.push(key)
+        this.queue.push(key);
         if (this.queue.length > this.queueSize) {
-            this.queue.shift()
+            this.queue.shift();
         }
+        this.lastKeyPressTime = currentTime;
+        // console.log('key down', event.key, this.queue, this.heldKeys);
     }
 }
 
+export function useShortcutsManager(
+    actionsProvider: () => ShortcutAction[],
+    onShortcutTriggered?: (actions: ShortcutAction[]) => void
+) {
+    const manager = new ShortcutsManager(actionsProvider);
 
-export function useShortcutsManager(actionsProvider: () => ShortcutAction[], onShortcutTriggered?: (actions: ShortcutAction[]) => void) {
-
-    if (!onShortcutTriggered) {
-        onShortcutTriggered = (actions) => {
-            for (let action of actions) {
-                try {
-                    action.method();
-                } catch (error) {
-                    console.log('Error executing shortcut action:', action, error);
-                }
+    manager.onShortcutTriggered(onShortcutTriggered || ((actions) => {
+        for (const action of actions) {
+            try {
+                action.method();
+            } catch (err) {
+                console.error('Error executing shortcut', err);
             }
         }
-    }
+    }));
 
-    let shortcuts = new ShortcutsManager(actionsProvider);
-    shortcuts.onShortcutTriggered(onShortcutTriggered)
-    let unbindShortcuts = shortcuts.bind();
-    return {manager: shortcuts, destory: unbindShortcuts}
+    const unbind = manager.bind();
+    return {manager, destroy: unbind};
 }
