@@ -58,6 +58,7 @@
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
             value={value}
             type={props.type}
+            autofocus={props.autofocus}
             placeholder={props.placeholder}
             disabled={props.disabled}
             name={props?.id}

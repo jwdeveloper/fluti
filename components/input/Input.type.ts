@@ -20,6 +20,7 @@ export interface InputProps {
 export interface InputProps2 extends ElementProps {
     placeholder?: string,
     readonly?: boolean,
+    autofocus?: boolean,
     required?: boolean,
     invalid?: boolean,
     regex?: string
