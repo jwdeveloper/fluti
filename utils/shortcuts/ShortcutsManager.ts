@@ -10,6 +10,9 @@ export interface ShortcutAction {
     preventDefault?: boolean
     undo?: any,
     trackable?: boolean
+
+    //Svelte component assigned to this action
+    component?: any
 }
 
 export class ShortcutsManager {
