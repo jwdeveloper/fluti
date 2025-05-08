@@ -1,4 +1,5 @@
 export interface ShortcutAction {
+    id?: string
     name: string,
     method: any,
     shortcuts: string[],
