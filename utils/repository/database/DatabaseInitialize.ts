@@ -1,12 +1,15 @@
 import {type DatabaseSchema} from "./Schema";
+import {CacheService} from "$lib/fluti/services/CacheService";
 
-let connection: IDBDatabase;
+
+let connections = new CacheService<string, IDBDatabase>()
 
 export async function useDatabase(databaseSchema: DatabaseSchema): Promise<IDBDatabase> {
 
-    if (connection !== undefined)
-        return connection;
-
+    if (connections.has(databaseSchema.name)) {
+        //@ts-ignore
+        return connections.get(databaseSchema.name);
+    }
 
     return new Promise((resolve, reject) => {
         if (!window.indexedDB) {
@@ -43,7 +46,7 @@ export async function useDatabase(databaseSchema: DatabaseSchema): Promise<IDBDa
         request.onsuccess = (event) => {
             //@ts-ignore
             const db: IDBDatabase = event.target.result;
-            connection = db;
+            connections.set(db.name, db, 1000 * 60 * 10);
             resolve(db);
         };
 

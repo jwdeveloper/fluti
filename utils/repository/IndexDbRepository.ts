@@ -31,6 +31,7 @@ export class IndexedDBRepository<T> implements Repository<T> {
         }
 
         return new Promise((resolve, reject) => {
+            // console.log(this.options.name,'name',this.databaseSchema)
             const transaction = db.transaction(this.options.name, 'readwrite');
             const store = transaction.objectStore(this.options.name);
             const request = store.add(item);
