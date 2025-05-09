@@ -1,19 +1,4 @@
-export interface GeminiConfig {
-    apiKey: string
-    prompt?: string
-    image?: string
-    systemMessage?: string
-    jsonOutput?: boolean
-    model?:
-        string |
-        'learnlm-2.0-flash-experimental' |
-        'gemini-2.5-pro-preview-03-25' |
-        'gemini-2.5-flash-preview-04-17' |
-        'gemini-2.0-flash-lite' |
-        'gemma-2-27b-it' |
-        'gemini-2.0-flash' |
-        'gemini-pro-vision'
-}
+import type {GeminiConfig} from "$lib/fluti/utils/ai/types";
 
 export async function askGemini(config: GeminiConfig): Promise<any> {
 
@@ -35,6 +20,7 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
 
     if (config.jsonOutput) {
         body.generationConfig = {
+            temperature: config.temperature ?? 1,
             responseMimeType: "application/json",
         }
     }
