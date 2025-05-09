@@ -1,4 +1,5 @@
 export interface GeminiConfig {
+    sessionId?: string
     apiKey: string
     prompt?: string
     image?: string

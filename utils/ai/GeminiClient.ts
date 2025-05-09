@@ -1,4 +1,12 @@
 import type {GeminiConfig} from "$lib/fluti/utils/ai/types";
+import {CacheService} from "$lib/fluti/services/CacheService";
+
+export interface ChatHistory {
+    sender: 'user' | 'model',
+    message: string
+}
+
+let chatHistory = new CacheService<string, ChatHistory[]>();
 
 export async function askGemini(config: GeminiConfig): Promise<any> {
 
@@ -14,9 +22,21 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
         systemInstruction: {
             parts: [{text: config.systemMessage}]
         },
-        contents: [{parts: []}],
+        contents: [],
         generationConfig: {}
     };
+
+    if (config.sessionId && chatHistory.has(config.sessionId)) {
+        let historyMessages = chatHistory.get(config.sessionId) ?? [];
+        for (let message of historyMessages) {
+            let content = {
+                role: message.sender,
+                parts: [{text: message.message}]
+            }
+            //@ts-ignore
+            body.contents.push(content)
+        }
+    }
 
     if (config.jsonOutput) {
         body.generationConfig = {
@@ -36,9 +56,12 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
     }
 
     if (config.prompt) {
-        let content = {text: config.prompt}
+        let userMessage = {
+            role: 'user',
+            parts: [{text: config.prompt}]
+        }
         //@ts-ignore
-        body.contents[0].parts.push(content)
+        body.contents.push(userMessage)
     }
 
     const response = await fetch(url, {
@@ -73,11 +96,27 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
         // console.log("Gemini response:", item.candidates);
     }
 
+    saveToHistory(config.sessionId ?? '', {sender: 'user', message: config?.prompt ?? ''})
+    saveToHistory(config.sessionId ?? '', {sender: 'model', message: resultMessage})
+
     if (!returnJson)
         return resultMessage;
 
     let object = extractJson(resultMessage);
     return object;
+}
+
+function saveToHistory(sessionId: string, history: ChatHistory) {
+    if (sessionId === undefined)
+        return
+
+    if (chatHistory.has(sessionId)) {
+        let messages = chatHistory.get(sessionId) ?? [];
+        messages.push(history);
+        chatHistory.set(sessionId, messages);
+    } else {
+        chatHistory.set(sessionId, [history]);
+    }
 }
 
 function fixJson(text: string) {
