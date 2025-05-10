@@ -12,6 +12,9 @@ export interface ShortcutAction {
     undo?: any,
     trackable?: boolean
 
+    //Plugin from where action is coming from
+    plugin?: string
+
     //Svelte component assigned to this action
     component?: any
 }

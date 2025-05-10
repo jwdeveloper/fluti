@@ -6,6 +6,7 @@
 
     interface HintProps extends ElementProps {
         title?: string | undefined
+        offset?: string
         keepVisible?: boolean
     }
 
@@ -18,7 +19,7 @@
         xOffset = "0",
         panelStyle,
         keepVisible = false,
-        fontSize='',
+        fontSize = '',
         show = $bindable(false)
     }: HintProps = $props();
 

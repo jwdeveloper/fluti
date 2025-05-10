@@ -1,4 +1,4 @@
-import {InMemoryRepository} from "./InMemoryRepository";
+import {InMemoryRepository} from "./InMemoryRepository.svelte";
 import {IndexedDBRepository} from "./IndexDbRepository";
 import {ReactiveRepository} from "./ReactiveRepository.svelte";
 import type {DatabaseSchema, TableSchema} from "$lib/fluti/utils/repository/database/Schema";
