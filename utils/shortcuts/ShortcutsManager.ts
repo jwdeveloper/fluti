@@ -27,7 +27,7 @@ export class ShortcutsManager {
     private callback: (event: KeyboardEvent, action: ShortcutAction[]) => void = () => {
     };
     private actionsProvider: () => ShortcutAction[];
-    private queueSize: number = 2;
+    private queueSize: number = 10;
     private lastKeyPressTime: number = Date.now();
 
     constructor(actionsProvider: () => ShortcutAction[]) {
@@ -54,14 +54,14 @@ export class ShortcutsManager {
 
         if (window) {
             window?.addEventListener('keydown', keydownHandler);
-            window?.addEventListener('keyup', keyupHandler);
+            // window?.addEventListener('keyup', keyupHandler);
         }
 
 
         this.unbindAction = () => {
             if (window) {
                 window?.removeEventListener('keydown', keydownHandler);
-                window?.removeEventListener('keyup', keyupHandler);
+                // window?.removeEventListener('keyup', keyupHandler);
             }
 
         }
@@ -70,6 +70,8 @@ export class ShortcutsManager {
 
     unbind() {
         if (this.unbindAction) {
+            this.queue = []
+            this.heldKeys = new Set<string>();
             this.unbindAction()
         }
     }
@@ -82,6 +84,7 @@ export class ShortcutsManager {
     validateShortcut(shortcut: string): boolean {
         const keys = shortcut.split(" ").map(k => k.toLowerCase());
 
+        // console.log('validating ',shortcut)
 
         //check held keys
         if (this.heldKeys.size === keys.length) {
@@ -139,6 +142,8 @@ export class ShortcutsManager {
         const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
         this.heldKeys.add(key);
 
+        console.log(key, this.heldKeys, this.queue)
+
         const currentTime = Date.now();
         if (currentTime - this.lastKeyPressTime > 500) {
             this.queue = [];
@@ -149,6 +154,9 @@ export class ShortcutsManager {
             this.queue.shift();
         }
         this.lastKeyPressTime = currentTime;
+
+
+        this.handleKeyUp(event)
         // console.log('key down', event.key, this.queue, this.heldKeys);
     }
 }
