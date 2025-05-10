@@ -1,65 +1,58 @@
+export class EventsController {
+    private eventsMap = new Map<string, Set<(payload: any) => void>>();
+    private boundListeners = new Map<string, EventListener>();
 
-export interface EventsController {
-    onEvent(name: string , event: (payload: any) => void): any,
-
-    callEvent(name: string, payload: any): void,
-
-    clear(): void,
-}
-
-let eventsMap = new Map<string, EventListener>();
-
-export let eventsContext: EventsController = {
-// @ts-ignore
-
-    // Register event listener and track the event name
-    onEvent: function (name: string | OpenVideoEvent, event: (payload: any) => void) {
-
-        const eventListener = (e: CustomEvent) => {
-            event(e.detail);  // Pass the custom event's detail (payload) to the handler
-        };
-        //
-        // if (!name.includes("_")) {
-        //     Object.values(OpenVideoEvent)
-        //         .filter(e => {
-        //             return e.startsWith(name) && e !== name
-        //         })
-        //         .forEach(e => {
-        //             this.onEvent(e, event);
-        //         })
-        // }
-
-        // @ts-ignore
-        window.addEventListener(name, eventListener);
-        // @ts-ignore
-        eventsMap.set(name, eventListener);
-
-        return () => {
-            // @ts-ignore
-            window.removeEventListener(name, eventListener);
+    /**
+     * Register a new handler for the given event name
+     */
+    onEvent(name: string, handler: (payload: any) => void) {
+        if (!this.eventsMap.has(name)) {
+            this.eventsMap.set(name, new Set());
         }
-    },
-
-    // Trigger the custom event
-    callEvent: function (name: string, payload: any) {
-        const customEvent = new CustomEvent(name, {
-            detail: payload,  // Pass the payload as event's detail
-        });
-        window.dispatchEvent(customEvent);  // Dispatch the event on the window
-    },
-
-    clear: function () {
-
-
-        // @ts-ignore
-        eventsMap.forEach((listener, eventName) => {
-            window.removeEventListener(eventName, listener);
-        });
-
-        eventsMap.clear();
+        this.eventsMap.get(name)!.add(handler);
     }
-};
 
-export let onEvent = (eventName: string, action: any) => {
-    return eventsContext.onEvent(eventName, action)
+    /**
+     * Trigger all handlers for a given event name manually
+     */
+    callEvent(name: string, payload: any) {
+        const handlers = this.eventsMap.get(name);
+        if (handlers) {
+            for (const handler of handlers) {
+                handler(payload);
+            }
+        }
+    }
+
+    clear()
+    {
+        this.eventsMap = new Map<string, Set<(payload: any) => void>>();
+    }
+
+    /**
+     * Bind all registered events to the window as CustomEvents
+     */
+    // bind() {
+    //     for (const [name, handlers] of this.eventsMap.entries()) {
+    //         if (!this.boundListeners.has(name)) {
+    //             const listener = (e: CustomEvent) => {
+    //                 for (const handler of handlers) {
+    //                     handler(e.detail);
+    //                 }
+    //             };
+    //             window.addEventListener(name, listener as EventListener);
+    //             this.boundListeners.set(name, listener as EventListener);
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * Unbind all CustomEvents from window
+    //  */
+    // unbind() {
+    //     for (const [name, listener] of this.boundListeners.entries()) {
+    //         window.removeEventListener(name, listener);
+    //     }
+    //     this.boundListeners.clear();
+    // }
 }

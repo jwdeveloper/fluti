@@ -1,3 +1,5 @@
+import {browser} from "$app/environment";
+
 export interface ShortcutAction {
     id?: string
     name: string,
@@ -32,22 +34,50 @@ export class ShortcutsManager {
         this.actionsProvider = actionsProvider;
     }
 
+    private unbindAction: () => void = () => {
+    }
+
+    isKeyPressed(key: string) {
+        return this.heldKeys.has(key);
+    }
+
     bind() {
+
+        if (!browser) {
+            return
+        }
+
+        this.unbind();
+
         const keydownHandler = this.handleKeyPress.bind(this);
         const keyupHandler = this.handleKeyUp.bind(this);
 
-        window.addEventListener('keydown', keydownHandler);
-        window.addEventListener('keyup', keyupHandler);
+        if (window) {
+            window?.addEventListener('keydown', keydownHandler);
+            window?.addEventListener('keyup', keyupHandler);
+        }
 
-        return () => {
-            window.removeEventListener('keydown', keydownHandler);
-            window.removeEventListener('keyup', keyupHandler);
+
+        this.unbindAction = () => {
+            if (window) {
+                window?.removeEventListener('keydown', keydownHandler);
+                window?.removeEventListener('keyup', keyupHandler);
+            }
+
+        }
+        return this.unbindAction;
+    }
+
+    unbind() {
+        if (this.unbindAction) {
+            this.unbindAction()
         }
     }
 
     onShortcutTriggered(callback: (event: KeyboardEvent, action: ShortcutAction[]) => void) {
         this.callback = callback;
     }
+
 
     validateShortcut(shortcut: string): boolean {
         const keys = shortcut.split(" ").map(k => k.toLowerCase());
@@ -139,6 +169,6 @@ export function useShortcutsManager(
         }
     }));
 
-    const unbind = manager.bind();
-    return {manager, destroy: unbind};
+    manager.bind();
+    return manager;
 }

@@ -62,6 +62,14 @@ export class InMemoryRepository<T> implements Repository<T> {
         return undefined;
     }
 
+    async deleteAll()
+    {
+        for(let item of this.items)
+        {
+            this.delete(item)
+        }
+    }
+
     async insert(item: T): Promise<T | undefined> {
         // @ts-ignore
         if (this.items.some(existingItem => existingItem[this.options.key] === item[this.options.key])) {
