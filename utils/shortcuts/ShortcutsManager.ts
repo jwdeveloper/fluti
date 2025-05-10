@@ -1,7 +1,7 @@
 export interface ShortcutAction {
     id?: string
     name: string,
-    method: any,
+    method: (event: KeyboardEvent, args: any) => void,
     shortcuts: string[],
     tags?: string[],
     icon?: string,
@@ -22,7 +22,7 @@ export interface ShortcutAction {
 export class ShortcutsManager {
     private queue: string[] = [];
     private heldKeys = new Set<string>();
-    private callback: (action: ShortcutAction[]) => void = () => {
+    private callback: (event: KeyboardEvent, action: ShortcutAction[]) => void = () => {
     };
     private actionsProvider: () => ShortcutAction[];
     private queueSize: number = 2;
@@ -45,7 +45,7 @@ export class ShortcutsManager {
         }
     }
 
-    onShortcutTriggered(callback: (action: ShortcutAction[]) => void) {
+    onShortcutTriggered(callback: (event: KeyboardEvent, action: ShortcutAction[]) => void) {
         this.callback = callback;
     }
 
@@ -84,7 +84,6 @@ export class ShortcutsManager {
 
     handleKeyUp(event: KeyboardEvent) {
         const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
-        console.log('keyup', key);
 
 
         const actions = this.actionsProvider();
@@ -101,7 +100,7 @@ export class ShortcutsManager {
         this.heldKeys.delete(key);
         if (result.length > 0) {
             this.queue = [];
-            this.callback(result);
+            this.callback(event, result);
         }
     }
 
@@ -126,14 +125,14 @@ export class ShortcutsManager {
 
 export function useShortcutsManager(
     actionsProvider: () => ShortcutAction[],
-    onShortcutTriggered?: (actions: ShortcutAction[]) => void
+    onShortcutTriggered?: (event: KeyboardEvent, actions: ShortcutAction[]) => void
 ) {
     const manager = new ShortcutsManager(actionsProvider);
 
-    manager.onShortcutTriggered(onShortcutTriggered || ((actions) => {
+    manager.onShortcutTriggered(onShortcutTriggered || ((event, actions) => {
         for (const action of actions) {
             try {
-                action.method();
+                action.method(event, undefined);
             } catch (err) {
                 console.error('Error executing shortcut', err);
             }
