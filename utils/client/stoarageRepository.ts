@@ -13,7 +13,7 @@ export interface IStorageMapper {
      * @param defaultValue An optional default value to return if the key does not exist.
      * @returns The retrieved object or the default value if the key does not exist.
      */
-    load(key: string, defaultValue?: any): void
+    load(key: string, defaultValue?: any): any
 }
 
 export interface IStorageRepository {
