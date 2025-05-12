@@ -47,21 +47,15 @@ export class ShortcutsManager {
             return
         }
 
-        this.unbind();
+        // this.unbind();
 
         const keydownHandler = this.handleKeyPress.bind(this);
-        const keyupHandler = this.handleKeyUp.bind(this);
-
         if (window) {
             window?.addEventListener('keydown', keydownHandler);
-            // window?.addEventListener('keyup', keyupHandler);
         }
-
-
         this.unbindAction = () => {
             if (window) {
                 window?.removeEventListener('keydown', keydownHandler);
-                // window?.removeEventListener('keyup', keyupHandler);
             }
 
         }
@@ -72,6 +66,7 @@ export class ShortcutsManager {
         if (this.unbindAction) {
             this.queue = []
             this.heldKeys = new Set<string>();
+            this.actionsProvider = () => []
             this.unbindAction()
         }
     }
@@ -117,8 +112,6 @@ export class ShortcutsManager {
 
     handleKeyUp(event: KeyboardEvent) {
         const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
-
-
         const actions = this.actionsProvider();
         const result: ShortcutAction[] = [];
 
@@ -140,10 +133,7 @@ export class ShortcutsManager {
     handleKeyPress(event: KeyboardEvent) {
 
         const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
-        this.heldKeys.add(key);
-
         console.log(key, this.heldKeys, this.queue)
-
         const currentTime = Date.now();
         if (currentTime - this.lastKeyPressTime > 500) {
             this.queue = [];
@@ -166,7 +156,7 @@ export function useShortcutsManager(
     onShortcutTriggered?: (event: KeyboardEvent, actions: ShortcutAction[]) => void
 ) {
     const manager = new ShortcutsManager(actionsProvider);
-
+    console.log('actions loaded',actionsProvider())
     manager.onShortcutTriggered(onShortcutTriggered || ((event, actions) => {
         for (const action of actions) {
             try {

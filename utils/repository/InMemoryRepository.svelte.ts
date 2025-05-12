@@ -3,7 +3,7 @@ import type {Repository, RepositoryOptions} from "./Repository";
 export class InMemoryRepository<T> implements Repository<T> {
 
     private readonly options: RepositoryOptions;
-    readonly items: T[] = $state([]);
+    items: T[] = $state([]);
     private readonly indexes: Map<string, Map<any, T[]>>;
 
     constructor(options: RepositoryOptions) {
@@ -62,10 +62,8 @@ export class InMemoryRepository<T> implements Repository<T> {
         return undefined;
     }
 
-    async deleteAll()
-    {
-        for(let item of this.items)
-        {
+    async deleteAll() {
+        for (let item of this.items) {
             this.delete(item)
         }
     }
