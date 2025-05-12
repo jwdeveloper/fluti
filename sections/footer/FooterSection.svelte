@@ -27,13 +27,13 @@
 {#snippet PrivacyLinks()}
     <Element gap="3em"
              mobile={{gap:"1em", direction: 'column'}}>
-        <Link>
+        <Link url="/blog/rodo">
             <h3 style="text-wrap: nowrap;font-weight: 300"> Polityka prywatności</h3>
         </Link>
-        <Link>
+        <Link url="/blog/regulamin">
             <h3 style="text-wrap: nowrap;font-weight: 300">Warunki Usługi</h3>
         </Link>
-        <Link>
+        <Link url="/blog/cookies">
             <h3 style="text-wrap: nowrap; font-weight: 300;">Ustawienia cookies</h3>
         </Link>
     </Element>
@@ -140,7 +140,7 @@
                  mobile={{style:'width:100%', direction:'column'}}
                  gap="2em"
                  align="flex-start"
-                 justify="flex-end"
+                 justify="space-between"
         >
             {#each linksColumns as linkColumn}
                 {@render LinksColumn(linkColumn)}
