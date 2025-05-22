@@ -26,7 +26,7 @@ export interface OAuthProvider {
     iconColor: string,
     borderColor?: string,
     onlyIcon: boolean //shows only icons with name
-    enabled?:boolean
+    enabled?: boolean
 }
 
 
@@ -87,7 +87,12 @@ export interface LoginPageProps {
 
     oAuth?: {
         enable?: boolean
+        direction?: 'default' | 'vertical'
         providers?: OAuthProvider[],
+    }
+
+    emailAuth?: {
+        enabled?: boolean
     }
 
     templates?: {

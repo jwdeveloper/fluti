@@ -10,6 +10,9 @@
     const props: LoginPageProps = $props();
 
     const defaultProps: LoginPageProps = {
+        emailAuth: {
+            enabled: true
+        },
         oAuth: {
             enable: true,
             providers: [
@@ -53,6 +56,7 @@
 
     const mergedData = {...defaultProps, ...props}
     const data: LoginPageProps = {
+        emailAuth: {...defaultProps?.emailAuth, ...props?.emailAuth},
         oAuth: {...defaultProps?.oAuth, ...props?.oAuth},
         templates: {...defaultProps?.templates, ...props?.templates},
         links: {...defaultProps?.links, ...props?.links},

@@ -5,6 +5,7 @@
     import Button2 from "$lib/fluti/components/button/Button2.svelte";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
+    import {onMount} from "svelte";
 
     interface OAuthLoginProps extends LoginViewProps {
         onProviderClick: (provider: string) => void;
@@ -13,6 +14,16 @@
     const {controller, onProviderClick}: OAuthLoginProps = $props();
     const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers?.filter(e => e?.enabled !== false) ?? [])
     const translations = controller.props.messages.loginView.oauth;
+
+    onMount(() => {
+        let isVertical = controller?.props?.oAuth?.direction === 'vertical'
+        if (isVertical) {
+            items.forEach(e => {
+                e.onlyIcon = false
+            })
+        }
+    })
+
     const providersIcons = $derived.by(() => {
         return items.filter(e => e.onlyIcon);
     })
@@ -49,6 +60,7 @@
             </div>
         {/each}
     </Element>
+
 </Element>
 
 

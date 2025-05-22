@@ -6,6 +6,7 @@ export interface GeminiConfig {
     systemMessage?: string
     temperature?: number
     jsonOutput?: boolean
+    imageOutput?: boolean
     model?:
         string |
         'learnlm-2.0-flash-experimental' |

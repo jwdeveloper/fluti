@@ -90,6 +90,9 @@
                 onProviderClick={(p)=> controller.loginOAuth(p)}/>
 
 
+    {/if}
+
+    {#if controller?.props?.oAuth?.enable === true && controller?.props?.emailAuth?.enabled === true}
         <Separator style="
          height: 0.1em;
          background: var(--bg-secondary)">
@@ -102,12 +105,13 @@
         <Space variant="tiny"/>
     {/if}
 
-
-    <Element direction="column" width="100%">
-        <FormFieldsLogin transition={translation}
-                         controller={controller}
-                         enablePassword={true}/>
-    </Element>
+    {#if controller?.props?.emailAuth?.enabled === true}
+        <Element direction="column" width="100%">
+            <FormFieldsLogin transition={translation}
+                             controller={controller}
+                             enablePassword={true}/>
+        </Element>
+    {/if}
 
     <Element
             align="flex-end"

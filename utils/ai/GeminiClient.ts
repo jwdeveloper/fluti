@@ -16,6 +16,13 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
 
     if (config.image)
         api = 'generateContent'
+
+    if (config.imageOutput) {
+        // model = 'gemini-2.0-flash-preview-image-generation'
+        api = 'generateContent'
+        config.systemMessage += '- You must generate an image.'
+    }
+
     //https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:${api}?key=${config.apiKey}`;
     const body = {
@@ -44,6 +51,12 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
             responseMimeType: "application/json",
         }
     }
+    if (config.imageOutput) {
+        body.generationConfig = {
+            responseModalities: ["TEXT", "IMAGE"]
+        }
+    }
+
     if (config.image) {
         let imagePrompt = {
             inline_data: {

@@ -105,6 +105,7 @@
     --text-error: rgba(239, 68, 68, 0.66);
     --accent-primary: #5919c9;
     --accent-color: #ffffff;
+
 }
 
 [data-theme="dark"] {
