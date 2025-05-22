@@ -64,8 +64,12 @@ export async function askGemini(config: GeminiConfig): Promise<any> {
                 data: config.image,
             },
         }
+         let userMessage = {
+             role: 'user',
+             parts: [imagePrompt]
+         }
         //@ts-ignore
-        body.contents[0].parts.push(imagePrompt)
+        body.contents.push(userMessage)
     }
 
     if (config.prompt) {

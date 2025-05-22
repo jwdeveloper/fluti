@@ -14,15 +14,12 @@
     const {controller, onProviderClick}: OAuthLoginProps = $props();
     const items: OAuthProvider[] = $state(controller.props?.oAuth?.providers?.filter(e => e?.enabled !== false) ?? [])
     const translations = controller.props.messages.loginView.oauth;
-
-    onMount(() => {
-        let isVertical = controller?.props?.oAuth?.direction === 'vertical'
-        if (isVertical) {
-            items.forEach(e => {
-                e.onlyIcon = false
-            })
-        }
-    })
+    let isVertical = controller?.props?.oAuth?.direction === 'vertical'
+    if (isVertical) {
+        items.forEach(e => {
+            e.onlyIcon = false
+        })
+    }
 
     const providersIcons = $derived.by(() => {
         return items.filter(e => e.onlyIcon);
