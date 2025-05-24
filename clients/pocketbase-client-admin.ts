@@ -5,7 +5,7 @@ import PocketBase, {
     RecordService
 } from 'pocketbase';
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
-import {PocketFilter, pocketFilter} from "$lib/fluti/utils/pocketFilter";
+import {PocketFilter} from "$lib/fluti/utils/pocketFilter";
 
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
 
@@ -75,9 +75,9 @@ export class PocketbaseCollection {
         let result = new PocketFilter();
         let filter = action(result)
         try {
-            let result = await this.collection.getFirstListItem(filter, options);
-            return result;
+            return await this.collection.getFirstListItem(filter, options);
         } catch (error) {
+            //@ts-ignore
             if (error?.status === 404)
                 return undefined;
 
