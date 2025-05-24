@@ -83,7 +83,7 @@
                 mobile={{height:'auto'}}
                 gap="0"
                 direction="column">
-            <LogoComponent/>
+            {@render LogoComponent()}
             <h4 style="font-weight: normal">{props?.logo?.slogan ?? ''}</h4>
 
             {#if breakpoints.isDesktop}
@@ -97,7 +97,7 @@
                      height="100%"
                      mobile={{}}
                      justify="flex-start">
-                <SocialMediaComponent/>
+                {@render SocialMediaComponent()}
             </Element>
         </Element>
 
