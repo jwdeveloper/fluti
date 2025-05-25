@@ -27,6 +27,8 @@ export interface CommonPages {
     url: string
 }
 
+export type SvelteComponentRef = any
+
 export type PageType =
     'website' |
     'article' |
