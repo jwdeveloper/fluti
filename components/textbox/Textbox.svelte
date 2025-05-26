@@ -3,6 +3,11 @@
 
     import type {InputProps2} from "$lib/fluti/components/input/Input.type";
 
+    interface TextboxProps extends InputProps2 {
+        maxCharacters?: number;
+        selectedText?: string;
+    }
+
     let {
         value = $bindable(''),
         selectedText = $bindable(''),
@@ -10,7 +15,7 @@
         focus = false,
         maxCharacters = -1,
         style = ''
-    }: InputProps2 = $props();
+    }: TextboxProps = $props();
 
     let element: HTMLHtmlElement;
 

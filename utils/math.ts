@@ -2,6 +2,9 @@ export interface Vector2 {
     x: number
     y: number
 }
+export interface Vector3 extends Vector2{
+    z: number
+}
 
 export function minVector2(p1: Vector2, p2: Vector2): Vector2 {
     return {
