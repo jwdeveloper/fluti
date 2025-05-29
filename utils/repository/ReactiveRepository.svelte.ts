@@ -27,21 +27,21 @@ export class ReactiveRepository<T> implements Repository<T> {
     async insert(item: T): Promise<T | undefined> {
         let result = await this._repo.insert(item)
         if (result)
-            this.callEvent(result)
+           await this.callEvent(result)
         return result;
     }
 
     async update(item: T): Promise<T | undefined> {
         let result = await this._repo.update(item)
         if (result)
-            this.callEvent(result)
+            await this.callEvent(result)
         return result;
     }
 
     async delete(item: T | string): Promise<T | undefined> {
         let result = await this._repo.delete(item)
         if (result)
-            this.callEvent(result)
+            await this.callEvent(result)
         return result;
     }
 
@@ -58,11 +58,14 @@ export class ReactiveRepository<T> implements Repository<T> {
         return await this._repo.find(lambda)
     }
 
-    private callEvent(data: any) {
+    private async callEvent(data: any) {
         // console.log('call event', data,this.trigger)
         this.trigger++;
-        for(let event of this._events) {
-            event(data)
+        for (let event of this._events) {
+            event({
+                items: await this._repo.findAll(),
+                data: data
+            })
         }
         // this._events.callEvent(this._repo.name(), data)
     }

@@ -19,6 +19,10 @@ export async function all(fn: any, time?: any, delay?: any) {
     await wait(time)
 }
 
+export function getCurrentTime() {
+    return new Date().toISOString();
+}
+
 export function generateUUID() { // Public Domain/MIT
     let d = new Date().getTime();//Timestamp
     let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported

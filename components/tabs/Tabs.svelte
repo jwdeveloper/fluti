@@ -3,7 +3,7 @@
     import type {TabsItem, TabsProps} from "./Tabs";
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
-    import {vibrate} from "$lib/fluti/utils/Wait";
+    import {generateUUID, vibrate} from "$lib/fluti/utils/Wait";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
@@ -26,8 +26,13 @@
             return true
         return false;
     })
-    let innerSize = (100 / items.length) + "%"
-    let step = 100 / items.length;
+    let innerSize = $derived.by(() => {
+        return (100 / items.length) + "%";
+    })
+
+    let step = $derived.by(() => {
+        return 100 / items.length;
+    });
 
     let flyingElementStyles = $derived.by(() => {
         if (isVertical) {
@@ -69,7 +74,7 @@
         for (let item of items) {
             if (selectedItem === undefined)
                 break
-            if (item.name === selectedItem.name) {
+            if (getId(item) === getId(selectedItem)) {
                 break
             }
             index++;
@@ -77,6 +82,9 @@
         return index;
     }
 
+    function getId(item: any) {
+        return item?.key ?? item?.id ?? item?.name;
+    }
 
     $effect(() => {
         let index = getIndex();
@@ -102,6 +110,7 @@
         }
     }
 
+
 </script>
 
 
@@ -121,10 +130,10 @@
             {...props}>
 
         <div bind:this={elementPointer} class="btn-bg" style={flyingElementStyles}/>
-        {#each items as item}
+        {#each items as item (getId(item))}
             <div tabindex="0"
                  class="btn-tab"
-                 style="color: {selectedItem?.name === item.name?flutiTheme.background.accent:''}"
+                 style="color: {getId(selectedItem) === getId(item)?flutiTheme.background.accent:''}"
                  onkeydown={(e)=> handleKeyDown(e,item)}
                  onclick={(e) => handleClick(item,e)}>
 
