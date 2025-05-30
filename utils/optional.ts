@@ -1,3 +1,4 @@
+
 export class Optional<T> {
     private constructor(
         private readonly value: T | null | undefined,
@@ -6,7 +7,7 @@ export class Optional<T> {
 
     static of<T>(value: T): Optional<T> {
         if (value === null || value === undefined) {
-            throw new Error("Optional.of() cannot be called with null or undefined");
+            return Optional.fail("null or undefined")
         }
         return new Optional(value);
     }
