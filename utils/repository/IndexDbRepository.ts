@@ -17,6 +17,7 @@ export class IndexedDBRepository<T> implements Repository<T> {
     }
 
     private async openDB(): Promise<IDBDatabase> {
+        // console.log('tryxzzzxing to open database', this.databaseSchema.name, this.databaseSchema.version);
         let connection = await useDatabase(this.databaseSchema)
         return connection;
     }

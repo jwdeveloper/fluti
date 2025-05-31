@@ -51,6 +51,7 @@ export async function useDatabase(databaseSchema: DatabaseSchema): Promise<IDBDa
         };
 
         request.onerror = (event) => {
+            console.log('Database error:', event);
             //@ts-ignore
             reject("Database error: " + event.target.errorCode);
         };
