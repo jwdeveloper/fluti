@@ -1,11 +1,11 @@
-
 export class Optional<T> {
     private constructor(
         private readonly value: T | null | undefined,
         private readonly errorMessage?: string
-    ) {}
+    ) {
+    }
 
-    static of<T>(value: T): Optional<T> {
+    static of<T>(value: T | undefined | null): Optional<T> {
         if (value === null || value === undefined) {
             return Optional.fail("null or undefined")
         }
