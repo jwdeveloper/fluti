@@ -1,4 +1,5 @@
 import type {Repository, RepositoryOptions} from "./Repository";
+import {generateUUID} from "$lib/fluti/utils/Wait";
 
 export class InMemoryRepository<T> implements Repository<T> {
 
@@ -69,6 +70,12 @@ export class InMemoryRepository<T> implements Repository<T> {
     }
 
     async insert(item: T): Promise<T | undefined> {
+
+        //@ts-ignore
+        if (item[this.options.key] === undefined)
+            //@ts-ignore
+            item[this.options.key] = generateUUID();
+
         // @ts-ignore
         if (this.items.some(existingItem => existingItem[this.options.key] === item[this.options.key])) {
             return undefined;

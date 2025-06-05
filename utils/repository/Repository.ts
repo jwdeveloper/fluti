@@ -2,8 +2,9 @@ import {InMemoryRepository} from "./InMemoryRepository.svelte";
 import {IndexedDBRepository} from "./IndexDbRepository";
 import {ReactiveRepository} from "./ReactiveRepository.svelte";
 import type {DatabaseSchema, TableSchema} from "$lib/fluti/utils/repository/database/Schema";
+import {PocketbaseRepository} from "$lib/fluti/utils/repository/PocketbaseRepository";
 
-export class LocalRepository {
+export class EasyRepository {
 
 
     static open<T>(options: RepositoryOptions): Repository<T> {
@@ -35,9 +36,12 @@ export class LocalRepository {
         if (options.useIndexDb)
             //@ts-ignore
             repository = new IndexedDBRepository(dbOptions, options)
+        else if (options.usePocketbase)
+            repository = new PocketbaseRepository(options);
         else
             //@ts-ignore
             repository = new InMemoryRepository(options)
+
 
         if (options.reactive)
             //@ts-ignore
@@ -51,6 +55,7 @@ export type RepositoryOptions = {
     name: string// repository name name
     key: string //that to property of object that represent key
     useIndexDb?: boolean //if true data is stored inside indexDB, otherwise data is store in application memory
+    usePocketbase?: boolean //if true data is stored inside pocketbase, otherwise data is store in application memory
     reactive?: boolean //triggers an event when Insert/Update/Delete method are executed with success
     indexes?: string[] //names of columns that should be indexed
     databaseName?: string

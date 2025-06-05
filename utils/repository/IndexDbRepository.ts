@@ -1,6 +1,7 @@
 import type {Repository, RepositoryOptions} from "./Repository";
 import {useDatabase} from "$lib/fluti/utils/repository/database/DatabaseInitialize";
 import type {DatabaseSchema} from "$lib/fluti/utils/repository/database/Schema";
+import {generateUUID} from "$lib/fluti/utils/Wait";
 
 
 export class IndexedDBRepository<T> implements Repository<T> {
@@ -24,6 +25,12 @@ export class IndexedDBRepository<T> implements Repository<T> {
 
     async insert(item: T): Promise<T | undefined> {
         const db = await this.openDB();
+
+        //@ts-ignore
+        if (item[this.options.key] === undefined)
+            //@ts-ignore
+            item[this.options.key] = generateUUID();
+
         //@ts-ignore
         let key = item[this.options.key];
         const exists = await this.findByKey(key)
