@@ -96,6 +96,8 @@ export class FlutiServer2Impl implements FlutiServer2 {
 
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any) {
 
+
+
         const theme = event.cookies.get("theme") ?? this.config.defaultTheme;
         const lang = event.cookies.get("lang") ?? this.config.defaultLang;
 

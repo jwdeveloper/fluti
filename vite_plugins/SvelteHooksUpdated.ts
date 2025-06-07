@@ -1,6 +1,13 @@
 import path from "path";
+import fs from "fs";
 
-export function onSvelteHooksUpdated(callback: () => void) {
+
+/**
+ * Checks if the current file imports the `onSvelteHooksUpdated` method, then if file got hot swapped or updated by vite
+ * is calling this method.
+ * @param callback
+ */
+export function onCurrentFileHotSwappedByVite(callback: () => void) {
     let functionClen = () => {
         callback()
         process.off('hooks-updated', functionClen)
@@ -9,30 +16,40 @@ export function onSvelteHooksUpdated(callback: () => void) {
 }
 
 
-function hotCallbackPlugin(watchedFilePath: string, callback: () => void) {
-    const resolvedPath = path.resolve(watchedFilePath);
+// Utility: Checks if a file imports a specific method
+function fileImportsSymbol(filePath: string, symbolName: string): boolean {
+    try {
+        const content = fs.readFileSync(filePath, "utf-8");
+        const importRegex = new RegExp(`import\\s+\\{[^}]*\\b${symbolName}\\b[^}]*\\}\\s+from\\s+['"][^'"]+['"]`, "g");
+        return importRegex.test(content);
+    } catch (e) {
+        return false;
+    }
+}
+
+function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
     return {
-        name: 'vite-plugin-hot-callback',
+        name: 'vite-plugin-hot-symbol',
         //@ts-ignore
         handleHotUpdate({file}) {
-            if (path.resolve(file) === resolvedPath) {
-                console.log(`🔁 File hot-swapped: ${file}`);
-                callback();
-            }
+            let path = file as string;
+            if (!path.includes('src'))
+                return
+            if (path.endsWith('.svelte'))
+                return;
+            if (path.includes('.svelte-kit'))
+                return;
+
+            console.log(`🔁 File imports '${symbolName}', hot-swapping: ${file}`);
+            callback();
         }
     };
 }
 
-
-export function hooksUpdatedPlugin() {
-
-    const currentPath = __dirname;
-    const basePath = currentPath.split('/src/')[0] + '/src/';
-    let targetPath = path.resolve(basePath, './hooks.server.ts');
-    console.log(targetPath)
-    return hotCallbackPlugin(targetPath, () => {
-        console.log('🔥🔥🔥 hooks.server.ts hot-swap! 🔥🔥🔥');
+export function fileHotSwapUpdateHookPlugin() {
+    return hotCallbackPluginForSymbol(onCurrentFileHotSwappedByVite.name, () => {
+        console.log('🔥🔥🔥 hook import detected, triggering callback 🔥🔥🔥');
         //@ts-ignore
         process.emit('hooks-updated', {});
-    })
+    });
 }

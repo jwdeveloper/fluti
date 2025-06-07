@@ -1,6 +1,6 @@
 import type {CrlsTableRules, CrlsUser} from "$lib/fluti/services/crls/types";
 
-import {CacheService} from "$lib/api/services/CacheService";
+import {CacheService} from "../../../../routes/canva/api/services/CacheService";
 import type {RequestEvent} from "@sveltejs/kit";
 import {CrlsTableValidatorImpl, CrlsValidatorImpl} from "$lib/fluti/services/crls/validator";
 

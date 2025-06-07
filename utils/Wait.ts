@@ -1,3 +1,15 @@
+import {tick} from "svelte";
+
+export async function waitTick(callback: () => void, ticks?: number) {
+    if (ticks === undefined)
+        ticks = 1;
+
+    for (let i = 0; i < ticks; i++) {
+        await tick();
+    }
+    callback();
+}
+
 export async function wait(milliseconds: any) {
     if (typeof milliseconds === "number") {
         return new Promise(resolve => {

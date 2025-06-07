@@ -1,3 +1,8 @@
+export interface Cancelable<T> {
+    isCanceled: boolean;
+    data: T
+}
+
 export class EventsController {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
     private boundListeners = new Map<string, EventListener>();
@@ -24,8 +29,7 @@ export class EventsController {
         }
     }
 
-    clear()
-    {
+    clear() {
         this.eventsMap = new Map<string, Set<(payload: any) => void>>();
     }
 
