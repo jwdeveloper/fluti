@@ -33,8 +33,9 @@ function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
         //@ts-ignore
         handleHotUpdate({file}) {
             let path = file as string;
-            if (!path.includes('src'))
-                return
+            if (!path.includes('src')) {
+                return;
+            }
             if (path.endsWith('.svelte'))
                 return;
             if (path.includes('.svelte-kit'))
