@@ -3,7 +3,7 @@ export interface Cancelable<T> {
     data: T
 }
 
-export class EventsController {
+export class EventsService {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
     private boundListeners = new Map<string, EventListener>();
 

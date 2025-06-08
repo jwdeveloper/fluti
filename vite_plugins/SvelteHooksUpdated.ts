@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 
+const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
 
 /**
  * Checks if the current file imports the `onSvelteHooksUpdated` method, then if file got hot swapped or updated by vite
@@ -15,41 +16,50 @@ export function onCurrentFileHotSwappedByVite(callback: () => void) {
     process.on('hooks-updated', functionClen)
 }
 
-
-// Utility: Checks if a file imports a specific method
-function fileImportsSymbol(filePath: string, symbolName: string): boolean {
+/**
+ * Append zero-width space to a file (no visible change but triggers hot reload)
+ */
+function appendInvisibleCharToHooksFile() {
     try {
-        const content = fs.readFileSync(filePath, "utf-8");
-        const importRegex = new RegExp(`import\\s+\\{[^}]*\\b${symbolName}\\b[^}]*\\}\\s+from\\s+['"][^'"]+['"]`, "g");
-        return importRegex.test(content);
-    } catch (e) {
-        return false;
+        let content = fs.readFileSync(HOOKS_FILE_PATH, "utf-8");
+        if (!content.endsWith('\u200B')) {
+            content += '\u200B';
+        } else {
+            // toggle to force file update (remove and add again)
+            content = content.slice(0, -1);
+            content += '\u200B';
+        }
+        fs.writeFileSync(HOOKS_FILE_PATH, content, "utf-8");
+        console.log("✏️ Appended invisible character to hooks.server.ts");
+    } catch (err) {
+        console.error("Failed to append to hooks.server.ts:", err);
     }
 }
+
 
 function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
     return {
         name: 'vite-plugin-hot-symbol',
-        //@ts-ignore
         handleHotUpdate({file}) {
-            let path = file as string;
-            if (!path.includes('src')) {
+            if (
+                !file.includes('src') ||
+                file.includes('.svelte-kit') ||
+                file === HOOKS_FILE_PATH
+            ) {
                 return;
             }
-            if (path.endsWith('.svelte'))
-                return;
-            if (path.includes('.svelte-kit'))
-                return;
 
-            console.log(`🔁 File imports '${symbolName}', hot-swapping: ${file}`);
+            console.log(`🔁 File changed: ${file}`);
             callback();
+
+            appendInvisibleCharToHooksFile();
         }
     };
 }
 
 export function fileHotSwapUpdateHookPlugin() {
-    return hotCallbackPluginForSymbol(onCurrentFileHotSwappedByVite.name, () => {
-        console.log('🔥🔥🔥 hook import detected, triggering callback 🔥🔥🔥');
+    return hotCallbackPluginForSymbol('', () => {
+        console.log('🔥 Detected hook usage, emitting process event 🔥');
         //@ts-ignore
         process.emit('hooks-updated', {});
     });
