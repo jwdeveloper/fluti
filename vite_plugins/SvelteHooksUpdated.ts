@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
+const HOOKS_FILE_PATH = path.resolve("src/hooks.setupServer.ts");
 
 /**
  * Checks if the current file imports the `onSvelteHooksUpdated` method, then if file got hot swapped or updated by vite
@@ -30,9 +30,9 @@ function appendInvisibleCharToHooksFile() {
             content += ' ';
         }
         fs.writeFileSync(HOOKS_FILE_PATH, content, "utf-8");
-        console.log("✏️ Appended invisible character to hooks.server.ts");
+        console.log("✏️ Appended invisible character to hooks.setupServer.ts");
     } catch (err) {
-        console.error("Failed to append to hooks.server.ts:", err);
+        console.error("Failed to append to hooks.setupServer.ts:", err);
     }
 }
 
@@ -40,6 +40,7 @@ function appendInvisibleCharToHooksFile() {
 function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
     return {
         name: 'vite-plugin-hot-symbol',
+        //@ts-ignore
         handleHotUpdate({file}) {
             if (
                 !file.includes('src') ||
