@@ -1,6 +1,6 @@
 export interface Cancelable<T> {
     isCanceled: boolean;
-    data: T
+    event: T
 }
 
 export class EventsService {
@@ -10,7 +10,7 @@ export class EventsService {
     /**
      * Register a new handler for the given event name
      */
-    onEvent(name: string, handler: (payload: any) => void) {
+    onEvent<T=any>(name: string, handler: (payload: T) => void) {
         if (!this.eventsMap.has(name)) {
             this.eventsMap.set(name, new Set());
         }
