@@ -3,14 +3,36 @@ export interface Cancelable<T> {
     event: T
 }
 
+export interface EventServiceConfig {
+    autoFire: boolean
+}
+
 export class EventsService {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
-    private boundListeners = new Map<string, EventListener>();
+    private eventQueue: { name: string, payload: any }[] = [];
+    private config: EventServiceConfig;
+
+    intervalId = undefined
+
+    constructor(config?: EventServiceConfig) {
+
+        this.config = config ?? {
+            autoFire: true,
+        };
+
+        if (!this.config.autoFire) {
+            this.intervalId = setInterval(() => {
+                this.executeEvents();
+            }, 50)
+
+        }
+
+    }
 
     /**
      * Register a new handler for the given event name
      */
-    onEvent<T=any>(name: string, handler: (payload: T) => void) {
+    onEvent<T = any>(name: string, handler: (payload: T) => void) {
         if (!this.eventsMap.has(name)) {
             this.eventsMap.set(name, new Set());
         }
@@ -21,6 +43,11 @@ export class EventsService {
      * Trigger all handlers for a given event name manually
      */
     callEvent(name: string, payload: any) {
+        if (!this.config.autoFire) {
+            this.eventQueue.push({name, payload});
+            return
+        }
+
         const handlers = this.eventsMap.get(name);
         if (handlers) {
             for (const handler of handlers) {
@@ -29,34 +56,26 @@ export class EventsService {
         }
     }
 
-    clear() {
-        this.eventsMap = new Map<string, Set<(payload: any) => void>>();
+    executeEvents() {
+        while (this.eventQueue.length > 0) {
+            const {name, payload} = this.eventQueue.shift()!;
+            console.log('executing events', name)
+
+            const handlers = this.eventsMap.get(name);
+            if (handlers) {
+                for (const handler of handlers) {
+                    handler(payload);
+                }
+            }
+        }
     }
 
-    /**
-     * Bind all registered events to the window as CustomEvents
-     */
-    // bind() {
-    //     for (const [name, handlers] of this.eventsMap.entries()) {
-    //         if (!this.boundListeners.has(name)) {
-    //             const listener = (e: CustomEvent) => {
-    //                 for (const handler of handlers) {
-    //                     handler(e.detail);
-    //                 }
-    //             };
-    //             window.addEventListener(name, listener as EventListener);
-    //             this.boundListeners.set(name, listener as EventListener);
-    //         }
-    //     }
-    // }
-    //
-    // /**
-    //  * Unbind all CustomEvents from window
-    //  */
-    // unbind() {
-    //     for (const [name, listener] of this.boundListeners.entries()) {
-    //         window.removeEventListener(name, listener);
-    //     }
-    //     this.boundListeners.clear();
-    // }
+    clear() {
+        this.eventsMap = new Map<string, Set<(payload: any) => void>>();
+        this.eventQueue = [];
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
+    }
+
 }
