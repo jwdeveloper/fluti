@@ -22,12 +22,12 @@ export function onCurrentFileHotSwappedByVite(callback: () => void) {
 function appendInvisibleCharToHooksFile() {
     try {
         let content = fs.readFileSync(HOOKS_FILE_PATH, "utf-8");
-        if (!content.endsWith('\u200B')) {
-            content += '\u200B';
+        if (!content.endsWith(' ')) {
+            content += ' ';
         } else {
             // toggle to force file update (remove and add again)
             content = content.slice(0, -1);
-            content += '\u200B';
+            content += ' ';
         }
         fs.writeFileSync(HOOKS_FILE_PATH, content, "utf-8");
         console.log("✏️ Appended invisible character to hooks.server.ts");
