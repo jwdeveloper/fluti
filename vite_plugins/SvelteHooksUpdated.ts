@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-const HOOKS_FILE_PATH = path.resolve("src/hooks.setupServer.ts");
+const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
 
 /**
  * Checks if the current file imports the `onSvelteHooksUpdated` method, then if file got hot swapped or updated by vite
