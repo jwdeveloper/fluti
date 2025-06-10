@@ -20,12 +20,6 @@ export class EventsService {
             autoFire: true,
         };
 
-        if (!this.config.autoFire) {
-            this.intervalId = setInterval(() => {
-                this.executeEvents();
-            }, 50)
-
-        }
 
     }
 
@@ -59,9 +53,9 @@ export class EventsService {
     executeEvents() {
         while (this.eventQueue.length > 0) {
             const {name, payload} = this.eventQueue.shift()!;
-            console.log('executing events', name)
 
             const handlers = this.eventsMap.get(name);
+            // console.log('executing events', name, this.eventsMap.keys().map(e => e))
             if (handlers) {
                 for (const handler of handlers) {
                     handler(payload);
@@ -73,9 +67,6 @@ export class EventsService {
     clear() {
         this.eventsMap = new Map<string, Set<(payload: any) => void>>();
         this.eventQueue = [];
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-        }
     }
 
 }

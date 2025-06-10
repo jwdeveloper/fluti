@@ -30,9 +30,9 @@ function appendInvisibleCharToHooksFile() {
             content += ' ';
         }
         fs.writeFileSync(HOOKS_FILE_PATH, content, "utf-8");
-        console.log("✏️ Appended invisible character to hooks.setupServer.ts");
+        console.log("✏️ Appended invisible character to hooks.server.ts");
     } catch (err) {
-        console.error("Failed to append to hooks.setupServer.ts:", err);
+        console.error("Failed to append to hooks.server.ts:", err);
     }
 }
 
