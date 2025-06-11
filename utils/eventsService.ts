@@ -53,12 +53,7 @@ export class EventsService {
     /**
      * Trigger all handlers for a given event name manually
      */
-    async callEventAsync(name: string, payload: any): Promise<void> {
-        if (!this.config.autoFire) {
-            this.eventQueue.push({name, payload});
-            return
-        }
-
+    async callEventSync(name: string, payload: any): Promise<void> {
         const handlers = this.eventsMap.get(name);
         if (handlers) {
             for (const handler of handlers) {
@@ -68,7 +63,7 @@ export class EventsService {
     }
 
 
-    executeEvents() {
+    async executeEvents() {
         while (this.eventQueue.length > 0) {
             const {name, payload} = this.eventQueue.shift()!;
 
