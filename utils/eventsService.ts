@@ -50,6 +50,24 @@ export class EventsService {
         }
     }
 
+    /**
+     * Trigger all handlers for a given event name manually
+     */
+    async callEventAsync(name: string, payload: any): Promise<void> {
+        if (!this.config.autoFire) {
+            this.eventQueue.push({name, payload});
+            return
+        }
+
+        const handlers = this.eventsMap.get(name);
+        if (handlers) {
+            for (const handler of handlers) {
+                await handler(payload);
+            }
+        }
+    }
+
+
     executeEvents() {
         while (this.eventQueue.length > 0) {
             const {name, payload} = this.eventQueue.shift()!;
