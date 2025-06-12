@@ -17,7 +17,7 @@ export interface ShortcutAction {
     //Plugin from where action is coming from
     plugin?: string
 
-    //Svelte component assigned to this action
+    //Svelte WebsocketPanel assigned to this action
     component?: any
 }
 

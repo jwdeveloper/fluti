@@ -34,7 +34,7 @@
         </Element>
 
         {#if props?.templates?.pageRightWindowTemplate}
-<!--            <svelte:component this={props?.templates?.pageRightWindowTemplate} {...props}/>-->
+<!--            <svelte:WebsocketPanel this={props?.templates?.pageRightWindowTemplate} {...props}/>-->
             {@render props?.templates?.pageRightWindowTemplate()}
         {:else}
             <Element height="100%" background="var(--accent-primary)" radius="0"/>

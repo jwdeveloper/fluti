@@ -32,7 +32,7 @@ export interface PanelProps {
     element?: HTMLDivElement
     tag?: string,
     variant?: "normal" | "border" | "shadow" | "border-color" |
-        "border-modern" | "component-panel-border" | "component-panel-border-dark",
+        "border-modern" | "WebsocketPanel-panel-border" | "WebsocketPanel-panel-border-dark",
 
     onClick?: (event: MouseEvent) => void
     onMouseOver?: (isOver: boolean, event: MouseEvent) => void
