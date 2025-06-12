@@ -7,6 +7,8 @@
     import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let props: HeaderSectionProps = $props();
+
+
 </script>
 
 <Element height="auto" width="100%" direction="column">
