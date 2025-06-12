@@ -42,7 +42,7 @@ function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
         name: 'vite-plugin-hot-symbol',
         //@ts-ignore
         handleHotUpdate({file}) {
-            console.log(`File reported change ${file}`);
+            // console.log(`File reported change ${file}`);
             if (
                 !file.includes('src') ||
                 file.includes('.svelte-kit')

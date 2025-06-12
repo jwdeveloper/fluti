@@ -9,7 +9,7 @@ export interface EventServiceConfig {
 
 export class EventsService {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
-    private eventQueue: { name: string, payload: any }[] = [];
+    private eventQueue: { name: string, payload: any, onExecute?: () => void }[] = [];
     private config: EventServiceConfig;
 
     intervalId = undefined
@@ -36,9 +36,9 @@ export class EventsService {
     /**
      * Trigger all handlers for a given event name manually
      */
-    callEvent(name: string, payload: any) {
+    callEvent(name: string, payload: any, onExecute?: any) {
         if (!this.config.autoFire) {
-            this.eventQueue.push({name, payload});
+            this.eventQueue.push({name, payload, onExecute});
             return
         }
 
@@ -64,8 +64,13 @@ export class EventsService {
 
 
     async executeEvents() {
+
+        let executeActions = []
         while (this.eventQueue.length > 0) {
-            const {name, payload} = this.eventQueue.shift()!;
+            const {name, payload, onExecute} = this.eventQueue.shift()!;
+
+            if (onExecute)
+                executeActions.push(onExecute)
 
             const handlers = this.eventsMap.get(name);
             // console.log('executing events', name, this.eventsMap.keys().map(e => e))
@@ -74,6 +79,11 @@ export class EventsService {
                     handler(payload);
                 }
             }
+        }
+
+        for (let action of executeActions) {
+            //@ts-ignore
+            action();
         }
     }
 
