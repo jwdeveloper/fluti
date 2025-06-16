@@ -72,6 +72,9 @@
             return
 
         previousVisibleState = visible;
+        if (options?.animation?.direction === 'none')
+            return;
+
         if (!rootAnimatedElement)
             rootAnimatedElement = animatedElement(rootElement);
 
