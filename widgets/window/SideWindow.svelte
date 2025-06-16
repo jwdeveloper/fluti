@@ -18,14 +18,16 @@
             color?: string
         },
         animation?: {
-            direction?: "left" | "top" | "bottom" | "right" | 'center',
+            direction?: "left" | "top" | "bottom" | "right" | 'center' | 'none',
             duration?: number
         },
         allowScroll?: boolean
         allowClose?: boolean
         children?: any,
         id?: string,
-        onClose?: (id: string) => void
+        onClose?: (id: string) => void,
+        x?: number,
+        y?: number
     }
 
     let {
@@ -160,7 +162,6 @@
     let y = $derived.by(() => {
         if (!isClient)
             return 0
-
         let size = window.screen.height;
         switch (getDirection()) {
             case "top":
@@ -261,6 +262,9 @@
                      align=""
                      background="var(--bg-primary)"
                      radius="var(--radius-strong)"
+                     style="position: absolute;
+                     top:{options?.y? options.y+'px':''};
+                     left: {options?.x? options.x+'px':''}"
                      {...panel}
             >
 
@@ -284,6 +288,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
         pointer-events: all;
         z-index: var(--z-index-1);
     }
