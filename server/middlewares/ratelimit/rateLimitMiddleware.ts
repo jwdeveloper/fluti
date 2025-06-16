@@ -6,6 +6,7 @@ const MAX_REQUESTS = 100; // Max requests per IP per window
 const requestCounts = new Map();
 
 function rateLimiter() {
+    //@ts-ignore
     return (event, next) => {
         const clientIP = event.request.headers.get('x-forwarded-for') || event.request.socket.remoteAddress;
 

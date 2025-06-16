@@ -12,7 +12,7 @@ export class ReactiveRepository<T> implements Repository<T> {
         // this._events = eventsContext;
     }
 
-    onEvent(update: () => {}) {
+    onEvent(update: (e: { type: string, data: T }) => void) {
         this._events.push(update);
     }
 
@@ -25,23 +25,26 @@ export class ReactiveRepository<T> implements Repository<T> {
     }
 
     async insert(item: T): Promise<T | undefined> {
+        await this.callEvent(item, 'before.insert')
         let result = await this._repo.insert(item)
         if (result)
-           await this.callEvent(result)
+            await this.callEvent(result, 'insert')
         return result;
     }
 
     async update(item: T): Promise<T | undefined> {
+        await this.callEvent(item, 'before.update')
         let result = await this._repo.update(item)
         if (result)
-            await this.callEvent(result)
+            await this.callEvent(result, 'update')
         return result;
     }
 
     async delete(item: T | string): Promise<T | undefined> {
+        await this.callEvent(item, 'before.delete')
         let result = await this._repo.delete(item)
         if (result)
-            await this.callEvent(result)
+            await this.callEvent(result, 'delete')
         return result;
     }
 
@@ -58,12 +61,12 @@ export class ReactiveRepository<T> implements Repository<T> {
         return await this._repo.find(lambda)
     }
 
-    private async callEvent(data: any) {
+    private async callEvent(data: any, type: string) {
         // console.log('call event', data,this.trigger)
         this.trigger++;
         for (let event of this._events) {
             event({
-                items: await this._repo.findAll(),
+                type: type,
                 data: data
             })
         }
