@@ -6,7 +6,6 @@
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
     import Element from "$lib/fluti/components/panel/Element.svelte";
-    import LeftRightInteraction from "$lib/fluti/components/interaction/LeftRightInteraction.svelte";
 
     interface WindowLayer {
         visible?: boolean
@@ -24,7 +23,9 @@
         },
         allowScroll?: boolean
         allowClose?: boolean
-        children?: any
+        children?: any,
+        id?: string,
+        onClose?: (id: string) => void
     }
 
     let {
@@ -35,11 +36,14 @@
         panel = {},
         allowClose = true,
         allowScroll = true,
+        onClose,
+        id,
         ...options
     }: WindowLayer = $props();
     let rootElement: HTMLDivElement;
     let rootAnimatedElement: any;
     let isClient = $state(false);
+    let previousVisibleState = false;
     let init = false
 
     let defaultValues = {
@@ -56,12 +60,16 @@
 
         if (!init) {
             init = true;
-            if (!visible)
-                return;
+            previousVisibleState = visible;
+            return;
         }
+        if (previousVisibleState === visible)
+            return;
 
         if (!rootElement)
             return
+
+        previousVisibleState = visible;
         if (!rootAnimatedElement)
             rootAnimatedElement = animatedElement(rootElement);
 
@@ -80,6 +88,9 @@
         if (!allowClose)
             return
 
+        if (onClose)
+            onClose(id ?? '');
+
         visible = !visible;
     }
 
@@ -96,6 +107,7 @@
     }
 
     function makeBrightnessAnimation() {
+
         let minBrightness = options?.background?.brightness ?? "70%"
         let animateOptions: AnimatePropertyOptions = {
             property: 'backdropFilter',
@@ -128,7 +140,6 @@
 
     onMount(() => {
         isClient = true;
-
         if (allowScroll === false) {
             document.body.style.overflow = 'hidden';
         }
@@ -231,6 +242,7 @@
      onclick={handleClick}
      bind:this={rootElement}>
     {#if visible}
+
         <div class="window-container"
              style="
              align-items:{align};
@@ -259,6 +271,7 @@
 
         </div>
     {/if}
+
 </div>
 
 
