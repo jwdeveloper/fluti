@@ -28,16 +28,16 @@ export class Optional<T> {
         return new Optional<T>(null, message);
     }
 
-    isPresent(): boolean {
+    isSuccess(): boolean {
         return this.value !== null && this.value !== undefined;
     }
 
     isEmpty(): boolean {
-        return !this.isPresent();
+        return !this.isSuccess();
     }
 
     get(): T {
-        if (!this.isPresent()) {
+        if (!this.isSuccess()) {
             throw new Error(this.errorMessage || "No value present in Optional");
         }
         return this.value!;
@@ -48,15 +48,15 @@ export class Optional<T> {
     }
 
     orElse(other: T): T {
-        return this.isPresent() ? this.value! : other;
+        return this.isSuccess() ? this.value! : other;
     }
 
     orElseGet(supplier: () => T): T {
-        return this.isPresent() ? this.value! : supplier();
+        return this.isSuccess() ? this.value! : supplier();
     }
 
     orElseThrow(errorSupplier?: () => Error): T {
-        if (this.isPresent()) {
+        if (this.isSuccess()) {
             return this.value!;
         } else {
             throw errorSupplier?.() || new Error(this.errorMessage || "No value present in Optional");
@@ -64,7 +64,7 @@ export class Optional<T> {
     }
 
     map<U>(mapper: (value: T) => U): Optional<U> {
-        if (this.isPresent()) {
+        if (this.isSuccess()) {
             return Optional.ofNullable(mapper(this.value!));
         } else {
             return Optional.fail<U>(this.errorMessage);
@@ -72,7 +72,7 @@ export class Optional<T> {
     }
 
     ifPresent(consumer: (value: T) => void): void {
-        if (this.isPresent()) {
+        if (this.isSuccess()) {
             consumer(this.value!);
         }
     }
