@@ -27,5 +27,3 @@ export type BiConsumer<T, U> = (a: T, b: U) => void;
 // Like java.util.function.BiPredicate<T, U>
 export type BiPredicate<T, U> = (a: T, b: U) => boolean;
 
-// Like java.util.Optional<T> (roughly)
-export type Optional<T> = T | null | undefined;
