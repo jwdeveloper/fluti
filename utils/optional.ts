@@ -32,7 +32,7 @@ export class Optional<T> {
         return this.value !== null && this.value !== undefined;
     }
 
-    isEmpty(): boolean {
+    isFail(): boolean {
         return !this.isSuccess();
     }
 
@@ -44,7 +44,7 @@ export class Optional<T> {
     }
 
     getError(): string | undefined {
-        return this.isEmpty() ? this.errorMessage : undefined;
+        return this.isFail() ? this.errorMessage : undefined;
     }
 
     orElse(other: T): T {

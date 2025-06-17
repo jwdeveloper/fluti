@@ -193,6 +193,7 @@
         border: var(--border-size-medium) solid var(--bg-tertiary);
         border-bottom: var(--button-bottom-border-size) solid var(--bg-tertiary);
 
+
     }
 
     :global(.btn-element-outline:hover) {
