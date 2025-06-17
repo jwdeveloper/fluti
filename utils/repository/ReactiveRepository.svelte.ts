@@ -1,4 +1,13 @@
 import type {Repository} from "./Repository";
+import type {Consumer} from "$lib/fluti/utils/methods";
+
+
+export type RepositoryEventCallback<T> = Consumer<ItemUpdateEvent<T>>
+
+export interface ItemUpdateEvent<T> {
+    type: 'insert' | 'update' | 'delete' | 'before.insert' | 'before.update' | 'before.delete'
+    data: T
+}
 
 export class ReactiveRepository<T> implements Repository<T> {
     private readonly _repo: Repository<T>
@@ -12,7 +21,7 @@ export class ReactiveRepository<T> implements Repository<T> {
         // this._events = eventsContext;
     }
 
-    onEvent(update: (e: { type: string, data: T }) => void) {
+    onEvent(update: RepositoryEventCallback<T>) {
         this._events.push(update);
     }
 
