@@ -28,9 +28,9 @@
          direction="column"
          style={style}>
     {#if title}
-        <h5 style="align-self: flex-start; color: {labelColor}; {labelStyle}">
+        <label style="align-self: flex-start; color: {labelColor}; {labelStyle}">
             {title}
-        </h5>
+        </label>
     {/if}
     {#if children}
         <Element
@@ -47,7 +47,7 @@
             <Element
                     padding="0 0.5em"
                     width="100%"
-                    gap="0.4em"
+                    gap="0.4rem"
                     tag="h5"
                     color={flutiTheme.color.error}
                     justify="flex-start">

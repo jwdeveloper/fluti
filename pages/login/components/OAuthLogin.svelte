@@ -70,6 +70,7 @@
                 fullWidth={true}
                 onClick={()=> onProviderClick(provider.name)}
                 color={provider.iconColor}
+                background={provider.borderColor}
                 fontSize={isIcon?'1.6em':undefined}
                 padding={isIcon?flutiTheme.padding.small:flutiTheme.padding.medium}
                 isShowText={!isIcon}

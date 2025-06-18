@@ -10,4 +10,5 @@ export interface LabelProps {
     labelFor?: string
     labelStyle?: string
     fullHeight?: boolean
+    invalid?: boolean
 }

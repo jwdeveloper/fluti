@@ -7,8 +7,10 @@
         value = $bindable(),
         variant = 'outline',
         invalid,
-        onClick=()=>{},
-        onIconClick = () => {},
+        onClick = () => {
+        },
+        onIconClick = () => {
+        },
         ...props
     }: InputProps2 = $props()
 
@@ -142,6 +144,10 @@
 
     :global(.element-input:not(:placeholder-shown)) {
         color: var(--text-light) !important;
+    }
+
+    :global(.element-input::placeholder) {
+        color: var(--text-neutral);
     }
 
     :global(.element-input:focus) {

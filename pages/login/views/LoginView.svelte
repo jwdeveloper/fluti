@@ -111,33 +111,35 @@
                              controller={controller}
                              enablePassword={true}/>
         </Element>
-    {/if}
 
-    <Element
-            align="flex-end"
-            width="100%" direction="column">
-        <Element padding="0"
-                 mobile={{
+        <Element
+                align="flex-end"
+                width="100%" direction="column">
+
+            <Element padding="0"
+                     mobile={{
                       width:'100%',
                       padding:'0'
                  }}
-                 width="300px"
-                 justify="flex-end">
+                     width="300px"
+                     justify="flex-end">
 
-            <Link onClick={()=> controller.view = 'recovery'}>
-                {translation.forgotPassword}
-            </Link>
+                <Link onClick={()=> controller.view = 'recovery'}>
+                    {translation.forgotPassword}
+                </Link>
+            </Element>
+            <ButtonLogin
+                    isLoading={controller.isLoading}
+                    title={translation.button.title}
+                    onButtonClick={()=>controller.login()}
+                    onActionClick={() => controller.view = 'register'}
+                    actionIcon="fa fa-user"
+                    actionTitle={translation.button.subtitle}>
+                {@render PrivacyPolicy()}
+            </ButtonLogin>
         </Element>
-        <ButtonLogin
-                isLoading={controller.isLoading}
-                title={translation.button.title}
-                onButtonClick={()=>controller.login()}
-                onActionClick={() => controller.view = 'register'}
-                actionIcon="fa fa-user"
-                actionTitle={translation.button.subtitle}>
-            {@render PrivacyPolicy()}
-        </ButtonLogin>
-    </Element>
+    {/if}
+
 </Element>
 
 
