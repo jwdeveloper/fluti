@@ -1,8 +1,6 @@
 import type {Repository, RepositoryOptions} from "./Repository";
 import PocketBase from "pocketbase";
-
-const pb = new PocketBase('http://127.0.0.1:8090');
-pb.autoCancellation(false)
+import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
 
 export class PocketbaseRepository<T> implements Repository<T> {
@@ -10,6 +8,15 @@ export class PocketbaseRepository<T> implements Repository<T> {
 
     constructor(options: RepositoryOptions) {
         this.options = options;
+    }
+
+    async getPocketbase() {
+        if (this.options.pocketbaseProvider)
+            return await this.options.pocketbaseProvider();
+
+        let admin = await pocketbaseClientAdmin()
+        admin.autoCancellation(false)
+        return admin;
     }
 
     name(): string {
@@ -20,6 +27,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
         if (!this.options.usePocketbase)
             return [];
         const filter = `${indexName} = "${indexValue}"`;
+        const pb = await this.getPocketbase();
         const records = await pb.collection(this.options.name).getFullList<T>({
             filter,
         });
@@ -40,7 +48,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
 
         //@ts-ignore
         delete item[this.options.key]
-
+        const pb = await this.getPocketbase();
         //@ts-ignore
         let result = await pb.collection(this.options.name).create<T>(item)
 
@@ -56,6 +64,8 @@ export class PocketbaseRepository<T> implements Repository<T> {
             throw new Error("Item must have an id for update");
 
         try {
+            //@ts-ignore
+            const pb = await this.getPocketbase();
             //@ts-ignore
             const updated = await pb.collection(this.options.name).update<T>(item[this.options.key], item);
             return updated;
@@ -73,6 +83,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
         //@ts-ignore
         const id = typeof item === "string" ? item : item[this.options.key];
         if (!id) throw new Error("Item must have an id to delete");
+        const pb = await this.getPocketbase();
         const existing = await pb.collection(this.options.name).getOne<T>(id);
         await pb.collection(this.options.name).delete(id);
         return existing;
@@ -81,6 +92,8 @@ export class PocketbaseRepository<T> implements Repository<T> {
     async findAll(): Promise<T[]> {
         if (!this.options.usePocketbase) return [];
         try {
+
+            const pb = await this.getPocketbase();
             const records = await pb.collection(this.options.name).getFullList<T>();
             return records;
         } catch (e) {
@@ -94,6 +107,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
         if (!this.options.usePocketbase)
             return undefined;
         try {
+            const pb = await this.getPocketbase();
             const record = await pb.collection(this.options.name).getOne<T>(key);
             return record;
         } catch (error) {

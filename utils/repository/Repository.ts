@@ -3,6 +3,8 @@ import {IndexedDBRepository} from "./IndexDbRepository";
 import {ReactiveRepository} from "./ReactiveRepository.svelte";
 import type {DatabaseSchema, TableSchema} from "$lib/fluti/utils/repository/database/Schema";
 import {PocketbaseRepository} from "$lib/fluti/utils/repository/PocketbaseRepository";
+import type PocketBase from "pocketbase";
+import type {Supplier} from "$lib/fluti/utils/methods";
 
 export class EasyRepository {
 
@@ -62,6 +64,8 @@ export type RepositoryOptions = {
     databaseVersion?: number
     schema?: TableSchema
     cache?: CacheOptions
+
+    pocketbaseProvider?: Supplier<Promise<PocketBase>>
 }
 
 export type CacheOptions = {

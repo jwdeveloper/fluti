@@ -10,7 +10,7 @@ export interface FormField {
     name?: string
     type?: FormFieldType
     hint?: string
-    template?: any | snippet | component
+    template?: any
     required?: string,
     validator: {
         message: string
@@ -19,7 +19,7 @@ export interface FormField {
 }
 
 export interface FormWindow {
-    isSaving: boolen
+    isSaving: boolean
 
     fields: FormField[]
 

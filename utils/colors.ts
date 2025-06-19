@@ -84,13 +84,13 @@ export function getHexColorBrightness(hex: string): number {
     return brightness * a;
 }
 
-function hexToHSL(hex) {
+function hexToHSL(hex: string) {
     let r = parseInt(hex.slice(1, 3), 16) / 255;
     let g = parseInt(hex.slice(3, 5), 16) / 255;
     let b = parseInt(hex.slice(5, 7), 16) / 255;
 
     let max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
+    let h, s, l: number = (max + min) / 2;
 
     if (max === min) {
         h = s = 0; // achromatic
@@ -108,13 +108,14 @@ function hexToHSL(hex) {
                 h = ((r - g) / d + 4);
                 break;
         }
+        //@ts-ignore
         h /= 6;
     }
-
+    //@ts-ignore
     return {h: h * 360, s: s * 100, l: l * 100};
 }
 
-function hslToHex(h, s, l) {
+function hslToHex(h:number, s:number, l:number) {
     s /= 100;
     l /= 100;
 
@@ -140,7 +141,7 @@ function hslToHex(h, s, l) {
         .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }
 
-export function makeVibrant(hex, saturationBoost = 1.3, lightnessBoost = 1.1) {
+export function makeVibrant(hex:string, saturationBoost = 1.3, lightnessBoost = 1.1) {
     let hsl = hexToHSL(hex);
     hsl.s = Math.min(100, hsl.s * saturationBoost);
     hsl.l = Math.min(100, hsl.l * lightnessBoost);
