@@ -39,6 +39,10 @@
             value = (event.target as HTMLInputElement).value ?? '';
         };
 
+
+        if (props.focus)
+            element.focus()
+
         element.addEventListener("input", updateValue);
         return () => {
             element.removeEventListener("input", updateValue);

@@ -19,12 +19,14 @@
         gap = "0.5em",
     }: LabelProps = $props()
 
-    let warnings: string[] = $state([])
-
-    if (typeof error === 'string')
-        warnings.push(error)
-    else if (error !== undefined)
-        warnings.push(...error);
+    let warnings: string[] = $derived.by(() => {
+        let result = []
+        if (typeof error === 'string')
+            result.push(error)
+        else if (error !== undefined)
+            result.push(...error);
+        return result;
+    })
 
 
 </script>
@@ -67,9 +69,11 @@
     {/if}
 
     {#if invalid}
+
         {#each warnings as warning, index}
             {@render Warning(warning, index)}
         {/each}
+
     {:else if description}
         <Element width="100%" justify="flex-start" align="flex-start">
             <div style="font-size: var(--font-size-tiny); color: {labelColor};">{description}</div>
@@ -80,10 +84,10 @@
 <style>
 
 
-    label
-    {
+    label {
         font-size: var(--font-size-small);
     }
+
     .error-container {
         color: red;
         min-height: 0.5em;

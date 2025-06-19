@@ -17,6 +17,7 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
     controller.post(`/login`, async (c) => {
         const {email, password} = await c.req.json();
         try {
+            console.log('email and passowrd', email, password)
             const authData = await pb.collection('users').authWithPassword(email, password);
             const record = authData.record;
             if (record.verified === false)
@@ -47,7 +48,6 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
         deleteCookie(c, 'db_token');
         return c.redirect('/');
     });
-
 
 
     controller.post(`/register`, async (c) => {
