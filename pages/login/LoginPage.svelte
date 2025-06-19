@@ -27,6 +27,7 @@
              columns="1fr 1fr" gap="0">
         <Element height="100%"
                  width="100%"
+                 style="z-index: 1"
                  background="var(--bg-primary)">
             <Element width="50%" direction="column">
                 <LoginWindow {...props}/>

@@ -1,6 +1,6 @@
 export interface LabelProps {
     title?: string
-    info?: string
+    description?: string
     error?: string | string[]
     onInfoClick?: () => void
     children?: any

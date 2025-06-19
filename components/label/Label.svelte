@@ -6,9 +6,9 @@
 
     let {
         title = undefined,
-        info = $bindable(""),
+        description = undefined,
         onInfoClick = undefined,
-        error = $bindable(undefined),
+        error = undefined,
         children = undefined,
         style = '',
         invalid = false,
@@ -19,8 +19,32 @@
         gap = "0.5em",
     }: LabelProps = $props()
 
+    let warnings: string[] = $state([])
+
+    if (typeof error === 'string')
+        warnings.push(error)
+    else if (error !== undefined)
+        warnings.push(...error);
+
+
 </script>
 
+{#snippet Warning(error, index)}
+    <div transition:fly={{y:-50, delay:index*100}} style="width: 100%;">
+        <Element
+                padding="0 0.5em"
+                width="100%"
+                gap="0.4rem"
+                tag="h5"
+                color={flutiTheme.color.error}
+                justify="flex-start">
+            <i class="fa fa-warning"/>
+            <div>
+                {error}
+            </div>
+        </Element>
+    </div>
+{/snippet}
 
 <Element width="100%"
          gap={gap}
@@ -28,36 +52,28 @@
          direction="column"
          style={style}>
     {#if title}
-        <label style="align-self: flex-start; color: {labelColor}; {labelStyle}">
+        <label
+                for="{labelFor}"
+                style="align-self: flex-start; color: {labelColor}; {labelStyle}">
             {title}
         </label>
     {/if}
     {#if children}
         <Element
-                tag="label"
-                attributes={{for:labelFor}}
-                style="z-index: 1;"
+                tag="label" style="z-index: 1;"
                 justify="flex-start" width="100%" height={fullHeight?'100%':"auto"}>
             {@render children()}
         </Element>
     {/if}
 
     {#if invalid}
-        <div transition:fly={{y:-50}} style="width: 100%;">
-            <Element
-                    padding="0 0.5em"
-                    width="100%"
-                    gap="0.4rem"
-                    tag="h5"
-                    color={flutiTheme.color.error}
-                    justify="flex-start">
-                <i class="fa fa-warning"/>
-                <div>
-                    {error}
-                </div>
-            </Element>
-        </div>
-
+        {#each warnings as warning, index}
+            {@render Warning(warning, index)}
+        {/each}
+    {:else if description}
+        <Element width="100%" justify="flex-start" align="flex-start">
+            <div style="font-size: var(--font-size-tiny); color: {labelColor};">{description}</div>
+        </Element>
     {/if}
 </Element>
 
