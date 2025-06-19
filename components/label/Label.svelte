@@ -79,6 +79,11 @@
 
 <style>
 
+
+    label
+    {
+        font-size: var(--font-size-small);
+    }
     .error-container {
         color: red;
         min-height: 0.5em;
