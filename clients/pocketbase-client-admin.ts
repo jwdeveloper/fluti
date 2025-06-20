@@ -27,6 +27,7 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
         return existing.client;
     }
 
+    console.log('Updating pocketbase clieknt', login, password)
     try {
         let pocketbase = new PocketBase(url);
         await pocketbase.collection('_superusers').authWithPassword(login, password);

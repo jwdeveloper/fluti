@@ -6,6 +6,47 @@ import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/servi
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
+
+export function makeOAuthOpenSelectUser(authUrl: string, provider: string): string {
+// Parse the authorization URL into base and query parts
+    const [baseUrl, queryString] = authUrl.split("?");
+
+    let option = undefined
+    switch (provider.toLowerCase()) {
+        case 'google':
+            // Google uses prompt=select_account
+
+            option = "prompt=select_account"
+            break;
+
+        case 'discord':
+            // Discord uses prompt=consent
+            option = "prompt=consent"
+            break;
+
+        case 'microsoft':
+            // Microsoft uses prompt=select_account
+            option = "prompt=select_account"
+            break;
+
+        case 'github':
+            // GitHub doesn't support a direct parameter, but you can use login parameter
+            // to clear the session and force a re-login
+            option = "login="
+            break;
+
+        case 'apple':
+            // Apple uses response_mode=form_post and response_type=code id_token
+            option = "response_mode=form_post&response_type=code id_token"
+            break;
+    }
+
+    if (!option)
+        return authUrl;
+
+    return `${baseUrl}?${option}&${queryString}`;
+}
+
 export function createOAuthApiController(config: SessionMiddlewareConfig) {
     const options = config.oAuth;
     const controller = new Hono();
@@ -23,29 +64,44 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
         if (!oauthProvider)
             throw new Error("OAuth provider " + provider + " not found!")
 
-        const authUrl = oauthProvider.authURL;
+        let authUrl = oauthProvider.authURL;
         const state = oauthProvider.state;
         const verifier = oauthProvider.codeVerifier;
         const url = new URL(c.req.url);
         const redirectUrl = `${url.protocol}//${url.host}/api/auth/oauth/${provider.toLowerCase()}`;
+
+
+        authUrl = makeOAuthOpenSelectUser(authUrl, provider);
+
+
         setCookie(c, 'oauth_state', encodeURIComponent(state), {
             path: '/',
             secure: true,
             sameSite: 'lax',
-            httpOnly: true // Consider adding this for security
+            httpOnly: true,
+            maxAge: 600
         });
 
         setCookie(c, 'oauth_verifier', encodeURIComponent(verifier), {
             path: '/',
             secure: true,
             sameSite: 'lax',
-            httpOnly: true // Consider adding this for security
+            httpOnly: true,
+            maxAge: 600
+
         });
 
 
         // let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
+        //
+        // const authUrlObj = new URL(authUrl);
+        // authUrlObj.searchParams.append('redirect_uri', redirectUrl);
+        // let fullUrl = authUrlObj.toString();
+        //
         console.log('redirect url is', redirectUrl)
         let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
+        console.log('FUll url is', fullUrl)
+
         if (provider.toLowerCase() === 'github') {
             fullUrl = fullUrl.replace("redirect_uri", '')
         }
@@ -69,13 +125,13 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
             return c.text(`cookie '${stateCookie}' not found`)
 
         const expectedVerifier = getCookie(c, verifierCookie) ?? '';
-        if (!expectedState)
+        if (!expectedVerifier)
             return c.text(`cookie '${verifierCookie}' not found`)
 
 
         const state = c.req.query("state") ?? '';
         const code = c.req.query("code") ?? '';
-        if (state !== expectedState) {
+        if (state !== decodeURIComponent(expectedState)) {
             console.log("State mismatch", state, " and ", expectedState);
             return c.redirect(failedRedirect);
         }
