@@ -6,7 +6,7 @@
         placeholder = 'Wybierz opcje',
         value = $bindable(''),
         items = $bindable([]),
-        onUpdate,
+        onUpdate = undefined,
         style = ''
     }: DropdownProps = $props();
 
@@ -56,11 +56,22 @@
 
     select {
         background: var(--bg-primary);
-        padding: var(--padding);
         border: var(--border-size-medium) solid var(--bg-tertiary);
-        border-radius: var(--radius-medium);
         width: 100%;
         color: var(--text-color);
+
+        padding: var(--padding-medium) 1em;
+        padding-right: 2.5em;
+        border-radius: var(--radius-medium);
+
+        width: 100%;
+        padding: var(--padding-medium) 1em;
+        padding-right: 2.5em;
+        border-radius: var(--radius-medium);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
+        color: var(--text-primary);
+        font-size: var(--font-size-medium);
+        transition: 100ms all ease-in;
     }
 
     option {

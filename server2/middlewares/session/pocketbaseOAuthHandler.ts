@@ -35,6 +35,7 @@ async function getProvider(name: string) {
 
 export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
 
+    console.log('RECORD IS', record)
     const user = record.meta;
     const id = record.record.id;
     const baseMapping = {

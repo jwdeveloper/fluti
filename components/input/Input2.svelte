@@ -2,6 +2,7 @@
     import type {InputProps2} from "./Input.type";
     import {onMount} from "svelte";
     import './input2.css'
+    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         value = $bindable(),
@@ -9,8 +10,7 @@
         invalid,
         onClick = () => {
         },
-        onIconClick = () => {
-        },
+        onIconClick = undefined,
         ...props
     }: InputProps2 = $props()
 
@@ -70,13 +70,19 @@
             name={props?.id}
             pattern={props?.regex}
             required={props.required}
-
+            autocomplete="off"
             {...props}
     />
 
     {#if props?.icon}
-        <div class="icon" onclick={onIconClick}>
-            <i class={props?.icon}></i>
+        <div class="icon-wrapper">
+            <div>
+                <div class="icon"
+                     class:icon-action={onIconClick !== undefined}
+                     onclick={onIconClick}>
+                    <i class={props?.icon}></i>
+                </div>
+            </div>
         </div>
     {/if}
 
@@ -102,15 +108,38 @@
         width: 100%;
 
 
-        .icon {
+        .icon-wrapper {
             position: absolute;
             width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             color: var(--text-muted);
             padding-right: 1em;
             pointer-events: none;
+
+            .icon {
+
+                width: 30px;
+                height: 30px;
+                display: flex;
+                border-radius: var(--radius-sm);
+                align-items: center;
+                justify-content: center;
+            }
+
+            .icon-action {
+                cursor: pointer;
+                color: var(--text-primary);
+                background-color: var(--bg-small-hover);
+                opacity: 0.5;
+            }
+
+
+            .icon-action:hover {
+                opacity: 2;
+            }
 
             i {
                 pointer-events: all;

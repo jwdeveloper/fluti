@@ -24,8 +24,3 @@
         {...props}
 />
 
-<style lang="ts">
-
-
-
-</style>

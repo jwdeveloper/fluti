@@ -36,6 +36,8 @@ export interface InputProps2 extends ElementProps {
     inputMode?: string
     textIcon?: string
     focus?: boolean
+
+    style?: string
 }
 
 export type InputType = undefined | 'text' | 'number' | 'email' | 'password' | 'tel' | 'url' |
