@@ -1,5 +1,4 @@
 import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
-import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 
 export async function handleMicrosoftOAuth(event: OAuthEvent) {
 

@@ -7,8 +7,8 @@ export class AlertController {
     isProcessing: boolean = false; // To track if the first alert is being processed
 
 
-    pushAlertSuccess(message: string) {
-        return this.pushAlert(message, 'success')
+    pushAlertSuccess(message: string, time: number = 5000) {
+        return this.pushAlert(message, 'success', time)
     }
 
     pushAlert(message: string, type?: string, time: number = 5000) {
