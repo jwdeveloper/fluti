@@ -2,6 +2,7 @@ import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
+import PocketBase from "pocketbase";
 
 
 export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUser> {
@@ -9,8 +10,9 @@ export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUse
     if (!provider) {
         throw new Error("OAuth provider not found!")
     }
-    const admin = pocketbaseClient;
-    const result = await admin.collection('users')
+    // const admin = pocketbaseClientAdmin();
+    let pocketbase = new PocketBase("http://localhost:8090/");
+    const result = await pocketbase.collection('users')
         .authWithOAuth2Code(
             event.provider,
             event.code,
@@ -32,6 +34,7 @@ async function getProvider(name: string) {
 }
 
 export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
+
     const user = record.meta;
     const id = record.record.id;
     const baseMapping = {

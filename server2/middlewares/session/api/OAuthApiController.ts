@@ -1,10 +1,15 @@
-import type {SessionMiddlewareConfig,} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
+import type {
+    OAuthMiddlewareOptions,
+    SessionMiddlewareConfig,
+} from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 
 import {type Context, Hono} from "hono";
 import {deleteCookie, getCookie, setCookie} from "hono/cookie";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
+import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+import {handleMicrosoftOAuth} from "$lib/fluti/server2/middlewares/session/api/handles/MicrosoftHandler";
 
 
 export function makeOAuthOpenSelectUser(authUrl: string, provider: string): string {
@@ -25,7 +30,7 @@ export function makeOAuthOpenSelectUser(authUrl: string, provider: string): stri
             break;
 
         case 'microsoft':
-            // Microsoft uses prompt=select_account
+
             option = "prompt=select_account"
             break;
 
@@ -40,11 +45,12 @@ export function makeOAuthOpenSelectUser(authUrl: string, provider: string): stri
             option = "response_mode=form_post&response_type=code id_token"
             break;
     }
-
     if (!option)
         return authUrl;
 
-    return `${baseUrl}?${option}&${queryString}`;
+    https://login.microsoftonline.com/20418f0b-4d84-4454-aed5-72f10ec3ea22/oauth2/v2.0/authorize?prompt=select_account&client_id=e700a59e-1d22-4e20-bc49-3a3d3f263793&code_challenge=TANCzX7irmI9ENmRtvSoK4_qcfe_226CeEBwFQ9WZoU&code_challenge_method=S256&response_type=code&scope=openid profile email User.Read&state=MJuNOk4S4VYqpLDE9r2BVxesH48pxp&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fapi%2Fauth%2Foauth%2Fmicrosoft
+
+        return `${baseUrl}?${option}&${queryString}`;
 }
 
 export function createOAuthApiController(config: SessionMiddlewareConfig) {
@@ -64,6 +70,7 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
         if (!oauthProvider)
             throw new Error("OAuth provider " + provider + " not found!")
 
+        console.log('PROVIDER', oauthProvider)
         let authUrl = oauthProvider.authURL;
         const state = oauthProvider.state;
         const verifier = oauthProvider.codeVerifier;
@@ -91,17 +98,7 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 
         });
 
-
-        // let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
-        //
-        // const authUrlObj = new URL(authUrl);
-        // authUrlObj.searchParams.append('redirect_uri', redirectUrl);
-        // let fullUrl = authUrlObj.toString();
-        //
-        console.log('redirect url is', redirectUrl)
         let fullUrl = `${authUrl}${encodeURIComponent(redirectUrl)}`;
-        console.log('FUll url is', fullUrl)
-
         if (provider.toLowerCase() === 'github') {
             fullUrl = fullUrl.replace("redirect_uri", '')
         }
@@ -145,18 +142,25 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
             request: c
         }
         try {
-            let user = await options.onAuthEvent(oAuthSgnData)
+            let user = await handleOAuthEvent(options, oAuthSgnData);
             deleteCookie(c, verifierCookie);
             deleteCookie(c, stateCookie);
             await returnUserAuthTokens(c, config, '', user)
         } catch (e) {
-            console.log('Error Signing in with oauth', {...oAuthSgnData, request: ""})
+            // console.log('Error Signing in with oauth', {...oAuthSgnData, request: ""})
             //@ts-ignore
-            console.log(e, JSON.stringify(e.response))
-            return c.redirect(failedRedirect);
+            console.log(e, JSON.stringify(e))
+            return c.redirect(failedRedirect + "?error=oAuth2");
         }
         return c.redirect(successRedirect);
     })
-
     return controller;
+}
+
+async function handleOAuthEvent(options: OAuthMiddlewareOptions, event: OAuthEvent) {
+
+    // if (event.provider === 'microsoft')
+    //     return handleMicrosoftOAuth(event);
+
+    return await options.onAuthEvent(event)
 }

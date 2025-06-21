@@ -61,6 +61,8 @@ let handleSendRecoveryMail = async (data: LoginFormData) => {
 }
 
 let handleOAuthLogin = async (provider: string) => {
+
+
     const response = await fetch(`/api/auth/oauth/create/${provider}`);
     const json = await response.json();
 
@@ -72,7 +74,7 @@ let handleOAuthLogin = async (provider: string) => {
 
     window.location.href = json.url;
     // console.log('URL is', json)
-    //
+
     // window.open(
     //     json.url,
     //     'OAuthLoginPopup',

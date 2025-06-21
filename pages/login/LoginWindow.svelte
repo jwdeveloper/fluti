@@ -6,6 +6,8 @@
     import EmailView from "./views/EmailView.svelte";
     import RecoveryView from "./views/RecoveryView.svelte";
     import type {LoginPageProps} from "./loginPageTypes";
+    import {onMount} from "svelte";
+    import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
 
     const props: LoginPageProps = $props();
 
@@ -80,6 +82,11 @@
         }
     })
 
+
+    onMount(() => {
+        if (window.location.href.includes("error="))
+            useAlert().pushAlert("Unexpected error while creating account")
+    })
 </script>
 
 
