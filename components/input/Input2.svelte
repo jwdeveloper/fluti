@@ -141,6 +141,7 @@
                 border-radius: var(--radius-sm);
                 align-items: center;
                 justify-content: center;
+                transition: all 200ms ease-in-out;
             }
 
             .icon-action {
