@@ -3,43 +3,56 @@
     import {onMount} from "svelte";
 
     let {
-        placeholder = 'Wybierz opcje',
-        value = $bindable(''),
+        placeholder = 'Select option',
+        value = $bindable(undefined),
         items = $bindable([]),
         onUpdate = undefined,
+        initIndex = -1,
         style = ''
     }: DropdownProps = $props();
 
 
+    let init = false;
+
     $effect(() => {
         value
-        if (onUpdate)
+        if (!init) {
+            init = true
+            return
+        }
+
+        if (onUpdate && value)
             onUpdate(value)
     })
 
-    $effect(() => {
-        items
-        if (items.length === 0)
-            return
-        if (!items.find(e => e.value === value)) {
-            value = items[0].value;
-        }
-
-    })
+    // $effect(() => {
+    //     items
+    //     if (items.length === 0)
+    //         return
+    //     if (!items.find(e => e.value === value)) {
+    //         value = items[0].value;
+    //     }
+    // })
 
     onMount(() => {
-        if (items.length === 0)
-            return
-        let item = items[0];
-        if (typeof item === 'string') {
-            items = items.map(e => {
-                return {
-                    name: e as string,
-                    value: e as string
-                }
-            })
+
+        if (initIndex >= 0 && items.length > 0) {
+            init = false
+            value = items[initIndex].value;
         }
-        value = items[0].value;
+
+        // if (items.length === 0)
+        //     return
+        // let item = items[0];
+        // if (typeof item === 'string') {
+        //     items = items.map(e => {
+        //         return {
+        //             name: e as string,
+        //             value: e as string
+        //         }
+        //     })
+        // }
+        // value = items[0].value;
     })
 
 </script>

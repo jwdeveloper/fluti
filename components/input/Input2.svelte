@@ -10,6 +10,7 @@
         invalid,
         onClick = () => {
         },
+        onChange,
         onIconClick = undefined,
         ...props
     }: InputProps2 = $props()
@@ -30,9 +31,20 @@
         updatedFromEffect = false
     })
 
+
+    let originalValue = ''
+
+    function startTyping() {
+        originalValue = $state.snapshot(value);
+    }
+
+    function endTyping() {
+        if (onChange)
+            onChange($state.snapshot(value), originalValue)
+    }
+
+
     onMount(() => {
-
-
         const updateValue = (event: Event) => {
             if (updatedFromEffect)
                 return
@@ -64,6 +76,8 @@
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
             value={value}
             type={props.type}
+            onfocusin={startTyping}
+            onfocusout={endTyping}
             autofocus={props.autofocus}
             placeholder={props.placeholder}
             disabled={props.disabled}
@@ -191,7 +205,7 @@
     }
 
     :global(.element-input:disabled) {
-        background: var(--bg-secondary);
+        /*background: var(--bg-secondary);*/
         cursor: not-allowed;
         opacity: var(--opacity-medium);
     }

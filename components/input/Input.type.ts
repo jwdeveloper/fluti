@@ -31,6 +31,7 @@ export interface InputProps2 extends ElementProps {
     variant?: 'outline' | 'filled'
     disabled?: boolean,
     onClick?: (i: any) => void,
+    onChange?: (current: string, original: string) => void,
     onIconClick?: (i: any) => void
     icon?: string
     inputMode?: string

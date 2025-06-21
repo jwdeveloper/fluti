@@ -9,4 +9,5 @@ export interface DropdownProps {
     items: string[] | DropdownItem[]
     onUpdate?: (a: string) => void
     placeholder?: string
+    initIndex?: number
 }

@@ -71,9 +71,18 @@ export class Optional<T> {
         }
     }
 
-    ifPresent(consumer: (value: T) => void): void {
+    ifPresent(consumer: (value: T) => void): Optional<T> {
         if (this.isSuccess()) {
             consumer(this.value!);
         }
+        return this;
     }
+
+    ifEmpty(consumer: (message: string) => void): Optional<T> {
+        if (this.isFail()) {
+            consumer(this.getError() ?? "");
+        }
+        return this;
+    }
+
 }
