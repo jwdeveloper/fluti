@@ -6,10 +6,10 @@ export async function handleMicrosoftOAuth(event: OAuthEvent) {
 
     // 1. Exchange code for token
     const params = new URLSearchParams({
-        client_id: '14d92deb-bfb6-41c7-83c1-f22df1050a48',
+        client_id: '',
         scope: 'openid profile email User.Read',
         code: event.code,
-        client_secret: "KTO8Q~asyCLxmEFtW.25B6ZQzVYsUA0LysXmLbYH",
+        client_secret: "",
         redirect_uri: event.redirect,
         grant_type: 'authorization_code',
         code_verifier: event.verifier
