@@ -34,7 +34,7 @@
             domain: 'localhost',
             country: "PL-pl",
             tweeter: {
-                image: 'socoal.png',
+                image: 'social.png',
                 title: 'template title',
                 description: 'template description'
             }

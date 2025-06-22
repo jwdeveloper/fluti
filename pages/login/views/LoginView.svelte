@@ -13,7 +13,7 @@
 
     let {controller}: LoginViewProps = $props();
     let logoVisible = $state(false)
-    let logo = "logo.png"
+    let logo = controller?.props?.links?.logo ?? 'logo.png';
 
 
     let translation = controller.props.messages.loginView;

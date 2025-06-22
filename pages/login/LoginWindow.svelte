@@ -51,7 +51,8 @@
             termsAndCondition: '/terms-and-conditions',
             error: '/error',
             login: '/login',
-            page: '/'
+            page: '/',
+            logo:"/logo.png"
         }
     }
 

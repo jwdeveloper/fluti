@@ -105,6 +105,7 @@ export interface LoginPageProps {
     redirectUrl?: string
 
     links?: {
+        logo: string
         termsAndCondition?: string
         privacyPolicy?: string
         login?: string
