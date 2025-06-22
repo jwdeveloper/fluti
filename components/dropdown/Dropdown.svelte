@@ -5,6 +5,7 @@
     let {
         placeholder = 'Select option',
         value = $bindable(undefined),
+        item,
         items = $bindable([]),
         onUpdate = undefined,
         initIndex = -1,
@@ -25,15 +26,6 @@
             onUpdate(value)
     })
 
-    // $effect(() => {
-    //     items
-    //     if (items.length === 0)
-    //         return
-    //     if (!items.find(e => e.value === value)) {
-    //         value = items[0].value;
-    //     }
-    // })
-
     onMount(() => {
 
         if (initIndex >= 0 && items.length > 0) {
@@ -41,18 +33,6 @@
             value = items[initIndex].value;
         }
 
-        // if (items.length === 0)
-        //     return
-        // let item = items[0];
-        // if (typeof item === 'string') {
-        //     items = items.map(e => {
-        //         return {
-        //             name: e as string,
-        //             value: e as string
-        //         }
-        //     })
-        // }
-        // value = items[0].value;
     })
 
 </script>
