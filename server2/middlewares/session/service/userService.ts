@@ -21,7 +21,8 @@ export async function returnUserAuthTokens(
             avatar: userRecord?.profile?.picture,
             name: userRecord.name ?? userRecord.email,
             verified: userRecord.verified ?? false,
-            admin: userRecord?.admin ?? false
+            admin: userRecord?.admin ?? false,
+            guest: false
         }, config.token.secret);
 
     let data: LoginResponse = {

@@ -17,7 +17,7 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
     controller.post(`/login`, async (c) => {
         const {email, password} = await c.req.json();
         try {
-            console.log('email and passowrd', email, password)
+            // console.log('email and passowrd', email, password)
             const authData = await pb.collection('users').authWithPassword(email, password);
             const record = authData.record;
             if (record.verified === false)
@@ -118,6 +118,7 @@ export function createSessionAuthMiddleware(config: SessionMiddlewareConfig) {
     const cacheService = new CacheService();
     return async (c: Context, next: any) => {
 
+        console.log('user middleware')
         let payload: any = await config.onDefaultUserData();
         c.set(config.contextPropertyName, payload);
 

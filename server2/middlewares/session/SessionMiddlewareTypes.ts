@@ -1,5 +1,6 @@
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import type {OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
+import type {Hono} from "hono";
 
 export interface UserLoginRequest {
     login: string

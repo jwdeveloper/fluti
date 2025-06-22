@@ -29,7 +29,8 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
                     id: '',
                     email: 'guest',
                     verified: false,
-                    isAdmin: false,
+                    guest: true,
+                    admin: false,
                     country: '',
                     login: 'guest',
                     permissions: [],
@@ -49,7 +50,7 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
                 useServerCache: true,
                 secret: JWT_TOKEN_SECRET,
                 tokenExpirationTime: 60 * 60 * 60 * 30,
-            }
+            },
         }
         if (onConfig)
             onConfig(config)
@@ -64,5 +65,6 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
         if (config?.oAuth !== undefined) {
             app.route(config.api.endpointPrefix, createOAuthApiController(config))
         }
+
     }
 }

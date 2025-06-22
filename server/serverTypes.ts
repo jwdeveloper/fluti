@@ -16,6 +16,7 @@ export type FlutiUser = {
     admin?: boolean,
     email?: string,
     login?: string,
+    guest?: boolean
     verified: boolean
     permissions: string[]
     roles: string[]

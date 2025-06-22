@@ -38,11 +38,12 @@ export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
     console.log('RECORD IS', record)
     const user = record.meta;
     const id = record.record.id;
-    const baseMapping = {
+    const baseMapping: FlutiUser = {
         id: id,
         login: user.email,
         email: user.email,
         verified: false,
+        guest: false,
         permissions: [],
         roles: [],
         country: 'en',
@@ -56,11 +57,14 @@ export function remapUserToFlutiUser(record: any, provider: string): FlutiUser {
         }
     }
     const rawUser = user.rawUser;
+    //TODO make for microsoft and bitbucket
     if (rawUser)
         switch (provider) {
             case 'google':
                 baseMapping.verified = rawUser.email_verified;
+                //@ts-ignore
                 baseMapping.profile.firstName = rawUser.given_name
+                //@ts-ignore
                 baseMapping.profile.lastName = rawUser.family_name
                 break;
             case 'discord':
