@@ -132,6 +132,18 @@ export class ShortcutsManager {
 
     handleKeyPress(event: KeyboardEvent) {
 
+
+        const target = event.target as HTMLElement;
+
+        const isTyping =
+            target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            (target as HTMLElement).isContentEditable;
+
+        if (isTyping) {
+            return; // Don't process shortcuts while typing
+        }
+
         const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
         console.log(key, this.heldKeys, this.queue)
         const currentTime = Date.now();
@@ -156,7 +168,7 @@ export function useShortcutsManager(
     onShortcutTriggered?: (event: KeyboardEvent, actions: ShortcutAction[]) => void
 ) {
     const manager = new ShortcutsManager(actionsProvider);
-    console.log('actions loaded',actionsProvider())
+    console.log('actions loaded', actionsProvider())
     manager.onShortcutTriggered(onShortcutTriggered || ((event, actions) => {
         for (const action of actions) {
             try {
