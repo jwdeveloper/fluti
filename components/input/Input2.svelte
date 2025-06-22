@@ -90,10 +90,13 @@
 
     {#if props?.icon}
         <div class="icon-wrapper">
-            <div>
+            <div
+                    onclick={onIconClick}
+                    style={onIconClick!==undefined?"pointer-events: all; cursor: pointer;":""}
+            >
                 <div class="icon"
                      class:icon-action={onIconClick !== undefined}
-                     onclick={onIconClick}>
+                >
                     <i class={props?.icon}></i>
                 </div>
             </div>
@@ -148,7 +151,7 @@
                 cursor: pointer;
                 color: var(--text-primary);
                 background-color: var(--bg-small-hover);
-                opacity: 0.5;
+                opacity: 0.4;
             }
 
 
