@@ -6,6 +6,7 @@
     let {
         title,
         actionTitle,
+        enableAction = true,
         children = undefined,
         isLoading = false,
         actionIcon = 'fa fa-arrow-left',
@@ -32,7 +33,8 @@
 
     {@render children?.()}
 
-    {#if actionTitle}
+
+    {#if enableAction && actionTitle}
         <Link onClick={onActionClick}>
             <Element>
                 <i class={actionIcon}></i>
@@ -40,4 +42,5 @@
             </Element>
         </Link>
     {/if}
+
 </Element>

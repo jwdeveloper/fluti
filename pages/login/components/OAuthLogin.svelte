@@ -74,6 +74,8 @@
                 fontSize={isIcon?'1.6em':undefined}
                 padding={isIcon?flutiTheme.padding.small:flutiTheme.padding.medium}
                 isShowText={!isIcon}
+                style="opacity: 0.7"
+                hover={{style:"opacity: 1.5 !important"}}
                 radius={flutiTheme.radius.huge}
                 icon='fa-brands fa-{provider.name.toLowerCase()}'>
             {#if !provider.onlyIcon}

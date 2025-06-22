@@ -39,7 +39,7 @@ export let defaultTranslation: LoginPagePropsTranslations = {
         },
         top: {
             title: '',
-            subtitle: 'Create free account and join our community!'
+            subtitle: ''
         },
         rules: {
             accept: "By continuing, you agree to",
@@ -67,6 +67,7 @@ export let defaultTranslation: LoginPagePropsTranslations = {
 
     form: {
         email: {
+            invalidEmail: "Invalid email",
             title: 'Email',
             subtitle: 'Enter email address'
         },

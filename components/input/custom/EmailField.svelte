@@ -6,11 +6,13 @@
         value = $bindable(''),
         required = false,
         label = undefined,
-        title="Email"
+        placeholder = "Wprowadź adres email",
+        invalidMessage = 'Nieprawidłowy adres email',
+        title = "Email"
     } = $props();
 
     let invalid = $state(false);
-    let errorMessage = $state('Nieprawidłowy adres email');
+    let errorMessage = $state(invalidMessage);
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     $effect(() => {
@@ -18,15 +20,15 @@
         if (value === undefined || value === '') {
             invalid = false;
             if (required == true) {
-                errorMessage = 'Wprowadź adres email';
+                errorMessage = placeholder;
                 invalid = true;
             } else {
-                errorMessage = 'Nieprawidłowy adres email';
+                errorMessage = invalidMessage;
             }
             return
         }
         invalid = !emailRegex.test(value);
-        errorMessage = 'Nieprawidłowy adres email';
+        errorMessage = invalidMessage;
     })
 
 </script>
@@ -44,5 +46,5 @@
             invalid={invalid}
             bind:value={value}
             required={true}
-            placeholder="Wprowadź adres email"/>
+            placeholder={placeholder}/>
 </Label>

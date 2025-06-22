@@ -15,6 +15,9 @@
         emailAuth: {
             enabled: true
         },
+        enableRecovery: true,
+        enableCreateAccount: true,
+        enablePrivacy: true,
         oAuth: {
             enable: true,
             providers: [
@@ -52,7 +55,7 @@
             error: '/error',
             login: '/login',
             page: '/',
-            logo:"/logo.png"
+            logo: "/logo.png"
         }
     }
 
@@ -63,7 +66,10 @@
         oAuth: {...defaultProps?.oAuth, ...props?.oAuth},
         templates: {...defaultProps?.templates, ...props?.templates},
         links: {...defaultProps?.links, ...props?.links},
-        messages: {...defaultTranslation, ...props?.messages}
+        messages: {...defaultTranslation, ...props?.messages},
+        enableCreateAccount: props?.enableCreateAccount ?? true,
+        enableRecovery: props?.enableRecovery ?? true,
+        enablePrivacy: props?.enablePrivacy ?? true
     }
     const finalData = {...mergedData, ...data}
 

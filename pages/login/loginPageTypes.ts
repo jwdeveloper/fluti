@@ -113,6 +113,10 @@ export interface LoginPageProps {
         page?: string
     }
 
+    enableRecovery: boolean
+    enablePrivacy: boolean
+    enableCreateAccount: boolean
+
     onLogin?: (data: LoginFormData, controller: LoginController) => void
     onError?: (data: LoginFormData, controller: LoginController, error: any) => void
     onOAuthLogin?: (provider: string) => void

@@ -124,19 +124,27 @@
                      width="300px"
                      justify="flex-end">
 
-                <Link onClick={()=> controller.view = 'recovery'}>
-                    {translation.forgotPassword}
-                </Link>
+                {#if controller.props.enableRecovery}
+                    <Link onClick={()=> controller.view = 'recovery'}>
+                        {translation.forgotPassword}
+                    </Link>
+                {/if}
             </Element>
+
             <ButtonLogin
                     isLoading={controller.isLoading}
                     title={translation.button.title}
                     onButtonClick={()=>controller.login()}
                     onActionClick={() => controller.view = 'register'}
                     actionIcon="fa fa-user"
+                    enableAction={controller?.props?.enableCreateAccount === true}
                     actionTitle={translation.button.subtitle}>
-                {@render PrivacyPolicy()}
+                {#if controller.props.enablePrivacy}
+                    {@render PrivacyPolicy()}
+                {/if}
+
             </ButtonLogin>
+
         </Element>
     {/if}
 

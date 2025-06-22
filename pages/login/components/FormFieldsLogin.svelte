@@ -22,6 +22,8 @@
 
 
 <EmailField
+        invalidMessage={translations.email.invalidEmail}
+        placeholder={"Email"}
         title={translations.email.title}
         bind:value={controller.form.email}
 />
