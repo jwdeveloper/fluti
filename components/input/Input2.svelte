@@ -202,10 +202,14 @@
     }
 
     :global(.element-input:focus) {
-        border-bottom-color: var(--text-muted);
-        border-bottom-right-radius: var(--radius-small);
-        border-bottom-left-radius: var(--radius-small);
+        /*border-bottom-color: var(--text-muted);*/
+        /*border-bottom-right-radius: var(--radius-small);*/
+        /*border-bottom-left-radius: var(--radius-small);*/
         outline: none;
+
+        box-shadow: 0 0 0 2px rgba(13, 241, 169, 0.2);
+        box-shadow: 0 0 0 1px var(--accent-hover);
+
     }
 
     :global(.element-input:disabled) {

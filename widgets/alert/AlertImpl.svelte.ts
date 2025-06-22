@@ -11,7 +11,7 @@ export class AlertController {
         return this.pushAlert(message, 'success', time)
     }
 
-    pushAlert(message: string, type?: string, time: number = 5000) {
+    pushAlert(message: string, type: string = 'error', time: number = 5000) {
         const alert = {
             id: Math.random().toString(36).substring(7),
             type: type,
