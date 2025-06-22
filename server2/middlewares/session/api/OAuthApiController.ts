@@ -48,9 +48,7 @@ export function makeOAuthOpenSelectUser(authUrl: string, provider: string): stri
     if (!option)
         return authUrl;
 
-    https://login.microsoftonline.com/20418f0b-4d84-4454-aed5-72f10ec3ea22/oauth2/v2.0/authorize?prompt=select_account&client_id=e700a59e-1d22-4e20-bc49-3a3d3f263793&code_challenge=TANCzX7irmI9ENmRtvSoK4_qcfe_226CeEBwFQ9WZoU&code_challenge_method=S256&response_type=code&scope=openid profile email User.Read&state=MJuNOk4S4VYqpLDE9r2BVxesH48pxp&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fapi%2Fauth%2Foauth%2Fmicrosoft
-
-        return `${baseUrl}?${option}&${queryString}`;
+    return `${baseUrl}?${option}&${queryString}`;
 }
 
 export function createOAuthApiController(config: SessionMiddlewareConfig) {
@@ -63,6 +61,8 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
         const authProviders = await client.collection('users').listAuthMethods();
         if (!authProviders.oauth2.enabled)
             throw new Error("OAuth disabled!")
+
+        console.log('auth providers', authProviders.oauth2.providers)
 
         const oauthProvider = authProviders.oauth2
             .providers

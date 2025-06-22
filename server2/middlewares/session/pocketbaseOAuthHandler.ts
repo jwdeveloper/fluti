@@ -10,7 +10,7 @@ export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUse
     if (!provider) {
         throw new Error("OAuth provider not found!")
     }
-    // const admin = pocketbaseClientAdmin();
+    // const admin = await pocketbaseClientAdmin();
     let pocketbase = new PocketBase("http://localhost:8090/");
     const result = await pocketbase.collection('users')
         .authWithOAuth2Code(
