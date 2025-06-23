@@ -122,12 +122,54 @@ export class PocketbaseCollectionWrapper {
         }
     }
 
+    async findBy<T = RecordModel>(name: string, value: any): Promise<Optional<T>> {
+        return await this.first(e => e.eq(name, value));
+    }
+
+    async findByOrCreate<T = RecordModel>(
+        findCriteria: (filter: PocketFilter) => string,
+        createData: Record<string, any>
+    ): Promise<Optional<T>> {
+        // First try to find the record
+        const foundRecord = await this.first<T>(findCriteria);
+
+        // If found, return it
+        if (foundRecord.isSuccess()) {
+            return foundRecord;
+        }
+
+        // If not found or error was "not found", create a new record
+        if (foundRecord.getError() === "not found") {
+            return this.create<T>(createData);
+        }
+
+        // If there was a different error, return that error
+        return foundRecord;
+    }
+
+    async findByAndUpdate<T = RecordModel>(
+        findCriteria: (filter: PocketFilter) => string,
+        updateData: Record<string, any>,
+    ): Promise<Optional<T>> {
+        // First try to find the record
+        const foundRecord = await this.first<T>(findCriteria);
+
+        if (foundRecord.isFail())
+            return foundRecord;
+
+        let record = foundRecord.get();
+        //@ts-ignore
+        let id = record.id ?? '';
+        return this.update<T>(id, updateData);
+    }
+
+
     /**
      * Get a record by ID
      * @param id The ID of the record to retrieve
      * @returns An Optional containing the record or error
      */
-    async getById<T = RecordModel>(id: string): Promise<Optional<T>> {
+    async findById<T = RecordModel>(id: string): Promise<Optional<T>> {
         try {
             const record = await this.collection.getOne(id) as T;
             return Optional.success(record);
