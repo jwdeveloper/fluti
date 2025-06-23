@@ -1,6 +1,7 @@
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import type {OAuthProviderValidate} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 import type {Hono} from "hono";
+import type {AuthProviderInfo} from "pocketbase";
 
 export interface UserLoginRequest {
     login: string
@@ -11,6 +12,7 @@ export interface OAuthMiddlewareOptions {
 
     //default: validate oauth request
     onAuthEvent: OAuthProviderValidate
+    onAuthFindProvider: (name: string) => Promise<AuthProviderInfo>;
 
     //default: 'oauth_state'
     stateCookie?: string

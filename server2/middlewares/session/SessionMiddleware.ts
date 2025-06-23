@@ -11,7 +11,10 @@ import {
     createSessionAuthMiddleware,
 } from "$lib/fluti/server2/middlewares/session/api/SessionApiController";
 import {createOAuthApiController} from "$lib/fluti/server2/middlewares/session/api/OAuthApiController";
-import {handlePocketBaseOAuth} from "$lib/fluti/server2/middlewares/session/pocketbaseOAuthHandler";
+import {
+    handlePocketBaseOAuth,
+    handlePocketBaseOAuthFind
+} from "$lib/fluti/server2/middlewares/session/pocketbaseOAuthHandler";
 import {JWT_TOKEN_SECRET} from "$env/static/private";
 
 async function pocketbaseUserLogin(request: UserLoginRequest) {
@@ -40,7 +43,8 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
                 }
             },
             oAuth: {
-                onAuthEvent: handlePocketBaseOAuth
+                onAuthEvent: handlePocketBaseOAuth,
+                onAuthFindProvider: handlePocketBaseOAuthFind
             },
             api: {
                 endpointPrefix: '/api/auth'

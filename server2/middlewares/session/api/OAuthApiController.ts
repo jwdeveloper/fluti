@@ -57,20 +57,8 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 
     controller.get("/oauth/create/:provider", async (c: Context) => {
         const provider = c.req.param().provider;
-        const client = await pocketbaseClientAdmin();
-        const authProviders = await client.collection('users').listAuthMethods();
-        if (!authProviders.oauth2.enabled)
-            throw new Error("OAuth disabled!")
 
-        console.log('auth providers', authProviders.oauth2.providers)
-
-        const oauthProvider = authProviders.oauth2
-            .providers
-            .find(e => e.name === provider.toLowerCase())
-        if (!oauthProvider)
-            throw new Error("OAuth provider " + provider + " not found!")
-
-        console.log('PROVIDER', oauthProvider)
+        let oauthProvider = await config.oAuth.onAuthFindProvider(provider);
         let authUrl = oauthProvider.authURL;
         const state = oauthProvider.state;
         const verifier = oauthProvider.codeVerifier;
@@ -158,9 +146,5 @@ export function createOAuthApiController(config: SessionMiddlewareConfig) {
 }
 
 async function handleOAuthEvent(options: OAuthMiddlewareOptions, event: OAuthEvent) {
-
-    // if (event.provider === 'microsoft')
-    //     return handleMicrosoftOAuth(event);
-
     return await options.onAuthEvent(event)
 }

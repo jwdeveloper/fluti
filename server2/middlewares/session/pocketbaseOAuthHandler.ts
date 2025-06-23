@@ -2,8 +2,24 @@ import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
-import PocketBase from "pocketbase";
+import PocketBase, {type AuthProviderInfo} from "pocketbase";
 
+
+export async function handlePocketBaseOAuthFind(provider: string):Promise<AuthProviderInfo> {
+    const client = await pocketbaseClientAdmin();
+    const authProviders = await client.collection('users').listAuthMethods();
+    if (!authProviders.oauth2.enabled)
+        throw new Error("OAuth disabled!")
+
+
+    const oauthProvider = authProviders.oauth2
+        .providers
+        .find(e => e.name === provider.toLowerCase())
+    if (!oauthProvider)
+        throw new Error("OAuth provider " + provider + " not found!")
+
+    return oauthProvider;
+}
 
 export async function handlePocketBaseOAuth(event: OAuthEvent): Promise<FlutiUser> {
     let provider = await getProvider(event.provider);
