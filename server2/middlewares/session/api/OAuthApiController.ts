@@ -6,10 +6,7 @@ import type {
 import {type Context, Hono} from "hono";
 import {deleteCookie, getCookie, setCookie} from "hono/cookie";
 import {returnUserAuthTokens} from "$lib/fluti/server2/middlewares/session/service/userService";
-import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
-import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
-import {handleMicrosoftOAuth} from "$lib/fluti/server2/middlewares/session/api/handles/MicrosoftHandler";
 
 
 export function makeOAuthOpenSelectUser(authUrl: string, provider: string): string {

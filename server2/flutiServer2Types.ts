@@ -6,6 +6,8 @@ import type {SideMapMiddlewareFn} from "$lib/fluti/server2/middlewares/sidemap/S
 
 export interface FlutiServer2Builder {
 
+    app: Hono
+
     configure(onConfig: (config: FlutiServer2Config) => void): FlutiServer2Builder
 
     use(middleware: FlutiServer2Middleware): FlutiServer2Builder
