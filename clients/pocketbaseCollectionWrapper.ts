@@ -28,7 +28,7 @@ export class PocketbaseCollectionWrapper {
         return [];
     }
 
-    async first<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<Optional<T>> {
+    async find<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<Optional<T>> {
         const result = new PocketFilter();
         const filter = action(result);
 
@@ -123,7 +123,7 @@ export class PocketbaseCollectionWrapper {
     }
 
     async findBy<T = RecordModel>(name: string, value: any): Promise<Optional<T>> {
-        return await this.first(e => e.eq(name, value));
+        return await this.find(e => e.eq(name, value));
     }
 
     async findByOrCreate<T = RecordModel>(
@@ -131,7 +131,7 @@ export class PocketbaseCollectionWrapper {
         createData: Record<string, any>
     ): Promise<Optional<T>> {
         // First try to find the record
-        const foundRecord = await this.first<T>(findCriteria);
+        const foundRecord = await this.find<T>(findCriteria);
 
         // If found, return it
         if (foundRecord.isSuccess()) {
@@ -139,7 +139,7 @@ export class PocketbaseCollectionWrapper {
         }
 
         // If not found or error was "not found", create a new record
-        if (foundRecord.getError() === "not found") {
+        if (foundRecord.getError()?.includes("not found")) {
             return this.create<T>(createData);
         }
 
@@ -152,7 +152,7 @@ export class PocketbaseCollectionWrapper {
         updateData: Record<string, any>,
     ): Promise<Optional<T>> {
         // First try to find the record
-        const foundRecord = await this.first<T>(findCriteria);
+        const foundRecord = await this.find<T>(findCriteria);
 
         if (foundRecord.isFail())
             return foundRecord;
