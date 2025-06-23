@@ -6,6 +6,8 @@ import PocketBase, {
 } from 'pocketbase';
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
 import {PocketFilter} from "$lib/fluti/utils/pocketFilter";
+import {Optional} from "$lib/fluti/utils/optional";
+import {PocketbaseCollectionWrapper} from "$lib/fluti/clients/pocketbaseCollectionWrapper";
 
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
 
@@ -40,51 +42,9 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
 }
 
 
-export async function pocketbaseCollection(collectionName: string): Promise<PocketbaseCollection> {
+export async function pocketbaseCollection(collectionName: string): Promise<PocketbaseCollectionWrapper> {
     let client = await pocketbaseClientAdmin();
     let collection = client.collection(collectionName);
-    let pocketCollection = new PocketbaseCollection(collection);
+    let pocketCollection = new PocketbaseCollectionWrapper(collection);
     return pocketCollection;
 }
-
-export class PocketbaseCollection {
-    collection: RecordService
-
-    constructor(collection: RecordService) {
-        this.collection = collection;
-    }
-
-    async all<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordFullListOptions): Promise<T[]> {
-        let result = new PocketFilter();
-        let filter = action(result)
-
-        let fullOptions = {
-            filter: filter,
-            ...options
-        }
-        try {
-            let result = await this.collection.getFullList(fullOptions);
-            //@ts-ignore
-            return result;
-        } catch (error) {
-            console.log(error)
-        }
-        return [];
-    }
-
-    async first<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordListOptions): Promise<T | undefined> {
-        let result = new PocketFilter();
-        let filter = action(result)
-        try {
-            return await this.collection.getFirstListItem(filter, options);
-        } catch (error) {
-            //@ts-ignore
-            if (error?.status === 404)
-                return undefined;
-
-            console.log(error)
-        }
-        return undefined;
-    }
-}
-

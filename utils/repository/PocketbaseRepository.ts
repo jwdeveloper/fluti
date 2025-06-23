@@ -99,7 +99,6 @@ export class PocketbaseRepository<T> implements Repository<T> {
         } catch (e) {
             console.log(e)
         }
-
         return [];
     }
 
