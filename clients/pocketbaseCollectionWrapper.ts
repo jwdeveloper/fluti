@@ -126,7 +126,7 @@ export class PocketbaseCollectionWrapper {
         return await this.find(e => e.eq(name, value));
     }
 
-    async findByOrCreate<T = RecordModel>(
+    async findOrCreate<T = RecordModel>(
         findCriteria: (filter: PocketFilter) => string,
         createData: Record<string, any>
     ): Promise<Optional<T>> {
@@ -147,7 +147,7 @@ export class PocketbaseCollectionWrapper {
         return foundRecord;
     }
 
-    async findByAndUpdate<T = RecordModel>(
+    async findAndUpdate<T = RecordModel>(
         findCriteria: (filter: PocketFilter) => string,
         updateData: Record<string, any>,
     ): Promise<Optional<T>> {
