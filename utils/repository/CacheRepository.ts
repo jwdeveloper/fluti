@@ -11,6 +11,10 @@ export class CacheRepository<T> implements Repository<T> {
         this.repo = repo;
     }
 
+    findByQuery(query: string): Promise<T[]> {
+        throw new Error("Method not implemented.");
+    }
+
 
     name(): string {
         return this.repo.name();

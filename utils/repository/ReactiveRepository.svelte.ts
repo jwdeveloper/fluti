@@ -81,4 +81,8 @@ export class ReactiveRepository<T> implements Repository<T> {
         }
         // this._events.callEvent(this._repo.name(), data)
     }
+
+    async findByQuery(query: string) {
+        return await this._repo.findByQuery(query)
+    }
 }

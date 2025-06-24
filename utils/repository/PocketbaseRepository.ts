@@ -1,5 +1,4 @@
 import type {Repository, RepositoryOptions} from "./Repository";
-import PocketBase from "pocketbase";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
 
@@ -9,6 +8,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
     constructor(options: RepositoryOptions) {
         this.options = options;
     }
+
 
     async getPocketbase() {
         if (this.options.pocketbaseProvider)
@@ -32,7 +32,19 @@ export class PocketbaseRepository<T> implements Repository<T> {
             filter,
         });
         return records;
+
     }
+
+    async findByQuery(query: string): Promise<T[]> {
+        if (!this.options.usePocketbase)
+            return [];
+        const pb = await this.getPocketbase();
+        const records = await pb.collection(this.options.name).getFullList<T>({
+            filter: query,
+        });
+        return records;
+    }
+
 
     async insert(item: T): Promise<T | undefined> {
         if (!this.options.usePocketbase)

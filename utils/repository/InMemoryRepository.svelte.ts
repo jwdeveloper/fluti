@@ -19,6 +19,10 @@ export class InMemoryRepository<T> implements Repository<T> {
         }
     }
 
+    findByQuery(query: string): Promise<T[]> {
+        throw new Error("Method not implemented.");
+    }
+
     name(): string {
         return this.options.name ?? "";
     }

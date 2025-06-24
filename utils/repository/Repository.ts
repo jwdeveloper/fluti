@@ -92,5 +92,7 @@ export interface Repository<T> {
     findByKey(key: any): Promise<T | undefined>
 
     findByIndex(indexName: string, indexValue: any): Promise<T[]>
+
+    findByQuery(query: string): Promise<T[]>;
 }
 
