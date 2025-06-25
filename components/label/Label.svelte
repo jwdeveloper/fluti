@@ -14,6 +14,7 @@
         invalid = false,
         labelStyle = '',
         labelFor = '',
+        zIndex=1,
         fullHeight = false,
         labelColor = 'var(--text-primary)',
         gap = "0.5em",
@@ -62,7 +63,7 @@
     {/if}
     {#if children}
         <Element
-                tag="label" style="z-index: 1;"
+                tag="label" style="z-index: {zIndex};"
                 justify="flex-start" width="100%" height={fullHeight?'100%':"auto"}>
             {@render children()}
         </Element>
