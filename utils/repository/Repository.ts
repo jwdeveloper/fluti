@@ -5,8 +5,9 @@ import type {DatabaseSchema, TableSchema} from "$lib/fluti/utils/repository/data
 import {PocketbaseRepository} from "$lib/fluti/utils/repository/PocketbaseRepository";
 import type PocketBase from "pocketbase";
 import type {Supplier} from "$lib/fluti/utils/methods";
+import {CacheRepository} from "$lib/fluti/utils/repository/CacheRepository";
 
-export class EasyRepository {
+export class SimpleRepository {
 
 
     static open<T>(options: RepositoryOptions): Repository<T> {
@@ -48,6 +49,12 @@ export class EasyRepository {
         if (options.reactive)
             //@ts-ignore
             repository = new ReactiveRepository(repository)
+
+        if (options.cache?.use)
+            //@ts-ignore
+            repository = new CacheRepository(options, repository)
+
+
         //@ts-ignore
         return repository;
     }
@@ -70,9 +77,9 @@ export type RepositoryOptions = {
 
 export type CacheOptions = {
     use: boolean, //if true cache is enabled
-    poolSize: number //maximal number or queries results cached in memory
-    searchFrequency: number  //when number of certain query extended then frequency it is added to cache
-    expirationTime: Date //time after which element is removed from cache
+    poolSize?: number //maximal number or queries results cached in memory
+    searchFrequency?: number  //when number of certain query extended then frequency it is added to cache
+    expirationTime?: number //time after which element is removed from cache
 }
 
 export interface Repository<T> {

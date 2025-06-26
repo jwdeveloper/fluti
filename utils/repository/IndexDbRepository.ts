@@ -13,6 +13,10 @@ export class IndexedDBRepository<T> implements Repository<T> {
         this.options = options;
     }
 
+    findByQuery(query: string): Promise<T[]> {
+        throw new Error("Method not implemented.");
+    }
+
     name(): string {
         return this.options.name ?? '';
     }
