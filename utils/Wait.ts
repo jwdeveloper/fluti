@@ -1,5 +1,66 @@
 import {tick} from "svelte";
 
+type CancelCallback = () => void;
+
+export class CancellationToken {
+    private _isCancelled = false;
+    private _callbacks: CancelCallback[] = [];
+
+    get isCancelled(): boolean {
+        return this._isCancelled;
+    }
+
+    /** Used internally to cancel the token. */
+    cancel() {
+        if (this._isCancelled) return;
+
+        this._isCancelled = true;
+        for (const cb of this._callbacks) {
+            cb();
+        }
+        this._callbacks = [];
+    }
+
+    /** Subscribe a callback to be called on cancellation. */
+    onCancel(callback: CancelCallback): void {
+        if (this._isCancelled) {
+            callback();
+        } else {
+            this._callbacks.push(callback);
+        }
+    }
+
+    /** Returns a promise that resolves when the token is cancelled. */
+    asPromise(): Promise<void> {
+        return this._isCancelled
+            ? Promise.resolve()
+            : new Promise<void>((resolve) => this.onCancel(resolve));
+    }
+}
+
+export class CancellationTokenSource {
+    private _tokens: CancellationToken[] = [];
+
+    /** Always returns a new token and stores it in the list. */
+    get token(): CancellationToken {
+        const token = new CancellationToken();
+        this._tokens.push(token);
+        return token;
+    }
+
+    /** Cancels all tokens created so far. */
+    cancel(): void {
+        for (const token of this._tokens) {
+            token.cancel();
+        }
+    }
+
+    /** Returns all created tokens. */
+    get allTokens(): readonly CancellationToken[] {
+        return this._tokens;
+    }
+}
+
 export async function waitTick(callback: () => void, ticks?: number) {
     if (ticks === undefined)
         ticks = 1;
@@ -10,13 +71,42 @@ export async function waitTick(callback: () => void, ticks?: number) {
     callback();
 }
 
-export async function wait(milliseconds: any) {
+
+export async function wait(milliseconds: any, token?: CancellationToken): Promise<void> {
     if (typeof milliseconds === "number") {
-        return new Promise(resolve => {
-            setTimeout(resolve, milliseconds);
+        if (token?.isCancelled) {
+            return
+        }
+        return new Promise<void>((resolve, reject) => {
+            const timeout = setTimeout(resolve, milliseconds);
+
+            token?.onCancel(() => {
+                clearTimeout(timeout);
+                resolve();
+            });
         });
     }
-    return all(milliseconds)
+    // If not a number, assume it's a list of waits (like Promise[])
+    return all(milliseconds);
+}
+
+export async function waitUntil(supplier: () => boolean | Promise<boolean>, intervalMs: number = 100, token?: CancellationToken) {
+    while (true) {
+        if (token?.isCancelled)
+            return
+
+        const result = await supplier();
+
+        if (typeof result !== 'boolean') {
+            throw new Error("Supplier must return a boolean.");
+        }
+
+        if (result) {
+            return;
+        }
+
+        await wait(intervalMs, token);
+    }
 }
 
 export async function all(fn: any, time?: any, delay?: any) {

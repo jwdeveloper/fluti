@@ -52,6 +52,7 @@ function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
             }
             console.log(`🔁 File changed: ${file}`);
             callback();
+            //@ts-ignore
             process.emit('hooks-updated', {});
             if (file !== HOOKS_FILE_PATH)
                 appendInvisibleCharToHooksFile();
