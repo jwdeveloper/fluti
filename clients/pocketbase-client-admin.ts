@@ -4,9 +4,8 @@ import PocketBase, {
     type RecordModel,
     RecordService
 } from 'pocketbase';
+//@ts-ignore
 import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
-import {PocketFilter} from "$lib/fluti/utils/pocketFilter";
-import {Optional} from "$lib/fluti/utils/optional";
 import {PocketbaseCollectionWrapper} from "$lib/fluti/clients/pocketbaseCollectionWrapper";
 
 let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
