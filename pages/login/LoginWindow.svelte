@@ -91,12 +91,16 @@
 
 
     onMount(() => {
-        if (window.location.href.includes("error="))
-            useAlert().pushAlert("Unexpected error while creating account")
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error");
+
+        if (error) {
+            useAlert().pushAlert(`${decodeURIComponent(error)}`);
+        }
     })
 </script>
 
 
-<svelte:component this="{currentView}"
-                  controller={controller}
+<svelte:component controller={controller}
+                  this="{currentView}"
                   translation={data.messages}/>
