@@ -123,11 +123,11 @@ export class PocketbaseCollectionWrapper {
         }
     }
 
-    async findMany<T = RecordModel>(action: (filter: PocketFilter) => string, options?: RecordFullListOptions): Promise<Optional<T[]>> {
+    async findMany<T = RecordModel>(action?: (filter: PocketFilter) => string, options?: RecordFullListOptions): Promise<Optional<T[]>> {
 
 
         const result = new PocketFilter();
-        const filter = action(result);
+        const filter = action?.(result);
         try {
             const result = await this.collection.getFullList({
                 ...options,
