@@ -10,6 +10,7 @@ const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
  */
 export function onCurrentFileHotSwappedByVite(callback: () => void) {
     let functionClen = () => {
+        console.log('event executed')
         callback()
         process.off('hooks-updated', functionClen)
     }
@@ -51,7 +52,7 @@ function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
             }
             console.log(`🔁 File changed: ${file}`);
             callback();
-
+            process.emit('hooks-updated', {});
             if (file !== HOOKS_FILE_PATH)
                 appendInvisibleCharToHooksFile();
         }
