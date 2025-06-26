@@ -1,5 +1,4 @@
 import type {Repository, RepositoryOptions} from "./Repository";
-import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
 
 
 export class PocketbaseRepository<T> implements Repository<T> {
@@ -14,6 +13,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
         if (this.options.pocketbaseProvider)
             return await this.options.pocketbaseProvider();
 
+        let {pocketbaseClientAdmin} = await import("$lib/fluti/clients/pocketbase-client-admin")
         let admin = await pocketbaseClientAdmin()
         admin.autoCancellation(false)
         return admin;
