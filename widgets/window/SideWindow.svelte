@@ -9,8 +9,10 @@
 
     interface WindowLayer {
         visible?: boolean
+        previousVisibleState?: boolean
         size?: string,
         height?: string,
+        init?: boolean
         panel?: PanelProps,
         background?: {
             blur?: string
@@ -36,6 +38,8 @@
         height = "100%",
         visible = $bindable(false),
         panel = {},
+        init = false,
+        previousVisibleState=false,
         allowClose = true,
         allowScroll = true,
         onClose,
@@ -45,8 +49,6 @@
     let rootElement: HTMLDivElement;
     let rootAnimatedElement: any;
     let isClient = $state(false);
-    let previousVisibleState = false;
-    let init = false
 
     let defaultValues = {
         blur: "3px",
@@ -221,8 +223,9 @@
     })
 
     let getSize = $derived.by(() => {
-        if (!isClient)
-            return {width: "0", height: "0"}
+        // if (!isClient)
+        //     return {width: size, height: height}
+        //
         switch (getDirection()) {
             case "top":
             case "bottom":
@@ -242,9 +245,9 @@
 
 <!--<LeftRightInteraction onInteraction={(e)=> visible =false}/>-->
 
-<div class="root"
-     onclick={handleClick}
-     bind:this={rootElement}>
+<div bind:this={rootElement}
+     class="root"
+     onclick={handleClick}>
     {#if visible}
 
         <div class="window-container"
