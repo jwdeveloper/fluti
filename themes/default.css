@@ -4,9 +4,9 @@
     --bg-primary: rgba(255, 255, 255);
     --bg-secondary: rgb(244, 243, 242);
 
-    --bg-transparent: rgba(217, 212, 212, .1);
-
     --bg-tertiary: #e1dfdf;
+
+    --bg-transparent: rgba(217, 212, 212, .1);
 
     --text-light: #192638;
     --text-primary: #34465d;
