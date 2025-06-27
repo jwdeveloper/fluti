@@ -1,20 +1,8 @@
 import path from "path";
 import fs from "fs";
+import type {Plugin} from "vite";
 
 const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
-
-/**
- * Checks if the current file imports the `onSvelteHooksUpdated` method, then if file got hot swapped or updated by vite
- * is calling this method.
- * @param callback
- */
-export function onCurrentFileHotSwappedByVite(callback: () => void) {
-    let functionClen = () => {
-        callback()
-        process.off('hooks-updated', functionClen)
-    }
-    process.on('hooks-updated', functionClen)
-}
 
 /**
  * Append zero-width space to a file (no visible change but triggers hot reload)
@@ -37,29 +25,55 @@ function appendInvisibleCharToHooksFile() {
 }
 
 
-function hotCallbackPluginForSymbol(symbolName: string, callback: () => void) {
+let SERVER;
+
+/**
+ * Creates a Vite plugin that restarts the dev server if a symbol-related file changes.
+ */
+function hotCallbackPluginForSymbol(symbolName: string, callback: () => void): Plugin {
     return {
         name: 'vite-plugin-hot-symbol',
-        //@ts-ignore
-        handleHotUpdate({file}) {
-            // console.log(`File reported change ${file}`);
+
+        configureServer(server) {
+            //@ts-ignore
+            SERVER = server;
+        },
+
+        handleHotUpdate(ctx) {
+            const file = ctx.file;
+
             if (
                 !file.includes('src') ||
                 file.includes('.svelte-kit')
             ) {
                 return;
             }
+
             console.log(`🔁 File changed: ${file}`);
             callback();
+
+            // Notify listeners
             //@ts-ignore
             process.emit('hooks-updated', {});
-            if (file !== HOOKS_FILE_PATH)
+
+            if (file !== HOOKS_FILE_PATH) {
                 appendInvisibleCharToHooksFile();
+            }
+
+            //@ts-ignore
+            if (SERVER) {
+                console.log('♻️ Restarting Vite dev server...');
+                //@ts-ignore
+                SERVER.restart();
+            }
         }
     };
 }
 
-export function fileHotSwapUpdateHookPlugin() {
+/**
+ * Plugin used to restart the Vite dev server when any hook-related file changes.
+ */
+export function resetServerPlugin(): Plugin {
     return hotCallbackPluginForSymbol('', () => {
         console.log('🔥 Detected hook usage, emitting process event 🔥');
         //@ts-ignore

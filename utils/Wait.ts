@@ -40,24 +40,55 @@ export class CancellationToken {
 
 export class CancellationTokenSource {
     private _tokens: CancellationToken[] = [];
+    private _children: CancellationTokenSource[] = [];
+    private _isCancelled = false;
 
-    /** Always returns a new token and stores it in the list. */
+    /** Create a new token from this source. */
     get token(): CancellationToken {
         const token = new CancellationToken();
-        this._tokens.push(token);
+        if (this._isCancelled) {
+            token.cancel();
+        } else {
+            this._tokens.push(token);
+        }
         return token;
     }
 
-    /** Cancels all tokens created so far. */
-    cancel(): void {
-        for (const token of this._tokens) {
-            token.cancel();
+    /** Add a child source, which will be cancelled when this parent is cancelled. */
+    source(source?: CancellationTokenSource): CancellationTokenSource {
+        if (source === undefined)
+            source = new CancellationTokenSource();
+
+        if (this._isCancelled) {
+            source.cancel();
+        } else {
+            this._children.push(source);
         }
+        return source;
     }
 
-    /** Returns all created tokens. */
+    /** Cancel this source and all tokens and child sources. */
+    cancel(): void {
+        if (this._isCancelled) return;
+        this._isCancelled = true;
+
+        for (const token of this._tokens) token.cancel();
+        for (const child of this._children) child.cancel();
+
+        this._tokens = [];
+        this._children = [];
+    }
+
     get allTokens(): readonly CancellationToken[] {
         return this._tokens;
+    }
+
+    get children(): readonly CancellationTokenSource[] {
+        return this._children;
+    }
+
+    get isCancelled(): boolean {
+        return this._isCancelled;
     }
 }
 
