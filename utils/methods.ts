@@ -1,5 +1,5 @@
 // Like java.util.function.Supplier<T>
-export type Supplier<T> = () => T;
+export type Supplier<T> = (args?: any) => T;
 export type AsyncSupplier<T> = () => Promise<T>;
 
 // Like java.util.function.Consumer<T>
