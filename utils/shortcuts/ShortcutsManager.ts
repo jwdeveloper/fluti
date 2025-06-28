@@ -7,6 +7,7 @@ export interface ShortcutAction {
     shortcuts: string[],
     tags?: string[],
     icon?: string,
+    permissions?: string[],
     displayedName?: string,
     path?: string,
     description?: string,
