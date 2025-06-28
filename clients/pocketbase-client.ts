@@ -1,7 +1,12 @@
 import PocketBase from 'pocketbase';
-import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
 
-let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
-export const pocketbaseClient = new PocketBase(url);
+//TODO check it if variables will works in this way
+function getUrl() {
+    const env = process.env.PUBLIC_ENV;
+    const localUrl = process.env.PUBLIC_LOCAL_POCKETBASE_URL;
+    const prodUrl = process.env.PUBLIC_POCKETBASE_URL;
 
+    return env === 'dev' ? localUrl : prodUrl;
+}
 
+export const pocketbaseClient = new PocketBase(getUrl());

@@ -71,6 +71,7 @@ export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
         this.middlewareBuilders.push(async (inpt) => {
             config(inpt)
         })
+        return this;
     }
 
     async create(): Promise<FlutiServer2> {

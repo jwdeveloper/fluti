@@ -1,14 +1,9 @@
-import PocketBase, {
-    type RecordFullListOptions,
-    type RecordListOptions,
-    type RecordModel,
-    RecordService
-} from 'pocketbase';
+import PocketBase from 'pocketbase';
 //@ts-ignore
-import {PUBLIC_ENV, PUBLIC_LOCAL_POCKETBASE_URL, PUBLIC_POCKETBASE_URL} from "$env/static/public";
 import {PocketbaseCollectionWrapper} from "$lib/fluti/clients/pocketbaseCollectionWrapper";
 
-let url = PUBLIC_ENV === "dev" ? PUBLIC_LOCAL_POCKETBASE_URL : PUBLIC_POCKETBASE_URL;
+let url = process.env.PUBLIC_ENV === "dev" ? process.env.PUBLIC_LOCAL_POCKETBASE_URL : process.env.PUBLIC_POCKETBASE_URL;
+
 
 // Store admin sessions with timestamps
 type SessionData = { client: PocketBase; createdAt: number };

@@ -15,7 +15,6 @@ import {
     handlePocketBaseOAuth,
     handlePocketBaseOAuthFind
 } from "$lib/fluti/server2/middlewares/session/pocketbaseOAuthHandler";
-import {JWT_TOKEN_SECRET} from "$env/static/private";
 
 async function pocketbaseUserLogin(request: UserLoginRequest) {
     return false;
@@ -52,7 +51,7 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
             token: {
                 cookieName: 'session_token',
                 useServerCache: true,
-                secret: JWT_TOKEN_SECRET,
+                secret: process?.env?.JWT_TOKEN_SECRET ?? '',
                 tokenExpirationTime: 60 * 60 * 60 * 30,
             },
         }
