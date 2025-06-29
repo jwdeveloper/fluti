@@ -13,6 +13,31 @@ import {useSessionMiddleware} from "$lib/fluti/server2/middlewares/session/Sessi
 import {type SideMapMiddlewareFn, useSideMapMiddleware} from "$lib/fluti/server2/middlewares/sidemap/SideMapMiddleware";
 
 
+export function getSvelteContext(context: Context, data: any) {
+
+    let event = context?.env?.svelteEvent as RequestEvent
+    if (event === undefined)
+        throw new Error("Svelte Event not found in hono env")
+
+    let locals = event.locals;
+    if (locals === undefined)
+        throw new Error("Svelte locals (context) is undefined")
+    return locals;
+}
+
+export function setSvelteContext(honoContext: Context, data: any) {
+
+    let event = honoContext?.env?.svelteEvent as RequestEvent
+    if (event === undefined)
+        throw new Error("Svelte Event not found in hono env")
+
+    let locals = event.locals;
+    if (locals === undefined)
+        throw new Error("Svelte locals (context) is undefined")
+
+    event.locals = {...locals, ...data}
+}
+
 export class FlutiServer2BuilderImpl implements FlutiServer2Builder {
 
     app: Hono
@@ -98,7 +123,6 @@ export class FlutiServer2Impl implements FlutiServer2 {
     handel(event: RequestEvent, resolve: (event: RequestEvent, opts?: ResolveOptions) => any) {
 
 
-
         const theme = event.cookies.get("theme") ?? this.config.defaultTheme;
         const lang = event.cookies.get("lang") ?? this.config.defaultLang;
 
@@ -118,7 +142,8 @@ export class FlutiServer2Impl implements FlutiServer2 {
             {
                 ip: event?.getClientAddress?.(),
                 // svelteEvent: event,
-                renderSvelte: resolveSvelte
+                renderSvelte: resolveSvelte,
+                svelteEvent: event
             });
     }
 
