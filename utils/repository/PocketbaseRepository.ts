@@ -83,7 +83,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
             return updated;
 
         } catch (error) {
-            console.log('error while update')
+            console.log('Error while update', error)
             // console.error(`Error updating item in collection ${this.options.name}:`, error);
             // throw error;
         }
