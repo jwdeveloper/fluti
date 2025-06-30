@@ -104,7 +104,7 @@ export async function updateHooksFunction(filePath: string) {
     if (!fs.existsSync(filePath)) return;
     let code = fs.readFileSync(filePath, 'utf-8');
     // console.log(code)
-    const updated = code.replace(currentFunction2, wantedFunction2);
+    const updated = code.replace(currentFunction, wantedFunction);
 
     if (updated !== code) {
         fs.writeFileSync(filePath, updated, 'utf-8');

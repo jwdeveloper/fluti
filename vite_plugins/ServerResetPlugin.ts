@@ -25,6 +25,7 @@ function appendInvisibleCharToHooksFile() {
 }
 
 
+//@ts-ignore
 let SERVER;
 
 /**
