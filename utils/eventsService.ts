@@ -50,6 +50,17 @@ export class EventsService {
         }
     }
 
+    async callEventWithParams(name: string, ...params: any[]) {
+        const handlers = this.eventsMap.get(name);
+        if (handlers) {
+            for (const handler of handlers) {
+                //@ts-ignore
+                await handler(...params);
+            }
+        }
+    }
+
+
     /**
      * Trigger all handlers for a given event name manually
      */

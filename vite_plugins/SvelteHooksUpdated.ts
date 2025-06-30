@@ -8,7 +8,7 @@ const HOOKS_FILE_PATH = path.resolve("src/hooks.server.ts");
  * is calling this method.
  * @param callback
  */
-export function onCurrentFileHotSwappedByVite(callback: () => void) {
+export function onViteFileUpdateHook(callback: () => void) {
     let functionClen = () => {
         callback()
         process.off('hooks-updated', functionClen)

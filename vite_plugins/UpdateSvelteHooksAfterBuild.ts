@@ -83,6 +83,8 @@ export async function get_hooks() {
     let init = hooks?.init;
     let reroute = hooks?.reroute;
     let transport = hooks?.transport;
+    
+    console.log('calling wanted function',handleWebsocket);
     return {
         handleWebsocket,
         handle,
