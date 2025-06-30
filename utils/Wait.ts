@@ -11,14 +11,20 @@ export class CancellationToken {
     }
 
     /** Used internally to cancel the token. */
-    cancel() {
-        if (this._isCancelled) return;
+    async cancel() {
+        try {
+            if (this._isCancelled) return;
 
-        this._isCancelled = true;
-        for (const cb of this._callbacks) {
-            cb();
+            this._isCancelled = true;
+            for (const cb of this._callbacks) {
+                await cb();
+            }
+            this._callbacks = [];
+
+        } catch (error) {
+            console.error('error while cancelling token', error);
         }
-        this._callbacks = [];
+
     }
 
     /** Subscribe a callback to be called on cancellation. */
