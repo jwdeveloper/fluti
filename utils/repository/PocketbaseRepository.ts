@@ -83,6 +83,9 @@ export class PocketbaseRepository<T> implements Repository<T> {
             return updated;
 
         } catch (error) {
+            if(error+"".includes("autocancelled")) {
+                return undefined;
+            }
             console.log('Error while update', error)
             // console.error(`Error updating item in collection ${this.options.name}:`, error);
             // throw error;
