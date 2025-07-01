@@ -83,8 +83,9 @@ export class PocketbaseRepository<T> implements Repository<T> {
             return updated;
 
         } catch (error) {
+            console.log(error)
             //@ts-ignore
-            if(error+"".includes("autocancelled")) {
+            if (error + "".includes("autocancelled")) {
                 return undefined;
             }
             console.log('Error while update', error)

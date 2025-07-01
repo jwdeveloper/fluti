@@ -149,7 +149,7 @@
              display: flex;
              height: 100%;
               width: 100%; color: {fontColor};">
-                <i class='{icon}'>
+                <i class='{icon}'/>
             </div>
         {/if}
         {#if children}
@@ -168,7 +168,7 @@
         {/if}
         {#if rightIcon}
             <div style="z-index: var(--z-index-1);height: 100%;  width: 100%; color: {iconColor};">
-                <i class='{rightIcon}'>
+                <i class='{rightIcon}'/>
             </div>
 
         {/if}
