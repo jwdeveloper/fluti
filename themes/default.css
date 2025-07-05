@@ -230,6 +230,7 @@ body, html {
 ::selection {
     background-color: var(--accent-primary); /* Green background */
     color: var(--accent-color); /* White text */
+
 }
 
 
