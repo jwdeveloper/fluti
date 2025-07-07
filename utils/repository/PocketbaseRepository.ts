@@ -114,7 +114,7 @@ export class PocketbaseRepository<T> implements Repository<T> {
             const records = await pb.collection(this.options.name).getFullList<T>();
             return records;
         } catch (e) {
-            console.log(e)
+            console.log("Pocket base find error", e)
         }
         return [];
     }

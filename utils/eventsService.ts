@@ -37,6 +37,12 @@ export class EventsService {
      * Trigger all handlers for a given event name manually
      */
     callEvent(name: string, payload: any, onExecute?: any) {
+
+        if(name === undefined)
+        {
+            throw new Error(`called name with undefined name ${name}`)
+        }
+
         if (!this.config.autoFire) {
             this.eventQueue.push({name, payload, onExecute});
             return
