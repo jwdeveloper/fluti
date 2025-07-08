@@ -5,6 +5,7 @@ export type AsyncSupplier<T> = () => Promise<T>;
 // Like java.util.function.Consumer<T>
 export type Consumer<T> = (input: T) => void;
 
+
 // Like java.util.function.Function<T, R>
 export type Function<T, R> = (input: T) => R;
 
