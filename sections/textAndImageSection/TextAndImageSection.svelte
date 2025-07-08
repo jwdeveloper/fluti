@@ -76,7 +76,9 @@
         >
             <div style="height: 300px"/>
             {#each items as item, index}
-                <TextAndImageItem key={index} subTitleColor={item.color}
+                <TextAndImageItem key={index}
+                                  subTitleColor={item.color}
+                                  glowStrength={props.glowStrength}
                                   selected={index === activeId}
                                   item={item}/>
             {/each}
@@ -89,7 +91,7 @@
                      className="sticky-panel"
                      direction="column">
                 <img style="
-            box-shadow: 0 0 2em 0.01em {borderColor};
+            box-shadow: 0 0 {props?.glowStrength ?? '2em'} 0.01em {borderColor};
             border: 0.01em solid {borderColor}" src={item?.image ?? ''}>
             </Element>
         </div>
@@ -97,8 +99,8 @@
 
 {/snippet}
 
-
 {#if item !== undefined}
+
     {#if breakpoints.isMobile}
         {@render MobileImplementation()}
     {:else}
