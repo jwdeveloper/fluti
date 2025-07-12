@@ -5,6 +5,7 @@ export interface ShortcutAction {
     name: string,
     method: (event: KeyboardEvent, args: any) => void,
     shortcuts: string[],
+    context?: string[],
     tags?: string[],
     icon?: string,
     permissions?: string[],
