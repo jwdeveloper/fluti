@@ -3,8 +3,9 @@ import {tick} from "svelte";
 type CancelCallback = () => void;
 
 export class CancellationToken {
+    private id: string = generateUUID()
     private _isCancelled = false;
-    private _callbacks: CancelCallback[] = [];
+    _callbacks: CancelCallback[] = [];
 
     get isCancelled(): boolean {
         return this._isCancelled;
@@ -118,6 +119,7 @@ export async function wait(milliseconds: any, token?: CancellationToken): Promis
             const timeout = setTimeout(resolve, milliseconds);
 
             token?.onCancel(() => {
+                console.log('token is getting canceled!!!')
                 clearTimeout(timeout);
                 resolve();
             });
