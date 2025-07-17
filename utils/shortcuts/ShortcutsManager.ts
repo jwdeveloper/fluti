@@ -113,9 +113,12 @@ export class ShortcutsManager {
     }
 
     handleKeyUp(event: KeyboardEvent) {
-        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        let key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
         const actions = this.actionsProvider();
         const result: ShortcutAction[] = [];
+
+        if (key === ' ')
+            key = 'space'
 
         for (const action of actions) {
             for (const shortcut of action.shortcuts) {
@@ -146,7 +149,10 @@ export class ShortcutsManager {
             return; // Don't process shortcuts while typing
         }
 
-        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        let key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        if (key === ' ')
+            key = 'space'
+
         console.log(key, this.heldKeys, this.queue)
         const currentTime = Date.now();
         if (currentTime - this.lastKeyPressTime > 500) {
