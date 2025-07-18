@@ -36,10 +36,9 @@ export class EventsService {
     /**
      * Trigger all handlers for a given event name manually
      */
-    callEvent(name: string, payload: any, onExecute?: any) {
+    callEvent<T = any>(name: string, payload: T, onExecute?: any) {
 
-        if(name === undefined)
-        {
+        if (name === undefined) {
             throw new Error(`called name with undefined name ${name}`)
         }
 

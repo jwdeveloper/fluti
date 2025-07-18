@@ -295,7 +295,7 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        pointer-events: all;
+        pointer-events: all ;
         z-index: var(--z-index-1);
     }
 
