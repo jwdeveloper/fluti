@@ -75,12 +75,14 @@ export class CancellationTokenSource {
     }
 
     /** Cancel this source and all tokens and child sources. */
-    cancel(): void {
+    async cancel(): Promise<void> {
         if (this._isCancelled) return;
         this._isCancelled = true;
 
-        for (const token of this._tokens) token.cancel();
-        for (const child of this._children) child.cancel();
+        for (const token of this._tokens)
+            await token.cancel();
+        for (const child of this._children)
+            await child.cancel();
 
         this._tokens = [];
         this._children = [];
