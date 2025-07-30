@@ -40,6 +40,7 @@ export class SimpleRepository {
             //@ts-ignore
             repository = new IndexedDBRepository(dbOptions, options)
         else if (options.usePocketbase)
+            //@ts-ignore
             repository = new PocketbaseRepository(options);
         else
             //@ts-ignore
@@ -88,7 +89,7 @@ export interface Repository<T> {
 
     insert(item: T): Promise<T | undefined>
 
-    update(item: T): Promise<T | undefined>
+    update(item: Partial<T>): Promise<T | undefined>
 
     delete(item: T | string): Promise<T | undefined>
 
