@@ -7,7 +7,7 @@ export type Consumer<T> = (input: T) => void;
 
 
 // Like java.util.function.Function<T, R>
-export type Function<T, R> = (input: T) => R;
+export type Func<T, R> = (input: T) => R;
 
 // Like java.util.function.Predicate<T>
 export type Predicate<T> = (input: T) => boolean;

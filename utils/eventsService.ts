@@ -69,13 +69,20 @@ export class EventsService {
     /**
      * Trigger all handlers for a given event name manually
      */
-    async callEventSync(name: string, payload: any): Promise<void> {
+    async callEventSync(name: string, payload: any): Promise<any> {
         const handlers = this.eventsMap.get(name);
+        let response = [];
         if (handlers) {
             for (const handler of handlers) {
-                await handler(payload);
+                response.push(await handler(payload))
             }
         }
+        if (response.length === 0)
+            return undefined;
+        if (response.length === 1) {
+            return response[0]
+        }
+        return response;
     }
 
 
