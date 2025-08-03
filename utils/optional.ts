@@ -85,6 +85,13 @@ export class Optional<T> {
         return this;
     }
 
+    throwIfFail(errorSupplier?: () => Error): Optional<T> {
+        if (this.isFail()) {
+            throw errorSupplier?.() || new Error(this.errorMessage || "No value present in Optional");
+        }
+        return this;
+    }
+
     print() {
         if (this.isSuccess()) {
             let value = typeof this.value === 'object' ? JSON.stringify(this.value, null, 2) : this.value;
