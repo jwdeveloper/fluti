@@ -66,6 +66,7 @@ export type RepositoryOptions = {
     key: string //that to property of object that represent key
     useIndexDb?: boolean //if true data is stored inside indexDB, otherwise data is store in application memory
     usePocketbase?: boolean //if true data is stored inside pocketbase, otherwise data is store in application memory
+    useSqlLite?: boolean //if true data is stored inside pocketbase, otherwise data is store in application memory
     reactive?: boolean //triggers an event when Insert/Update/Delete method are executed with success
     indexes?: string[] //names of columns that should be indexed
     databaseName?: string
