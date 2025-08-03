@@ -1,3 +1,4 @@
+//@ts-ignore
 import {PUBLIC_STRIPE_KEY} from "$env/static/public";
 import Stripe from "stripe";
 
