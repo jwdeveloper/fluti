@@ -45,9 +45,16 @@ export class ShortcutsManager {
 
     bind() {
 
-        if (!browser) {
+        try {
+            window
+        }
+        catch (error)
+        {
             return
         }
+        // if (!browser) {
+        //     return
+        // }
 
         // this.unbind();
 
