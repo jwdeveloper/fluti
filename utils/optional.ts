@@ -85,4 +85,14 @@ export class Optional<T> {
         return this;
     }
 
+    print() {
+        if (this.isSuccess()) {
+            let value = typeof this.value === 'object' ? JSON.stringify(this.value, null, 2) : this.value;
+            console.log("Optional success:", value);
+        } else {
+            console.error("Optional error:", this.errorMessage);
+        }
+        return this;
+    }
+
 }
