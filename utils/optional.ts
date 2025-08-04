@@ -1,7 +1,7 @@
 export class Optional<T> {
     private constructor(
         private readonly value: T | null | undefined,
-        private readonly errorMessage?: string
+        private errorMessage?: string
     ) {
     }
 
@@ -26,6 +26,22 @@ export class Optional<T> {
 
     static fail<T>(message?: string): Optional<T> {
         return new Optional<T>(null, message);
+    }
+
+    returnError<K>(additionalMessage?: string): Optional<K> {
+
+        if (!this.errorMessage) {
+            this.errorMessage = additionalMessage;
+            //@ts-ignore
+            return this as Optional<K>;
+        }
+
+        if (additionalMessage && this.errorMessage) {
+            this.errorMessage += " " + additionalMessage;
+        }
+
+        //@ts-ignore
+        return this as Optional<K>;
     }
 
     isSuccess(): boolean {
