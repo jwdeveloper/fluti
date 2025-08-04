@@ -85,9 +85,17 @@ export class Optional<T> {
         return this;
     }
 
+    getOrThrow(): T {
+        if (this.isSuccess())
+            return this.get();
+        this.throwIfFail();
+        //@ts-ignore
+        return null;
+    }
+
     throwIfFail(errorSupplier?: () => Error): Optional<T> {
         if (this.isFail()) {
-            let message =this.errorMessage || "No value present in Optional"
+            let message = this.errorMessage || "No value present in Optional"
             console.error(message)
             throw errorSupplier?.() || new Error(message);
         }
