@@ -183,7 +183,6 @@ export function useShortcutsManager(
     onShortcutTriggered?: (event: KeyboardEvent, actions: ShortcutAction[]) => void
 ) {
     const manager = new ShortcutsManager(actionsProvider);
-    console.log('actions loaded', actionsProvider())
     manager.onShortcutTriggered(onShortcutTriggered || ((event, actions) => {
         for (const action of actions) {
             try {
