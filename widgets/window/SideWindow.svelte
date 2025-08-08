@@ -14,6 +14,10 @@
         height?: string,
         init?: boolean
         panel?: PanelProps,
+        maxSize?: {
+            height: string
+            width: string
+        }
         background?: {
             blur?: string
             brightness?: string
@@ -39,7 +43,7 @@
         visible = $bindable(false),
         panel = {},
         init = false,
-        previousVisibleState=false,
+        previousVisibleState = false,
         allowClose = true,
         allowScroll = true,
         onClose,
@@ -222,6 +226,26 @@
         }
     })
 
+    let getMaxSizeStyles = $derived.by(() => {
+
+        if (!options.maxSize)
+            return "";
+
+        let size = options.maxSize;
+        switch (getDirection()) {
+            case "top":
+            case "bottom":
+                size = {width: options.maxSize.height, height: options.maxSize.width};
+            case "left":
+            case "right":
+            case "center":
+                size = {width: options.maxSize.width, height: options.maxSize.height};
+        }
+
+        return `max-height:${size.height}; max-width:${size.width};`
+    })
+
+
     let getSize = $derived.by(() => {
         // if (!isClient)
         //     return {width: size, height: height}
@@ -269,6 +293,7 @@
                      background="var(--bg-primary)"
                      radius="var(--radius-strong)"
                      style="position: absolute;
+                     {getMaxSizeStyles};
                      top:{options?.y? options.y+'px':''};
                      left: {options?.x? options.x+'px':''}"
                      {...panel}
@@ -295,7 +320,7 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        pointer-events: all ;
+        pointer-events: all;
         z-index: var(--z-index-1);
     }
 
