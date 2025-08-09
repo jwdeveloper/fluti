@@ -7,9 +7,12 @@ export interface EventServiceConfig {
     autoFire: boolean
 }
 
+export type AnyEventHandler = (name: string, payload: any) => void
+
 export class EventsService {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
     private eventQueue: { name: string, payload: any, onExecute?: () => void }[] = [];
+    private anyEventsHandlers: AnyEventHandler[] = []
     private config: EventServiceConfig;
 
     intervalId = undefined
@@ -20,7 +23,10 @@ export class EventsService {
             autoFire: true,
         };
 
+    }
 
+    onAnyEvent(handler: (name: string, payload: any) => void) {
+        this.anyEventsHandlers.push(handler);
     }
 
     /**
@@ -46,7 +52,7 @@ export class EventsService {
             this.eventQueue.push({name, payload, onExecute});
             return
         }
-
+        this.callAnyHandlers(name, payload)
         const handlers = this.eventsMap.get(name);
         if (handlers) {
             for (const handler of handlers) {
@@ -57,6 +63,8 @@ export class EventsService {
 
     async callEventWithParams(name: string, ...params: any[]) {
         const handlers = this.eventsMap.get(name);
+        this.callAnyHandlers(name, params)
+
         if (handlers) {
             for (const handler of handlers) {
                 //@ts-ignore
@@ -72,11 +80,13 @@ export class EventsService {
     async callEventSync(name: string, payload: any): Promise<any> {
         const handlers = this.eventsMap.get(name);
         let response = [];
+        this.callAnyHandlers(name, payload)
         if (handlers) {
             for (const handler of handlers) {
                 response.push(await handler(payload))
             }
         }
+
         if (response.length === 0)
             return undefined;
         if (response.length === 1) {
@@ -95,6 +105,8 @@ export class EventsService {
             if (onExecute)
                 executeActions.push(onExecute)
 
+            this.callAnyHandlers(name, payload)
+
             const handlers = this.eventsMap.get(name);
             // console.log('executing events', name, this.eventsMap.keys().map(e => e))
             if (handlers) {
@@ -110,9 +122,17 @@ export class EventsService {
         }
     }
 
+
+    callAnyHandlers(name: string, payload: any) {
+        for (let handler of this.anyEventsHandlers) {
+            handler(name, payload);
+        }
+    }
+
     clear() {
         this.eventsMap = new Map<string, Set<(payload: any) => void>>();
         this.eventQueue = [];
+        this.anyEventsHandlers = []
     }
 
 }
