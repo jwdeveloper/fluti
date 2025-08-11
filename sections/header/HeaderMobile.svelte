@@ -9,6 +9,7 @@
     import {vibrate} from "$lib/fluti/utils/Wait";
     import LeftRightInteraction from "$lib/fluti/components/interaction/LeftRightInteraction.svelte";
     import type {Direction} from "$lib/fluti/flutiSvelteTypes";
+    import Hint from "$lib/fluti/components/hint/Hint.svelte";
 
     let {items, currentPath, ...props}: HeaderSectionProps = $props();
 
@@ -32,7 +33,7 @@
     let profile = {
         name: "Profil",
         icon: 'fa fa-user',
-        link:'/profile'
+        link: '/profile'
     }
 </script>
 
@@ -66,13 +67,13 @@
 {/snippet}
 
 
-<Element width="100%"
-         id="Mobile-header"
-         display="grid"
+<Element background={flutiTheme.background.primary}
          columns="auto 1fr auto"
+         display="grid"
          fontSize={flutiTheme.font.huge}
-         background={flutiTheme.background.primary}
-         padding={flutiTheme.padding.large}>
+         id="Mobile-header"
+         padding={flutiTheme.padding.large}
+         width="100%">
 
     <Element>
         <!--        <Button2 size="small" icon="fa fa-arrow-left"></Button2>-->
@@ -82,30 +83,49 @@
         <LogoElement {...props.logo}/>
     </Element>
 
-    <Element width="100%" justify="flex-end">
-        <Button2 onClick={()=>openWindow = true} icon="fa-solid fa-bars" size="large" variant="text"/>
+    <Element justify="flex-end" width="100%">
+        <Button2 icon="fa-solid fa-bars" onClick={()=>openWindow = true} size="large" variant="text"/>
     </Element>
 </Element>
 <LeftRightInteraction
         onInteraction={handleInteraction}
 />
 <SideWindow
-        panel={{radius: 'var(--radius-large) 0 0 var(--radius-large)'}}
         animation={{duration:300}}
-        bind:visible={openWindow} size="80%">
-    <Element height="100%"
+        bind:visible={openWindow}
+        panel={{radius: 'var(--radius-large) 0 0 var(--radius-large)'}} size="80%">
+    <Element align="flex-start"
              direction='column'
-             width="100%"
-             padding="0 1em"
+             height="100%"
              justify="flex-start"
-             align="flex-start">
+             padding="0 1em"
+             width="100%">
         <Space variant="small"/>
 
-        <Element width="100%" justify="space-between" align="flex-start">
+        <Element align="flex-start" justify="space-between" width="100%">
             <LogoElement {...props.logo}/>
-            <Button2 onClick={()=>openWindow = false} icon="fa fa-x" size="medium" variant="text"/>
+            <Button2 icon="fa fa-x" onClick={()=>openWindow = false} size="medium" variant="text"/>
         </Element>
-        <Element width="100%">
+        <Element justify="flex-end" width="100%">
+            {#if props.showLogin}
+                {#if props.isUserLogin}
+                    <Hint title="Informacje o koncie">
+                        <Button2
+                                variant="filled"
+                                fullWidth={true}
+                                onClick={()=> window.location.href=props.profileUrl ?? "/profile"} icon="fa fa-user">
+                            Twój profil
+                        </Button2>
+                    </Hint>
+
+                {:else }
+                    <Hint title="Zaloguj się lub utwórz konto">
+                        <Button2 variant="filled" onClick={()=> window.location.href='/login'}>
+                            Zaloguj się
+                        </Button2>
+                    </Hint>
+                {/if}
+            {/if}
         </Element>
         {#each items as item}
             {@render HeaderButton(item)}

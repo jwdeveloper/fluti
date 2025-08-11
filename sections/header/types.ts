@@ -10,6 +10,7 @@ export interface HeaderSectionProps extends ElementProps {
     isUserLogin?: boolean
     currentPath?: string
     showThemes?: boolean
+    profileUrl?: string
     items?: HeaderItem[]
     children?: any
     logo?: LogoElementProps
