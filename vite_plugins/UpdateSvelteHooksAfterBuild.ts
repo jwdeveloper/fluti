@@ -185,7 +185,7 @@ export function pathSvelteSeverHooks(): Plugin[] {
                     console.log('looking for internal file')
                     const root2 = path.resolve(process.cwd(), '.svelte-kit/generated');
                     findInternalJs(root2).then(file => {
-                        console.log('find root2')
+                        // console.log('find root2')
                         if (file) {
                             updateHooksFunction(file);
                         }
