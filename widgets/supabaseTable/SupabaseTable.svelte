@@ -1,7 +1,7 @@
 <script lang="ts">
     import Table from "$lib/fluti/components/table/Table.svelte";
 
-    import {supabase} from "$lib/supabase-client";
+    // import {supabase} from "$lib/supabase-client";
     import {SortState, type TableFetchRequest, type TableFetchResponse} from "$lib/fluti/components/table/Table";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
     import {scale as effectTrans} from "svelte/transition";
