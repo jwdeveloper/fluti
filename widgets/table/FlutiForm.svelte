@@ -9,6 +9,7 @@
     import type {FlutiFormProps} from "./ComponentTypes";
     import {addArrowController} from "$lib/fluti/effects/ArrowController";
     import {onMount} from "svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
     let {item, window, table, isEdit}: FlutiFormProps = $props();
 
@@ -56,7 +57,7 @@
 
 <div use:addArrowController={{target:'input'}}>
     <Form onSubmit={handleFormSubmit}>
-        <Panel panelType="grid"
+        <Panel display="grid"
                rows="auto 1fr"
                height="500px"
                width="500px"
@@ -75,7 +76,7 @@
                         icon="fa fa-x">
                 </Button>
             </Panel>
-            <Panel panelType="grid"
+            <Panel display="grid"
                    columns="repeat(auto-fit, minmax(200px, 1fr))"
                    className="input-panel">
                 {#each formColumns as column (column.key)}
