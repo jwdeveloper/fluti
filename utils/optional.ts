@@ -24,6 +24,7 @@ export class Optional<T> {
         return this.of(value);
     }
 
+
     static fail<T>(message?: string): Optional<T> {
         return new Optional<T>(null, message);
     }
