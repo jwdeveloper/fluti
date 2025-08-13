@@ -84,9 +84,12 @@ export class TableController<T> {
         this.isLoading = true;
         try {
             // Remove the item from the items list
+            //@ts-ignore
             this.items = this.items.filter(existingItem => existingItem['id'] !== item['id']);
+            //@ts-ignore
             this.selected = this.selected.filter(existingItem => existingItem['id'] !== item['id'])
             this.itemsStates = [
+            //@ts-ignore
                 ...this.itemsStates.filter(state => state.item.id !== item.id), // Remove old state
                 {
                     item,

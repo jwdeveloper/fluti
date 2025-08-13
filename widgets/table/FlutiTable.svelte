@@ -1,20 +1,20 @@
 <script lang="ts">
     import Table from "$lib/fluti/components/table/Table.svelte";
 
-    // import {supabase} from "$lib/supabase-client";
     import {SortState, type TableFetchRequest, type TableFetchResponse} from "$lib/fluti/components/table/Table";
     import {useAlert} from "$lib/fluti/widgets/alert/AlertImpl.svelte";
     import {scale as effectTrans} from "svelte/transition";
     import {useWindow, WindowCloseReason, WindowHandle} from "$lib/fluti/widgets/window/WindowManagerImpl.svelte";
-    import SupabaseForm from "./SupabaseForm.svelte";
-    import type {SupabaseTableProps} from "./SupabaseComponentTypes";
+    import FlutiForm from "./FlutiForm.svelte";
+    import type {FlutiTableProps} from "./ComponentTypes";
     import QuestionWindow from "$lib/fluti/pages/questionWindow/QuestionWindow.svelte";
     import Input from "$lib/fluti/components/input/Input.svelte";
     import SearchBox from "$lib/fluti/components/searchbox/SearchBox.svelte";
     import Checkbox from "$lib/fluti/components/checkbox/Checkbox.svelte";
     import Icon from "$lib/fluti/components/icon/Icon.svelte";
     import Hint from "$lib/fluti/components/hint/Hint.svelte";
-    import SupabaseTablePagination from "./SupabaseTablePagination.svelte";
+    import FlutiTablePagination from "./FlutiTablePagination.svelte";
+    import Panel from "$lib/fluti/components/containers/Panel.svelte";
 
 
     const supabaseClient = (useViewName: boolean = false) => {
@@ -226,10 +226,10 @@
         enableItemsLimit = true,
 
         canEdit = () => true,
-    }: SupabaseTableProps = $props();
+    }: FlutiTableProps = $props();
     const alerts = useAlert();
     const questionWindow = useWindow(QuestionWindow);
-    const form: WindowHandle = useWindow(formTemplate ?? SupabaseForm)
+    const form: WindowHandle = useWindow(formTemplate ?? FlutiForm)
     const showInsert = $derived.by(() => table.selected.length === 0);
     const tableQuery = $state({
         search: '',
@@ -265,6 +265,7 @@
     let selectedColumns = $derived.by(() => {
         let obj = {}
         for (let item of table.displayedColumns) {
+            //@ts-ignore
             obj[item.key] = item.text
         }
         return obj;
@@ -341,7 +342,6 @@
 {#snippet HeaderTemplateSnippet()}
     <Panel direction="row" justify="flex-start" width="auto">
         <Checkbox bind:value={selectAll}/>
-
     </Panel>
 {/snippet}
 
@@ -374,7 +374,7 @@
 <Panel direction="column"
        width="100%"
        height="100%"
-       maxHeight="100%"
+       style="height: 100%"
        overflow="hidden"
        justify="flex-start"
        rows="auto 1fr"
@@ -383,7 +383,7 @@
        align="flex-start">
 
 
-    <Panel width="100%" panelType="grid" columns="repeat(auto-fit,minmax(0,1fr))" padding="0" style="z-index: 10">
+    <Panel width="100%" display="grid" columns="repeat(auto-fit,minmax(0,1fr))" padding="0" style="z-index: 10">
         <Panel gap="0.5em" width="100%"
                padding="0.5em 0"
                justify="flex-start">
@@ -430,7 +430,7 @@
 
                 <Input placeholder={searchPlaceholder}
                        bind:value={tableQuery.search}
-                       icon="fa fa-search"/>
+                       iconSymbol="fa fa-search"/>
             </Panel>
         {/if}
         <Panel width="100%" justify="flex-end" padding="0">
@@ -465,7 +465,7 @@
             {/if}
 
             {#if enablePagination}
-                <SupabaseTablePagination table={table}/>
+                <FlutiTablePagination table={table}/>
             {/if}
         </Panel>
     </Panel>
