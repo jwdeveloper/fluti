@@ -6,6 +6,7 @@
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import type {MouseEvent} from "hono/dist/types/jsx";
 
     interface WindowLayer {
         visible?: boolean
@@ -95,7 +96,9 @@
         }
     })
 
-    function handleClick() {
+    function handleClick(event: MouseEvent) {
+
+
         if (!allowClose)
             return
 
@@ -104,6 +107,7 @@
 
         visible = !visible;
     }
+
 
     function makeBackgroundColorAnimation() {
         let color = options?.background?.color;
@@ -265,6 +269,23 @@
         return options?.animation?.duration ?? defaultValues.duration
     }
 
+    function handleWindowContainerClick(event: MouseEvent) {
+        // Create a custom event with extra data
+        const customEvent = new CustomEvent('window-click', {
+            detail: {
+                originalEvent: event, // pass the original MouseEvent
+                info: {foo: 'bar'}  // add any extra info you want
+            },
+            bubbles: true, // optional: let it bubble up like a normal event
+            composed: true // optional: let it cross shadow DOM boundaries
+        });
+
+        // Dispatch globally
+        window.dispatchEvent(customEvent);
+        // Optional: stop original propagation if needed
+        event.stopPropagation();
+    }
+
 </script>
 
 <!--<LeftRightInteraction onInteraction={(e)=> visible =false}/>-->
@@ -285,7 +306,7 @@
                  duration:getDuration()}}>
 
             <Element height={getSize?.height ?? 'auto'}
-                     onClick={(e)=>{e.stopPropagation()}}
+                     onClick={handleWindowContainerClick}
                      width={getSize?.width ?? 'auto'}
                      direction="column"
                      justify=""
