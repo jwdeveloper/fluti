@@ -11,7 +11,7 @@ export interface SqlLiteRepoConfig extends RepositoryOptions {
     primaryKey?: string
 }
 
-export class SqlRepository<T> implements IRepository<T> {
+export class SqlRepository<T extends Record<string, any>> implements IRepository<T> {
 
     connection: IDbConnection
     config: SqlLiteRepoConfig
@@ -23,150 +23,134 @@ export class SqlRepository<T> implements IRepository<T> {
         this.primaryKey = config.primaryKey || 'id';
     }
 
-    findOneByField(field: string, value: any): Promise<Optional<T>> {
-        let data = {}
-        //@ts-ignore
-        data[field] = value;
-        return this.findOneByFields(data)
-    }
-
-    async upsert(item: T): Promise<Optional<T>> {
-        try {
-            const key = this.primaryKey;
-            // Check if the item has a primary key
-            if (item[key as keyof T]) {
-                // If it has a primary key, check if the record exists
-                const db = await this.connection();
-                const existingItem = await db.select()
-                    .from(this.config.tableSchema)
-                    .where(eq(this.config.tableSchema[key], item[key as keyof T] as any))
-                    .limit(1);
-
-                if (existingItem && existingItem.length > 0) {
-                    // Record exists, update it
-                    return this.update(item);
-                }
-            }
-
-            // If no primary key or record doesn't exist, insert as new
-            return this.insert(item);
-        } catch (error) {
-            console.error(`Error upserting in ${this.config.tableName}:`, error);
-            return Optional.fail(`Error upserting in ${this.config.tableName}:`);
-        }
-    }
-
     name(): string {
         return this.config.name;
     }
 
+    findOneByField(field: string, value: any): Promise<Optional<T>> {
+        return this.findOneByFields({[field]: value});
+    }
+
+    async upsert(item: T): Promise<Optional<T>> {
+        const pk = this.primaryKey as keyof T;
+        if (item[pk]) {
+            const existing = await this.findOneById(item[pk]);
+            if (existing.isSuccess()) {
+                return this.update(item);
+            }
+        }
+        return this.insert(item);
+    }
+
     async insert(item: T): Promise<Optional<T>> {
         try {
-            if (!item[this.primaryKey as keyof T]) {
-                let id = generateUUID()
-                item[this.primaryKey as keyof T] = id as any;
+            const pk = this.primaryKey as keyof T;
+            if (!item[pk]) {
+                item[pk] = generateUUID() as any;
             }
-
-            for (let field in item) {
-                if (typeof item[field as keyof T] === 'object') {
-                    //@ts-ignore
-                    item[field as keyof T] = JSON.stringify(item[field as keyof T]);
+            for (const f in item) {
+                const v = item[f];
+                if (typeof v === 'object' && v !== null) {
+                    item[f] = JSON.stringify(v) as any;
                 }
             }
-
             const db = await this.connection();
-            const result = await db.insert(this.config.tableSchema).values(item as any).returning({
-                id: this.config.tableSchema[this.primaryKey],
-            });
-
-            item[this.primaryKey as keyof T] = result[0].id as any;
-            if (!item[this.primaryKey as keyof T])
-                return Optional.fail(`New item create by ID has not been assigned ${this.config.tableName}:`);
-
-            return Optional.of(item);
-        } catch (error) {
-            console.error(`Error inserting into ${this.config.tableName}:`, error);
+            let insertedId: any;
+            try {
+                const rows = await db
+                    .insert(this.config.tableSchema)
+                    .values(item as any)
+                    .returning({[this.primaryKey]: this.config.tableSchema[this.primaryKey]});
+                insertedId = rows?.[0]?.[this.primaryKey];
+            } catch {
+                // fallback (SQLite bez returning)
+                await db.insert(this.config.tableSchema).values(item as any);
+                insertedId = item[pk];
+            }
+            if (!insertedId)
+                return Optional.fail(`Insert failed in ${this.config.tableName}`);
+            item[pk] = insertedId;
+            return Optional.success(item);
+        } catch (e) {
+            console.error(`Error inserting into ${this.config.tableName}:`, e);
             return Optional.fail(`Error inserting into ${this.config.tableName}:`);
         }
     }
 
     async update(item: Partial<T>): Promise<Optional<T>> {
         try {
+            const pk = this.primaryKey as keyof T;
+            if (!item[pk])
+                return Optional.fail(`Primary key '${String(pk)}' not found in item for update`);
             const db = await this.connection();
-            const key = this.primaryKey;
-
-            if (!item[key as keyof T]) {
-                return Optional.fail(`Primary key '${key}' not found in item for update`);
-            }
-
-            for (let property in item) {
-                if (typeof item[property] === 'object') {
-                    //@ts-ignore
-                    item[property] = JSON.stringify(item[property]);
+            for (const f in item) {
+                const v = item[f];
+                if (typeof v === 'object' && v !== null) {
+                    item[f] = JSON.stringify(v) as any;
                 }
             }
-
-            const result = await db.update(this.config.tableSchema)
-                .set(item as any)
-                .where(eq(this.config.tableSchema[key], item[key as keyof T] as any))
-                .returning();
-
-
-            //@ts-ignore
-            return Optional.of(result[0] as T);
-        } catch (error) {
-            console.error(`Error updating in ${this.config.tableName}:`, error);
+            let row: any;
+            try {
+                const rows = await db.update(this.config.tableSchema)
+                    .set(item as any)
+                    .where(eq(this.config.tableSchema[this.primaryKey], item[pk] as any))
+                    .returning({[this.primaryKey]: this.config.tableSchema[this.primaryKey]});
+                row = rows?.[0];
+            } catch {
+                await db.update(this.config.tableSchema)
+                    .set(item as any)
+                    .where(eq(this.config.tableSchema[this.primaryKey], item[pk] as any));
+                const selected = await db.select()
+                    .from(this.config.tableSchema)
+                    .where(eq(this.config.tableSchema[this.primaryKey], item[pk] as any))
+                    .limit(1);
+                row = selected?.[0];
+            }
+            if (!row) return Optional.fail(`Update failed in ${this.config.tableName}`);
+            return Optional.success(row as T);
+        } catch (e) {
+            console.error(`Error updating in ${this.config.tableName}:`, e);
             return Optional.fail(`Error updating in ${this.config.tableName}:`);
         }
     }
 
     async delete(item: string | T): Promise<Optional<T>> {
         try {
+            const pk = this.primaryKey as keyof T;
             const db = await this.connection();
-            const key = this.primaryKey;
-            let keyValue: any;
-
-            if (typeof item === 'string') {
-                keyValue = item;
-            } else {
-                keyValue = item[key as keyof T];
-                if (!keyValue) {
-                    return Optional.fail(`Primary key '${key}' not found in item for deletion`);
-                }
+            const keyValue = typeof item === 'string' ? item : item[pk];
+            if (!keyValue)
+                return Optional.fail(`Primary key '${String(pk)}' not found for delete`);
+            let row: any;
+            try {
+                const rows = await db.delete(this.config.tableSchema)
+                    .where(eq(this.config.tableSchema[this.primaryKey], keyValue))
+                    .returning({[this.primaryKey]: this.config.tableSchema[this.primaryKey]});
+                row = rows?.[0];
+            } catch {
+                // brak returning - nie mamy usuniętego rekordu; zwracamy tylko PK
+                row = {[this.primaryKey]: keyValue};
             }
-
-            const result = await db.delete(this.config.tableSchema)
-                .where(eq(this.config.tableSchema[key], keyValue))
-                .returning();
-
-
-            //@ts-ignore
-            return Optional.success(result[0] as T);
-        } catch (error) {
-            console.error(`Error deleting from ${this.config.tableName}:`, error);
+            return Optional.success(row as T);
+        } catch (e) {
+            console.error(`Error deleting from ${this.config.tableName}:`, e);
             return Optional.fail(`Error deleting from ${this.config.tableName}:`);
         }
     }
 
     async find(lambda: (item: T) => boolean): Promise<Optional<T[]>> {
-        try {
-            const allItems = await this.findMany();
-            if (allItems.isFail())
-                return allItems;
-            return Optional.of(allItems.get().filter(lambda));
-        } catch (error) {
-            console.error(`Error finding in ${this.config.tableName}:`, error);
-            return Optional.fail(`Error finding in ${this.config.tableName}:`);
-        }
+        const all = await this.findMany();
+        if (all.isFail()) return all;
+        return Optional.success(all.get().filter(lambda));
     }
 
     async findMany(): Promise<Optional<T[]>> {
         try {
             const db = await this.connection();
             const result = await db.select().from(this.config.tableSchema);
-            return Optional.of(result as T[]);
-        } catch (error) {
-            console.error(`Error finding all in ${this.config.tableName}:`, error);
+            return Optional.success(result as T[]);
+        } catch (e) {
+            console.error(`Error finding all in ${this.config.tableName}:`, e);
             return Optional.fail(`Error finding all in ${this.config.tableName}:`);
         }
     }
@@ -178,95 +162,72 @@ export class SqlRepository<T> implements IRepository<T> {
                 .from(this.config.tableSchema)
                 .where(eq(this.config.tableSchema[this.primaryKey], key))
                 .limit(1);
-
-            return Optional.of(result[0] as T);
-        } catch (error) {
-            console.error(`Error finding by id in ${this.config.tableName}:`, error);
+            if (!result[0]) return Optional.fail('Not found');
+            return Optional.success(result[0] as T);
+        } catch (e) {
+            console.error(`Error finding by id in ${this.config.tableName}:`, e);
             return Optional.fail(`Error finding by key in ${this.config.tableName}:`);
         }
     }
 
     async findOneByFields(fields: Record<string, any>): Promise<Optional<T>> {
-        let result = await this.findManyByFields(fields, {limit: 1});
-        if (result.isFail()) {
-            return Optional.fail(`Error finding by fields in ${this.config.tableName}:`);
-        }
-        let items = result.get();
-        if (items.length === 0) {
-            return Optional.fail(`No results found for fields in ${this.config.tableName}: ${JSON.stringify(fields)}`);
-        }
-        return Optional.success(items[0]);
+        const many = await this.findManyByFields(fields, {limit: 1});
+        if (many.isFail()) return many.returnError();
+        const arr = many.get();
+        if (!arr.length) return Optional.fail('Not found');
+        return Optional.success(arr[0]);
     }
 
-    async findManyByField(indexName: string, indexValue: any): Promise<Optional<T[]>> {
-        try {
-            const db = await this.connection();
-            const result = await db.select()
-                .from(this.config.tableSchema)
-                .where(eq(this.config.tableSchema[indexName], indexValue));
-
-            return Optional.of(result);
-        } catch (error) {
-            console.error(`Error finding by index in ${this.config.tableName}:`, error);
-            return Optional.fail(`Error finding by index in ${this.config.tableName}:`);
-        }
+    async findManyByField(field: string, value: any): Promise<Optional<T[]>> {
+        return this.findManyByFields({[field]: value});
     }
 
     async findManyByFields(fields: Record<string, any>, options?: any): Promise<Optional<T[]>> {
         try {
             const db = await this.connection();
-            const conditions = Object.entries(fields).map(([key, value]) => {
-                const column = this.config.tableSchema[key];
-                if (!column) throw new Error(`Unknown column: ${key}`);
-                return eq(column, value);
+            const conditions = Object.entries(fields).map(([k, v]) => {
+                const col = this.config.tableSchema[k];
+                if (!col) throw new Error(`Unknown column: ${k}`);
+                return eq(col, v);
             });
-
-            let query = db
-                .select()
-                .from(this.config.tableSchema)
-                .where(conditions.length > 1 ? and(...conditions) : conditions[0]);
-
+            let query = db.select().from(this.config.tableSchema);
+            if (conditions.length === 1) {
+                query = query.where(conditions[0]);
+            } else if (conditions.length > 1) {
+                query = query.where(and(...conditions));
+            }
             if (options?.limit) {
-                //@ts-ignore
+                // @ts-ignore
                 query = query.limit(options.limit);
             }
-
-            let result = await query;
-
-            return Optional.of(result);
-        } catch (error) {
-            console.error(`Error finding by fields in ${this.config.tableName}:`, error);
+            const result = await query;
+            return Optional.success(result as T[]);
+        } catch (e) {
+            console.error(`Error finding by fields in ${this.config.tableName}:`, e);
             return Optional.fail(`Error finding by fields in ${this.config.tableName}:`);
         }
     }
 
     async findOneByQuery(query: string): Promise<Optional<T>> {
-        let result = await this.findManyByQuery(query, {limit: 1});
-        if (result.isFail() || result.get().length === 0) {
-            return Optional.fail(`No results found for query in ${this.config.tableName}: ${query}`);
-        }
-        let items = result.get();
-        if (items.length === 0) {
-            return Optional.fail(`No results found for query in ${this.config.tableName}: ${query}`);
-        }
-        return Optional.success(items[0]);
+        const many = await this.findManyByQuery(query, {limit: 1});
+        if (many.isFail()) return many.returnError();
+        const arr = many.get();
+        if (!arr.length) return Optional.fail('Not found');
+        return Optional.success(arr[0]);
     }
 
     async findManyByQuery(query: string, options?: any): Promise<Optional<T[]>> {
         try {
             const db = await this.connection();
-
-            // Add LIMIT only if it's not already in the query
-            let finalQuery = query.trim().replace(/;$/, ''); // Remove trailing semicolon
+            let finalQuery = query.trim().replace(/;$/, '');
             if (options?.limit && !/limit\s+\d+/i.test(finalQuery)) {
                 finalQuery += ` LIMIT ${options.limit}`;
             }
             const result = db.all(finalQuery);
-
             // @ts-ignore
-            return Optional.of(result);
-        } catch (error) {
-            console.error(`Error executing custom query in ${this.config.tableName}:`, error);
+            return Optional.success(result);
+        } catch (e) {
+            console.error(`Error executing custom query in ${this.config.tableName}:`, e);
             return Optional.fail(`Error executing custom query in ${this.config.tableName}:`);
         }
     }
