@@ -1,6 +1,6 @@
-import type {IRepository} from "$lib/core/server/repositories/IRepository";
 import type {Optional} from "$lib/fluti/utils/optional";
 import type {Consumer} from "$lib/fluti/utils/methods";
+import type {IRepository} from "$lib/fluti/utils/repository2/IRepository";
 
 export type RepositoryEventCallback<T> = Consumer<ItemUpdateEvent<T>>
 
@@ -44,7 +44,7 @@ export class EventsProxyRepository<T> implements IRepository<T> {
     async insert(item: T): Promise<Optional<T>> {
         await this.callEvent(item, 'before.insert')
         let result = await this._repo.insert(item)
-        if (result)
+        if (result.isSuccess())
             await this.callEvent(result, 'insert')
         return result;
     }
@@ -52,7 +52,7 @@ export class EventsProxyRepository<T> implements IRepository<T> {
     async update(item: Partial<T>): Promise<Optional<T>> {
         await this.callEvent(item, 'before.update')
         let result = await this._repo.update(item)
-        if (result)
+        if (result.isSuccess())
             await this.callEvent(result, 'update')
         return result;
     }
@@ -60,7 +60,7 @@ export class EventsProxyRepository<T> implements IRepository<T> {
     async delete(item: string | T): Promise<Optional<T>> {
         await this.callEvent(item, 'before.delete')
         let result = await this._repo.delete(item)
-        if (result)
+        if (result.isSuccess())
             await this.callEvent(result, 'delete')
         return result;
     }
