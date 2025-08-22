@@ -1,8 +1,8 @@
 import type {RepositoryOptions} from "$lib/fluti/utils/repository/Repository";
-import {and, eq} from "drizzle-orm";
+import {and, asc, desc, eq, gt, gte, lt, lte, or} from "drizzle-orm";
 import {generateUUID} from "$lib/fluti/utils/Wait";
 import {Optional} from "$lib/fluti/utils/optional";
-import type {IDbConnection, IRepository} from "$lib/fluti/utils/repository2/IRepository";
+import type {IDbConnection, IRepository, QueryOptions, Where} from "$lib/fluti/utils/repository2/IRepository";
 
 export interface SqlLiteRepoConfig extends RepositoryOptions {
     connection: IDbConnection
@@ -144,16 +144,82 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
         return Optional.success(all.get().filter(lambda));
     }
 
-    async findMany(): Promise<Optional<T[]>> {
+    async findMany(options?: QueryOptions): Promise<Optional<T[]>> {
         try {
             const db = await this.connection();
-            const result = await db.select().from(this.config.tableSchema);
+            const schema = this.config.tableSchema;
+            let query = db.select().from(this.config.tableSchema);
+
+            // WHERE conditions
+            if (options?.where) {
+                let where = options?.where
+                const operatorMap: Record<string, any> = {
+                    "=": eq,
+                    ">": gt,
+                    "<": lt,
+                    ">=": gte,
+                    "<=": lte,
+                };
+
+                const whereClauses = where.map((condition: Where) => {
+                    const field = schema[condition.field as keyof typeof schema];
+                    const operator = operatorMap[condition.operator];
+                    return operator(field, condition.value);
+                });
+
+                const andConditions = whereClauses.filter(
+                    (clause, index) =>
+                        !where[index].connector ||
+                        where[index].connector === "and",
+                );
+                const orConditions = whereClauses.filter(
+                    (clause, index) => where[index].connector === "or",
+                );
+
+                const finalCondition = and(...andConditions);
+                if (orConditions.length > 0) {
+                    //@ts-ignore
+                    query = query.where(or(finalCondition, ...orConditions));
+                } else {
+                    //@ts-ignore
+                    query = query.where(finalCondition);
+                }
+            }
+
+            // SORT
+            if (options?.sort) {
+                let filters = []
+                for (let key in options.sort) {
+                    const field = schema[key as keyof typeof schema];
+                    if (options.sort[key] === 'desc')
+                        filters.push(desc(field))
+                    else
+                        filters.push(asc(field))
+                }
+                //@ts-ignore
+                query = query.orderBy(...filters);
+            }
+
+            // LIMIT
+            if (typeof options?.limit === "number") {
+                //@ts-ignore
+                query = query.limit(options.limit);
+            }
+
+            // OFFSET
+            if (typeof options?.offset === "number") {
+                //@ts-ignore
+                query = query.offset(options.offset);
+            }
+
+            const result = await query;
             return Optional.success(result as T[]);
         } catch (e) {
             console.error(`Error finding all in ${this.config.tableName}:`, e);
             return Optional.fail(`Error finding all in ${this.config.tableName}:`);
         }
     }
+
 
     async findOneById(key: any): Promise<Optional<T>> {
         try {
@@ -178,34 +244,48 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
         return Optional.success(arr[0]);
     }
 
-    async findManyByField(field: string, value: any): Promise<Optional<T[]>> {
-        return this.findManyByFields({[field]: value});
+    async findManyByField(field: string, value: any, options?: QueryOptions): Promise<Optional<T[]>> {
+        return this.findManyByFields({[field]: value}, options);
     }
 
-    async findManyByFields(fields: Record<string, any>, options?: any): Promise<Optional<T[]>> {
-        try {
-            const db = await this.connection();
-            const conditions = Object.entries(fields).map(([k, v]) => {
-                const col = this.config.tableSchema[k];
-                if (!col) throw new Error(`Unknown column: ${k}`);
-                return eq(col, v);
-            });
-            let query = db.select().from(this.config.tableSchema);
-            if (conditions.length === 1) {
-                query = query.where(conditions[0]);
-            } else if (conditions.length > 1) {
-                query = query.where(and(...conditions));
-            }
-            if (options?.limit) {
-                // @ts-ignore
-                query = query.limit(options.limit);
-            }
-            const result = await query;
-            return Optional.success(result as T[]);
-        } catch (e) {
-            console.error(`Error finding by fields in ${this.config.tableName}:`, e);
-            return Optional.fail(`Error finding by fields in ${this.config.tableName}:`);
+    async findManyByFields(fields: Record<string, any>, options?: QueryOptions): Promise<Optional<T[]>> {
+        let where = options?.where ?? []
+        for (let field in fields) {
+            where.push({
+                field: field,
+                operator: '=',
+                value: fields[field],
+                connector: 'and'
+            })
         }
+        return await this.findMany({
+            ...options,
+            where: where
+        })
+
+        // try {
+        //     const db = await this.connection();
+        //     const conditions = Object.entries(fields).map(([k, v]) => {
+        //         const col = this.config.tableSchema[k];
+        //         if (!col) throw new Error(`Unknown column: ${k}`);
+        //         return eq(col, v);
+        //     });
+        //     let query = db.select().from(this.config.tableSchema);
+        //     if (conditions.length === 1) {
+        //         query = query.where(conditions[0]);
+        //     } else if (conditions.length > 1) {
+        //         query = query.where(and(...conditions));
+        //     }
+        //     if (options?.limit) {
+        //         // @ts-ignore
+        //         query = query.limit(options.limit);
+        //     }
+        //     const result = await query;
+        //     return Optional.success(result as T[]);
+        // } catch (e) {
+        //     console.error(`Error finding by fields in ${this.config.tableName}:`, e);
+        //     return Optional.fail(`Error finding by fields in ${this.config.tableName}:`);
+        // }
     }
 
     async findOneByQuery(query: string): Promise<Optional<T>> {
@@ -216,7 +296,7 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
         return Optional.success(arr[0]);
     }
 
-    async findManyByQuery(query: string, options?: any): Promise<Optional<T[]>> {
+    async findManyByQuery(query: string, options?: QueryOptions): Promise<Optional<T[]>> {
         try {
             const db = await this.connection();
             let finalQuery = query.trim().replace(/;$/, '');

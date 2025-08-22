@@ -1,8 +1,22 @@
 import type {Optional} from "$lib/fluti/utils/optional";
-import type { Supplier } from "../methods";
+import type {Supplier} from "../methods";
 import type {BunSQLiteDatabase} from "drizzle-orm/bun-sqlite/driver";
 
 export type IDbConnection = Supplier<Promise<BunSQLiteDatabase>>
+
+export interface Where {
+    field: string
+    operator: '=' | '=>' | '<=' | ">" | "<"
+    value: any,
+    connector?: 'and' | 'or'
+}
+
+export interface QueryOptions {
+    where?: Where[]
+    limit?: number
+    offset?: number
+    sort?: Record<string, 'desc' | 'asc'>
+}
 
 export interface IRepository<T> {
     /**
@@ -53,11 +67,11 @@ export interface IRepository<T> {
 
     findOneByField(field: string, value: any): Promise<Optional<T>>
 
-    findMany(): Promise<Optional<T[]>>;
+    findMany(options?: QueryOptions): Promise<Optional<T[]>>;
 
-    findManyByQuery(query: string): Promise<Optional<T[]>>
+    findManyByQuery(query: string, options?: QueryOptions): Promise<Optional<T[]>>
 
-    findManyByField(field: string, value: any): Promise<Optional<T[]>>
+    findManyByField(field: string, value: any, options?: QueryOptions): Promise<Optional<T[]>>
 
-    findManyByFields(fields: Record<string, any>): Promise<Optional<T[]>>;
+    findManyByFields(fields: Record<string, any>, options?: QueryOptions): Promise<Optional<T[]>>;
 }

@@ -1,6 +1,6 @@
 import type {Optional} from "$lib/fluti/utils/optional";
 import type {Consumer} from "$lib/fluti/utils/methods";
-import type {IRepository} from "$lib/fluti/utils/repository2/IRepository";
+import type {IRepository, QueryOptions} from "$lib/fluti/utils/repository2/IRepository";
 
 export type RepositoryEventCallback<T> = Consumer<ItemUpdateEvent<T>>
 
@@ -33,8 +33,8 @@ export class EventsProxyRepository<T> implements IRepository<T> {
         return this._repo.findOneByFields(fields);
     }
 
-    findManyByFields(fields: Record<string, any>): Promise<Optional<T[]>> {
-        return this._repo.findManyByFields(fields);
+    findManyByFields(fields: Record<string, any>, options?: QueryOptions): Promise<Optional<T[]>> {
+        return this._repo.findManyByFields(fields, options);
     }
 
     name(): string {
@@ -69,20 +69,20 @@ export class EventsProxyRepository<T> implements IRepository<T> {
         return this._repo.find(lambda);
     }
 
-    findMany(): Promise<Optional<T[]>> {
-        return this._repo.findMany();
+    findMany(options?: QueryOptions): Promise<Optional<T[]>> {
+        return this._repo.findMany(options);
     }
 
     findOneById(key: any): Promise<Optional<T>> {
         return this._repo.findOneById(key);
     }
 
-    findManyByQuery(query: string): Promise<Optional<T[]>> {
-        return this._repo.findManyByQuery(query);
+    findManyByQuery(query: string, options?: QueryOptions): Promise<Optional<T[]>> {
+        return this._repo.findManyByQuery(query, options);
     }
 
-    findManyByField(indexName: string, indexValue: any): Promise<Optional<T[]>> {
-        return this._repo.findManyByField(indexName, indexValue);
+    findManyByField(indexName: string, indexValue: any, options?: QueryOptions): Promise<Optional<T[]>> {
+        return this._repo.findManyByField(indexName, indexValue, options);
     }
 
     onEvent(update: RepositoryEventCallback<T>) {
