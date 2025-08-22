@@ -127,7 +127,8 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
                     .where(eq(this.config.tableSchema[this.primaryKey], keyValue))
                     .returning({[this.primaryKey]: this.config.tableSchema[this.primaryKey]});
                 row = rows?.[0];
-            } catch {
+            } catch(error) {
+                console.error(error)
                 // brak returning - nie mamy usuniętego rekordu; zwracamy tylko PK
                 row = {[this.primaryKey]: keyValue};
             }
