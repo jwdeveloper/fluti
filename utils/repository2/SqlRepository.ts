@@ -1,6 +1,5 @@
 import type {RepositoryOptions} from "$lib/fluti/utils/repository/Repository";
-import {and, asc, desc, eq, gt, gte, lt, lte, or} from "drizzle-orm";
-import {generateUUID} from "$lib/fluti/utils/Wait";
+import {and, asc, desc, eq, gt, gte, inArray, lt, lte, or} from "drizzle-orm";
 import {Optional} from "$lib/fluti/utils/optional";
 import type {IDbConnection, IRepository, QueryOptions, Where} from "$lib/fluti/utils/repository2/IRepository";
 
@@ -44,10 +43,18 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
 
     async insert(item: T): Promise<Optional<T>> {
         try {
-            const pk = this.primaryKey as keyof T;
-            if (!item[pk]) {
-                item[pk] = generateUUID() as any;
+            let pk = this.primaryKey;
+            let schemaField = this.config.tableSchema[this.primaryKey];
+            if (schemaField.dataType === 'number') {
+                //@ts-ignore
+                item[this.primaryKey as keyof T] = undefined
+            } else {
+                if (!item[this.primaryKey as keyof T]) {
+                    let id = crypto.randomUUID();
+                    item[this.primaryKey as keyof T] = id as any;
+                }
             }
+
             for (const f in item) {
                 const v = item[f];
                 if (typeof v === 'object' && v !== null) {
@@ -69,6 +76,8 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
             }
             if (!insertedId)
                 return Optional.fail(`Insert failed in ${this.config.tableName}`);
+
+            //@ts-ignore
             item[pk] = insertedId;
             return Optional.success(item);
         } catch (e) {
@@ -127,7 +136,7 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
                     .where(eq(this.config.tableSchema[this.primaryKey], keyValue))
                     .returning({[this.primaryKey]: this.config.tableSchema[this.primaryKey]});
                 row = rows?.[0];
-            } catch(error) {
+            } catch (error) {
                 console.error(error)
                 // brak returning - nie mamy usuniętego rekordu; zwracamy tylko PK
                 row = {[this.primaryKey]: keyValue};
@@ -164,7 +173,17 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
 
                 const whereClauses = where.map((condition: Where) => {
                     const field = schema[condition.field as keyof typeof schema];
+
+                    // ✅ support array values
+                    if (Array.isArray(condition.value)) {
+                        return inArray(field, condition.value);
+                    }
+
+                    // fallback to operator map
                     const operator = operatorMap[condition.operator];
+                    if (!operator) {
+                        throw new Error(`Unsupported operator: ${condition.operator}`);
+                    }
                     return operator(field, condition.value);
                 });
 
@@ -263,30 +282,6 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
             ...options,
             where: where
         })
-
-        // try {
-        //     const db = await this.connection();
-        //     const conditions = Object.entries(fields).map(([k, v]) => {
-        //         const col = this.config.tableSchema[k];
-        //         if (!col) throw new Error(`Unknown column: ${k}`);
-        //         return eq(col, v);
-        //     });
-        //     let query = db.select().from(this.config.tableSchema);
-        //     if (conditions.length === 1) {
-        //         query = query.where(conditions[0]);
-        //     } else if (conditions.length > 1) {
-        //         query = query.where(and(...conditions));
-        //     }
-        //     if (options?.limit) {
-        //         // @ts-ignore
-        //         query = query.limit(options.limit);
-        //     }
-        //     const result = await query;
-        //     return Optional.success(result as T[]);
-        // } catch (e) {
-        //     console.error(`Error finding by fields in ${this.config.tableName}:`, e);
-        //     return Optional.fail(`Error finding by fields in ${this.config.tableName}:`);
-        // }
     }
 
     async findOneByQuery(query: string): Promise<Optional<T>> {
