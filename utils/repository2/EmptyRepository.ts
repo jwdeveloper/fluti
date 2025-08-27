@@ -1,5 +1,5 @@
-import type {IRepository} from "$lib/core/server/repositories/IRepository";
 import type {Optional} from "$lib/fluti/utils/optional";
+import type {IRepository} from "$lib/fluti/utils/repository2/IRepository";
 
 export class EmptyRepository implements IRepository<any> {
     findOneByField(field: string, value: any): Promise<Optional<any>> {
