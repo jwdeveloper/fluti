@@ -127,7 +127,16 @@ export class Optional<T> {
         } else {
             console.error("Optional error:", this.errorMessage);
             return `Optional error:, ${this.errorMessage}`
+
         }
+    }
+
+    printError() {
+        if (this.isFail()) {
+            console.error("Optional error:", this.errorMessage);
+            return `Optional error:, ${this.errorMessage}`
+        }
+        return ''
     }
 
 }
