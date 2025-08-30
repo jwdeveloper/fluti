@@ -105,15 +105,15 @@ export class LoggerService {
     private parseStackLine(line: string) {
         // V8 (Chrome/Node): "    at fn (file:line:col)"
         let m = line.match(/^\s*at\s+(.*?)\s+\((.*?):(\d+):(\d+)\)\s*$/);
-        if (m) return { fn: m[1], file: m[2], line: Number(m[3]), col: Number(m[4]) };
+        if (m) return {fn: m[1], file: m[2], line: Number(m[3]), col: Number(m[4])};
 
         // V8 no function: "    at file:line:col"
         m = line.match(/^\s*at\s+(.*?):(\d+):(\d+)\s*$/);
-        if (m) return { fn: undefined as string | undefined, file: m[1], line: Number(m[2]), col: Number(m[3]) };
+        if (m) return {fn: undefined as string | undefined, file: m[1], line: Number(m[2]), col: Number(m[3])};
 
         // Firefox: "fn@file:line:col"
         m = line.match(/^(.*?)@(.*?):(\d+):(\d+)$/);
-        if (m) return { fn: m[1] || undefined, file: m[2], line: Number(m[3]), col: Number(m[4]) };
+        if (m) return {fn: m[1] || undefined, file: m[2], line: Number(m[3]), col: Number(m[4])};
 
         return null;
     }
@@ -141,9 +141,13 @@ export class LoggerService {
                     continue;
                 }
 
-                const shortFile = file.replace(/^.*[\\/]/, '');
-                const fn = frame.fn ? `${frame.fn}()` : '<anonymous>';
-                return `${fn} ${shortFile}:${frame.line}:${frame.col}`;
+                // const shortFile = file.replace(/^.*[\\/]/, '');
+                const shortFile = file.replace(/^.*[\\/]/, '').split('?')[0];
+                return `${shortFile}:${frame.line}:${frame.col}`;
+
+                // const fn = frame.fn ? `${frame.fn}()` : '<anonymous>';
+                // return `${fn} ${shortFile}:${frame.line}:${frame.col}`;
+
             }
         } catch {
             // ignore
