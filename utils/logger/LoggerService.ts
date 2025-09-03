@@ -7,6 +7,7 @@ export interface LoggerConfig {
     maxHistory?: number;
     includeLocation?: boolean;      // <- add: include caller file:line:col + function
     locationDepth?: number;         // <- add: how many frames to skip (default 2)
+    useColors: boolean
 }
 
 export interface LogEntry {
@@ -57,6 +58,7 @@ export class LoggerService {
     private prefixColor: string;
     private includeLocation: boolean;
     private locationDepth: number;
+    private useColors: boolean
 
     constructor(config?: LoggerConfig) {
         this.prefix = config?.prefix ?? 'Logger';
@@ -65,6 +67,7 @@ export class LoggerService {
         this.maxHistory = config?.maxHistory ?? 500;
         this.includeLocation = config?.includeLocation ?? true;
         this.locationDepth = Math.max(0, config?.locationDepth ?? 2); // skip frames: log() + public method
+        this.useColors = config?.useColors ?? true;
     }
 
     setLevel(level: LogLevel) {
