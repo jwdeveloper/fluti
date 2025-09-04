@@ -1,5 +1,12 @@
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'silent';
 
+
+export interface LogEvent {
+    message: string
+    level: string
+    timestamp: string
+}
+
 export interface LoggerConfig {
     prefix?: string;
     color?: ConsoleColor;
@@ -7,7 +14,9 @@ export interface LoggerConfig {
     maxHistory?: number;
     includeLocation?: boolean;      // <- add: include caller file:line:col + function
     locationDepth?: number;         // <- add: how many frames to skip (default 2)
-    useColors: boolean
+    useColors?: boolean
+
+    onLog: (event: LogEvent) => void
 }
 
 export interface LogEntry {
@@ -59,6 +68,7 @@ export class LoggerService {
     private includeLocation: boolean;
     private locationDepth: number;
     private useColors: boolean
+    private onLog: ((event: LogEvent) => void) | undefined;
 
     constructor(config?: LoggerConfig) {
         this.prefix = config?.prefix ?? 'Logger';
@@ -68,6 +78,7 @@ export class LoggerService {
         this.includeLocation = config?.includeLocation ?? true;
         this.locationDepth = Math.max(0, config?.locationDepth ?? 2); // skip frames: log() + public method
         this.useColors = config?.useColors ?? true;
+        this.onLog = config?.onLog;
     }
 
     setLevel(level: LogLevel) {
@@ -179,6 +190,14 @@ export class LoggerService {
         const output =
             `${this.prefixColor}[${this.prefix}] ${color}[${level.toUpperCase()}]${RESET} ${ANSI_COLORS.gray}[${timestamp}]${RESET}${wherePart}:`;
 
+        if (this.onLog) {
+            this.onLog({
+                level: level,
+                timestamp: timestamp,
+                message: output
+            })
+        }
+
         switch (level) {
             case 'debug':
                 console.debug(output, ...args);
@@ -210,6 +229,8 @@ export class LoggerService {
     error(...args: any[]) {
         this.log('error', ...args);
     }
+
+
 }
 
 /*
