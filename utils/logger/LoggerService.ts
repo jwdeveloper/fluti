@@ -16,7 +16,7 @@ export interface LoggerConfig {
     locationDepth?: number;         // <- add: how many frames to skip (default 2)
     useColors?: boolean
 
-    onLog: (event: LogEvent) => void
+    onLog?: (event: LogEvent) => void
 }
 
 export interface LogEntry {
