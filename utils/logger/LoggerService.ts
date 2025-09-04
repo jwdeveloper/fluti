@@ -191,10 +191,14 @@ export class LoggerService {
             `${this.prefixColor}[${this.prefix}] ${color}[${level.toUpperCase()}]${RESET} ${ANSI_COLORS.gray}[${timestamp}]${RESET}${wherePart}:`;
 
         if (this.onLog) {
+            const argsString = args.map(a =>
+                typeof a === "object" ? JSON.stringify(a) : String(a)
+            ).join(" ");
+
             this.onLog({
                 level: level,
                 timestamp: timestamp,
-                message: output
+                message: output + " " + argsString
             })
         }
 
@@ -212,22 +216,23 @@ export class LoggerService {
                 console.error(output, ...args);
                 break;
         }
+        return output;
     }
 
     debug(...args: any[]) {
-        this.log('debug', ...args);
+        return this.log('debug', ...args);
     }
 
     info(...args: any[]) {
-        this.log('info', ...args);
+        return this.log('info', ...args);
     }
 
     warn(...args: any[]) {
-        this.log('warn', ...args);
+        return this.log('warn', ...args);
     }
 
     error(...args: any[]) {
-        this.log('error', ...args);
+        return this.log('error', ...args);
     }
 
 
