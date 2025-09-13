@@ -12,6 +12,7 @@ export type AnyEventHandler = (name: string, payload: any) => void
 export class EventsService {
     private eventsMap = new Map<string, Set<(payload: any) => void>>();
     private eventQueue: { name: string, payload: any, onExecute?: () => void }[] = [];
+
     private anyEventsHandlers: AnyEventHandler[] = []
     private config: EventServiceConfig;
 
