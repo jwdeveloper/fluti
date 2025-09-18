@@ -2,98 +2,50 @@ import {type Plugin, type ViteDevServer} from "vite";
 import path from "path";
 import fs from "fs";
 
-let currentFunction2 = `
-export async function get_hooks() {
-\tlet handle;
-\tlet handleFetch;
-\tlet handleError;
-\tlet init;
-\t({ handle, handleFetch, handleError, init } = await import("../../../src/hooks.server.ts"));
-
-\tlet reroute;
-\tlet transport;
-\t
-
-\treturn {
-\t\thandle,
-\t\thandleFetch,
-\t\thandleError,
-\t\tinit,
-\t\treroute,
-\t\ttransport
-\t};
-}
-`
-
 let currentFunction = `
 async function get_hooks() {
   let handle;
   let handleFetch;
   let handleError;
+  let handleValidationError;
   let init;
-  ({ handle, handleFetch, handleError, init } = await import("./hooks.server.js"));
+  ({ handle, handleFetch, handleError, handleValidationError, init } = await import("./hooks.server.js"));
   let reroute;
   let transport;
   return {
     handle,
     handleFetch,
     handleError,
+    handleValidationError,
     init,
     reroute,
     transport
   };
 }
 `
-let wantedFunction2 = `
-export async function get_hooks() {
-    let hooks = await import("../../../src/hooks.server.ts");
 
-    console.log('calling wanted function');
-
-    let handleWebsocket = hooks?.handleWebsocket;
-    let handle = hooks?.handle;
-    let handleFetch = hooks?.handleFetch;
-    let handleError = hooks?.handleError;
-    let init = hooks?.init;
-    let reroute = hooks?.reroute;
-    let transport = hooks?.transport;
-    
-    console.log('calling wanted function',hooks);
-    
-    return {
-        handleWebsocket,
-        handle,
-        handleFetch,
-        handleError,
-        init,
-        reroute,
-        transport
-    };
-}
-`
 
 let wantedFunction = `
-export async function get_hooks() {
-    let hooks = await import("./hooks.server.js");
-
-    let handleWebsocket = hooks?.handleWebsocket;
-    let handle = hooks?.handle;
-    let handleFetch = hooks?.handleFetch;
-    let handleError = hooks?.handleError;
-    let init = hooks?.init;
-    let reroute = hooks?.reroute;
-    let transport = hooks?.transport;
-    
-    console.log('calling wanted function',handleWebsocket);
-    return {
-        handleWebsocket,
-        handle,
-        handleFetch,
-        handleError,
-        init,
-        reroute,
-        transport
-    };
+async function get_hooks() {
+  let handle;
+  let handleFetch;
+  let handleError;
+  let handleValidationError;
+  let init;
+  let handleWebsocket;
+  ({ handle, handleFetch, handleError, handleValidationError, init, handleWebsocket } = await import("./hooks.server.js"));
+  let reroute;
+  let transport;
+  return {
+    handle,
+    handleFetch,
+    handleError,
+    handleValidationError,
+    init,
+    reroute,
+    transport,
+    handleWebsocket
+  };
 }
 `
 const targetFileName = 'internal.js';
@@ -161,6 +113,7 @@ export function pathSvelteSeverHooks(): Plugin[] {
 
             configureServer(server: ViteDevServer) {
 
+                //TODO THROW EXEPCTION IF FUNCTION HAS NOT BEEN OVERRITEM
                 server.watcher.on('add', async (file) => {
                     if (path.basename(file) === targetFileName) {
                         console.log(`[patchSvelteServerHooks] Detected internal.js created`);
