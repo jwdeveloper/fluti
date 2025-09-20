@@ -6,7 +6,7 @@ export type IDbConnection = Supplier<Promise<BunSQLiteDatabase>>
 
 export interface Where {
     field: string
-    operator: '=' | '=>' | '<=' | ">" | "<"
+    operator: '=' | '>=' | '<=' | ">" | "<"
     value: any,
     connector?: 'and' | 'or'
 }
