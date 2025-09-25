@@ -49,10 +49,12 @@
 
             if (updatedFromEffect)
                 return
-            if (onUpdate)
-                onUpdate(event)
 
-            value = (event.target as HTMLInputElement).value ?? '';
+            let newValue = (event.target as HTMLInputElement).value ?? '';
+            if (onUpdate)
+                onUpdate(newValue, event)
+
+            value = newValue;
 
         };
 
