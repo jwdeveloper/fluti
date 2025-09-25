@@ -26,7 +26,6 @@ export interface InputProps2 extends ElementProps {
     regex?: string
     pattern?: string
     value?: any,
-
     type?: InputType
     variant?: 'outline' | 'filled'
     disabled?: boolean,
