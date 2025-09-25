@@ -9,6 +9,7 @@
         items = $bindable([]),
         onUpdate = undefined,
         initIndex = -1,
+        showError = false,
         style = ''
     }: DropdownProps = $props();
 
@@ -37,7 +38,9 @@
 
 </script>
 
-<select bind:value={value} style={style}>
+<select bind:value={value}
+        class:error-select={showError && value === placeholder}
+        style={style}>
     <option disabled selected>{placeholder}</option>
     {#each items as item (item.value)}
         <option value={item.value}>{item.name}</option>
@@ -46,6 +49,10 @@
 
 
 <style>
+
+    .error-select {
+        border: var(--border-size-medium) solid red;
+    }
 
     select {
         background: var(--bg-primary);
