@@ -2,7 +2,6 @@
     import type {InputProps2} from "./Input.type";
     import {onMount} from "svelte";
     import './input2.css'
-    import Element from "$lib/fluti/components/panel/Element.svelte";
 
     let {
         value = $bindable(),
@@ -11,6 +10,7 @@
         onClick = () => {
         },
         onChange,
+        onUpdate,
         onIconClick = undefined,
         ...props
     }: InputProps2 = $props()
@@ -46,9 +46,14 @@
 
     onMount(() => {
         const updateValue = (event: Event) => {
+
             if (updatedFromEffect)
                 return
+            if (onUpdate)
+                onUpdate(event)
+
             value = (event.target as HTMLInputElement).value ?? '';
+
         };
 
 
@@ -72,20 +77,20 @@
 
 <div class="root" onclick={(e)  => onClick(e)}>
     <input
+            {...props}
+            autocomplete="off"
+            autofocus={props.autofocus}
             bind:this={element}
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
-            value={value}
-            type={props.type}
-            onfocusin={startTyping}
-            onfocusout={endTyping}
-            autofocus={props.autofocus}
-            placeholder={props.placeholder}
             disabled={props.disabled}
             name={props?.id}
+            onfocusin={startTyping}
+            onfocusout={endTyping}
             pattern={props?.regex}
+            placeholder={props.placeholder}
             required={props.required}
-            autocomplete="off"
-            {...props}
+            type={props.type}
+            value={value}
     />
 
     {#if props?.icon}
