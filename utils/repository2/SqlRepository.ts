@@ -116,7 +116,10 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
                 row = selected?.[0];
             }
             if (!row) return Optional.fail(`Update failed in ${this.config.tableName}`);
-            return Optional.success(row as T);
+            return Optional.success({
+                ...item,
+                ...row,
+            });
         } catch (e) {
             console.error(`Error updating in ${this.config.tableName}:`, e);
             return Optional.fail(`Error updating in ${this.config.tableName}:`);

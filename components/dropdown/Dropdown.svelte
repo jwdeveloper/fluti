@@ -9,69 +9,132 @@
         items = $bindable([]),
         onUpdate = undefined,
         initIndex = -1,
+        showError = false,
         style = ''
     }: DropdownProps = $props();
 
-
-    let init = false;
+    let init = $state(false);
+    let open = $state(false);
+    let search = $state("")
+    let filteredItems = $state(items);
 
     $effect(() => {
-        value
-        if (!init) {
-            init = true
-            return
-        }
+        filteredItems = items.filter((i) =>
+            i.name.toLowerCase().includes(search.toLowerCase())
+        );
+    });
 
-        if (onUpdate && value)
-            onUpdate(value)
-    })
+    $effect(() => {
+        if (!init) {
+            init = true;
+            return;
+        }
+        if (onUpdate && value) onUpdate(value);
+    });
 
     onMount(() => {
-
         if (initIndex >= 0 && items.length > 0) {
-            init = false
+            init = false;
             value = items[initIndex].value;
         }
+    });
 
-    })
-
+    function selectItem(val: string) {
+        value = val;
+        open = false;
+    }
 </script>
 
-<select bind:value={value} style={style}>
-    <option disabled selected>{placeholder}</option>
-    {#each items as item (item.value)}
-        <option value={item.value}>{item.name}</option>
-    {/each}
-</select>
+<div class="dropdown" style={style}>
+    <div class="dropdown-header" on:click={() => (open = !open)}>
+        {#if value}
+            {items.find(i => i.value === value)?.name}
+        {:else}
+            <span class:placeholder>{placeholder}</span>
+        {/if}
+    </div>
 
+    {#if open}
+        <div class="dropdown-menu">
+            <input
+                    type="text"
+                    placeholder="Wyszukaj..."
+                    bind:value={search}
+                    class="search-input"
+            />
+
+            {#each filteredItems as item (item.value)}
+                <div
+                        class="dropdown-item"
+                        on:click={() => selectItem(item.value)}
+                >
+                    {item.name}
+                </div>
+            {/each}
+
+            {#if filteredItems.length === 0}
+                <div class="dropdown-empty">Brak wyników</div>
+            {/if}
+        </div>
+    {/if}
+</div>
 
 <style>
+    .dropdown {
+        position: relative;
+        width: 100%;
+    }
 
-    select {
+    .dropdown-header {
         background: var(--bg-primary);
         border: var(--border-size-medium) solid var(--bg-tertiary);
-        width: 100%;
-        color: var(--text-color);
-
         padding: var(--padding-medium) 1em;
-        padding-right: 2.5em;
         border-radius: var(--radius-medium);
-
-        width: 100%;
-        padding: var(--padding-medium) 1em;
-        padding-right: 2.5em;
-        border-radius: var(--radius-medium);
-        border: var(--border-size-medium) solid var(--bg-tertiary);
         color: var(--text-primary);
-        font-size: var(--font-size-medium);
-        transition: 100ms all ease-in;
+        cursor: pointer;
     }
 
-    option {
-        padding: var(--padding);
+    .dropdown-header .placeholder {
+        color: var(--text-secondary);
     }
 
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
+        border-radius: var(--radius-medium);
+        margin-top: 0.3em;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+    }
 
+    .search-input {
+        width: 100%;
+        padding: var(--padding-small);
+        border: none;
+        border-bottom: 1px solid var(--bg-tertiary);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        outline: none;
+    }
+
+    .dropdown-item {
+        padding: var(--padding-small) 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .dropdown-item:hover {
+        background: var(--bg-tertiary);
+    }
+
+    .dropdown-empty {
+        padding: var(--padding-small) 1em;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
 </style>
-
-

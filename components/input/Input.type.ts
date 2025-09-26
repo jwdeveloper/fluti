@@ -26,12 +26,12 @@ export interface InputProps2 extends ElementProps {
     regex?: string
     pattern?: string
     value?: any,
-
     type?: InputType
     variant?: 'outline' | 'filled'
     disabled?: boolean,
     onClick?: (i: any) => void,
-    onChange?: (current: string, original: string) => void,
+    onChange?: (current: string, original: string, event: InputEvent) => void,
+    onUpdate?: (value: string, event: InputEvent) => void,
     onIconClick?: (i: any) => void
     icon?: string
     inputMode?: string
