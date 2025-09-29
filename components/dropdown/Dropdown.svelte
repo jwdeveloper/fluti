@@ -45,7 +45,9 @@
     }
 </script>
 
-<div class="dropdown" style={style}>
+<div class="dropdown"
+     class:dropdown-error={showError}
+     style={style}>
     <div class="dropdown-header" on:click={() => (open = !open)}>
         {#if value}
             {items.find(i => i.value === value)?.name}
@@ -80,6 +82,12 @@
 </div>
 
 <style>
+
+    .dropdown-error {
+        outline: 2px solid red;
+        border-radius: 1rem;
+    }
+
     .dropdown {
         position: relative;
         width: 100%;
