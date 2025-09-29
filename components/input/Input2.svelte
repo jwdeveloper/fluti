@@ -9,6 +9,9 @@
         invalid,
         onClick = () => {
         },
+        onClickInput = () => {
+
+        },
         onChange,
         onUpdate,
         onIconClick = undefined,
@@ -86,6 +89,7 @@
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
             disabled={props.disabled}
             name={props?.id}
+            onclick={onClickInput}
             onfocusin={startTyping}
             onfocusout={endTyping}
             pattern={props?.regex}
