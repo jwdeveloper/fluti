@@ -29,7 +29,7 @@ export interface IRepository<T> {
      * @param item The item to insert
      * @returns An Optional containing the inserted item or a failure
      */
-    insert(item: T): Promise<Optional<T>>;
+    insert(item: Omit<T, 'id'>): Promise<Optional<T>>;
 
     /**
      * Updates an existing item in the collection
