@@ -1,5 +1,3 @@
-import {browser} from "$app/environment";
-
 export interface ShortcutAction {
     id?: string
     name: string,
@@ -47,9 +45,7 @@ export class ShortcutsManager {
 
         try {
             window
-        }
-        catch (error)
-        {
+        } catch (error) {
             return
         }
         // if (!browser) {
