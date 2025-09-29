@@ -15,6 +15,7 @@ export interface InputProps {
     onValueChanged?: (i: any) => void,
     onKeydown?: (i: KeyboardEvent) => void,
     onKeyup?: (i: KeyboardEvent) => void,
+    icon?: string
 }
 
 export interface InputProps2 extends ElementProps {
