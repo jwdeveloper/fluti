@@ -35,6 +35,7 @@ export interface InputProps2 extends ElementProps {
     onUpdate?: (value: string, event: InputEvent) => void,
     onIconClick?: (i: any) => void
     onClickInput?: (i: MouseEvent) => void
+    onKeydown?: (i: KeyboardEvent) => void
     icon?: string
     inputMode?: string
     textIcon?: string

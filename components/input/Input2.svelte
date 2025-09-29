@@ -14,6 +14,9 @@
         },
         onChange,
         onUpdate,
+        onKeydown =()=>{
+
+        },
         onIconClick = undefined,
         ...props
     }: InputProps2 = $props()
@@ -92,6 +95,7 @@
             onclick={onClickInput}
             onfocusin={startTyping}
             onfocusout={endTyping}
+            onkeydown={onKeydown}
             pattern={props?.regex}
             placeholder={props.placeholder}
             required={props.required}
