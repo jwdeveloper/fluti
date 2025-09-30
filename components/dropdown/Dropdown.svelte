@@ -46,9 +46,10 @@
 </script>
 
 <div class="dropdown"
-     class:dropdown-error={showError}
      style={style}>
-    <div class="dropdown-header" on:click={() => (open = !open)}>
+    <div
+            class:dropdown-error={showError}
+            class="dropdown-header" on:click={() => (open = !open)}>
         {#if value}
             {items.find(i => i.value === value)?.name}
         {:else}
@@ -57,7 +58,9 @@
     </div>
 
     {#if open}
-        <div class="dropdown-menu">
+        <div
+
+                class="dropdown-menu">
             <input
                     type="text"
                     placeholder="Wyszukaj..."
@@ -84,8 +87,8 @@
 <style>
 
     .dropdown-error {
-        outline: 2px solid red;
-        border-radius: 1rem;
+        border-color: var(--text-error) !important;
+        background:  color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%) !important;
     }
 
     .dropdown {
@@ -100,6 +103,7 @@
         border-radius: var(--radius-medium);
         color: var(--text-primary);
         cursor: pointer;
+        transition: all 200ms ease-out;
     }
 
     .dropdown-header .placeholder {
@@ -118,6 +122,7 @@
         max-height: 200px;
         overflow-y: auto;
         z-index: 100;
+
     }
 
     .search-input {

@@ -245,6 +245,7 @@
         background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%);
 
         border-radius: var(--radius-medium);
+
     }
 
     :global(.element-input:-webkit-autofill) {
