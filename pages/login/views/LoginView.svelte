@@ -22,6 +22,11 @@
         logoVisible = true;
     })
 
+    function handleKeyboardDown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            controller.login();
+        }
+    }
 </script>
 
 
@@ -55,10 +60,11 @@
     </h6>
 {/snippet}
 
+<svelte:window onkeydown={handleKeyboardDown}/>
 <Element
+        direction="column"
         height="100%"
-        width="100%"
-        direction="column">
+        width="100%">
 
     {#if controller.props?.templates?.logoTemplate}
         <svelte:component this={controller.props.templates.logoTemplate} {...controller.props}/>
@@ -77,7 +83,7 @@
     {/if}
 
 
-    <h5 style:height={flutiTheme.font.small} style:color={flutiTheme.color.error}>
+    <h5 style:color={flutiTheme.color.error} style:height={flutiTheme.font.small}>
         {#if controller.error}
             {controller.error}
         {/if}
@@ -88,8 +94,6 @@
                 controller={controller}
                 translation={translation}
                 onProviderClick={(p)=> controller.loginOAuth(p)}/>
-
-
     {/if}
 
     {#if controller?.props?.oAuth?.enable === true && controller?.props?.emailAuth?.enabled === true}

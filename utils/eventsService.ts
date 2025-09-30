@@ -50,7 +50,7 @@ export class EventsService {
         }
 
         if (!this.config.autoFire) {
-            this.eventQueue.push({name, payload, onExecute});
+            this.eventQueue.push({nexoLogin: name, payload, onExecute});
             return
         }
         this.callAnyHandlers(name, payload)
