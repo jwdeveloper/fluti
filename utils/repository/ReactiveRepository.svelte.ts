@@ -41,7 +41,7 @@ export class ReactiveRepository<T> implements Repository<T> {
         return result;
     }
 
-    async update(item: T): Promise<T | undefined> {
+    async update(item: Partial<T>): Promise<T | undefined> {
         await this.callEvent(item, 'before.update')
         let result = await this._repo.update(item)
         if (result)

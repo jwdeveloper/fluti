@@ -1,10 +1,9 @@
-import {browser} from "$app/environment";
-
 export interface ShortcutAction {
     id?: string
     name: string,
     method: (event: KeyboardEvent, args: any) => void,
     shortcuts: string[],
+    context?: string[],
     tags?: string[],
     icon?: string,
     permissions?: string[],
@@ -44,9 +43,14 @@ export class ShortcutsManager {
 
     bind() {
 
-        if (!browser) {
+        try {
+            window
+        } catch (error) {
             return
         }
+        // if (!browser) {
+        //     return
+        // }
 
         // this.unbind();
 
@@ -112,9 +116,12 @@ export class ShortcutsManager {
     }
 
     handleKeyUp(event: KeyboardEvent) {
-        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        let key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
         const actions = this.actionsProvider();
         const result: ShortcutAction[] = [];
+
+        if (key === ' ')
+            key = 'space'
 
         for (const action of actions) {
             for (const shortcut of action.shortcuts) {
@@ -145,7 +152,10 @@ export class ShortcutsManager {
             return; // Don't process shortcuts while typing
         }
 
-        const key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        let key = event.key.toLowerCase() === 'meta' ? 'alt' : event.key.toLowerCase();
+        if (key === ' ')
+            key = 'space'
+
         console.log(key, this.heldKeys, this.queue)
         const currentTime = Date.now();
         if (currentTime - this.lastKeyPressTime > 500) {
@@ -169,7 +179,6 @@ export function useShortcutsManager(
     onShortcutTriggered?: (event: KeyboardEvent, actions: ShortcutAction[]) => void
 ) {
     const manager = new ShortcutsManager(actionsProvider);
-    console.log('actions loaded', actionsProvider())
     manager.onShortcutTriggered(onShortcutTriggered || ((event, actions) => {
         for (const action of actions) {
             try {

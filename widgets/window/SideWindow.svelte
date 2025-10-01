@@ -6,6 +6,7 @@
     import {easeFunction} from "$lib/fluti/utils/ease";
     import {flyWithNoOpacity} from "$lib/fluti/effects/fly";
     import Element from "$lib/fluti/components/panel/Element.svelte";
+    import type {MouseEvent} from "hono/dist/types/jsx";
 
     interface WindowLayer {
         visible?: boolean
@@ -14,6 +15,10 @@
         height?: string,
         init?: boolean
         panel?: PanelProps,
+        maxSize?: {
+            height: string
+            width: string
+        }
         background?: {
             blur?: string
             brightness?: string
@@ -39,7 +44,7 @@
         visible = $bindable(false),
         panel = {},
         init = false,
-        previousVisibleState=false,
+        previousVisibleState = false,
         allowClose = true,
         allowScroll = true,
         onClose,
@@ -91,7 +96,9 @@
         }
     })
 
-    function handleClick() {
+    function handleClick(event: MouseEvent) {
+
+
         if (!allowClose)
             return
 
@@ -100,6 +107,7 @@
 
         visible = !visible;
     }
+
 
     function makeBackgroundColorAnimation() {
         let color = options?.background?.color;
@@ -222,6 +230,26 @@
         }
     })
 
+    let getMaxSizeStyles = $derived.by(() => {
+
+        if (!options.maxSize)
+            return "";
+
+        let size = options.maxSize;
+        switch (getDirection()) {
+            case "top":
+            case "bottom":
+                size = {width: options.maxSize.height, height: options.maxSize.width};
+            case "left":
+            case "right":
+            case "center":
+                size = {width: options.maxSize.width, height: options.maxSize.height};
+        }
+
+        return `max-height:${size.height}; max-width:${size.width};`
+    })
+
+
     let getSize = $derived.by(() => {
         // if (!isClient)
         //     return {width: size, height: height}
@@ -239,6 +267,23 @@
 
     let getDuration = () => {
         return options?.animation?.duration ?? defaultValues.duration
+    }
+
+    function handleWindowContainerClick(event: MouseEvent) {
+        // Create a custom event with extra data
+        const customEvent = new CustomEvent('window-click', {
+            detail: {
+                originalEvent: event, // pass the original MouseEvent
+                info: {foo: 'bar'}  // add any extra info you want
+            },
+            bubbles: true, // optional: let it bubble up like a normal event
+            composed: true // optional: let it cross shadow DOM boundaries
+        });
+
+        // Dispatch globally
+        window.dispatchEvent(customEvent);
+        // Optional: stop original propagation if needed
+        event.stopPropagation();
     }
 
 </script>
@@ -261,7 +306,7 @@
                  duration:getDuration()}}>
 
             <Element height={getSize?.height ?? 'auto'}
-                     onClick={(e)=>{e.stopPropagation()}}
+                     onClick={handleWindowContainerClick}
                      width={getSize?.width ?? 'auto'}
                      direction="column"
                      justify=""
@@ -269,6 +314,7 @@
                      background="var(--bg-primary)"
                      radius="var(--radius-strong)"
                      style="position: absolute;
+                     {getMaxSizeStyles};
                      top:{options?.y? options.y+'px':''};
                      left: {options?.x? options.x+'px':''}"
                      {...panel}

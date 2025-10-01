@@ -1,5 +1,4 @@
 <script lang="ts">
-    // import {supabase} from "$lib/supabase-client";
     import SearchBox from "$lib/fluti/components/searchbox/SearchBox.svelte";
 
     const loading = async () => {

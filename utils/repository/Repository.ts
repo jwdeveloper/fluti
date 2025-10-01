@@ -40,6 +40,7 @@ export class SimpleRepository {
             //@ts-ignore
             repository = new IndexedDBRepository(dbOptions, options)
         else if (options.usePocketbase)
+            //@ts-ignore
             repository = new PocketbaseRepository(options);
         else
             //@ts-ignore
@@ -65,6 +66,7 @@ export type RepositoryOptions = {
     key: string //that to property of object that represent key
     useIndexDb?: boolean //if true data is stored inside indexDB, otherwise data is store in application memory
     usePocketbase?: boolean //if true data is stored inside pocketbase, otherwise data is store in application memory
+    useSqlLite?: boolean //if true data is stored inside pocketbase, otherwise data is store in application memory
     reactive?: boolean //triggers an event when Insert/Update/Delete method are executed with success
     indexes?: string[] //names of columns that should be indexed
     databaseName?: string
@@ -88,7 +90,7 @@ export interface Repository<T> {
 
     insert(item: T): Promise<T | undefined>
 
-    update(item: T): Promise<T | undefined>
+    update(item: Partial<T>): Promise<T | undefined>
 
     delete(item: T | string): Promise<T | undefined>
 

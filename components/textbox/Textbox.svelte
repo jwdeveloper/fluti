@@ -30,6 +30,22 @@
         selectedText = value.slice(start, end);
     }
 
+    function handleKeyPress(event: KeyboardEvent) {
+        if (event.key.toLowerCase() === 'escape') {
+            // Blur the element first
+            element.blur();
+
+            // Re-dispatch a new KeyboardEvent globally (to window or document)
+            const newEvent = new KeyboardEvent('keydown', {
+                key: 'Escape',
+                code: 'Escape',
+                bubbles: true,
+                cancelable: true,
+            });
+            window.dispatchEvent(newEvent);
+        }
+    }
+
     $effect(() => {
         if (maxCharacters <= 0) {
             return
@@ -42,8 +58,9 @@
 </script>
 
 <textarea
-        onselect={handleSelection}
-        bind:this={element} bind:value={ value} placeholder={placeholder} style={style}>
+        bind:this={element}
+        bind:value={ value}
+        onkeydown={handleKeyPress} onselect={handleSelection} placeholder={placeholder} style={style}>
 </textarea>
 
 

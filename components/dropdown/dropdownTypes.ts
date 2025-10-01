@@ -10,4 +10,5 @@ export interface DropdownProps {
     onUpdate?: (a: string) => void
     placeholder?: string
     initIndex?: number
+    showError?: boolean
 }

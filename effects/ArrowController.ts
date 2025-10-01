@@ -1,4 +1,4 @@
-export let addArrowController = (node: HTMLDivElement, target: any) => {
+export let addArrowController = (node: Element, target: any) => {
 
     const inputs = Array.from(node.querySelectorAll('input, button'))
         .filter(input => !input.disabled && !input.hasAttribute('readonly'));

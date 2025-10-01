@@ -1,7 +1,7 @@
 export class Optional<T> {
     private constructor(
         private readonly value: T | null | undefined,
-        private readonly errorMessage?: string
+        private errorMessage?: string
     ) {
     }
 
@@ -24,8 +24,25 @@ export class Optional<T> {
         return this.of(value);
     }
 
+
     static fail<T>(message?: string): Optional<T> {
         return new Optional<T>(null, message);
+    }
+
+    returnError<K>(additionalMessage?: string): Optional<K> {
+
+        if (!this.errorMessage) {
+            this.errorMessage = additionalMessage;
+            //@ts-ignore
+            return this as Optional<K>;
+        }
+
+        if (additionalMessage && this.errorMessage) {
+            this.errorMessage += " " + additionalMessage;
+        }
+
+        //@ts-ignore
+        return this as Optional<K>;
     }
 
     isSuccess(): boolean {
@@ -83,6 +100,43 @@ export class Optional<T> {
             consumer(this.getError() ?? "");
         }
         return this;
+    }
+
+    getOrThrow(): T {
+        if (this.isSuccess())
+            return this.get();
+        this.throwIfFail();
+        //@ts-ignore
+        return null;
+    }
+
+    throwIfFail(errorSupplier?: () => Error): Optional<T> {
+        if (this.isFail()) {
+            let message = this.errorMessage || "No value present in Optional"
+            console.error(message)
+            throw errorSupplier?.() || new Error(message);
+        }
+        return this;
+    }
+
+    print() {
+        if (this.isSuccess()) {
+            let value = typeof this.value === 'object' ? JSON.stringify(this.value, null, 2) : this.value;
+            console.log("Optional success:", value);
+            return `Optional success:, ${value}`
+        } else {
+            console.error("Optional error:", this.errorMessage);
+            return `Optional error:, ${this.errorMessage}`
+
+        }
+    }
+
+    printError() {
+        if (this.isFail()) {
+            console.error("Optional error:", this.errorMessage);
+            return `Optional error:, ${this.errorMessage}`
+        }
+        return ''
     }
 
 }

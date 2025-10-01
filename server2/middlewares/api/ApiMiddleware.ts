@@ -4,7 +4,7 @@ import {Hono} from "hono";
 
 
 export function useApiMiddleware(onConfig: ApiMiddlewareConfigFn): FlutiServer2Middleware {
-    return (flutiConfig: FlutiServer2Config) => {
+    return async (flutiConfig: FlutiServer2Config) => {
 
         const apiVersions = new Map<string, Hono>();
         const config: ApiMiddlewareConfig = {
@@ -19,7 +19,7 @@ export function useApiMiddleware(onConfig: ApiMiddlewareConfigFn): FlutiServer2M
                 return apiVersions.get(finalVersion)
             }
         }
-        onConfig(config);
+        await onConfig(config);
         apiVersions.forEach((value, key) => {
             flutiConfig.app.route(`/api/${key}`, value)
         })

@@ -24,6 +24,7 @@
         showLogin = true,
         hideAfterScroll = true,
         showThemes = true,
+        profileUrl = 'profile',
         isUserLogin = false,
         children = undefined,
         ...props
@@ -83,9 +84,6 @@
         isScrollingDown = value > scroll
         scroll = value
     }
-
-    console.log('current path is ', currentPath)
-
 </script>
 
 <svelte:window onscroll={onScroll}/>
@@ -98,17 +96,17 @@
 {/if}
 
 <Element
-        tag="header" display="block"
-        style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);">
+        display="block" style="position: fixed; width: 100%; top: 0; left: 0; right: 0; z-index: var(--z-index-4);"
+        tag="header">
 
 
-    <Element width="100%"
+    <Element background={flutiTheme.background.primary}
              bind:element={element}
-             background={flutiTheme.background.primary}
-             style="box-shadow: 0 0 1em 0.1em var(--shadow)"
-             height="auto"
+             direction="column"
              gap="0"
-             direction="column">
+             height="auto"
+             style="box-shadow: 0 0 1em 0.1em var(--shadow)"
+             width="100%">
 
         {#if props.companyInfo}
             <CompanyInfo
@@ -117,23 +115,23 @@
         {/if}
 
         <Element
-                display="grid"
                 columns="22.5fr 55fr 22.5fr"
+                display="grid"
 
+                gap="0"
                 padding='1em {props.padding}'
                 width="100%"
-                gap="0"
         >
 
             <Element
                     hover={{style:"cursor:pointer;"}}
-                    onClick={()=> window.location.href='/'}
-                    justify="flex-start">
+                    justify="flex-start"
+                    onClick={()=> window.location.href='/'}>
                 <LogoElement {...logo}/>
             </Element>
             <Element
 
-                    width="100%" justify="center">
+                    justify="center" width="100%">
                 <DefaultMenu
                         currentItemKey={currentPath}
                         highlightColor={flutiTheme.background.secondary}
@@ -148,7 +146,7 @@
                             <Button2
                                     variant="filled"
                                     fullWidth={true}
-                                    onClick={()=> window.location.href='/profile'} icon="fa fa-user">
+                                    onClick={()=> window.location.href=profileUrl} icon="fa fa-user">
                                 Twój profil
                             </Button2>
                         </Hint>
@@ -159,7 +157,6 @@
                                 Zaloguj się
                             </Button2>
                         </Hint>
-
                     {/if}
                 {/if}
                 <Hint title="Ulubione">

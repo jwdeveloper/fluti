@@ -57,7 +57,9 @@
     {#if title}
         <label
                 for="{labelFor}"
-                style="align-self: flex-start; color: {labelColor}; {labelStyle}">
+                style="text-transform: capitalize;
+                font-size: 0.7rem !important;
+                align-self: flex-start; color: {labelColor}; {labelStyle}">
             {title}
         </label>
     {/if}
