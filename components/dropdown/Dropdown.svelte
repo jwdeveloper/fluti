@@ -63,6 +63,19 @@
 
     let highlightedIndex = $state(0)
 
+    function handleKeyDown(event: KeyboardEvent) {
+        if (!open)
+            return
+
+        if (event.code === "Enter") {
+            event.preventDefault()
+            if (items.length > 0) {
+                selectItem(items[0].value)
+            }
+            open = false;
+        }
+    }
+
     function toggleOpen() {
         open = !open;
         if (open) {
@@ -83,6 +96,7 @@
             open = false;
         }
     }}
+     on:keydown={handleKeyDown}
      style={style}
      tabindex="0">
     <div
