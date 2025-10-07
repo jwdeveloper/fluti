@@ -19,7 +19,7 @@
         ...props
     }: FooterSectionProps = $props();
 
-    console.log('LINKS is', props, linksColumns)
+    // console.log('LINKS is', props, linksColumns)
 
     const year = new Date().getFullYear();
 </script>

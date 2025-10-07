@@ -2,8 +2,6 @@ import PocketBase from 'pocketbase';
 //@ts-ignore
 import {PocketbaseCollectionWrapper} from "$lib/fluti/clients/pocketbaseCollectionWrapper";
 
-let url = process.env.PUBLIC_ENV === "dev" ? process.env.PUBLIC_LOCAL_POCKETBASE_URL : process.env.PUBLIC_POCKETBASE_URL;
-
 
 // Store admin sessions with timestamps
 type SessionData = { client: PocketBase; createdAt: number };
@@ -12,9 +10,9 @@ const ONE_HOUR = 60 * 30 * 1000;
 
 //@ts-ignore
 export async function pocketbaseClientAdmin(login?: string, password?: string): Promise<PocketBase> {
-    login = login ?? 'admin@admin.com'
-    password = password ?? '1234567890'
-
+    login = login ?? process.env.POCKETBASE_LOGIN ?? 'admin@admin.com'
+    password = password ?? process.env.POCKETBASE_PASSWORD ?? '1234567890'
+    let url = process.env.PUBLIC_ENV === "dev" ? process.env.PUBLIC_LOCAL_POCKETBASE_URL : process.env.PUBLIC_POCKETBASE_URL;
     const key = `${login}:${password}`;
     const now = Date.now();
 
@@ -22,8 +20,6 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     if (existing && now - existing.createdAt < ONE_HOUR) {
         return existing.client;
     }
-
-    console.log('Updating pocketbase clieknt', login, password)
     try {
         let pocketbase = new PocketBase(url);
         await pocketbase.collection('_superusers').authWithPassword(login, password);

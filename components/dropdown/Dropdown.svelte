@@ -48,8 +48,8 @@
 <div class="dropdown"
      style={style}>
     <div
-            class:dropdown-error={showError}
-            class="dropdown-header" on:click={() => (open = !open)}>
+            class="dropdown-header"
+            class:dropdown-error={showError} on:click={() => (open = !open)}>
         {#if value}
             {items.find(i => i.value === value)?.name}
         {:else}
@@ -58,21 +58,15 @@
     </div>
 
     {#if open}
-        <div
-
-                class="dropdown-menu">
+        <div class="dropdown-menu">
             <input
                     type="text"
                     placeholder="Wyszukaj..."
                     bind:value={search}
-                    class="search-input"
-            />
+                    class="search-input"/>
 
             {#each filteredItems as item (item.value)}
-                <div
-                        class="dropdown-item"
-                        on:click={() => selectItem(item.value)}
-                >
+                <div class="dropdown-item" on:click={() => selectItem(item.value)}>
                     {item.name}
                 </div>
             {/each}
@@ -88,7 +82,7 @@
 
     .dropdown-error {
         border-color: var(--text-error) !important;
-        background:  color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%) !important;
+        background: color-mix(in srgb, var(--text-error) 10%, var(--bg-primary) 20%) !important;
     }
 
     .dropdown {
