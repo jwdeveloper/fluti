@@ -69,8 +69,8 @@
 
         if (event.code === "Enter") {
             event.preventDefault()
-            if (items.length > 0) {
-                selectItem(items[0].value)
+            if (filteredItems.length > 0) {
+                selectItem(filteredItems[0].value)
             }
             open = false;
         }
