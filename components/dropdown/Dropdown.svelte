@@ -46,7 +46,8 @@
 </script>
 
 <div class="dropdown"
-     style={style}>
+     style={style}
+     tabindex="0">
     <div
             class="dropdown-header"
             class:dropdown-error={showError} on:click={() => (open = !open)}>
