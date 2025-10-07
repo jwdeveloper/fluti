@@ -103,6 +103,11 @@ export class EventsService {
         while (this.eventQueue.length > 0) {
             const {name, payload, onExecute} = this.eventQueue.shift()!;
 
+            if (!name) {
+                // console.warn(name, payload)
+                return
+            }
+
             if (onExecute)
                 executeActions.push(onExecute)
 
@@ -114,6 +119,8 @@ export class EventsService {
                 for (const handler of handlers) {
                     handler(payload);
                 }
+            } else {
+                console.warn('handlers not found for event ', name)
             }
         }
 
