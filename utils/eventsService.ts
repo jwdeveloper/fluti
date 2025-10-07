@@ -50,7 +50,7 @@ export class EventsService {
         }
 
         if (!this.config.autoFire) {
-            this.eventQueue.push({nexoLogin: name, payload, onExecute});
+            this.eventQueue.push({name: name, payload, onExecute});
             return
         }
         this.callAnyHandlers(name, payload)
@@ -104,7 +104,7 @@ export class EventsService {
             const {name, payload, onExecute} = this.eventQueue.shift()!;
 
             if (!name) {
-                // console.warn(name, payload)
+                console.warn(name)
                 return
             }
 
