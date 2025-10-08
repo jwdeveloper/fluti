@@ -1,3 +1,5 @@
+import {wait} from "$lib/fluti/utils/Wait";
+
 export class AlertController {
     maxAlerts: number = $state(5);
     displayedAlerts = $derived.by(() => {
@@ -18,10 +20,13 @@ export class AlertController {
             message: message,
             time: time,
         };
-        this.alerts.push(alert);
-        if (!this.isProcessing) {
-            this.processFirstAlert();
-        }
+        wait(10).then(e => {
+            this.alerts.push(alert);
+            if (!this.isProcessing) {
+                this.processFirstAlert();
+            }
+        })
+
     }
 
     processFirstAlert() {
