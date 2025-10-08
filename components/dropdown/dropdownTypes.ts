@@ -11,4 +11,5 @@ export interface DropdownProps {
     placeholder?: string
     initIndex?: number
     showError?: boolean
+    filter?: (e: DropdownItem, search: string) => boolean
 }

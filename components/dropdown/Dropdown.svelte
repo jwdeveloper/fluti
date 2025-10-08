@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type {DropdownProps} from "$lib/fluti/components/dropdown/dropdownTypes";
+    import type {DropdownItem, DropdownProps} from "$lib/fluti/components/dropdown/dropdownTypes";
     import {onMount} from "svelte";
+    import {wait} from "$lib/fluti/utils/Wait";
 
     let {
         placeholder = 'Select option',
@@ -10,7 +11,8 @@
         onUpdate = undefined,
         initIndex = -1,
         showError = false,
-        style = ''
+        style = '',
+        filter,
     }: DropdownProps = $props();
 
     let init = $state(false);
@@ -19,9 +21,12 @@
     let filteredItems = $state(items);
 
     $effect(() => {
-        filteredItems = items.filter((i) =>
-            i.name.toLowerCase().includes(search.toLowerCase())
-        );
+        filteredItems = items.filter((i: DropdownItem) => {
+            if (filter) {
+                return filter(i, search)
+            }
+            return i.name.toLowerCase().includes(search.toLowerCase())
+        });
     });
 
     $effect(() => {
@@ -40,16 +45,65 @@
     });
 
     function selectItem(val: string) {
-        value = val;
         open = false;
+
+        wait(10).then(e => {
+            value = val;
+            open = false;
+        })
+    }
+
+    let inputEl: HTMLInputElement | null = $state(null);
+
+    // $effect(() => {
+    //     open
+    //     if (open && inputEl)
+    //         inputEl.focus()
+    // })
+
+    let highlightedIndex = $state(0)
+
+    function handleKeyDown(event: KeyboardEvent) {
+        if (!open)
+            return
+
+        if (event.code === "Enter") {
+            event.preventDefault()
+            if (filteredItems.length > 0) {
+                selectItem(filteredItems[0].value)
+            }
+            open = false;
+        }
+    }
+
+    function toggleOpen() {
+        open = !open;
+        if (open) {
+            // reset search
+            search = "";
+            highlightedIndex = filteredItems.length > 0 ? 0 : -1;
+            // wait a tick to focus input
+            requestAnimationFrame(() => inputEl?.focus());
+        }
     }
 </script>
 
 <div class="dropdown"
-     style={style}>
+     on:focusin={()=> open=true}
+     on:focusout={(e) => {
+        const related = e.relatedTarget;
+        if (!related || !e.currentTarget.contains(related)) {
+            open = false;
+        }
+    }}
+     on:keydown={handleKeyDown}
+     style={style}
+     tabindex="0">
     <div
             class="dropdown-header"
-            class:dropdown-error={showError} on:click={() => (open = !open)}>
+            class:dropdown-error={showError}
+            on:click={toggleOpen}
+    >
         {#if value}
             {items.find(i => i.value === value)?.name}
         {:else}
@@ -60,7 +114,9 @@
     {#if open}
         <div class="dropdown-menu">
             <input
+                    bind:this={inputEl}
                     type="text"
+                    autofocus={true}
                     placeholder="Wyszukaj..."
                     bind:value={search}
                     class="search-input"/>
@@ -76,6 +132,7 @@
             {/if}
         </div>
     {/if}
+
 </div>
 
 <style>
