@@ -17,7 +17,7 @@
     .alerts-container {
         position: fixed;
         pointer-events: none;
-        z-index: var(--z-index-6);
+        z-index: 100000;
         width: 100%;
         gap: 0.5em;
         height: 100%;
