@@ -64,6 +64,7 @@
                         hoverStyle="color: var(--fluti-text);"
                 />
             </div>
+
             <div
                     class="message-content"
                     onclick={handleCopy}
@@ -72,21 +73,22 @@
                 {message}
             </div>
         </div>
+
     </Panel>
 {/snippet}
 
-<div transition:fade={{duration: 200}} onclick={handleClick}>
+<div transition:fade={{duration: 200}} >
     <Element className="alert">
         <div class="alert-wrapper alert-{type}">
             <div class="alert-icon">
                 <i class={getIcon}></i>
             </div>
-            <div class="alert-content">
+            <div class="alert-content" onclick={handleClick}>
                 <span class="alert-title">{getTitle}</span>
                 <span class="alert-message">{message}</span>
             </div>
-            <div class="alert-close">
-                <i class="fa fa-times" onclick={handleDestroy}></i>
+            <div class="alert-close" onclick={handleDestroy}>
+                <i class="fa fa-times" ></i>
             </div>
         </div>
     </Element>
@@ -124,6 +126,7 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         cursor: pointer;
         transition: all 0.2s ease;
+        pointer-events: all;
         min-width: 300px;
     }
 
