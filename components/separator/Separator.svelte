@@ -40,14 +40,14 @@
 <style>
 
     :global(.bar-horizontal) {
-        background: var(--text-muted) !important;
+        background: var(--border-default) !important;
         width: 100%;
         border-radius: 0.1em;
         height: 0.1em;
     }
 
     :global(.bar-vertical) {
-        background: var(--text-muted) !important;
+        background: var(--border-default) !important;
         width: 0.1em;
         border-radius: 0.1em;
         height: 100%;

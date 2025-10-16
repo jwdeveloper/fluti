@@ -7,6 +7,7 @@ export class CancellationToken {
     private _isCancelled = false;
     _callbacks: CancelCallback[] = [];
 
+
     get isCancelled(): boolean {
         return this._isCancelled;
     }

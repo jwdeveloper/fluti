@@ -58,7 +58,11 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
             for (const f in item) {
                 const v = item[f];
                 if (typeof v === 'object' && v !== null) {
-                    item[f] = JSON.stringify(v) as any;
+                    let schemaField = this.config.tableSchema[f];
+                    if (schemaField.dataType !== 'json')
+                        item[f] = JSON.stringify(v) as any;
+                    else
+                        item[f] = v as any;
                 }
             }
             const db = await this.connection();
@@ -95,7 +99,11 @@ export class SqlRepository<T extends Record<string, any>> implements IRepository
             for (const f in item) {
                 const v = item[f];
                 if (typeof v === 'object' && v !== null) {
-                    item[f] = JSON.stringify(v) as any;
+                    let schemaField = this.config.tableSchema[f];
+                    if (schemaField.dataType !== 'json')
+                        item[f] = JSON.stringify(v) as any;
+                    else
+                        item[f] = v as any;
                 }
             }
             let row: any;
