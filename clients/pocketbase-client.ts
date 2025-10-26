@@ -18,7 +18,12 @@ async function getUrl() {
     const localUrl = process.env.PUBLIC_LOCAL_POCKETBASE_URL;
     const prodUrl = process.env.PUBLIC_POCKETBASE_URL;
     return env === 'dev' ? localUrl : prodUrl;
-
 }
 
-export const pocketbaseClient = new PocketBase(await getUrl());
+let client: PocketBase | undefined = undefined;
+export const pocketbaseClient = async () => {
+    if (client)
+        return client;
+    client = new PocketBase(await getUrl())
+    return client;
+};

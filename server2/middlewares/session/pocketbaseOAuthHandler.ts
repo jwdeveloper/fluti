@@ -1,7 +1,6 @@
 import type {OAuthEvent} from "$lib/fluti/server/middlewares/oauth/oAuthTypes";
 import type {FlutiUser} from "$lib/fluti/server/serverTypes";
 import {pocketbaseClientAdmin} from "$lib/fluti/clients/pocketbase-client-admin";
-import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 import PocketBase, {type AuthProviderInfo} from "pocketbase";
 
 
