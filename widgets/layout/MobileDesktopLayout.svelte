@@ -85,8 +85,8 @@
 <Element
         display="grid"
         tag="main"
-        columns={dimentions.columns}
-        rows={dimentions.rows}
+        columns='auto'
+        rows='auto 1fr auto'
         width="100%"
         height="auto"
         style="min-height: 100%"
