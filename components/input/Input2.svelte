@@ -14,7 +14,7 @@
         },
         onChange,
         onUpdate,
-        onKeydown =()=>{
+        onKeydown = () => {
 
         },
         onIconClick = undefined,
@@ -91,6 +91,7 @@
             bind:this={element}
             class="element-input element-input-{variant} {invalid? 'element-input-invalid':''}"
             disabled={props.disabled}
+            inputmode="decimal"
             name={props?.id}
             onclick={onClickInput}
             onfocusin={startTyping}
