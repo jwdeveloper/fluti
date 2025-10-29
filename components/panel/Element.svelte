@@ -145,8 +145,8 @@
     :global(.element) {
         display: flex;
         flex-direction: row;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         transition: all 200ms ease-in-out;
         gap: 0.5em;
     }
