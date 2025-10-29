@@ -53,8 +53,8 @@ const handleError = async (data: LoginFormData, controller: LoginController, err
 let handleSendRecoveryMail = async (data: LoginFormData) => {
     if (!data.email)
         return false;
-
-    let result = await pocketbaseClient
+    let db = await pocketbaseClient();
+    let result = await db
         .collection('users')
         .requestPasswordReset(data.email)
     return result;
@@ -103,12 +103,13 @@ let handleUserRegister = async (data: LoginFormData) => {
 }
 
 let handleUserSendVerificationEmail = async (data: LoginFormData) => {
-    //@ts-ignore
-    return await pocketbaseClient.collection('users').requestVerification(data.email)
+    let db = pocketbaseClient();
+    return await db.collection('users').requestVerification(data.email)
 }
 
 let handleUserCheckVerification = async (data: LoginFormData) => {
-    const authData = await pocketbaseClient
+    let db = pocketbaseClient();
+    const authData = await db
         .collection('users')
         //@ts-ignore
         .authWithPassword(data.email, data.password);

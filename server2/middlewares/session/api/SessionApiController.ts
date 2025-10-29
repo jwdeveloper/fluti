@@ -12,10 +12,10 @@ import {pocketbaseClient} from "$lib/fluti/clients/pocketbase-client";
 export function createSessionApiController(config: SessionMiddlewareConfig) {
     const controller = new Hono();
 
-    const pb = pocketbaseClient;
 
     controller.post(`/login`, async (c) => {
         const {email, password} = await c.req.json();
+        const pb = await pocketbaseClient();
         try {
             // console.log('email and passowrd', email, password)
             const authData = await pb.collection('users').authWithPassword(email, password);
@@ -58,7 +58,7 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
                 message: 'Email, password, and password confirmation are required.'
             }, 400);
         }
-
+        const pb = await pocketbaseClient();
         try {
             await pb.collection('users').create({email, password, passwordConfirm});
             return c.json({
@@ -95,7 +95,8 @@ export function createLoginWithHeadersMiddleware(config: SessionMiddlewareConfig
         console.log(`trying to login by header with login ${login} and password ${password}`)
 
         try {
-            const authData = await pocketbaseClient.collection('users').authWithPassword(login, password);
+            const pb = await pocketbaseClient();
+            const authData = await pb.collection('users').authWithPassword(login, password);
             const record = authData.record;
             if (record.verified === false)
                 throw new Error("user is not verified")
