@@ -10,6 +10,8 @@ export interface TabsProps extends ElementProps {
     selectedComponent?: any | undefined
 
     onClick?: (tabItem: TabsItem, event: MouseEvent | KeyboardEvent | undefined) => void
+
+    padding?: string
 }
 
 export interface TabsItem {
