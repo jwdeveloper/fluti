@@ -1,4 +1,7 @@
 export class Optional<T> {
+
+    signature: string = "optional"
+
     private constructor(
         private readonly value: T | null | undefined,
         private errorMessage?: string
