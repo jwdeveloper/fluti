@@ -150,7 +150,7 @@
                     </Element>
                 {/if}
                 {#if item.name}
-                    <div>
+                    <div class="not-selected-item">
                         {item.name}
                     </div>
                 {/if}
@@ -163,6 +163,15 @@
 
 <style>
 
+    .not-selected-item
+    {
+
+        transition: all 200ms ease-out;
+    }
+    .not-selected-item:hover
+    {
+        color: var(--accent-primary);
+    }
 
     .btn-tab {
         /*font-weight: 600;*/
