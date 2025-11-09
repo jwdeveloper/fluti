@@ -6,7 +6,7 @@ export interface PanelProps {
     padding?: string
     justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
     align?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
-    direction?: "row" | "row-reverse" | "column" | "column-reverse"
+    direction?: "row" | "row-isTopPort" | "column" | "column-isTopPort"
 
     shadow?: string,
     className?: string

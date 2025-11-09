@@ -45,7 +45,7 @@
         <Separator/>
         <Space/>
         <Element width="100%"
-                 mobile={{gap:'4em', direction: 'column-reverse',}}
+                 mobile={{gap:'4em', direction: 'column-isTopPort',}}
                  justify="space-between">
             <Element width="100%"
                      mobile={{justify:'center'}}

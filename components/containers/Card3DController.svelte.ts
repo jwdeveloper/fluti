@@ -48,7 +48,7 @@ export class Card3DController {
         // this.event = null
         // this.updateBind = this.update.bind(this)
         // this.resetBind = this.reset.bind(this)
-        // this.reverse = this.settings.reverse ? -1 : 1
+        // this.isTopPort = this.settings.isTopPort ? -1 : 1
         // this.glare = isValueTrue(this.settings.glare)
         // this.glarePrerender = isValueTrue(this.settings["glare-prerender"])
         // this.gyroscope = isValueTrue(this.settings.gyroscope)

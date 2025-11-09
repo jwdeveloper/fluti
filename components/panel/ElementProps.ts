@@ -15,7 +15,7 @@ export interface ElementStyleProps {
     display?: "flex" | "grid" | "block" | 'none'
     justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
     align?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly" | "",
-    direction?: "row" | "row-reverse" | "column" | "column-reverse"
+    direction?: "row" | "row-isTopPort" | "column" | "column-isTopPort"
     style?: string
 
     hover?: ElementStyleProps
