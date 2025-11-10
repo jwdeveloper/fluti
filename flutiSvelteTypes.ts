@@ -25,6 +25,10 @@ export interface FlutiWebSiteData {
 export interface CommonPages {
     name: string,
     url: string
+
+    title?: string
+    description?: string
+    keywords?: string
 }
 
 export type SvelteComponentRef = any

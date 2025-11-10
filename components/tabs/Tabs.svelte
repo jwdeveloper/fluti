@@ -3,7 +3,7 @@
     import type {TabsItem, TabsProps} from "./Tabs";
     import {onMount} from "svelte";
     import {animatedElement} from "$lib/fluti/effects/animations/AnimatedElement";
-    import {generateUUID, vibrate} from "$lib/fluti/utils/Wait";
+    import {vibrate} from "$lib/fluti/utils/Wait";
     import Element from "$lib/fluti/components/panel/Element.svelte";
     import {flutiTheme} from "$lib/fluti/themes/themeProperties";
 
@@ -13,6 +13,7 @@
         selectedItem = $bindable(undefined),
         onClick = () => {
         },
+        padding = '0.5em',
         ...props
     }: TabsProps = $props();
 
@@ -119,15 +120,15 @@
 {/snippet}
 
 <Element
-        radius='22px'
         background={flutiTheme.background.tertiary}
-        width="100%"
-        padding="0.5em">
+        padding={padding}
+        radius='22px'
+        width="100%">
 
     <Element
-            width="100%"
+            {...props}
             style="position: relative;"
-            {...props}>
+            width="100%">
 
         <div bind:this={elementPointer} class="btn-bg" style={flyingElementStyles}/>
         {#each items as item (getId(item))}
@@ -149,7 +150,7 @@
                     </Element>
                 {/if}
                 {#if item.name}
-                    <div>
+                    <div class="not-selected-item">
                         {item.name}
                     </div>
                 {/if}
@@ -162,6 +163,15 @@
 
 <style>
 
+    .not-selected-item
+    {
+
+        transition: all 200ms ease-out;
+    }
+    .not-selected-item:hover
+    {
+        color: var(--accent-primary);
+    }
 
     .btn-tab {
         /*font-weight: 600;*/
@@ -176,12 +186,11 @@
         font-size: var(--font-size-normaler);
         position: relative;
         overflow: hidden;
+        /*padding: 0.6em 1.2em;*/
         padding: 0.6em 1.2em;
         width: 100%;
         z-index: var(--z-index-1);
         color: var(--text-muted);
-
-
     }
 
     .btn-bg {

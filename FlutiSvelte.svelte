@@ -17,6 +17,7 @@
 
     interface Fluti {
         websiteData?: FlutiWebSiteData
+        path?: string
         useThemes?: boolean,
         useWindows?: boolean,
         useAlerts?: boolean,
@@ -30,6 +31,7 @@
         useBreakpoints = true,
         useAlerts = true,
         useUserSession = true,
+        path = '/',
         websiteData = {
             domain: 'localhost',
             country: "PL-pl",
@@ -41,6 +43,12 @@
         }
     }: Fluti = $props();
 
+    let page = websiteData?.pages?.find(e => e.url === path);
+    let data = {
+        title: page?.title ?? websiteData?.title ?? 'page',
+        description: page?.description ?? websiteData?.description ?? '',
+        keywords: page?.keywords ?? websiteData?.keywords ?? ''
+    }
 
     onMount(() => {
         if (websiteData?.google?.tagId) {
@@ -64,32 +72,32 @@
 </script>
 
 <svelte:head>
-    <title>{websiteData?.title}</title>
-    <meta name="description" content={websiteData?.description}>
-    <meta name="keywords" content={websiteData?.keywords}>
-    <meta property="og:title" content={websiteData?.title}>
-    <meta property="og:description" content={websiteData?.description}>
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:site_name" content={websiteData.domain} data-next-head="">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content={websiteData.country}/>
-    <meta property="og:url" content={websiteData.domain}>
-    <meta property="og:image" content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}">
-    <meta property="og:type" content="{websiteData.pageType ?? 'website'}"/>
+    <title>{data.title}</title>
+    <meta content={data.description} name="description">
+    <meta content={data.keywords} name="keywords">
+    <meta content={data.title} property="og:title">
+    <meta content={data.description} property="og:description">
+    <meta content="image/png" property="og:image:type">
+    <meta content="1200" property="og:image:width">
+    <meta content={websiteData.domain} data-next-head="" property="og:site_name">
+    <meta content="630" property="og:image:height">
+    <meta content={websiteData.country} property="og:locale"/>
+    <meta content={websiteData.domain} property="og:url">
+    <meta content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}" property="og:image">
+    <meta content="{websiteData.pageType ?? 'website'}" property="og:type"/>
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content={websiteData?.tweeter?.title ?? websiteData?.title}>
-    <meta name="twitter:description" content={websiteData?.tweeter?.description ?? websiteData?.description}>
-    <meta name="twitter:image:type" content="image/png">
-    <meta name="twitter:image:width" content="1200">
-    <meta name="twitter:image:height" content="630">
-    <meta name="twitter:image" content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}">
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content={websiteData?.tweeter?.title ?? websiteData?.title} name="twitter:title">
+    <meta content={websiteData?.tweeter?.description ?? websiteData?.description} name="twitter:description">
+    <meta content="image/png" name="twitter:image:type">
+    <meta content="1200" name="twitter:image:width">
+    <meta content="630" name="twitter:image:height">
+    <meta content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}" name="twitter:image">
 
-    <meta property="al:web:url" content={websiteData.domain}>
-    <meta property="al:web:should_fallback" content="true">
+    <meta content={websiteData.domain} property="al:web:url">
+    <meta content="true" property="al:web:should_fallback">
 
-    <link rel="canonical" href={websiteData?.url ?? websiteData?.domain}>
+    <link href={websiteData?.url ?? websiteData?.domain} rel="canonical">
 </svelte:head>
 
 {#if useAlerts}
