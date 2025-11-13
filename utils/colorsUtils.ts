@@ -115,7 +115,7 @@ function hexToHSL(hex: string) {
     return {h: h * 360, s: s * 100, l: l * 100};
 }
 
-function hslToHex(h:number, s:number, l:number) {
+function hslToHex(h: number, s: number, l: number) {
     s /= 100;
     l /= 100;
 
@@ -141,7 +141,7 @@ function hslToHex(h:number, s:number, l:number) {
         .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }
 
-export function makeVibrant(hex:string, saturationBoost = 1.3, lightnessBoost = 1.1) {
+export function makeVibrant(hex: string, saturationBoost = 1.3, lightnessBoost = 1.1) {
     let hsl = hexToHSL(hex);
     hsl.s = Math.min(100, hsl.s * saturationBoost);
     hsl.l = Math.min(100, hsl.l * lightnessBoost);
@@ -217,24 +217,30 @@ export function adjustHexIntensity(hex: string, intensity: number): string {
 }
 
 export function parseCssColorToHex(cssColor: string): string | null {
-    const tempEl = document.createElement("div");
-    tempEl.style.color = cssColor;
-    document.body.appendChild(tempEl);
 
-    const computed = getComputedStyle(tempEl).color;
-    document.body.removeChild(tempEl);
+    try {
+        const tempEl = document.createElement("div");
+        tempEl.style.color = cssColor;
+        document.body.appendChild(tempEl);
 
-    const match = computed.match(/rgba?\((\d+), (\d+), (\d+)(?:, ([\d.]+))?\)/);
-    if (!match) return null;
+        const computed = getComputedStyle(tempEl).color;
+        document.body.removeChild(tempEl);
 
-    const r = parseInt(match[1]);
-    const g = parseInt(match[2]);
-    const b = parseInt(match[3]);
-    const a = match[4] !== undefined ? Math.round(parseFloat(match[4]) * 255) : 255;
+        const match = computed.match(/rgba?\((\d+), (\d+), (\d+)(?:, ([\d.]+))?\)/);
+        if (!match) return null;
 
-    const toHex = (n: number) => n.toString(16).padStart(2, '0');
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const a = match[4] !== undefined ? Math.round(parseFloat(match[4]) * 255) : 255;
 
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(a)}`;
+        const toHex = (n: number) => n.toString(16).padStart(2, '0');
+
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(a)}`;
+    } catch (error) {
+        return cssColor;
+    }
+
 }
 
 
