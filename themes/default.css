@@ -316,10 +316,13 @@ p {
 
 
 .ripple {
+
+    --ripple-time: 900ms;
+
     position: absolute;
     border-radius: 50%;
     transform: scale(0);
-    animation: ripple-animation 0.9s linear;
+    animation: ripple-animation var(--ripple-time) linear;
     background: var(--text-muted); /* Adjust as needed */
     pointer-events: none; /* Ignore pointer events */
 }

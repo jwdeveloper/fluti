@@ -99,10 +99,10 @@
             element.style.overflow = 'hidden'
             element.style.position = 'relative'
             element.style.cursor = 'pointer'
-            effects.push(addRippleEffect(element, effectsOptions?.rippler?.color))
+            effects.push(addRippleEffect(element, effectsOptions?.rippler?.color, true, effectsOptions?.rippler?.time))
         }
         if (effectsOptions?.click)
-            effects.push(addClickEffect(element,effectsOptions?.click?.frames))
+            effects.push(addClickEffect(element, effectsOptions?.click?.frames))
 
         return () => {
             //@ts-ignore
@@ -113,30 +113,30 @@
 </script>
 
 <svelte:element
-        id={id ?? elementId}
+        {...attributes}
         bind:this={element}
-        use:addVisualEffects
-        this={tag}
-        style:background={finalStyles.background}
-        style:display={finalStyles.display ?? 'flex'}
-        style:height={finalStyles.height}
-        style:width={finalStyles.width}
-        style:gap={finalStyles.gap}
-        style:color={finalStyles.color}
-        style:flex-direction={finalStyles.direction}
-        style:align-items={finalStyles.align}
-        style:justify-content={finalStyles.justify}
-        style:grid-template-rows={finalStyles.rows}
-        style:grid-template-columns={finalStyles.columns}
-        style:padding={finalStyles.padding}
-        style:border-radius={finalStyles.radius}
-        style:overflow={props?.effects?.rippler ? 'hidden': props.overflow}
-        style:font-size={props?.fontSize}
-        style:margin={props?.margin}
+        class="scroll element {finalStyles.className} {className} "
+        id={id ?? elementId}
         onclick={onClick}
         style={finalStyles.style}
-        class="scroll element {finalStyles.className} {className} "
-        {...attributes}>
+        style:align-items={finalStyles.align}
+        style:background={finalStyles.background}
+        style:border-radius={finalStyles.radius}
+        style:color={finalStyles.color}
+        style:display={finalStyles.display ?? 'flex'}
+        style:flex-direction={finalStyles.direction}
+        style:font-size={props?.fontSize}
+        style:gap={finalStyles.gap}
+        style:grid-template-columns={finalStyles.columns}
+        style:grid-template-rows={finalStyles.rows}
+        style:height={finalStyles.height}
+        style:justify-content={finalStyles.justify}
+        style:margin={props?.margin}
+        style:overflow={props?.effects?.rippler ? 'hidden': props.overflow}
+        style:padding={finalStyles.padding}
+        style:width={finalStyles.width}
+        this={tag}
+        use:addVisualEffects>
 
     {@render children?.()}
 </svelte:element>

@@ -1,4 +1,4 @@
-export function addRippleEffect(element: HTMLElement, color?: string, enabled: boolean = true) {
+export function addRippleEffect(element: HTMLElement, color?: string, enabled: boolean = true, time?: number) {
 
     if (!enabled)
         return
@@ -14,6 +14,7 @@ export function addRippleEffect(element: HTMLElement, color?: string, enabled: b
         ripple.style.width = ripple.style.height = `${size}px`;
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
+        ripple.style.setProperty("--ripple-time", `${time ?? 900}ms`);
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
         // ripple.style.zIndex = `1`;

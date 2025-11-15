@@ -25,6 +25,7 @@ export interface ElementEffectsProps {
 
     rippler?: {
         color?: string
+        time?:number
     }
 
     click?: {
