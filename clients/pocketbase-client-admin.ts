@@ -17,12 +17,14 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     const now = Date.now();
 
     const existing = sessions.get(key);
-    if (existing && now - existing.createdAt < ONE_HOUR) {
+    if (existing !== undefined && existing && now - existing.createdAt < ONE_HOUR) {
         return existing.client;
     }
     try {
         let pocketbase = new PocketBase(url);
-        await pocketbase.collection('_superusers').authWithPassword(login, password);
+        const col = await pocketbase.collection('_superusers').authWithPassword(login, password);
+        if (!col || !col.token)
+            throw new Error("Collection is null")
         sessions.set(key, {client: pocketbase, createdAt: now});
         return pocketbase;
     } catch (error) {
@@ -34,6 +36,8 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
 
 export async function pocketbaseCollection(collectionName: string): Promise<PocketbaseCollectionWrapper> {
     let client = await pocketbaseClientAdmin();
+    if (!client)
+        throw new Error("Internal error pocketbase client is null. Check method 'pocketbaseClientAdmin'")
     let collection = client.collection(collectionName);
     let pocketCollection = new PocketbaseCollectionWrapper(collection);
     return pocketCollection;
