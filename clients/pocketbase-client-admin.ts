@@ -33,7 +33,6 @@ export async function pocketbaseClientAdmin(login?: string, password?: string): 
     }
 }
 
-
 export async function pocketbaseCollection(collectionName: string): Promise<PocketbaseCollectionWrapper> {
     let client = await pocketbaseClientAdmin();
     if (!client)
