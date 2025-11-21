@@ -196,7 +196,12 @@ export function generateUUID() { // Public Domain/MIT
 }
 
 export function vibrate() {
-    if (navigator && navigator?.vibrate)
-        navigator?.vibrate(25);
+    try {
+        if (navigator && navigator?.vibrate)
+            navigator?.vibrate(25);
+    } catch (error) {
+
+    }
+
 
 }
