@@ -138,6 +138,8 @@ export class FlutiServer2Impl implements FlutiServer2 {
             });
         }
 
+
+
         return this.app.request(event.request, undefined,
             {
                 ip: event?.getClientAddress?.(),
