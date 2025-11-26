@@ -115,6 +115,38 @@ export function createLoginWithHeadersMiddleware(config: SessionMiddlewareConfig
     }
 }
 
+export function createTokenMiddleware(config: SessionMiddlewareConfig) {
+    const cacheService = new CacheService();
+    return async (c: Context, next: any) => {
+
+        // console.log('user middleware')
+        let payload: any = await config.onDefaultUserData();
+        c.set(config.contextPropertyName, payload);
+        const token = c.req.header('Token');
+        if (!token) {
+            return await next();
+        }
+        if (config.token.useServerCache && cacheService.has(token) && token !== '') {
+            payload = cacheService.get(token);
+        } else {
+
+            try {
+                payload = await verify(token, config.token.secret);
+                payload = await config.onTokenToUserMapping(payload);
+                cacheService.set(token, payload);
+
+            } catch (error) {
+                //@ts-ignore
+                if (error.name === "JwtTokenSignatureMismatched" && c.req.path !== '/login') {
+                    deleteCookie(c, config.token.cookieName);
+                }
+            }
+        }
+        c.set(config.contextPropertyName, payload);
+        await next()
+    };
+}
+
 export function createSessionAuthMiddleware(config: SessionMiddlewareConfig) {
     const cacheService = new CacheService();
     return async (c: Context, next: any) => {

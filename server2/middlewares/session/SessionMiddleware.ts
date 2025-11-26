@@ -9,6 +9,7 @@ import {
     createLoginWithHeadersMiddleware,
     createSessionApiController,
     createSessionAuthMiddleware,
+    createTokenMiddleware,
 } from "$lib/fluti/server2/middlewares/session/api/SessionApiController";
 import {createOAuthApiController} from "$lib/fluti/server2/middlewares/session/api/OAuthApiController";
 import {
@@ -62,8 +63,14 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
             console.error("[ERROR AND WARNING] env variable JWT_TOKEN_SECRET is empty! Make sure fill its data otherwise login page will not working!")
         }
         const app: Hono = serverConfig.app;
+        app.use(createTokenMiddleware(config));
         app.use(createLoginWithHeadersMiddleware(config));
         app.use(createSessionAuthMiddleware(config));
+
+        // app.use("/*", (e, n) => {
+        //     console.log('siema', e.req.path)
+        //     return n(e);
+        // })
         app.route(config.api.endpointPrefix, createSessionApiController(config));
         if (config?.oAuth !== undefined) {
             app.route(config.api.endpointPrefix, createOAuthApiController(config))
