@@ -27,6 +27,7 @@ export interface ProductCardBadge {
 }
 
 export interface Product {
+    id: string,
     "@context": "https://schema.org/";
     "@type": "Product";
     name: string;

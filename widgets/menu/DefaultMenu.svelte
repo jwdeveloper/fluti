@@ -145,9 +145,8 @@
 {/snippet}
 
 <Element
-        padding="0 1em"
-        style="position: relative"
-        tag="nav"
+        {...props}
+        align="flex-end"
         attributes={
         {
             onmouseenter:(e)=>handleEnter(true,e),
@@ -155,8 +154,10 @@
         }
         }
         justify="space-around"
-        align="flex-end"
-        {...props}>
+        mobile={{direction:'column'}}
+        padding="0 1em"
+        style="position: relative"
+        tag="nav">
 
     {#each items as item}
         {@render itemTemplate(item, setElementSource)}

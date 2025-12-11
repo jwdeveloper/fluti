@@ -57,6 +57,8 @@ export class PocketbaseCollectionWrapper {
             return Optional.success(record);
         } catch (error) {
             console.error("Create error:", error);
+            console.error(`Pocketbase error ${JSON.stringify(error?.response?.data)}`)
+            console.error(`Record ${JSON.stringify(data)}`)
             return Optional.fail(`Failed to create record: ${error}`);
         }
     }
