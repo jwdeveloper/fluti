@@ -145,6 +145,7 @@ export class FlutiServer2Impl implements FlutiServer2 {
                 ip: event?.getClientAddress?.(),
                 renderSvelte: resolveSvelte,
                 svelteEvent: event
+
             });
     }
 
