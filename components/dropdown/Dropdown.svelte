@@ -11,6 +11,7 @@
         onUpdate = undefined,
         initIndex = -1,
         showError = false,
+        showIcon = false,
         style = '',
         filter,
     }: DropdownProps = $props();
@@ -104,6 +105,8 @@
             class:dropdown-error={showError}
             on:click={toggleOpen}
     >
+
+        <i class="fa fa-solid fa-caret-down"></i>
         {#if value}
             {items.find(i => i.value === value)?.name}
         {:else}
@@ -145,6 +148,7 @@
     .dropdown {
         position: relative;
         width: 100%;
+        border-radius: var(--radius-medium);
     }
 
     .dropdown-header {
@@ -152,6 +156,7 @@
         border: var(--border-size-medium) solid var(--bg-tertiary);
         padding: var(--padding-medium) 1em;
         border-radius: var(--radius-medium);
+
         color: var(--text-primary);
         cursor: pointer;
         transition: all 200ms ease-out;
@@ -170,7 +175,7 @@
         border: var(--border-size-medium) solid var(--bg-tertiary);
         border-radius: var(--radius-medium);
         margin-top: 0.3em;
-        max-height: 200px;
+        max-height: 300px;
         overflow-y: auto;
         z-index: 100;
 
@@ -201,4 +206,125 @@
         color: var(--text-secondary);
         font-style: italic;
     }
+
+
+    /* === Visual clarity + comfort tweaks (CSS only) === */
+
+    .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+
+        background: var(--bg-primary);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
+        border-radius: var(--radius-medium);
+
+        max-height: 280px;
+        overflow-y: auto;
+        z-index: 100;
+
+        /* subtle elevation */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* nicer scrollbar (WebKit + modern browsers) */
+    .dropdown-menu::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-thumb {
+        background: var(--bg-tertiary);
+        border-radius: 6px;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in srgb, var(--bg-tertiary) 70%, var(--text-primary));
+    }
+
+    /* search input separation */
+    .search-input {
+        width: 100%;
+        padding: 0.6em 0.75em;
+        border: none;
+        border-bottom: 1px solid var(--bg-tertiary);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        outline: none;
+
+        font-size: 0.95em;
+    }
+
+    /* dropdown items */
+    .dropdown-item {
+        padding: 0.65em 1em;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+
+        color: var(--text-primary);
+        border-radius: 6px;
+        margin: 0.15em 0.3em;
+
+        transition: background-color 150ms ease,
+        color 150ms ease,
+        transform 120ms ease;
+    }
+
+    /* hover = clearer intent */
+    .dropdown-item:hover {
+        background: color-mix(in srgb, var(--bg-tertiary) 70%, var(--bg-primary));
+        color: var(--text-primary);
+        transform: translateX(2px);
+    }
+
+    /* active click feedback */
+    .dropdown-item:active {
+        background: color-mix(in srgb, var(--bg-tertiary) 85%, var(--bg-primary));
+        transform: translateX(1px);
+    }
+
+    /* empty state */
+    .dropdown-empty {
+        padding: 0.8em 1em;
+        margin: 0.3em;
+        border-radius: 6px;
+
+        color: var(--text-secondary);
+        background: color-mix(in srgb, var(--bg-secondary) 80%, var(--bg-primary));
+        font-style: italic;
+        text-align: center;
+    }
+
+    /* header polish */
+    .dropdown-header {
+        background: var(--bg-primary);
+        border: var(--border-size-medium) solid var(--bg-tertiary);
+        padding: var(--padding-medium) 1em;
+        border-radius: var(--radius-medium);
+
+        display: flex;
+        align-items: center;
+        /*justify-content: space-between;*/
+        gap: 0.5em;
+
+        color: var(--text-primary);
+        cursor: pointer;
+
+        transition: border-color 150ms ease,
+        background-color 150ms ease,
+        box-shadow 150ms ease;
+    }
+
+    .dropdown-header:hover {
+        border-color: color-mix(in srgb, var(--bg-tertiary) 60%, var(--text-primary));
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
 </style>
