@@ -1,8 +1,7 @@
 import type {Optional} from "$lib/fluti/utils/optional";
 import type {Supplier} from "../methods";
-import type {BunSQLiteDatabase} from "drizzle-orm/bun-sqlite/driver";
 
-export type IDbConnection = Supplier<Promise<BunSQLiteDatabase>>
+export type IDbConnection = Supplier<Promise<any>>
 
 export interface Where {
     field: string

@@ -2,15 +2,17 @@ import type {SubscriptionPageProps} from "$lib/fluti/pages/subscription/types";
 
 
 export const handleGetProducts = async () => {
-    const response = await fetch("/api/v1/payment/products")
+    const response = await fetch("/api/products")
     if (!response.ok)
         throw new Error(response.statusText)
-    return await response.json();
+    const body = await response.json();
+    if (body?.success === false) throw new Error(body?.error ?? "Failed to load products");
+    return body?.data ?? body;
 }
 
 export const handleMakePayment = async (event: any) => {
 
-    const response = await fetch('/api/v1/payment', {
+    const response = await fetch('/api/payments', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -19,7 +21,13 @@ export const handleMakePayment = async (event: any) => {
     })
     if (!response.ok)
         throw new Error(response.statusText)
-    return await response.json();
+    const body = await response.json();
+    if (body?.success === false) throw new Error(body?.error ?? "Failed to create payment");
+    const payload = body?.data ?? body;
+    return {
+        secret: payload.clientSecret,
+        ...payload,
+    };
 }
 
 const defaultSubscriptionPageData: SubscriptionPageProps = {
