@@ -53,6 +53,14 @@ export class CacheService<K = string, V = any> {
         return this.cache.size;
     }
 
+    delete(key: K) {
+        return this.cache.delete(key);
+    }
+
+    clear() {
+        this.cache.clear();
+    }
+
     getOrSet(key: string, value: any, durationSeconds?: number): any {
         //@ts-ignore
         if (this.has(key)) {
