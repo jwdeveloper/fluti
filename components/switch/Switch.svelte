@@ -72,11 +72,11 @@
 </script>
 
 
-<div id={id}
-     class="switch-container {value?'switch-active':''}"
+<div class="switch-container {value?'switch-active':''}"
+     id={id}
+     onclick={handleClick}
      style="opacity: {readonly?0.5:1}"
-     use:addRippleEffect={flutiTheme.background.tertiary}
-     onclick={handleClick}>
+     use:addRippleEffect={flutiTheme.background.tertiary}>
     <div bind:this={element} class="ball"/>
 </div>
 
@@ -109,9 +109,6 @@
     }
 
     :global(.switch-active) {
-        /*background: var(--text-light) !important;*/
-        /*background: var(--accent-primary) !important;*/
-        /*border-color: var(--text-light) !important;*/
         background: var(--accent-primary);
     }
 
