@@ -29,6 +29,7 @@ export interface CommonPages {
     title?: string
     description?: string
     keywords?: string
+    pageType?: PageType
 }
 
 export type SvelteComponentRef = any

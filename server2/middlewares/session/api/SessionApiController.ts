@@ -75,6 +75,10 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
         }
     });
 
+    controller.post(`/login/headers`, async (c) => {
+        return handleLoginByHeaders(c, config);
+    });
+
 
     return controller;
 }
@@ -82,36 +86,44 @@ export function createSessionApiController(config: SessionMiddlewareConfig) {
 export function createLoginWithHeadersMiddleware(config: SessionMiddlewareConfig) {
 
     return async (c: Context, next: any) => {
-
-        let login = c.req.header("login")
-        if (!login) {
+        const authHeadersPath = `${config.api.endpointPrefix}/login/headers`;
+        if (c.req.path !== authHeadersPath || c.req.method !== 'POST') {
             return await next();
         }
-        let password = c.req.header("password");
+        return handleLoginByHeaders(c, config);
+    }
+}
 
-        if (!login || !password) {
-            return c.json({error: "login and password are required"}, 404)
-        }
-        console.log(`trying to login by header with login ${login} and password ${password}`)
+async function handleLoginByHeaders(c: Context, config: SessionMiddlewareConfig) {
+    const login = c.req.header("login");
+    const password = c.req.header("password");
 
-        try {
-            const pb = await pocketbaseClient();
-            const authData = await pb.collection('users').authWithPassword(login, password);
-            const record = authData.record;
-            if (record.verified === false)
-                throw new Error("user is not verified")
+    if (!login || !password) {
+        return c.json({
+            token: '',
+            dbToken: '',
+            message: "login and password headers are required",
+            error: true
+        }, 400);
+    }
 
-            await returnUserAuthTokens(c, config, authData.token, record);
-        } catch (error) {
-            console.log(error)
-            return c.json({
-                token: '',
-                dbToken: '',
-                message: "Invalid email or password or user is not verified",
-                error: true
-            }, 401);
-        }
-        return await next();
+    try {
+        const pb = await pocketbaseClient();
+        const authData = await pb.collection('users').authWithPassword(login, password);
+        const record = authData.record;
+        if (record.verified === false)
+            throw new Error("user is not verified");
+
+        const result = await returnUserAuthTokens(c, config, authData.token, record);
+        return c.json(result);
+    } catch (error) {
+        console.log(error);
+        return c.json({
+            token: '',
+            dbToken: '',
+            message: "Invalid email or password or user is not verified",
+            error: true
+        }, 401);
     }
 }
 

@@ -6,7 +6,6 @@ import type {
     UserLoginRequest
 } from "$lib/fluti/server2/middlewares/session/SessionMiddlewareTypes";
 import {
-    createLoginWithHeadersMiddleware,
     createSessionApiController,
     createSessionAuthMiddleware,
     createTokenMiddleware,
@@ -53,7 +52,7 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
                 cookieName: 'session_token',
                 useServerCache: true,
                 secret: process?.env?.JWT_TOKEN_SECRET ?? '',
-                tokenExpirationTime: 60 * 60 * 60 * 30,
+                tokenExpirationTime: 60 * 60 * 24 * 30,
             },
         }
         if (onConfig)
@@ -64,7 +63,6 @@ export function useSessionMiddleware(onConfig: SessionMiddlewareConfigFn): Fluti
         }
         const app: Hono = serverConfig.app;
         app.use(createTokenMiddleware(config));
-        app.use(createLoginWithHeadersMiddleware(config));
         app.use(createSessionAuthMiddleware(config));
 
         // app.use("/*", (e, n) => {

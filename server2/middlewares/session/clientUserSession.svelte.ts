@@ -44,7 +44,15 @@ export class UserSession {
             return false;
         }
         this.token = cookies[tokenCookieName];
-        this.user = parseJwt(this.token);
+        const parsed = parseJwt(this.token);
+        if (!parsed || typeof parsed !== "object") {
+            this.isLogin = false;
+            this.user = {} as FlutiUser;
+            this.token = '';
+            return false;
+        }
+
+        this.user = parsed as FlutiUser;
         this.isLogin = true;
         return true;
     }

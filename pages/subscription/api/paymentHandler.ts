@@ -65,6 +65,11 @@ export async function createPaymentSession(event: Context) {
     if (!price)
         return json({error: 'Price not found'}, {status: 404});
 
+    const priceProductId = typeof price.product === 'string' ? price.product : price.product?.id;
+    if (priceProductId !== product.id) {
+        return json({error: 'Price does not belong to selected product'}, {status: 400});
+    }
+
     const url = new URL(event.req.url);
     const returnUrl = `${url.protocol}//${url.host}/api/v1/payment/success/{CHECKOUT_SESSION_ID}`;
 
@@ -74,14 +79,7 @@ export async function createPaymentSession(event: Context) {
         ui_mode: 'embedded',
         line_items: [
             {
-                price_data: {
-                    currency: price.currency,
-                    product_data: {
-                        name: product.name,
-                        images: [product.imageUrl],
-                    },
-                    unit_amount: price.unit_amount,
-                },
+                price: price.id,
                 quantity: 1,
             },
         ],

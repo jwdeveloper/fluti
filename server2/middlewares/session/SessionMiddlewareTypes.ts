@@ -58,7 +58,7 @@ export interface SessionMiddlewareConfig {
         cookieName: string
 
         /**
-         * Time in milliseconds after with token get expired
+         * Time in seconds after which token and auth cookies expire.
          *
          * default: 7 days
          */

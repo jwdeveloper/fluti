@@ -6,7 +6,7 @@
     import UserManager from "$lib/fluti/widgets/user/UserManager.svelte";
     import './themes/default.css'
     import '../../app.css'
-    import type {FlutiWebSiteData} from "$lib/fluti/flutiSvelteTypes";
+    import type {FlutiWebSiteData, PageType} from "$lib/fluti/flutiSvelteTypes";
     import {onMount} from "svelte";
     import {
         googleAnalitycsHeadContent,
@@ -43,7 +43,39 @@
         }
     }: Fluti = $props();
 
-    let page = websiteData?.pages?.find(e => e.url === path);
+    function normalizeDomain(domain: string): string {
+        const trimmed = (domain ?? "").trim();
+        if (!trimmed) {
+            return "https://localhost/";
+        }
+        try {
+            return new URL(trimmed).toString();
+        } catch (error) {
+            return new URL(`https://${trimmed}`).toString();
+        }
+    }
+
+    function buildAbsoluteUrl(base: string, route: string = "/"): string {
+        return new URL(route || "/", normalizeDomain(base)).toString();
+    }
+
+    function toPageType(route: string, fallback: PageType = "website"): PageType {
+        if (route.startsWith("/produkt/")) {
+            return "product";
+        }
+        if (route.startsWith("/blog/")) {
+            return "article";
+        }
+        if (route.startsWith("/szkolenie")) {
+            return "event";
+        }
+        return fallback;
+    }
+
+    const page = websiteData?.pages?.find(e => e.url === path);
+    const pageType = page?.pageType ?? toPageType(path, websiteData.pageType ?? "website");
+    const canonicalUrl = buildAbsoluteUrl(websiteData.domain, path);
+    const socialImage = buildAbsoluteUrl(websiteData.domain, websiteData.tweeter?.image ?? "logo.png");
     let data = {
         title: page?.title ?? websiteData?.title ?? 'page',
         description: page?.description ?? websiteData?.description ?? '',
@@ -65,8 +97,7 @@
         }
 
         if (websiteData?.stripe) {
-            let stripeHtml = "<script async src={websiteData.stripe?.url ?? 'https://js.stripe.com/v3/'}/>"
-            document.head.insertAdjacentHTML('beforeend', stripeHtml);
+
         }
     })
 </script>
@@ -82,22 +113,23 @@
     <meta content={websiteData.domain} data-next-head="" property="og:site_name">
     <meta content="630" property="og:image:height">
     <meta content={websiteData.country} property="og:locale"/>
-    <meta content={websiteData.domain} property="og:url">
-    <meta content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}" property="og:image">
-    <meta content="{websiteData.pageType ?? 'website'}" property="og:type"/>
+    <meta content={canonicalUrl} property="og:url">
+    <meta content={socialImage} property="og:image">
+    <meta content={pageType} property="og:type"/>
 
     <meta content="summary_large_image" name="twitter:card">
-    <meta content={websiteData?.tweeter?.title ?? websiteData?.title} name="twitter:title">
-    <meta content={websiteData?.tweeter?.description ?? websiteData?.description} name="twitter:description">
+    <meta content={data.title} name="twitter:title">
+    <meta content={data.description} name="twitter:description">
     <meta content="image/png" name="twitter:image:type">
     <meta content="1200" name="twitter:image:width">
     <meta content="630" name="twitter:image:height">
-    <meta content="{websiteData.domain}/{websiteData.tweeter?.image ?? 'logo.png'}" name="twitter:image">
+    <meta content={socialImage} name="twitter:image">
+    <meta content={canonicalUrl} name="twitter:url">
 
     <meta content={websiteData.domain} property="al:web:url">
     <meta content="true" property="al:web:should_fallback">
 
-    <link href={websiteData?.url ?? websiteData?.domain} rel="canonical">
+    <link href={canonicalUrl} rel="canonical">
 </svelte:head>
 
 {#if useAlerts}

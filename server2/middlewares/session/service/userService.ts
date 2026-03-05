@@ -12,7 +12,7 @@ export async function returnUserAuthTokens(
     dbToken: string,
     userRecord: any): Promise<LoginResponse> {
 
-    console.log('user record', userRecord)
+    const nowUnixSeconds = Math.floor(Date.now() / 1000);
     const token = await sign(
         {
             id: userRecord.id,
@@ -22,7 +22,8 @@ export async function returnUserAuthTokens(
             name: userRecord.name ?? userRecord.email,
             verified: userRecord.verified ?? false,
             admin: userRecord?.admin ?? false,
-            guest: false
+            guest: false,
+            exp: nowUnixSeconds + config.token.tokenExpirationTime
         }, config.token.secret);
 
     let data: LoginResponse = {

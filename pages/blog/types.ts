@@ -22,43 +22,67 @@ export interface BlogData {
     }
 }
 
-export function createBlogMetaTags(props: BlogData) {
-    return `
-     <meta name="description" content="${props.shortDescription}" />
-     <meta name="author" content="${props.author.name}" />
-     <title>${props.headline}</title>
+function escapeHtml(value: string): string {
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("\"", "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
-     <meta property="og:title" content="${props.headline}" />
-     <meta property="og:description" content="${props.shortDescription}" />
+export function createBlogMetaTags(props: BlogData) {
+    const title = escapeHtml(props.headline);
+    const description = escapeHtml(props.shortDescription);
+    const author = escapeHtml(props.author.name);
+    const url = escapeHtml(props.url);
+    const image = escapeHtml(props.image);
+
+    return `
+     <meta name="description" content="${description}" />
+     <meta name="author" content="${author}" />
+     <title>${title}</title>
+     <link rel="canonical" href="${url}" />
+
+     <meta property="og:title" content="${title}" />
+     <meta property="og:description" content="${description}" />
      <meta property="og:type" content="article" />
-     <meta property="og:url" content="${props.url}" />
-     <meta property="og:image" content="${props.image}" />
+     <meta property="og:url" content="${url}" />
+     <meta property="og:image" content="${image}" />
+     <meta name="twitter:card" content="summary_large_image" />
+     <meta name="twitter:title" content="${title}" />
+     <meta name="twitter:description" content="${description}" />
+     <meta name="twitter:image" content="${image}" />
+     <meta name="twitter:url" content="${url}" />
     `
 }
 
 export function createBlogJsonSchema(props: BlogData) {
-    return `
-    <script type = "application/ld+json" >
-    {
+    const schema = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "${props.headline}",
-        "image": "${props.image}",
+        "headline": props.headline,
+        "image": props.image,
         "author": {
             "@type": "Person",
-            "name": "${props.author.name}"
+            "name": props.author.name
         },
         "publisher": {
             "@type": "Organization",
-            "name": "${props.publisher.name}",
+            "name": props.publisher.name,
             "logo": {
                 "@type": "ImageObject",
-                "url": "${props.publisher.logo}"
+                "url": props.publisher.logo.url
             }
         },
-        "datePublished": "${props.datePublished}"
-    }
-    </script>
+        "datePublished": props.datePublished,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": props.url
+        }
+    };
+
+    return `
+    <script type="application/ld+json">${JSON.stringify(schema)}</script>
     `
 }
-
