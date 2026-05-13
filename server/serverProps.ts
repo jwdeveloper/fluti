@@ -16,13 +16,6 @@ export function returnServerProps(event: RequestEvent) {
             domain = domain.replace(/^http:\/\//, "https://");
         }
     }
-    console.log('server props', {
-        url,
-        isUser: isUserLogin,
-        domain,
-        route: event.url.pathname
-    })
-
     return {
         url,
         isUser: isUserLogin,
